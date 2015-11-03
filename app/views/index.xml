@@ -1,0 +1,5 @@
+<Alloy>
+	<Window id="win" navBarHidden="true">
+		<ImageView image="/images/appicon.png"/>
+	</Window>
+</Alloy>

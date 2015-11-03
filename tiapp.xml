@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ti:app xmlns:ti="http://ti.appcelerator.org">
+    <id>com.freejini.pluxfordoctor</id>
+    <name>Plux for Doctor</name>
+    <version>1.0</version>
+    <publisher>HatsuneMiku</publisher>
+    <url>http://</url>
+    <description>undefined</description>
+    <copyright>2015 by HatsuneMiku</copyright>
+    <icon>appicon.png</icon>
+    <fullscreen>false</fullscreen>
+    <navbar-hidden>false</navbar-hidden>
+    <analytics>true</analytics>
+    <guid>136e4665-f34f-41a0-9ccc-35bd8caebb20</guid>
+    <property name="ti.ui.defaultunit" type="string">dp</property>
+    <ios>
+        <plist>
+            <dict>
+                <key>UISupportedInterfaceOrientations~iphone</key>
+                <array>
+                    <string>UIInterfaceOrientationPortrait</string>
+                </array>
+                <key>UISupportedInterfaceOrientations~ipad</key>
+                <array>
+                    <string>UIInterfaceOrientationPortrait</string>
+                    <string>UIInterfaceOrientationPortraitUpsideDown</string>
+                    <string>UIInterfaceOrientationLandscapeLeft</string>
+                    <string>UIInterfaceOrientationLandscapeRight</string>
+                </array>
+                <key>UIRequiresPersistentWiFi</key>
+                <false/>
+                <key>UIPrerenderedIcon</key>
+                <false/>
+                <key>UIStatusBarHidden</key>
+                <false/>
+                <key>UIStatusBarStyle</key>
+                <string>UIStatusBarStyleDefault</string>
+            </dict>
+        </plist>
+    </ios>
+    <android xmlns:android="http://schemas.android.com/apk/res/android"/>
+    <mobileweb>
+        <precache/>
+        <splash>
+            <enabled>true</enabled>
+            <inline-css-images>true</inline-css-images>
+        </splash>
+        <theme>default</theme>
+    </mobileweb>
+    <modules>
+        <module platform="commonjs">ti.cloud</module>
+    </modules>
+    <deployment-targets>
+        <target device="android">true</target>
+        <target device="ipad">true</target>
+        <target device="iphone">true</target>
+        <target device="mobileweb">true</target>
+        <target device="windows">false</target>
+    </deployment-targets>
+    <sdk-version>5.1.0.v20150922160425</sdk-version>
+    <plugins>
+        <plugin version="1.0">ti.alloy</plugin>
+    </plugins>
+    <property name="appc-app-id" type="string">562c77209c8cc2090c0c5f35</property>
+    <property name="acs-authbase-url-development" type="string">https://secure-identity.cloud.appcelerator.com</property>
+    <property name="acs-base-url-development" type="string">https://api.cloud.appcelerator.com</property>
+    <property name="acs-oauth-secret-development" type="string">zGiYfMoMROwti9CYsldUvDThZPzwNk2n</property>
+    <property name="acs-oauth-key-development" type="string">6EstgEqpeXV0rj8TF0kLbQmh17n7uPQF</property>
+    <property name="acs-api-key-development" type="string">xPGKtjb2fQq9M0Hm9tVGLHKPIL51Hiy1</property>
+    <property name="acs-username-development" type="string">appc_app_user_dev</property>
+    <property name="acs-password-development" type="string">xiQAnVUxunK25P1oLI</property>
+    <property name="acs-authbase-url-production" type="string">https://secure-identity.cloud.appcelerator.com</property>
+    <property name="acs-base-url-production" type="string">https://api.cloud.appcelerator.com</property>
+    <property name="acs-oauth-secret-production" type="string">AsYaEuJcTllhYy89Bb4CrsWq5TnCgE31</property>
+    <property name="acs-oauth-key-production" type="string">KlxdiDNYjkLaEuS7uVRRrFWDRP5pclJS</property>
+    <property name="acs-api-key-production" type="string">bKjbTiucZq7r2OXWWwXdV9GtgLZm0E10</property>
+    <property name="acs-username-production" type="string">appc_app_user</property>
+    <property name="acs-password-production" type="string">U8kZFMx9i7LiZJtPZX</property>
+    <property name="appc-org-id" type="string">100026224</property>
+    <property name="appc-creator-user-id" type="string">37d3be16-02d7-4f77-9c31-7aadd8bc5011</property>
+</ti:app>

@@ -1,0 +1,18 @@
+<Alloy>
+	<Window title="Register" id='signUpWin' navBarHidden="false">
+		<View layout="vertical" id="loadingBar" height="0" width="120" borderRadius="15" backgroundColor="#2E2E2E" >
+		        <ActivityIndicator id="activityIndicator" />
+		    	<Label top="5" text="Loading" color="#ffffff" />
+		</View>
+		<ScrollView class="wfill hfill vert" backgroundImage="/images/home_background.jpg" scrollType="vertical">
+			<ImageView image="/images/full_logo.png" top="10" width="30%" />
+			<TextField id="fullname" hintText="Fullname"></TextField>
+			<TextField id="mobile" hintText="Mobile Number"></TextField>
+			<TextField id="email" hintText="Email Address"></TextField>
+			<TextField id="username" hintText="Username"></TextField>
+			<TextField id="password" hintText="Password" passwordMask="true"></TextField>
+			<TextField id="confirm" hintText="Confirm Password" passwordMask="true"></TextField>
+			<Button onClick="doRegister" backgroundColor="#5375BD" class="button" title="Register"></Button>
+		</ScrollView>
+	</Window>
+</Alloy>

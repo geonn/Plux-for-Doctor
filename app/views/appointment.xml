@@ -1,0 +1,41 @@
+<Alloy>
+	<Window barColor="#75d0cb" id="win" title="Appointment" navBarHidden="false">
+	<ActionBar platform="android" displayHomeAsUp="true" onHomeIconItemSelected="closeWindow" />
+	<ScrollView class="wfill hfill vert" contentHeight="Ti.UI.SIZE" contentWidth="Ti.UI.FILL">
+		<ScrollView class="wfill hsize bg_light_grey" contentWidth="Ti.UI.FILL" contentHeight="Ti.UI.SIZE" top="0">
+			<View class="wfii hsize" id="calendar">
+			</View>
+		</ScrollView>
+		<ScrollView>
+			<TableView editable="true">
+				<TableViewRow>
+					<View backgroundColor="white" class="horz wfill" height="60">
+						<View class="indicator_yellow"></View>
+						<View class="hfill vert padding" width="80">
+							<Label class="h5 hsize wsize">1:15 PM</Label>
+							<Label class="h6 hsize wsize">1 hr</Label>
+						</View>
+						<View class="horz_div"></View>
+						<View class="hfill vert padding" width="auto">
+							<Label class="h5 hsize wfill">Demo Demo</Label>
+						</View>
+					</View>
+				</TableViewRow>
+				<TableViewRow>
+					<View backgroundColor="white" class="horz wfill" height="60">
+						<View class="indicator_green"></View>
+						<View class="hfill vert padding" width="80">
+							<Label class="h5 hsize wsize">1:15 PM</Label>
+							<Label class="h6 hsize wsize">1 hr</Label>
+						</View>
+						<View class="horz_div"></View>
+						<View class="hfill vert padding" width="auto">
+							<Label class="h5 hsize wfill">Demo Demo</Label>
+						</View>
+					</View>
+				</TableViewRow>
+			</TableView>
+		</ScrollView>
+    </ScrollView>
+    </Window>
+</Alloy>

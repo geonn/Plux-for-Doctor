@@ -1,0 +1,17 @@
+".indicator_yellow":{
+	backgroundColor: "#f3ef80",
+	width: 10,
+	height: Ti.UI.FILL,
+}
+
+".indicator_green":{
+	backgroundColor: "#8db8b3",
+	width: 10,
+	height: Ti.UI.FILL,
+}
+
+".horz_div":{
+	backgroundColor: "#d8d8d8",
+	width: 1,
+	height: Ti.UI.FILL,
+}
