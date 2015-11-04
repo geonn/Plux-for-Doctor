@@ -32,15 +32,17 @@ exports.callByPost = function(e, onload, onerror){
 		var url = eval(e.url);
 		console.log(url);
 		var _result = contactServerByPost(url, e.params || {});   
-		_result.onload = function(e) { 
+		_result.onload = function(ex) { 
 			console.log('success callByPost');
 			console.log(this.responseText);
 			onload && onload(this.responseText); 
 		};
 		
-		_result.onerror = function(e) { 
+		_result.onerror = function(ex) { 
 			console.log("onerror "+url);
+			console.log(API);
 			API.callByPost(e, onload, onerror);
+			console.log('a');
 		};
 	}
 };
@@ -57,7 +59,7 @@ exports.callByPostImage = function(e, onload, onerror) {
 		onload && onload(this.responseText); 
 	};
 	
-	_result.onerror = function(e) { 
+	_result.onerror = function(ex) { 
 		console.log("onerror");
 		API.callByPostImage(e, onload);
 		//onerror && onerror();
@@ -80,7 +82,7 @@ exports.updateNotificationToken = function(e){
 		_result.onload = function(e) {  
 		};
 		
-		_result.onerror = function(e) { 
+		_result.onerror = function(ex) { 
 		};
 	}
 };
@@ -94,12 +96,12 @@ exports.sendNotification = function(e){
 	records['u_id'] = u_id; 
 	var url = sendNotificationUrl+"?message="+e.message+"&to_id="+e.to_id+"&u_id="+u_id+"&target="+e.target;
 	var _result = contactServerByGet(url);   
-	_result.onload = function(e) {
-		console.log(e);
+	_result.onload = function(ex) {
+		console.log(ex);
 	};
 	
-	_result.onerror = function(e) { 
-		console.log(e);
+	_result.onerror = function(ex) { 
+		console.log(ex);
 	};
 };
 

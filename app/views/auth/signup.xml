@@ -5,7 +5,7 @@
 		    	<Label top="5" text="Loading" color="#ffffff" />
 		</View>
 		<ScrollView class="wfill hfill vert" backgroundImage="/images/home_background.jpg" scrollType="vertical">
-			<ImageView image="/images/appicon.png" top="10" width="30%" />
+			<ImageView image="/images/appicon.png" top="2" bottom="50" width="30%" />
 			<TextField id="fullname" hintText="Fullname"></TextField>
 			<TextField id="mobile" hintText="Mobile Number"></TextField>
 			<TextField id="email" hintText="Email Address"></TextField>

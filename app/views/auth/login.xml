@@ -1,8 +1,8 @@
 <Alloy>
 	<Window title="" color="#ffffff" id="win">
-		<View class="wfill hfill vert"  backgroundImage="/images/home_background.jpg">
-			<ImageView image="/images/appicon.png"  top="10" width="50%" />
-			<TextField id="username" hintText="Email"></TextField>
+		<View class="wfill hfill vert" layout="vertical" backgroundImage="/images/home_background.jpg">
+			<ImageView image="/images/appicon.png" top="50" class="hsize"  width="50%" />
+			<TextField id="username" value="annie@gleneagleskl.com.my" top="50" hintText="Email"></TextField>
 			<TextField id="password" hintText="Password" passwordMask="true"></TextField>
 			<Button onClick="do_login" class="button" title="Login"></Button>
 			<!--<Button onClick="do_signup" class="button" backgroundColor="#5375BD" title="Register"></Button>-->
