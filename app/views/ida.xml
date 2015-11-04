@@ -1,33 +1,12 @@
 <Alloy>
-	<Window barColor="#75d0cb" id="win" title="IDA" navBarHidden="false">
-	<ActionBar platform="android" displayHomeAsUp="true" onHomeIconItemSelected="closeWindow" />
-	<ScrollView class="wfill hfill vert" contentHeight="Ti.UI.SIZE" contentWidth="Ti.UI.FILL">
-    	<View class="wfill hsize">
-        	<View class="wsize hsize vert padding">
-	        	<Label class="h3 wsize hsize" id="label_friends">IDA (0)</Label>
-        	</View>
-    	</View>
-    	<View class="wfill hsize box vert padding" top="0">
-	    	<View class="wfill hsize vert bg_light_grey" top="0">
-	    		<View id="inner_box" class="wfill hsize padding vert" top="0">
-	    			<Label class="wfill hsize light_grey">October 2015</Label>
-	    		</View>
-	    		<!--<View class="hsize wfill horz" height="80" u_id="102">
-	        		<ImageView class="" left="10" top="10" width="60" height="auto" image="/images/demo_avatar_2.png"></ImageView>
-	        		<View class="wfill hsize vert padding">
-	        			<Label id="item_donator_name" class="h5 wfill hsize bold" textAlign="left">Tammy Liu</Label>
-	        			<Label id="item_name" class="h5 wfill hsize">Tiffany Ear Rings</Label>
-	        		</View>
-	    		</View>
-	    		<View class="hsize wfill horz" height="80" u_id="103">
-	        		<ImageView class="" left="10" top="10" width="60" height="auto" image="/images/demo_avatar_3.png"></ImageView>
-	        		<View class="wfill hsize vert padding">
-	        			<Label id="item_donator_name" class="h5 wfill hsize bold" textAlign="left">Jacky Chan</Label>
-	        			<Label id="item_name" class="h5 wfill hsize">Nike Shoe</Label>
-	        		</View>
-	    		</View>-->
-			</View>
-		</View>
-    </ScrollView>
+	<Window   navTintColor="#CE1D1C" id="win" title="iDA"  navBarHidden="false">
+		<ActionBar platform="android" displayHomeAsUp="true" onHomeIconItemSelected="closeWindow" />
+		 
+		<View class="wfill hsize" top="0">
+			<Label class="h5 wfill hsize themeColor padding" id="label_ida">IDA (0)</Label>
+	 	</View> 
+	    <ScrollView id="contentView" class="wfill hfill vert"  top="40"  contentHeight="Ti.UI.SIZE" contentWidth="Ti.UI.FILL" />  
+    	<ScrollView id="bigView" zIndex="99" height="Ti.UI.SIZE" layout="vertical" backgroundColor="#ffffff" opacity="0.8" bottom="0" width="80%" visible="false" />
+				
     </Window>
 </Alloy>

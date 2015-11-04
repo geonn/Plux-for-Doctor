@@ -1,7 +1,7 @@
 exports.definition = {
 	config: {
 		columns: {
-		    "id": "INTEGER",
+		    "id": "INTEGER PRIMARY KEY",
 		    "title": "TEXT" ,
 		    "url": "TEXT" ,
 		    "status": "INTEGER" ,
@@ -14,7 +14,8 @@ exports.definition = {
 		},
 		adapter: {
 			type: "sql",
-			collection_name: "leaflet"
+			collection_name: "ida",
+			idAttribute: "id"
 		}
 	},
 	extendModel: function(Model) {
@@ -27,7 +28,7 @@ exports.definition = {
 	extendCollection: function(Collection) {
 		_.extend(Collection.prototype, {
 			// extended functions and properties go here
-			getLeaftletList: function(){
+			getIdaList: function(){
 				var collection = this;
                 var sql = "SELECT * FROM " + collection.config.adapter.collection_name +" WHERE `status` =1 ORDER BY position ASC";
                 
@@ -100,6 +101,26 @@ exports.definition = {
 	            db.close();
 	            collection.trigger('sync');
             },
+            saveArray : function(arr){
+			 
+				var collection = this;
+                db = Ti.Database.open(collection.config.adapter.db_name);
+                if(Ti.Platform.osname != "android"){
+                	db.file.setRemoteBackup(false);
+                }
+                db.execute("BEGIN");
+                
+                arr.forEach(function(entry) {
+	                var sql_query =  "INSERT OR IGNORE INTO "+collection.config.adapter.collection_name+" (id, title, url, status, position, attachment, cover, isDownloaded ,  created,updated) VALUES (?,?,?,?,?,?,?,?,?,?)";
+					db.execute(sql_query, entry.b_id, entry.b_title, entry.b_url, entry.b_status, entry.b_position, entry.attachment, entry.cover,0,  entry.b_created, entry.b_updated);
+					var sql_query =  "UPDATE "+collection.config.adapter.collection_name+" SET title=?, url=?, status=?, position=?, attachment=?, cover=?, updated=? WHERE id=?";
+					db.execute(sql_query,   entry.b_title, entry.b_url, entry.b_status, entry.b_position, entry.attachment,  entry.cover,entry.b_updated, entry.b_id);
+				});
+				db.execute("COMMIT");
+	            db.close();
+	            collection.trigger('sync');
+			},
+			
 			resetBrouchure : function(id){
 				var collection = this;
                 var sql = "DELETE FROM " + collection.config.adapter.collection_name ;

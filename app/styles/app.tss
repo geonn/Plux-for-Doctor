@@ -37,7 +37,7 @@ overrode the settings with other TSS, XML, or JS settings:
 'Window': {
     backgroundColor: '#f1f5f7', // white background instead of default transparent #e5ebee
     titleAttributes:  {
-        color: "#eaebe6"
+        color: "#CE1D1C"
    },
    navBarHidden: true,
 },
@@ -266,4 +266,19 @@ overrode the settings with other TSS, XML, or JS settings:
 
 ".shadow":{
 	backgroundImage: "/images/shadow.png",
+},
+'.whiteColor' : {
+	color: "#ffffff"
 }
+'.themeColor' : {
+	color: "#CE1D1C"
+}
+'.themeBg' : {
+	backgroundColor: "#CE1D1C"
+}, 
+'.font_light_grey':{
+	color: "#9197a3 "
+},
+'.font_dark_grey' :{
+	color: "#C8C8CD"
+},

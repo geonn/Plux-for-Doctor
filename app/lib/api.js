@@ -13,11 +13,12 @@ var doSignUpUrl = "http://"+API_DOMAIN+"/api/pluxDoctorSignup?user="+USER+"&key=
 var getAppHomepageBackgroundUrl            = "http://"+API_DOMAIN+"/api/getAppHomepageBackground?user="+USER+"&key="+KEY;
 var getDoctorListUrl            = "http://"+API_DOMAIN+"/api/getDoctorList?user="+USER+"&key="+KEY;
 var getAppointmentByClinic 		= "http://"+API_DOMAIN+"/api/getAppointmentByClinic?user="+USER+"&key="+KEY;
-
+var getIdaListUrl               = "http://"+API_DOMAIN+"/api/getIda?user="+USER+"&key="+KEY;
 //API that call in sequence 
 var APILoadingList = [
 	{url: getAppHomepageBackgroundUrl, model: "background", checkId: "1"},
 	{url: getDoctorListUrl, model: "doctor", checkId: "2"},
+	{url: getIdaListUrl, model: "ida", checkId: "3"},
 ];
 
 /*********************
