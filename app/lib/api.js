@@ -14,11 +14,13 @@ var getAppHomepageBackgroundUrl            = "http://"+API_DOMAIN+"/api/getAppHo
 var getDoctorListUrl            = "http://"+API_DOMAIN+"/api/getDoctorList?user="+USER+"&key="+KEY;
 var getAppointmentByClinic 		= "http://"+API_DOMAIN+"/api/getAppointmentByClinic?user="+USER+"&key="+KEY;
 var getIdaListUrl               = "http://"+API_DOMAIN+"/api/getIda?user="+USER+"&key="+KEY;
+
 //API that call in sequence 
 var APILoadingList = [
 	{url: getAppHomepageBackgroundUrl, model: "background", checkId: "1"},
 	{url: getDoctorListUrl, model: "doctor", checkId: "2"},
 	{url: getIdaListUrl, model: "ida", checkId: "3"},
+	{url: getAppointmentByClinic, model: "appointment", checkId: "4"},
 ];
 
 /*********************
@@ -118,12 +120,13 @@ exports.loadAPIBySequence = function (ex, counter){
 	var checker = Alloy.createCollection('updateChecker'); 
 	
 	var addon_url = "";
-	if(api['model'] == "item_response" || api['model'] == "friends"){
-		var u_id = Ti.App.Properties.getString('user_id') || 0;
-		addon_url = "&u_id="+u_id;
-		var isUpdate = checker.getCheckerById(api['checkId'], u_id);
+	if(api['model'] == "appointment"){
+		var clinic_id = Ti.App.Properties.getString('clinic_id') || 0;
+		addon_url = "&clinic_id="+clinic_id;
+		var isUpdate = checker.getCheckerById(api['checkId'], clinic_id);
+		console.log(clinic_id+":clinic_id");
 		var last_updated = isUpdate.updated || "";
-		if(!u_id){
+		if(!clinic_id){
 			counter++;
 			API.loadAPIBySequence(ex, counter);
 			return;

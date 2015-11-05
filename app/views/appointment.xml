@@ -7,33 +7,8 @@
 			</View>
 		</ScrollView>
 		<ScrollView>
-			<TableView editable="true">
-				<TableViewRow>
-					<View backgroundColor="white" class="horz wfill" height="60">
-						<View class="indicator_yellow"></View>
-						<View class="hfill vert padding" width="80">
-							<Label class="h5 hsize wsize">1:15 PM</Label>
-							<Label class="h6 hsize wsize">1 hr</Label>
-						</View>
-						<View class="horz_div"></View>
-						<View class="hfill vert padding" width="auto">
-							<Label class="h5 hsize wfill">Demo Demo</Label>
-						</View>
-					</View>
-				</TableViewRow>
-				<TableViewRow>
-					<View backgroundColor="white" class="horz wfill" height="60">
-						<View class="indicator_green"></View>
-						<View class="hfill vert padding" width="80">
-							<Label class="h5 hsize wsize">1:15 PM</Label>
-							<Label class="h6 hsize wsize">1 hr</Label>
-						</View>
-						<View class="horz_div"></View>
-						<View class="hfill vert padding" width="auto">
-							<Label class="h5 hsize wfill">Demo Demo</Label>
-						</View>
-					</View>
-				</TableViewRow>
+			<TableView editable="true" id="inner_box">
+				
 			</TableView>
 		</ScrollView>
     </ScrollView>

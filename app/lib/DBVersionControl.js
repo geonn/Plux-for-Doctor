@@ -7,15 +7,15 @@
 
 // update user device token
 exports.checkAndUpdate = function(e){
-	var dbVersion = Ti.App.Properties.getString("dbVersion");
-	if (dbVersion = '1.0') {
+	var dbVersion = Ti.App.Properties.getString("dbVersion") || "1.0";
+	
+	if (dbVersion == '1.0') {
 	  /*
 	   version 1.1 upgrade
-	   * 
-	  var message_model = Alloy.createCollection('message'); 
-	  message_model.addColumn("read", "INTEGER");
+	   * */
+	  var appointment_model = Alloy.createCollection('appointment'); 
+	  appointment_model.addColumn("patient_name", "TEXT");
 	  dbVersion = '1.1';
-	  */
 	}
 	Ti.App.Properties.setString("dbVersion", dbVersion);
 };

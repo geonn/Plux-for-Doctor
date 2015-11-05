@@ -12,6 +12,7 @@
 
 var _ = require('underscore')._;
 var API = require('api');
+var CAL = require('calendar');
 //var PUSH = require('push'); 
 var Common = require('common'); 
 var DBVersionControl = require('DBVersionControl');
@@ -50,6 +51,25 @@ function parent(key, e){
 	    		return eval("e."+key.name);
 	    }
 	}
+}
+
+function convertToDBDateFormat(datetime){
+	var timeStamp = datetime.split(" ");  
+	var newFormat;
+	 
+	var date = timeStamp[0].split("/");  
+	if(timeStamp.length == 1){
+		newFormat = date[2]+"-"+date[1]+"-"+date[0] ;
+	}else{
+		var time = timeStamp[1].split(":");
+		var hour = (timeStamp[2] == "pm")?12 + parseInt(time[0]):time[0];
+		var min = time[1] || "00";
+		var sec = time[2] || "00";
+		
+		newFormat = date[2]+"-"+date[1]+"-"+date[0] + " "+hour+":"+min+":"+sec;
+	}
+	
+	return newFormat;
 }
 
 function children(key, e){

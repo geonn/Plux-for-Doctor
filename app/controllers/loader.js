@@ -9,8 +9,8 @@ var loadingList = [
  */
 function start(){
 	console.log('start');
-	next_loading();
 	$.logo.start();
+	next_loading();
 };
 
 

@@ -2,6 +2,6 @@
 	<Window id="win" class="container">
 		<View id="overlay" />
 		<ImageView id="logo"/>
-		<Label id="loading_text" class="wsize hsize" bottom="50" color="#ffffff"></Label>
+		<Label id="loading_text" class="wsize hsize" bottom="50" color="#000000"></Label>
 	</Window>
 </Alloy>
