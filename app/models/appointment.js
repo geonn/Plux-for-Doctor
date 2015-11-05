@@ -9,7 +9,7 @@ exports.definition = {
 		    "end_date" : "TEXT",
 		    "remark" : "TEXT",
 		    "specialty" : "TEXT",
-		    "status": "INTEGER" ,
+		    "status": "INTEGER" ,	// 1 - pending, 2- rejected, 3 - accepted. 4 - suggested date, 5 - delete
 		    "created": "TEXT" ,
 		    "updated": "TEXT",
 		    "date" : "TEXT",
@@ -56,7 +56,7 @@ exports.definition = {
 				var query_clinicid = (typeof ex.clinicId != "undefined")?" clinic_id= ? ":"";
 				var query_start_date = (typeof ex.start_date != "undefined")?" AND start_date >= ? AND start_date < ? ":"";
 				var collection = this;
-                var sql = "SELECT * FROM " + collection.config.adapter.collection_name +" WHERE "+query_clinicid+query_start_date+" AND status != 5 ORDER BY created DESC";
+                var sql = "SELECT * FROM " + collection.config.adapter.collection_name +" WHERE "+query_clinicid+query_start_date+" AND status != 5 AND status != 2 ORDER BY created DESC";
               	 
                 db = Ti.Database.open(collection.config.adapter.db_name);
                 if(Ti.Platform.osname != "android"){

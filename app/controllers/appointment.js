@@ -3,6 +3,9 @@ var clinic_id = Ti.App.Properties.getString('clinic_id') || 0;
 var loading = Alloy.createController("loading");
 var appointment = Alloy.createCollection("appointment");
 var data;
+var status_text = ["nothing", "Pending", "Rejected", "Approved", "Suggested date", "Deleted"];
+var indicator_color = ['red', 'yellow', 'red', 'green', 'orange', 'black'];
+// 1 - pending, 2- rejected, 3 - accepted. 4 - suggested date, 5 - delete
 /**
  * Navigate to Conversation by u_id
  */
@@ -27,7 +30,8 @@ function render_booking_list(){
 		});
 		
 		var view_indicator = $.UI.create("View",{
-			classes: ['indicator_yellow']
+			classes: ['indicator_yellow'],
+			backgroundColor: indicator_color[data[i].status]
 		});
 		
 		var view_horz_div = $.UI.create("View",{
@@ -44,16 +48,14 @@ function render_booking_list(){
 			width: "auto"
 		});
 		
-		var time = data[i].start_date.split(" ");
-		
 		var label_time = $.UI.create("Label",{
 			classes:['h6','wsize','hsize'],
-			text: time[1]
+			text: formatDate(timeFormat(data[i].start_date))
 		});
 		
 		var label_duration = $.UI.create("Label",{
 			classes:['h5','wsize','hsize'],
-			text: data[i].duration
+			text: convertMinuteToHour(data[i].duration)
 		});
 		
 		var label_patient_name = $.UI.create("Label",{
@@ -61,9 +63,15 @@ function render_booking_list(){
 			text: data[i].patient_name
 		});
 		
+		var label_status = $.UI.create("Label",{
+			classes:['h5','wfill','hsize'],
+			text: status_text[data[i].status]
+		});
+		
 		view_left_column.add(label_time);
 		view_left_column.add(label_duration);
 		view_right_column.add(label_patient_name);
+		view_right_column.add(label_status);
 		view_container.add(view_indicator);
 		view_container.add(view_left_column);
 		view_container.add(view_horz_div);
@@ -141,3 +149,39 @@ $.win.addEventListener("close", function(){
 	$.destroy();
 	console.log("window close");
 });
+
+/*
+ private function
+ * */
+
+function formatDate(date) {
+    var d = new Date(date);
+    console.log(d);
+    var hh = d.getHours();
+    var m = d.getMinutes();
+    var s = d.getSeconds();
+    var dd = "am";
+    var h = hh;
+    if (h >= 12) {
+        h = hh-12;
+        dd = "pm";
+    }
+    if (h == 0) {
+        h = 12;
+    }
+    m = m<10?"0"+m:m;
+
+    s = s<10?"0"+s:s;
+
+    /* if you want 2 digit hours: */
+    h = h<10?"0"+h:h;
+    return h+":"+m+" "+dd;
+}
+
+function convertMinuteToHour(minutes){
+	minutes = parseInt(minutes);
+	console.log(minutes);
+	var hour = Math.floor(minutes/60);
+	var minute = minutes%60;
+    return hour+"h "+('0' + minute).slice(-2)+" m";
+}
