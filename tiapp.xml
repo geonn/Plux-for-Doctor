@@ -3,10 +3,10 @@
     <id>com.freejini.pluxfordoctor</id>
     <name>Plux-for-Doctor</name>
     <version>1.0</version>
-    <publisher>geomilano</publisher>
+    <publisher>PLUX Health</publisher>
     <url>http://</url>
     <description>undefined</description>
-    <copyright>2015 by geomilano</copyright>
+    <copyright>2015 by PLUX Health</copyright>
     <icon>appicon.png</icon>
     <fullscreen>false</fullscreen>
     <navbar-hidden>false</navbar-hidden>
@@ -49,6 +49,8 @@
     </mobileweb>
     <modules>
         <module platform="commonjs">ti.cloud</module>
+        <module platform="android">com.mirasense.scanditsdk</module>
+        <module platform="iphone">com.mirasense.scanditsdk</module>
     </modules>
     <deployment-targets>
         <target device="android">true</target>

@@ -14,7 +14,7 @@ var _ = require('underscore')._;
 var API = require('api');
 var CAL = require('calendar');
 //var PUSH = require('push'); 
-var Common = require('common'); 
+var Common = COMMON = common = require('common'); 
 var DBVersionControl = require('DBVersionControl');
 
 DBVersionControl.checkAndUpdate();

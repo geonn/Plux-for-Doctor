@@ -1,0 +1,12 @@
+<Alloy>
+	<Window   navTintColor="#CE1D1C" id="win" title="eCard Reader"  navBarHidden="false">
+		<ActionBar platform="android" displayHomeAsUp="true" onHomeIconItemSelected="closeWindow" />
+		 
+		<View class="wfill hsize" top="0">
+			<Label class="h5 wfill hsize themeColor padding" id="label_ida">Reader</Label>
+	 	</View> 
+	    <ScrollView id="contentView" class="wfill hfill vert"  top="40"  contentHeight="Ti.UI.SIZE" contentWidth="Ti.UI.FILL" />  
+    	<ScrollView id="bigView" zIndex="99" height="Ti.UI.SIZE" layout="vertical" backgroundColor="#ffffff" opacity="0.8" bottom="0" width="80%" visible="false" />
+				
+    </Window>
+</Alloy>

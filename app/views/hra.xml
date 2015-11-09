@@ -1,0 +1,16 @@
+<Alloy>
+	<Window   navTintColor="#CE1D1C" id="win" title="Health Risk Assessment"  navBarHidden="false">
+		<ActionBar platform="android" displayHomeAsUp="true" onHomeIconItemSelected="closeWindow" />
+		 
+		<View class="wfill hsize" top="0">
+			<Label class="h5 wfill hsize themeColor padding" id="label_ida">Health Risk Assessment</Label>
+	 	</View> 
+	    <TableView id="menu"> 
+	    	<TableViewRow mod="bmi" height="40" top="5" bottom="5" ><Label textAlign="left" height="Ti.UI.SIZE" left="15" width="Ti.UI.SIZE">BMI Calculator</Label></TableViewRow>
+	    	<TableViewRow mod="whratio" height="40" top="5" bottom="5" ><Label textAlign="left" height="Ti.UI.SIZE"  left="15"  width="Ti.UI.SIZE">Waist-To-Hips Ratio Calculator</Label></TableViewRow>
+	   		<TableViewRow mod="nutritional_profile" height="40" top="5" bottom="5" ><Label textAlign="left"  left="15"  height="Ti.UI.SIZE" width="Ti.UI.SIZE">Nutritional Profile</Label></TableViewRow>
+	   		<TableViewRow mod="smokecost" height="40" top="5" bottom="5" ><Label textAlign="left" height="Ti.UI.SIZE"  left="15"  width="Ti.UI.SIZE">Smoking Cost Calculator</Label></TableViewRow>
+	    	<TableViewRow mod="diabetes" height="40" top="5" bottom="5"  ><Label textAlign="left" height="Ti.UI.SIZE" left="15"  width="Ti.UI.SIZE">Diabetes Risk Calculator</Label></TableViewRow>
+	    </TableView>	
+    </Window>
+</Alloy> 

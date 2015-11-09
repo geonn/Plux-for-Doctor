@@ -2,8 +2,12 @@ var args = arguments[0] || {};
 var loading = Alloy.createController("loading");
 
 var menu_info = [
-	{mod: "ida", image: "/images/btn/ida.png"},
+	{mod: "cardReader", image: "/images/btn/e-card-reader.png"},
+	{mod: "patient", image: "/images/btn/patient-record.png"}, 
 	{mod: "appointment", image: "/images/btn/appointment.png"},
+	{mod: "clinic/listing", image: "/images/btn/clinic-locator.png"},
+	{mod: "ida", image: "/images/btn/ida.png"},
+	{mod: "hra", image: "/images/btn/health-rish-assessment.png"},
 ];
 
 function doLogout(){
