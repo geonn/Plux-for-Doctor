@@ -18,7 +18,7 @@ common.showLoading();
 $.clinicTypeSelection.text = clinicType;
 $.clinicLocationSelection.text = clinicLocationSelection;
 if(OS_IOS){
-	$.clinicList.title = "Locator List";
+	$.win.title = "Locator List";
 }else{
 	$.pageTitle.text =  "Locator List";
 } 
@@ -132,7 +132,7 @@ function listing(){
 		}
 		
 		$.clinicListTv.addEventListener('click', function(e) { 
-			nav.navigateWithArgs("clinic/clinicDetails", {panel_id:e.rowData.source});
+			Alloy.Globals.Navigator.open("clinic/clinicDetails", {panel_id:e.rowData.source});
 		});
 }
 
@@ -151,7 +151,7 @@ $.btnSearch.addEventListener('click', function(){
 
 if(Ti.Platform.osname == "android"){
 	$.btnBack.addEventListener('click', function(){ 
-		nav.closeWindow($.clinicList); 
+		$.win.close();
 	}); 
 } 
 	/***SEARCH FUNCTION***/
@@ -269,8 +269,8 @@ function showLocationSelection(){
 	});
 }
 
-$.btnMap.addEventListener('click', function(){
-	nav.navigateWithArgs("clinic/clinicLocator", { clinicType: Ti.App.Properties.getString('clinicTypeSelection'), location: Ti.App.Properties.getString('clinicLocationSelection') });
+$.btnMap.addEventListener('click', function(){ 
+	Alloy.Globals.Navigator.open("clinic/clinicLocator", { clinicType: Ti.App.Properties.getString('clinicTypeSelection'), location: Ti.App.Properties.getString('clinicLocationSelection') });
 });
 
 function loadData(corp){

@@ -17,6 +17,26 @@ function openWindow(win){
 }
 
 
+exports.hideLoading = function(){
+	mainView.activityIndicator.hide();
+	mainView.loadingBar.opacity = "0";
+	mainView.loadingBar.height = "0";
+//	mainView.loadingBar.top = "0"; 
+};
+
+exports.showLoading = function(){ 
+	mainView.activityIndicator.show();
+	mainView.loadingBar.opacity = 1;
+	mainView.loadingBar.zIndex = 100;
+	mainView.loadingBar.height = 120;
+	 
+	if(OS_ANDROID){ 
+		mainView.activityIndicator.style = Ti.UI.ActivityIndicatorStyle.BIG; 
+	}else if (OS_IOS){ 
+		mainView.activityIndicator.style = Ti.UI.iPhone.ActivityIndicatorStyle.BIG;
+	}  
+};
+
 //function closeWindow(win){
 exports.closeWindow = function(win){
 	if(Ti.Platform.osname == "android"){ 

@@ -72,6 +72,15 @@ function convertToDBDateFormat(datetime){
 	return newFormat;
 }
 
+function ucwords(str) { 
+  	str = str.toLowerCase();
+	return str.replace(/(^([a-zA-Z\p{M}]))|([ -][a-zA-Z\p{M}])/g,
+        function($1){
+            return $1.toUpperCase();
+	});
+}
+
+
 function children(key, e){
 	if(eval("e."+key.name+"") != key.value){
 		for (var i=0; i < e.children.length; i++) {

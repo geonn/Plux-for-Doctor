@@ -21,13 +21,10 @@ overrode the settings with other TSS, XML, or JS settings:
 
 */
 
-'Label': {
-	color: '#3d484f', //#2eafa8 selected
-	width: Ti.UI.FILL,
-	height: Ti.UI.SIZE,
-	font: {
-		fontSize: 12
-	}
+"Label":{
+	width: Titanium.UI.SIZE,
+	height: Titanium.UI.SIZE,
+	color: "#606060"
 },
 
 "Actionbar":{
@@ -263,7 +260,10 @@ overrode the settings with other TSS, XML, or JS settings:
 ".bold":{
 	font: { fontWeight: 'bold'}
 },
-
+".darkgreyText" : {
+	color: "#626262",
+	font: {fontWeight: 'bold'},
+},
 ".shadow":{
 	backgroundImage: "/images/shadow.png",
 },
@@ -281,4 +281,25 @@ overrode the settings with other TSS, XML, or JS settings:
 },
 '.font_dark_grey' :{
 	color: "#C8C8CD"
+},
+
+'.left-align' :{
+	textAlign: Titanium.UI.TEXT_ALIGNMENT_LEFT,
+}
+'.right-align' :{
+	textAlign: Titanium.UI.TEXT_ALIGNMENT_RIGHT,
+}
+'.center' :{
+	textAlign: Titanium.UI.TEXT_ALIGNMENT_CENTER,
+},
+"#activityIndicator[platform=ios]" : { 
+	 top:30,
+	 left:30,
+	 width:60,
+},
+
+"#activityIndicator[platform=android]" : { 
+	 top:10,
+	 left:30,
+	 width:60,
 },

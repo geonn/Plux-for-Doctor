@@ -245,7 +245,7 @@ function resultPopUp(title, msg){
 		
 		left:40,
 		title: "OK",
-		width: "30%",
+		width: "80%",
 		backgroundColor: "#F1F1F1",
 		borderColor: "#CE1D1C",
 		color: "#CE1D1C",
@@ -253,20 +253,8 @@ function resultPopUp(title, msg){
 		height: Ti.UI.SIZE,
 		bottom: "20dp",
 	});
-	var saveButton = Ti.UI.createButton({
-		
-		title: "Save BMI",
-		width: "50%",
-		left: 10,
-		backgroundColor: "#F1F1F1",
-		borderColor: "#CE1D1C",
-		color: "#CE1D1C",
-		borderRadius: 10,
-		height: Ti.UI.SIZE,
-		bottom: "20dp",
-	});
-	btnView.add(okButton);
-	btnView.add(saveButton);
+	 
+	btnView.add(okButton); 
 	content.add(content_text);
 	content.add(btnView);
 	box.add(header);

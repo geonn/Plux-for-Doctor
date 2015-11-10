@@ -215,6 +215,6 @@ $.showFullMap.addEventListener('click', function(){
 
 if(Ti.Platform.osname == "android"){
 	$.btnBack.addEventListener('click', function(){ 
-		nav.closeWindow($.panelDetails); 
+		$.win.close(); 
 	}); 
 }

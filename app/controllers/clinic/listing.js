@@ -116,16 +116,14 @@ $.win.addEventListener('close',function(){
 	det24 = null;
 });
 
-if(Ti.Platform.osname == "android"){
+if(OS_ANDROID){
 	$.btnBack.addEventListener('click', function(){ 
-		nav.closeWindow($.win); 
+		$.win.close();
 	}); 
 }
 
 Ti.App.addEventListener('aspClinic',init);
 
-$.tblview.addEventListener('click', function(e){
-	var nav = require('navigation');
-	//nav.navigateWithArgs("clinic/clinicLocator", {clinicType:e.rowData.id});
-	nav.navigateWithArgs("clinic/clinicList", {clinicType:e.rowData.id});
+$.tblview.addEventListener('click', function(e){ 
+	Alloy.Globals.Navigator.open("clinic/clinicList", {clinicType:e.rowData.id}); 
 });

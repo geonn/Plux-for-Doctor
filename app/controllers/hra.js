@@ -13,8 +13,8 @@ $.menu.addEventListener('click', function(e){
 	Alloy.Globals.Navigator.open("hra_detail", {mod: res.mod}); 
 });
 
-if(Ti.Platform.osname == "android"){
+if(OS_ANDROID){
 	$.btnBack.addEventListener('click', function(){  
-		nav.closeWindow($.hra); 
+		$.win.close();
 	}); 
 }
