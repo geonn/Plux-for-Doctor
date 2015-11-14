@@ -12,14 +12,14 @@
 				</View> 
 				
 				<View id="tvrName" top="10"  height="Ti.UI.SIZE"   backgroundColor="#ffffff" > 
-					<Label text="My Profile" top="10" bottom="10"  width="35%" left="5" class="h5 padding-left themeColor"  /> 
+					<Label text="My Profile" top="15" bottom="15"  width="35%" left="5" class="h5 padding-left themeColor"  /> 
 					 
 					<Label id="lblPName" text="" class="wsize  h6 right-align" right="18"  color="#000000"  /> 
 					<ImageView  class="wsize" right="5" image="/images/btn-forward.png" width="15" />  
 				</View> 
 				
 				<View id="tvrPassword" top="10"  height="Ti.UI.SIZE" backgroundColor="#ffffff" > 
-					<Label text="Change Password" top="10" bottom="10" left="5" class="wfill h5 padding-left themeColor"  />  
+					<Label text="Change Password" top="15" bottom="15" left="5" class="wfill h5 padding-left themeColor"  />  
 					<ImageView  class="wsize" right="5" image="/images/btn-forward.png" width="15" /> 
 				</View> 
 			</View> 

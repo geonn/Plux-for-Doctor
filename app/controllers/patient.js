@@ -17,7 +17,7 @@ function showList(){
  
 	if(details.length < 1){
 		COMMON.hideLoading(); 
-		$.recordTable.setData(common.noRecord());
+		$.recordTable.setData(COMMON.noRecord());
 	}else{
 		details.forEach(function(entry) {
 			 

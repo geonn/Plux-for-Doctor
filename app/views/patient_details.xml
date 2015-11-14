@@ -6,7 +6,7 @@
 	        	<Label id="loading" top="5" text="Loading" color="#ffffff" />
 	    </View>
 		<View class="wfill hsize" top="0">
-			<Label class="h4 wfill hsize  padding bold" id="label_ida">Patients Record</Label>
+			<Label class="h4 wfill hsize  padding bold" id="label_ida">Patient Records</Label>
 	 	</View> 
 	 	 <ScrollView class="vert hfill wfill" contentWidth="Ti.UI.FILL" contentHeight="Ti.UI.SIZE" top="35">
 	 	 	<View id="tvrVisitId"  height="Ti.UI.SIZE" layout="vertical" selectedBackgroundColor="#ffffff" >

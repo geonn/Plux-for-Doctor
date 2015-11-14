@@ -88,7 +88,7 @@ overrode the settings with other TSS, XML, or JS settings:
 	height: 40,
 	borderColor: "#C6C8CA",
 	textAlign: Titanium.UI.TEXT_ALIGNMENT_CENTER,
-	backgroundColor: "#ED1C24",
+	backgroundColor: "#CE1D1C",
 	borderRadius: 6,
 	color: "#ffffff",
 	width: Titanium.UI.FILL,
@@ -291,6 +291,15 @@ overrode the settings with other TSS, XML, or JS settings:
 }
 '.center' :{
 	textAlign: Titanium.UI.TEXT_ALIGNMENT_CENTER,
+},
+
+".description" : {
+	color: "#777777",
+	font:{
+		fontSize: '14dp'
+	},
+	width : Ti.UI.SIZE,
+	height : Ti.UI.SIZE
 },
 "#activityIndicator[platform=ios]" : { 
 	 top:30,

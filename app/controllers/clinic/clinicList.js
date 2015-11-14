@@ -1,7 +1,7 @@
 var args = arguments[0] || {};
 var clinicType = args.clinicType || "CLINIC";
 var library = Alloy.createCollection('panelList');
-var corp = Ti.App.Properties.getString('corpcode') || "";
+var corp = "";
 var list;
 var aspClinicArr = [];
 

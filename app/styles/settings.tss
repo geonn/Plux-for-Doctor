@@ -11,7 +11,7 @@
 	 color: '#CE1D1C',
 	 backgroundColor: '#ffffff',
 	 width:'90%',
-	 height: '35dp',
+	 height: '30dp',
 	 bottom:5,
 	 borderColor : "#F0DCDC",
 	 borderRadius : 3,
@@ -31,16 +31,16 @@
 	borderRadius : 3,
 	backgroundColor: '#ffffff',
 	width:'90%',
-	height: '35dp',
+	height: 35,
 	keyboardType: Titanium.UI.KEYBOARD_DEFAULT,
     returnKeyType: Titanium.UI.RETURNKEY_DONE  ,
 	borderStyle:Titanium.UI.INPUT_BORDERSTYLE_ROUNDED
 },
 
 ".description" : {
-	color: "#ADADAD",
+	color: "#777777",
 	font:{
-		fontSize: '12dp'
+		fontSize: '14dp'
 	},
 	width : Ti.UI.SIZE,
 	height : Ti.UI.SIZE

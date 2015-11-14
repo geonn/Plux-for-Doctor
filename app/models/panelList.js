@@ -64,8 +64,7 @@ exports.definition = {
 
                 //var res = db.execute(sql);
                 var arr = [];
-                if (res.isValidRow()){
-                	console.log('wtf');
+                if (res.isValidRow()){ 
 					arr = {
 					   id: res.fieldByName('id'),
 						clinicCode: res.fieldByName('clinicCode'), 
@@ -243,13 +242,10 @@ exports.definition = {
                 collection.trigger('sync');
                 return listArr;
 			},
-			getCountClinicType : function(corp){
-				var collection = this;
-				if(corp != ""){
-					var sql = "SELECT clinicType, count(DISTINCT(id)) as total FROM " + collection.config.adapter.collection_name +" where panel=1 GROUP BY clinicType ";
-				}else{
+			getCountClinicType : function(){
+				var collection = this; 
                 var sql = "SELECT clinicType, count(DISTINCT(id)) as total FROM " + collection.config.adapter.collection_name +" GROUP BY clinicType ";
-               }
+               
 				 
                 db = Ti.Database.open(collection.config.adapter.db_name);
                 var res = db.execute(sql);
