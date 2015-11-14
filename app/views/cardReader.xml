@@ -5,8 +5,70 @@
 		<View class="wfill hsize" top="0">
 			<Label class="h5 wfill hsize themeColor padding" id="label_ida">Reader</Label>
 	 	</View> 
-	    <ScrollView id="contentView" class="wfill hfill vert"  top="40"  contentHeight="Ti.UI.SIZE" contentWidth="Ti.UI.FILL" />  
-    	<ScrollView id="bigView" zIndex="99" height="Ti.UI.SIZE" layout="vertical" backgroundColor="#ffffff" opacity="0.8" bottom="0" width="80%" visible="false" />
+	    <View  class="wfill hsize vert"> 
+	    	<Button  id="scanner" class="button" title="Launch Scanner"></Button>
+	    	<View class="gray-line" top="20" bottom="20" />
+	    	<Label text="Patient Information"  class="h4 wfill padding-left"  /> 	
+	    	<ScrollView class="vert hfill wfill" contentWidth="Ti.UI.FILL" contentHeight="Ti.UI.SIZE">
+	    		<View id="tvrName"  height="Ti.UI.SIZE" layout="vertical" selectedBackgroundColor="#ffffff" >
+					<View class="horz hsize wfill"  textAlign="right" >
+						<Label text="Patient Name" top="12" width="35%" class="h5 padding-left themeColor"  /> 
+						<View width="auto"  class="right-align hsize" >
+							<Label id="lblName" text="" class="wfill padding padding-right h6 right-align" top="12"  color="#000000"  />  
+						</View> 
+					</View>
+				</View> 
+				<View class="gray-line" /> 
 				
+				 <View id="tvruserIc"  height="Ti.UI.SIZE" layout="vertical" selectedBackgroundColor="#ffffff" >
+					<View class="horz hsize wfill "  textAlign="right" >
+						<Label text="Patient I/C" top="12" width="35%" class="h5 padding-left themeColor"  /> 
+						<View width="auto"  class="right-align hsize" >
+							<Label id="lblIc" text="" class="wfill padding padding-right h6 right-align" top="12"   color="#000000"   />  
+						</View> 
+					</View>
+				</View> 
+				<View class="gray-line" /> 
+				
+				<View id="tvrEmp"  height="Ti.UI.SIZE" layout="vertical" selectedBackgroundColor="#ffffff" >
+					<View class="horz hsize wfill "  textAlign="right" >
+						<Label text="Emp. No." top="12" width="35%" class="h5 padding-left themeColor"  /> 
+						<View width="auto"  class="right-align hsize" >
+							<Label id="lblEmp" text=""  class="wfill padding padding-right h6 right-align" top="12" color="#000000"   />  
+						</View> 
+					</View>
+				</View> 
+				<View class="gray-line" /> 
+				
+				<View id="tvrCorpName"  height="Ti.UI.SIZE" layout="vertical" selectedBackgroundColor="#ffffff" >
+					<View class="horz hsize wfill "  textAlign="right" >
+						<Label text="Corp. Name" top="12" width="35%" class="h5 padding-left themeColor"  /> 
+						<View width="auto"  class="right-align hsize" >
+							<Label id="lblCorpName" text="" class="wfill padding padding-right h6 right-align" top="12"  color="#000000"   />  
+						</View> 
+					</View>
+				</View> 
+				<View class="gray-line" /> 
+				<View id="tvrCorpName"  height="Ti.UI.SIZE" layout="vertical" selectedBackgroundColor="#ffffff" >
+					<View class="horz hsize wfill "  textAlign="right" >
+						<Label text="Visit Remark" top="12" width="35%" class="h5 padding-left themeColor"  /> 
+						<View width="auto"  class="right-align hsize" >
+							<TextArea  horizontalWrap="true" id="remark" class="left-align h5 font_dark_grey" width="100%"   hintText="Please fill in visit remark" value=""  borderColor="#ffffff" backgroundColor="#ffffff"  height="150"  suppressReturn="false" >
+								<KeyboardToolbar platform="ios">
+									<Toolbar>
+										<Items> 
+											<FlexSpace/>
+											<Button onClick="hideKeyboard" backgroundImage="/images/btn-down.png" textAlign="right" right="5" width="20" height="20"  />
+										</Items>
+									</Toolbar>
+								</KeyboardToolbar>
+							</TextArea>
+						</View> 
+					</View>
+				</View> 
+				<Button  id="saveBtn" class="button" title="Save" top="10" visible="false"></Button> 
+				
+	    	</ScrollView>
+	   	</View>
     </Window>
 </Alloy>

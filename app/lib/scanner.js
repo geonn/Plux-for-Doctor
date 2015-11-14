@@ -58,13 +58,44 @@ exports.openScanner = function(scanType) {
 	picker.setSuccessCallback(function(e) { 
 		// 1 - scan and assigned resources and finish goods
 		if(scanType == "1"){ 
+			var time1 = Ti.App.Properties.getString('time1'); 
+			var time2 = Ti.App.Properties.getString('time2'); 
 			var barcode = e.barcode;
 			var barRes = barcode.split('||');
-			Ti.App.Properties.setString('sales'+barRes[0], '1'); 
-			setTimeout(function(){ Ti.App.Properties.removeProperty('sales'+barRes[0]); }, 60000);
-			Ti.App.fireEvent('getScanMerchant');
+	
+			//Ti.App.Properties.setString('sales'+barRes[0], '1'); 
+			//console.log(barRes[15]);
+			console.log("time1 : "+time1); 
+			console.log("scan Time : "+barRes[13]);
+			if(time1 == ""){
+				Ti.App.Properties.setString('time1',barRes[13] ); 
+			}else{
+				if(time1 == barRes[13]){
+					alert("Invalid scan. Please scan again with PLUX Health app");
+				}else{
+					var param = {
+						name : barRes[0],
+						id : barRes[1],
+						icno : barRes[2],
+						memno : barRes[3],
+						empno : barRes[4],
+						relation : barRes[5],
+						corpcode : barRes[6],
+						corpname : barRes[7],
+						costcenter : barRes[8],
+						dept : barRes[9],
+						allergy : barRes[10],
+						isver : barRes[11],
+						verno : barRes[12],
+					}; 
+				
+					Ti.App.Properties.setString('time1', '');  
+					Ti.App.fireEvent('getCardData', {data : param});
+					closeScanner();
+				}
+			}
 		}
-		closeScanner();
+		//
 	});
 	picker.setCancelCallback(function(e) { 
 		closeScanner();

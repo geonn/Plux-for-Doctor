@@ -8,6 +8,7 @@ var menu_info = [
 	{mod: "clinic/listing", image: "/images/btn/clinic-locator.png"},
 	{mod: "ida", image: "/images/btn/ida.png"},
 	{mod: "hra", image: "/images/btn/health-rish-assessment.png"},
+	{mod: "settings", image: "/images/btn/settings.png"},
 ];
 
 function doLogout(){
@@ -109,8 +110,7 @@ function render_header_info(){
 	$.myInfo.add(title_view);
 }
 
-function refresh(){
-	console.log('refresh');
+function refresh(){ 
 	loading.start();
 	render_header_info();
 	render_menu_list();

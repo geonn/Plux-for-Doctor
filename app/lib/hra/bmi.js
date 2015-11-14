@@ -264,27 +264,5 @@ function resultPopUp(title, msg){
 	okButton.addEventListener("click", function(){
 		$.hraDetailsWin.remove(box);
 		$.hraDetailsWin.remove(mask);
-	});
-	saveButton.addEventListener("click", function(){
-		var weight = form[0].value;
-		var height = form[1].value;
-		
-		var result = weight / ((height/100) * (height/100));
-		var result = result.toFixed(2);
-		var currentDT = currentDateTime();
-		var datetime = currentDT.split(" ");
-		 
-		var lib_health = Alloy.createCollection('health'); 
-		lib_health.addHealthData({
-			date : datetime[0],
-			time : datetime[1],
-			field1 : weight,
-			field2 : height/100,
-			amount : result,
-			type : 1
-		});  
-		
-		saveButton.hide();
-		common.createAlert("BMI","BMI's record saved");
-	});
+	}); 
 };
