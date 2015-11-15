@@ -264,5 +264,10 @@ function resultPopUp(title, msg){
 	okButton.addEventListener("click", function(){
 		$.hraDetailsWin.remove(box);
 		$.hraDetailsWin.remove(mask);
+<<<<<<< Updated upstream
 	}); 
+=======
+	});
+	 
+>>>>>>> Stashed changes
 };
