@@ -15,7 +15,7 @@ function onload(responseText){
 		var arr = result.data; 
 		Ti.App.Properties.setString('u_id', arr.id);
    		Ti.App.Properties.setString('name', arr.name);
-   		
+   		Ti.App.Properties.setString('myClinics', arr.clinic_id);
    		var clinic_id = Ti.App.Properties.getString('clinic_id') || "";
    		if(clinic_id ==""){
    			//load clinic

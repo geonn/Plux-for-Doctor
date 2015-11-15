@@ -1,7 +1,7 @@
 <Alloy>
 	<Window   navTintColor="#CE1D1C" id="win" title="Settings" navBarHidden="false">
 		<ActionBar platform="android" displayHomeAsUp="true" onHomeIconItemSelected="closeWindow" />
-		    <View class="vert wfill hfill"> 
+		    <ScrollView class="vert hfill wfill" contentWidth="Ti.UI.FILL" contentHeight="Ti.UI.SIZE"> 
 				<View class=" wfill horz" height="95"  >
 						<ImageView borderRadius="10" width="80" height="80" left="10" top="10" image="/images/appicon.png" />
 						<View class="vert wfill hsize" left="10" top="10">
@@ -14,7 +14,7 @@
 				<View id="tvrName" top="10"  height="Ti.UI.SIZE"   backgroundColor="#ffffff" > 
 					<Label text="My Profile" top="15" bottom="15"  width="35%" left="5" class="h5 padding-left themeColor"  /> 
 					 
-					<Label id="lblPName" text="" class="wsize  h6 right-align" right="18"  color="#000000"  /> 
+					<Label id="lblPName" text="" class="wsize  h6 right-align" right="20"  color="#000000"  /> 
 					<ImageView  class="wsize" right="5" image="/images/btn-forward.png" width="15" />  
 				</View> 
 				
@@ -22,6 +22,14 @@
 					<Label text="Change Password" top="15" bottom="15" left="5" class="wfill h5 padding-left themeColor"  />  
 					<ImageView  class="wsize" right="5" image="/images/btn-forward.png" width="15" /> 
 				</View> 
-			</View> 
+				
+				<View id="tvrClinics" top="10"  height="Ti.UI.SIZE" backgroundColor="#ffffff" > 
+					<Label text="My Clinic / Panel" top="15" bottom="15" left="5" class="wfill h5 padding-left themeColor"  />  
+					 
+					<View class="wfill hsize vert" id='myClinic' top="40">
+						  
+					</View>
+				</View> 
+			</ScrollView> 
 	</Window>
 </Alloy>

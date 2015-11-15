@@ -93,8 +93,7 @@ function render_header_info(){
 			if (e.index === 1){
 				doLogout();
 			}
-		});
-		console.log("click logout");
+		}); 
 		dialog.show(); 
 	});
 	 

@@ -1,5 +1,6 @@
 var args = arguments[0] || {}; 
 var clinic_id = Ti.App.Properties.getString('clinic_id');
+var panelListModel = Alloy.createCollection('panelList'); 
 var u_id = Ti.App.Properties.getString('u_id');
 var name = Ti.App.Properties.getString('name');
 COMMON.construct($);  
@@ -10,7 +11,73 @@ function init(){
 }
 
 function showList(){  
+	loadClinic();
 	$.lblPName.text = name;
+}
+
+function loadClinic(){
+	clinic_id = Ti.App.Properties.getString('clinic_id');
+	var doctorPanel = Ti.App.Properties.getString('myClinics');
+	var myPanel = doctorPanel.split(",");
+	if(myPanel.length > 1){ 
+		for(var i=0; i< myPanel.length; i++){
+			 
+			var panelDetails = panelListModel.getDataByID(myPanel[i]);
+			var activeClinic = "#FFFFFF";
+			
+			if(myPanel[i] == clinic_id){
+				activeClinic = "#EBFFDE";
+			}
+			var clinicView = $.UI.create('View',{ 
+				height: 40, 
+				classes: ['wfill',  'vert'], 
+				id: panelDetails.id, 
+				backgroundColor: activeClinic
+			}); 
+			
+			var clinicLabel = $.UI.create('Label',{  
+				classes: ['wfill', 'h5','padding-left'],
+				height: 39, 
+				text: panelDetails.clinicName, 
+				id: panelDetails.id, 
+			}); 
+			 
+			var seperateView = $.UI.create('View',{  
+				classes: ['gray-line'], 
+			}); 
+			clinicView.add(clinicLabel);
+			clinicView.add(seperateView);
+			$.myClinic.add(clinicView);
+			
+			clinicView.addEventListener('click',selectedPanel);  
+		}
+	}
+}
+
+function selectedPanel(e){
+	var elbl = JSON.stringify(e.source); 
+	var res = JSON.parse(elbl);    
+	if(res.id == clinic_id){
+		return false;
+	}
+		 
+	var dialog = Ti.UI.createAlertDialog({
+		cancel: 1,
+		buttonNames: ['Cancel','Confirm'],
+		message: 'Are you sure want to change this as your active clinic?',
+		title: 'Change Active Clinic'
+	});
+	dialog.addEventListener('click', function(e){
+		if (e.index === e.source.cancel){ 
+		}
+		if (e.index === 1){
+			Ti.App.Properties.setString('clinic_id', res.id);
+			COMMON.removeAllChildren($.myClinic);
+			loadClinic();
+		}
+	});
+		
+	dialog.show();  
 }
 
 $.tvrPassword.addEventListener('click', function(){
