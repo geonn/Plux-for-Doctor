@@ -181,28 +181,33 @@ function downloadBrochure(adImage,content){
 				}else{
 					
 				var myModal = Ti.UI.createWindow({
-					title           : 'Read PDF',
-					backgroundColor : 'transparent',
+					title           : 'iDA',
+					backgroundColor : '#ffffff',
+					orientationModes : [ Ti.UI.LANDSCAPE_LEFT, Ti.UI.LANDSCAPE_RIGHT ],
 					fullscreen		:true
 				});
-				var leftBtn = Ti.UI.createButton({
-					title: "Close",
-					color: "#CE1D1C",
-					left: 15
+				var leftBtn = Ti.UI.createImageView({
+					image: "/images/cross.png",
+					width: 15,
+					top:10,
+					left: 10
 				});
 				var wrapperView    = Ti.UI.createView({
-					layout:"vertical",
-					height: Ti.UI.SIZE
+					//layout:"vertical",
+					height: Ti.UI.FILL
 				}); 
 				// Full screen
 				var topView = Ti.UI.createView({  // Also full screen
-				    backgroundColor : '#EEEEEE',
-				    top         : 0,
-				    height		: 40
+				    backgroundColor : 'transparent',
+				    width: 50,
+				    top     : 0,
+				    height  : 40
 				});
-				var containerView  = Ti.UI.createView({  // Set height appropriately
-				    height          : Ti.UI.SIZE,
+				var containerView  = Ti.UI.createScrollView({  // Set height appropriately
+				    height          : Ti.UI.FILL,
 				    width			: Ti.UI.FILL,
+				    contentWidth     : Ti.UI.FILL,
+					contentHeight   :Ti.UI.SIZE,
 				    backgroundColor : 'transparent'
 				});
 				var webview = Ti.UI.createWebView({ 
@@ -212,34 +217,12 @@ function downloadBrochure(adImage,content){
 				   backgroundColor:"#ffffff",
 				   bottom:10 
 				});
-				if(content.url != ""){
-					var rightBtn = Ti.UI.createButton({
-						title: "Details",
-						color: "#CE1D1C",
-						right: 15
-					});
-					rightBtn.addEventListener('click',function(rx){ 
-						var BackBtn = Ti.UI.createButton({
-							title: "Back",
-							color: "#CE1D1C",
-							right: 15
-						});
-						BackBtn.addEventListener('click',function(sa){
-								BackBtn.setVisible(false);
-								rightBtn.setVisible(true);
-								webview.setData(file.read()); 
-						});
-						topView.add(BackBtn);
-						rightBtn.setVisible(false);
-						BackBtn.setVisible(true);
-						webview.setUrl(content.url); 
-					});  
-					topView.add(rightBtn);
-				}
+			 
 				containerView.add(webview);
-				topView.add(leftBtn);
-				wrapperView.add(topView);
+				//topView.add(leftBtn);
+				
 				wrapperView.add(containerView); 
+				wrapperView.add(leftBtn);
 				myModal.add(wrapperView); 
 				myModal.open({
 					modal : true

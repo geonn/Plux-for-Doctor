@@ -1,11 +1,11 @@
 <Alloy>
 	<Window id="win" title="Home"  >
-		<View id="background" backgroundImage="/images/background1.jpg" class="wfill hfill"></View>
+		<View id="background" backgroundImage="/images/background1.jpg" width="640" height="1143"></View>
 		<ImageView id="logo" borderRadius="10" width="100" height="100" top="10" left="10" image="/images/appicon.png" zIndex="5" />
 		<View zIndex="4" id="myinfo_view" layout="horizontal" height="Ti.UI.SIZE" top="20" backgroundColor="#B3000000">
 			<View layout="horizontal" left="110" width="Ti.UI.FILL" top="10" bottom="10" height="60" id="myInfo" />
 		</View>
-        <ScrollView zIndex="3" id="menu_scrollview" class="wfill hfill horz" contentHeight="Ti.UI.SIZE" contentWidth="Ti.UI.FILL">
+        <ScrollView zIndex="3" id="menu_scrollview" class="hfill horz" contentHeight="Ti.UI.SIZE" contentWidth="Ti.UI.FILL">
         	<View height="150" class="wfill"></View>
 		</ScrollView>
     </Window>

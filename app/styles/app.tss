@@ -45,7 +45,7 @@ overrode the settings with other TSS, XML, or JS settings:
     fullscreen: true,
 },
 
-'TextField': {
+'TextField[platform=ios formFactor=handheld]': {
     height: 40,
 	borderColor: "#dfe0e4",
 	borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
@@ -56,6 +56,29 @@ overrode the settings with other TSS, XML, or JS settings:
 	left: 10,
 	right: 10,
 	top: 10,
+},
+
+'TextField[platform=android]': {
+    height: 40,
+	borderColor: "#dfe0e4",
+	borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
+	verticalAlign: Titanium.UI.TEXT_VERTICAL_ALIGNMENT_CENTER,
+	textAlign: Titanium.UI.TEXT_ALIGNMENT_LEFT,
+	backgroundColor: "#ffffff",
+	width: Titanium.UI.FILL,
+	left: 10,
+	right: 10,
+	top: 10,
+},
+
+// iPad and iPad mini
+"TextField[platform=ios formFactor=tablet]": { 
+    height: 60,
+    width : '50%', 
+	borderColor: "#dfe0e4",
+	borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
+	//verticalAlign: Titanium.UI.TEXT_VERTICAL_ALIGNMENT_CENTER, 
+	backgroundColor: "#ffffff",  
 },
 
 "ImageView":{
@@ -83,8 +106,9 @@ overrode the settings with other TSS, XML, or JS settings:
 		fontSize: 14
 	}
 }
+ 
 
-'.button': {
+'.button[platform=android]': {
 	height: 40,
 	borderColor: "#C6C8CA",
 	textAlign: Titanium.UI.TEXT_ALIGNMENT_CENTER,
@@ -96,8 +120,26 @@ overrode the settings with other TSS, XML, or JS settings:
 	right: 10,
 	top: 10,
 },
-
-
+'.button[platform=ios formFactor=handheld]': {
+	height: 40,
+	borderColor: "#C6C8CA",
+	textAlign: Titanium.UI.TEXT_ALIGNMENT_CENTER,
+	backgroundColor: "#CE1D1C",
+	borderRadius: 6,
+	color: "#ffffff",
+	width: Titanium.UI.FILL,
+	left: 10,
+	right: 10,
+	top: 10,
+},
+'.button[platform=ios formFactor=tablet]': {
+	height: 60,
+	borderColor: "#C6C8CA",
+	backgroundColor: "#CE1D1C",
+	borderRadius: 6,
+	color: "#ffffff",
+	width: "50%"
+},
 
 '.vert':{
 	layout: "vertical"

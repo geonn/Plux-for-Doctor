@@ -36,9 +36,7 @@ function render_background(){
 	var today = new Date();
 	var hours = today.getHours();
 	if(typeof (bg[0].img_path) != "undefined"){
-		var bg = home_background.getData({time: hours});
-		console.log(bg[0].img_path);
-		console.log(typeof (bg[0].img_path));
+		var bg = home_background.getData({time: hours}); 
 	}
 	//$.background.setBackgroundImage(bg[0].img_path);
 }
@@ -49,6 +47,12 @@ function render_menu_list(){
 	//get screen width to calculate button width
 	var pWidth = Titanium.Platform.displayCaps.platformWidth;
 	var button_width = Math.floor((pWidth - 30) / 2);
+	$.menu_scrollview.width = "100%";
+	if (Ti.Platform.osname == 'ipad'){
+		button_width = Math.floor((pWidth - 30) / 4);
+		$.menu_scrollview.width = "80%";
+	};
+
 	for (var i=0; i < menu_info.length; i++) {
 		console.log(menu_info[i].mod);
 		var imageView_menu = $.UI.create("ImageView", {

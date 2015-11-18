@@ -2,15 +2,15 @@ var args = arguments[0] || {};
 var patient_recordsModel = Alloy.createCollection('patient_records'); 
 var details;
 COMMON.construct($); 
-init();
+init(); 
 
-
-function init(){
+function init(){  
+	details = patient_recordsModel.getHistoryList(""); 
  	showList();
 }
 
 function showList(){ 
-	details = patient_recordsModel.getHistoryList(); 
+	
 	var data=[]; 
 	$.recordTable.setData(data);
 	var counter = 0; 
@@ -102,6 +102,36 @@ function showList(){
 function viewDetails(e){ 
 	Alloy.Globals.Navigator.open('patient_details', {record_id:e.source});
 }
+
+
+/***SEARCH FUNCTION***/
+var searchResult = function(){ 
+	$.searchBar.blur(); 
+	//COMMON.showLoading();
+	var str = $.searchBar.getValue(); 
+	if(str != ""){
+		details = patient_recordsModel.getHistoryList(""); 
+	}else{ 
+		details = patient_recordsModel.getHistoryList(str); 
+	}	
+	createSchoolList(); 
+};
+
+$.searchBar.addEventListener("return", searchResult);
+
+$.searchBar.addEventListener('focus', function f(e){
+	$.searchBar.removeEventListener('focus', f);
+});
+
+$.searchBar.addEventListener('cancel', function(e){ 
+	//listing = educationModel.getSchoolList("all",educationType,""); 
+//	createSchoolList(); 
+	$.searchBar.blur();
+});
+
+$.searchBar.addEventListener('blur', function(e){
+	
+});
 
 function closeWindow(){
 	$.win.close();
