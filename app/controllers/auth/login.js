@@ -13,6 +13,7 @@ function onload(responseText){
 		var arr = result.data;
 		console.log(arr);
 		Ti.App.Properties.setString('clinic_id', arr.clinic_id);
+		Ti.App.Properties.setString('specialty', arr.specialty);
    		Ti.App.Properties.setString('u_id', arr.id);
    		Ti.App.Properties.setString('name', arr.name);
    		

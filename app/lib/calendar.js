@@ -1,8 +1,9 @@
 // Taking Screen Width
 var screenWidth = 322;
 var needToChangeSize = false;
-
+var row = 1;
 var screenWidthActual = Ti.Platform.displayCaps.platformWidth;
+var open = true;
 
 if (Ti.Platform.osname === 'android') {
 	if (screenWidthActual >= 641) {
@@ -11,16 +12,23 @@ if (Ti.Platform.osname === 'android') {
 	}
 }
 
-var win, backButton, prevMonth, nextMonth, monthTitle, toolBar, toolBarTitle, toolBarDays, nameOfMonth, setDate, prevCalendarView = null, nextCalendarView = null, thisCalendarView, slideNext, slideReset, slidePrev;
+var win, innerBox, backButton, prevMonth, nextMonth, monthTitle, toolBar, toolBarTitle, toolBarDays, nameOfMonth, setDate, prevCalendarView = null, nextCalendarView = null, thisCalendarView, slideNext, slideReset, slidePrev;
 
 function init(){
 	// Main Window of the Month View.
 	win = Ti.UI.createView({
-		backgroundColor : 'yellow',
 		height: Ti.UI.SIZE,
+		layout: "vertical",
 		top:0 
 	});
-	console.log(win);
+	
+	innerBox = Ti.UI.createScrollView({
+		contentHeight: Ti.UI.SIZE,
+		contentWidth: Ti.UI.FILL,
+		width: Ti.UI.FILL,
+		height: Ti.UI.SIZE
+	});
+
 	// Button at the buttom side
 	backButton = Ti.UI.createButton({
 		bottom : '20dp',
@@ -30,30 +38,40 @@ function init(){
 	
 	// Previous Button - Tool Bar
 	prevMonth = Ti.UI.createButton({
-	left : '15dp',
 	width : Ti.UI.SIZE,
-	height : '24dp',
-	title : '<'
+	height : 50,
+	title : '<',
+	left: 10,
+	right: 10
 	});
 	
 	// Next Button - Tool Bar
 	nextMonth = Ti.UI.createButton({
-	right : '15dp',
 	width : Ti.UI.SIZE,
-	height : '24dp',
-	title : '>'
+	height : 50,
+	title : '>',
+	left: 10,
+	right: 10
+	});
+	
+	// Next Button - Tool Bar
+	expand = Ti.UI.createButton({
+		backgroundColor: "yellow",
+		width : 'auto',
+		height : 50,
+		textAlign: "center",
+		title : 'Expand'
 	});
 	
 	// Month Title - Tool Bar
 	monthTitle = Ti.UI.createLabel({
-	width : '200dp',
-	height : '24dp',
+	width : Ti.UI.SIZE,
+	height : 50,
 	textAlign : 'center',
 	color : '#3a4756',
-	font : {
-	fontSize : 16,
-	
-	}
+		font : {
+			fontSize : 16,
+		}
 	});
 	
 	// Tool Bar
@@ -68,13 +86,22 @@ function init(){
 	// Tool Bar - View which contain Title Prev. & Next Button
 	toolBarTitle = Ti.UI.createView({
 	top : '3dp',
-	width : '322dp',
-	height : '24dp'
+	width : 322,
+	height : 50,
+	layout: 'horizontal'
+	});
+	
+	var div_line = Ti.UI.createView({
+		backgroundColor: "#d2d3ce",
+		width: 1,
+		height: 50
 	});
 	
 	toolBarTitle.add(prevMonth);
 	toolBarTitle.add(monthTitle);
 	toolBarTitle.add(nextMonth);
+	toolBarTitle.add(div_line);
+	toolBarTitle.add(expand);
 	
 	// Tool Bar - Day's
 	toolBarDays = Ti.UI.createView({
@@ -253,6 +280,10 @@ function init(){
 	
 	slidePrev.left = screenWidth;
 	
+	expand.addEventListener("click", function(){
+		calendar_trigger(row);
+	});
+	
 	// Next Month Click Event
 	nextMonth.addEventListener('click', function() {
 	if (b == 11) {
@@ -281,7 +312,7 @@ function init(){
 	}
 	monthTitle.text = monthName(b) + ' ' + a;
 	nextCalendarView.left = screenWidth + 'dp';
-	win.add(nextCalendarView);
+	innerBox.add(nextCalendarView);
 	}, 500);
 	});
 	
@@ -311,12 +342,36 @@ function init(){
 	}
 	monthTitle.text = monthName(b) + ' ' + a;
 	prevCalendarView.left = (screenWidth * -1) + 'dp';
-	win.add(prevCalendarView);
+	innerBox.add(prevCalendarView);
 	}, 500);
 	});
 }
 
-
+function calendar_trigger(row_val){
+	if(open){
+		var top = (row_val * 44);
+		console.log(top);
+		innerBox.setHeight(44);
+		innerBox.scrollTo(0, top);
+		open = false;
+		console.log(row_val+" closing");
+	}else{
+		var top = 0;
+		/*
+		var a = Ti.UI.createAnimation({
+			height: 220,
+		    duration : 500,
+		  });
+		innerBox.animate(a);
+		a.addEventListener("complete", function(){
+			open = true;
+			innerBox.scrollTo(0, top);
+		});*/
+		open = true;
+		innerBox.setHeight(220);
+		console.log(thisCalendarView.selected_row+" opening");
+	}
+}
 
 
 // Function which create day view template
@@ -327,6 +382,7 @@ dayView = function(e) {
 	height : '44dp',
 	backgroundColor : '#e5ebee',
 	text : e.day,
+	row_no: e.row_no,
 	textAlign : 'center',
 	color : e.color,
 	font : {
@@ -383,33 +439,36 @@ monthName = function(e) {
 var calView = function(a, b, c) {
 	var nameOfMonth = monthName(b);
 	
-	//create main calendar view
-	var mainView = Ti.UI.createView({
-	backgroundColor: "red",
-	layout : 'horizontal',
-	width : '322dp',
-	height : '220dp',
-	top : '50dp'
-	});
-	
 	//set the time
 	var daysInMonth = 32 - new Date(a, b, 32).getDate();
 	var dayOfMonth = new Date(a, b, c).getDate();
 	var dayOfWeek = new Date(a, b, 1).getDay();
 	var daysInLastMonth = 32 - new Date(a, b - 1, 32).getDate();
 	var daysInNextMonth = (new Date(a, b, daysInMonth).getDay()) - 6;
-	
+	console.log(nameOfMonth+" "+dayOfWeek+" "+dayOfMonth);
+	//create main calendar view
+	var mainView = Ti.UI.createView({
+		layout : 'horizontal',
+		contentHeight: Ti.UI.SIZE,
+		contentWidth: Ti.UI.FILL,
+		width : '322dp',
+		height : '220dp',
+		selected_row: Math.floor((dayOfWeek + dayOfMonth) / 8)
+	});
+	row =  Math.floor((dayOfWeek + dayOfMonth) / 8);
 	//set initial day number
 	var dayNumber = daysInLastMonth - dayOfWeek + 1;
-	
+
 	//get last month's days
 	for ( i = 0; i < dayOfWeek; i++) {
 	mainView.add(new dayView({
 	day : dayNumber,
 	color : '#8e959f',
 	current : 'no',
+	row_no: Math.floor((dayOfWeek + dayNumber) / 8),
 	dayOfMonth : ''
 	}));
+	console.log(dayNumber);
 	dayNumber++;
 	};
 	
@@ -421,6 +480,7 @@ var calView = function(a, b, c) {
 	var newDay = new dayView({
 	day : dayNumber,
 	color : '#3a4756',
+	row_no: Math.floor((dayOfWeek + dayNumber) / 8),
 	current : 'yes',
 	dayOfMonth : dayOfMonth
 	});
@@ -444,6 +504,7 @@ var calView = function(a, b, c) {
 	day : dayNumber,
 	color : '#8e959f',
 	current : 'no',
+	row_no: Math.floor((dayOfWeek + dayNumber) / 8),
 	dayOfMonth : ''
 	}));
 	dayNumber++;
@@ -471,7 +532,8 @@ var calView = function(a, b, c) {
 		}
 		// set window title with day selected, for testing purposes only
 		backButton.title = nameOfMonth + ' ' + e.source.text + ', ' + a +"("+a+"-"+theMonth+"-"+theday+")";
-		
+		row = e.source.row_no;
+		//calendar_trigger(e.source.row_no);
 		Ti.App.fireEvent("appointment:refresh", {selected_date: a+"-"+theMonth+"-"+theday});
 		// set characteristic of the day selected
 		if (e.source.text == dayOfMonth) {
@@ -496,8 +558,9 @@ exports.getCalendar = function(){
 	console.log('getCalendar oo');
 	init();
 	win.add(toolBar);
-	win.add(thisCalendarView);
-	win.add(nextCalendarView);
-	win.add(prevCalendarView);
+	innerBox.add(thisCalendarView);
+	innerBox.add(nextCalendarView);
+	innerBox.add(prevCalendarView);
+	win.add(innerBox);
 	return win;
 };

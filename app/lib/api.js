@@ -8,6 +8,7 @@ var KEY   = '06b53047cf294f7207789ff5293ad2dc';
 
 var doLoginUrl = "http://"+API_DOMAIN+"/api/pluxDoctorLogin?user="+USER+"&key="+KEY;
 var doSignUpUrl = "http://"+API_DOMAIN+"/api/pluxDoctorSignup?user="+USER+"&key="+KEY;
+var addAppointmentUrl = "http://"+API_DOMAIN+"/api/addAppointment?user="+USER+"&key="+KEY; 
 
 //API when app loading phase
 var getAppHomepageBackgroundUrl            = "http://"+API_DOMAIN+"/api/getAppHomepageBackground?user="+USER+"&key="+KEY;
