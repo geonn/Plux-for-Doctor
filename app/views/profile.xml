@@ -1,0 +1,113 @@
+<Alloy>
+	<Window   navTintColor="#CE1D1C" id="win" title="My Profile"  navBarHidden="false">
+		<ActionBar platform="android" displayHomeAsUp="true" onHomeIconItemSelected="closeWindow" />
+		<View layout="vertical" id="loadingBar" height="120" width="120" borderRadius="15" backgroundColor="#2E2E2E" >
+	        	<ActivityIndicator  id="activityIndicator" />
+	        	<Label id="loading" top="5" text="Loading" color="#ffffff" />
+	    </View>
+		<View class="wfill hsize" top="0">
+			<Label class="h4 wfill hsize  padding bold" id="label_ida">My Biodata</Label>
+	 	</View> 
+	 	 <ScrollView class="vert hfill wfill" backgroundColor="#FFFFFF" contentWidth="Ti.UI.FILL" contentHeight="Ti.UI.SIZE" top="35">
+	 	 	 
+	    		<View id="tvrName"  height="Ti.UI.SIZE" layout="vertical" selectedBackgroundColor="#ffffff" >
+					<View class="horz hsize wfill"  textAlign="right" >
+						<Label text="Name" top="12"  class="h5 wfill padding-left themeColor"  /> 
+						<View width="auto"  class="left-align hsize" >
+							<TextField class="h5" borderColor="#ffffff" backgroundColor="#ffffff" id="name" top="5" bottom='5' right='5'  hintText="Doctor's Name" /> 
+						</View> 
+					</View>
+				</View> 
+				<View class="gray-line" /> 
+				
+				 <View id="tvrCode"  height="Ti.UI.SIZE" layout="vertical" selectedBackgroundColor="#ffffff" >
+					<View class="horz hsize wfill "  textAlign="right" >
+						<Label text="Doctor Code" top="12"  class="h5 wfill padding-left themeColor"  /> 
+						<View width="auto"  class="left-align hsize" >
+							<TextField class="h5" borderColor="#ffffff" backgroundColor="#ffffff" id="code" top="5" bottom='5' right='5'  hintText="Doctor's Name" /> 
+						</View> 
+					</View>
+				</View> 
+				<View class="gray-line" /> 
+				
+				<View id="tvrEmail"  height="Ti.UI.SIZE" layout="vertical" selectedBackgroundColor="#ffffff" >
+					<View class="horz hsize wfill "  textAlign="right" >
+						<Label text="Email" top="12" class="h5 wfill padding-left themeColor"  /> 
+						<View width="auto"  class="left-align hsize" >
+							<TextField class="h5" borderColor="#ffffff" backgroundColor="#ffffff" id="email" top="5" bottom='5' right='5'  hintText="Doctor's Email" /> 
+						</View> 
+					</View>
+				</View> 
+				<View class="gray-line" /> 
+				
+				<View id="tvrMobile"  height="Ti.UI.SIZE" layout="vertical" selectedBackgroundColor="#ffffff" >
+					<View class="horz hsize wfill "  textAlign="right" >
+						<Label text="Mobile No." top="12"  class="h5 wfill padding-left themeColor"  /> 
+						<View width="auto"  class="left-align hsize" >
+							<TextField class="h5" borderColor="#ffffff" backgroundColor="#ffffff" id="mobile" top="5" bottom='5' right='5'  textAlign="left" hintText="Doctor's Mobile" /> 
+						</View> 
+					</View>
+				</View> 
+				<View class="gray-line" /> 
+				 <View id="tvrQualification"  height="Ti.UI.SIZE" layout="vertical" selectedBackgroundColor="#ffffff" >
+					<View class="horz hsize wfill "  textAlign="right" >
+						<Label text="Qualification" top="12"  class="h5 wfill padding-left themeColor"  /> 
+						<View width="auto"  class="left-align hsize padding" >
+							 <TextArea  horizontalWrap="true" id="qualification" class=" left-align h5 wfill" color="#000000"  hintText="Please fill in doctor's qualification" value="" top="0"  borderColor="#ffffff" backgroundColor="#ffffff"  height="100"  suppressReturn="false" >
+								<KeyboardToolbar platform="ios">
+									<Toolbar>
+										<Items> 
+											<FlexSpace/>
+											<Button onClick="hideKeyboard" backgroundImage="/images/btn-down.png" textAlign="left" right="5" width="20" height="20"  />
+										</Items>
+									</Toolbar>
+								</KeyboardToolbar>
+							</TextArea>
+						</View> 
+					</View>
+				</View> 
+				<View class="gray-line" /> 
+				
+				 <View id="tvrSpecialty"  height="Ti.UI.SIZE" layout="vertical" selectedBackgroundColor="#ffffff" >
+					<View class="horz hsize wfill "  textAlign="right" >
+						<Label text="Specialty" top="12" class="h5 wfill padding-left themeColor"  /> 
+						<View width="auto"  class="right-align hsize padding" >
+							<TextArea  horizontalWrap="true" id="specialty" class=" left-align h5 wfill"   hintText="Please fill in doctor's specialty" value="" top="0" color="#000000" borderColor="#ffffff" backgroundColor="#ffffff"  height="100"  suppressReturn="false" >
+								<KeyboardToolbar platform="ios">
+									<Toolbar>
+										<Items> 
+											<FlexSpace/>
+											<Button onClick="hideKeyboard" backgroundImage="/images/btn-down.png" textAlign="left" right="5" width="20" height="20"  />
+										</Items>
+									</Toolbar>
+								</KeyboardToolbar>
+							</TextArea>
+						</View> 
+					</View>
+				</View> 
+				
+				<View class="gray-line" /> 
+				<View id="tvrIntroduction"  height="Ti.UI.SIZE" layout="vertical" selectedBackgroundColor="#ffffff" >
+					<View class="horz hsize wfill "  textAlign="right" >
+						<Label text="Introduction" top="12"  class="h5 wfill padding-left themeColor"  /> 
+						<View width="auto"  class="right-align hsize padding" >
+							<TextArea  horizontalWrap="true" id="introduction" class=" left-align h5   wfill" color="#000000"  hintText="Please fill in doctor's introduction" value="" top="0"  borderColor="#ffffff" backgroundColor="#ffffff"  height="100"  suppressReturn="false" >
+								<KeyboardToolbar platform="ios">
+									<Toolbar>
+										<Items> 
+											<FlexSpace/>
+											<Button onClick="hideKeyboard" backgroundImage="/images/btn-down.png" textAlign="left" right="5" width="20" height="20"  />
+										</Items>
+									</Toolbar>
+								</KeyboardToolbar>
+							</TextArea>
+						</View> 
+					</View>
+				</View> 
+				<Button  id="saveBtn" class="button" title="Save" top="10"></Button> 
+				
+	    	</ScrollView>
+	    <!--<ScrollView id="contentView" class="wfill hfill vert"  top="40"  contentHeight="Ti.UI.SIZE" contentWidth="Ti.UI.FILL" />  
+    	-->
+    </Window>
+</Alloy>

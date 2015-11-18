@@ -1,14 +1,21 @@
 var args = arguments[0] || {};
 var loading = Alloy.createController("loading");
-
+var myClinic = Ti.App.Properties.getString('clinic_id');
+console.log("HOME CLINIC => "+myClinic);
 var menu_info = [
-	{mod: "ida", image: "/images/btn/ida.png"},
+	{mod: "cardReader", image: "/images/btn/e-card-reader.png"},
+	{mod: "patient", image: "/images/btn/patient-record.png"}, 
 	{mod: "appointment", image: "/images/btn/appointment.png"},
+	{mod: "clinic/listing", image: "/images/btn/clinic-locator.png"},
+	{mod: "ida", image: "/images/btn/ida.png"},
+	{mod: "hra", image: "/images/btn/health-rish-assessment.png"},
+	{mod: "settings", image: "/images/btn/settings.png"},
 ];
 
 function doLogout(){
 	Ti.App.Properties.removeProperty('u_id');
 	Ti.App.Properties.removeProperty('name');
+	Ti.App.Properties.removeProperty('clinic_id');
 	Alloy.Globals.Navigator.navGroup.close();
 	var win = Alloy.createController("auth/login").getView();
 	win.open();
@@ -86,8 +93,7 @@ function render_header_info(){
 			if (e.index === 1){
 				doLogout();
 			}
-		});
-		console.log("click logout");
+		}); 
 		dialog.show(); 
 	});
 	 
@@ -105,8 +111,7 @@ function render_header_info(){
 	$.myInfo.add(title_view);
 }
 
-function refresh(){
-	console.log('refresh');
+function refresh(){ 
 	loading.start();
 	render_header_info();
 	render_menu_list();

@@ -11,17 +11,20 @@ var doSignUpUrl = "http://"+API_DOMAIN+"/api/pluxDoctorSignup?user="+USER+"&key=
 var addAppointmentUrl = "http://"+API_DOMAIN+"/api/addAppointment?user="+USER+"&key="+KEY; 
 
 //API when app loading phase
-var getAppHomepageBackgroundUrl            = "http://"+API_DOMAIN+"/api/getAppHomepageBackground?user="+USER+"&key="+KEY;
+var getAppHomepageBackgroundUrl = "http://"+API_DOMAIN+"/api/getAppHomepageBackground?user="+USER+"&key="+KEY;
 var getDoctorListUrl            = "http://"+API_DOMAIN+"/api/getDoctorList?user="+USER+"&key="+KEY;
 var getAppointmentByClinic 		= "http://"+API_DOMAIN+"/api/getAppointmentByClinic?user="+USER+"&key="+KEY;
 var getIdaListUrl               = "http://"+API_DOMAIN+"/api/getIda?user="+USER+"&key="+KEY;
-
+var clinicListUrl 				= "http://"+API_DOMAIN+"/api/getClinicLocator?user="+USER+"&key="+KEY; 
+var changePasswordUrl 			= "http://"+API_DOMAIN+"/api/doctorChangePassword?user="+USER+"&key="+KEY; 
+var updateDoctorProfileUrl 		= "http://"+API_DOMAIN+"/api/updateDoctorProfile?user="+USER+"&key="+KEY; 
 //API that call in sequence 
 var APILoadingList = [
 	{url: getAppHomepageBackgroundUrl, model: "background", checkId: "1"},
 	{url: getDoctorListUrl, model: "doctor", checkId: "2"},
 	{url: getIdaListUrl, model: "ida", checkId: "3"},
 	{url: getAppointmentByClinic, model: "appointment", checkId: "4"},
+	{url: clinicListUrl, model: "panelList", checkId: "5"},
 ];
 
 /*********************
@@ -42,11 +45,8 @@ exports.callByPost = function(e, onload, onerror){
 			onload && onload(this.responseText); 
 		};
 		
-		_result.onerror = function(ex) { 
-			console.log("onerror "+url);
-			console.log(API);
-			API.callByPost(e, onload, onerror);
-			console.log('a');
+		_result.onerror = function(ex) {  
+			API.callByPost(e, onload, onerror); 
 		};
 	}
 };

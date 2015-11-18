@@ -54,6 +54,32 @@ exports.definition = {
                 collection.trigger('sync');
                 return arr;
 			},
+			getById : function(id){
+				var collection = this; 
+                db = Ti.Database.open(collection.config.adapter.db_name);
+                var sql = "SELECT * FROM " + collection.config.adapter.collection_name + " WHERE id='"+id+"'";
+               
+                var res = db.execute(sql);
+                var arr = []; 
+               
+                if (res.isValidRow()){
+					arr = {
+					    id: res.fieldByName('id'), 
+					    name: res.fieldByName('name'),
+					    dr_code: res.fieldByName('dr_code'),
+					    email: res.fieldByName('email'),
+					    mobile: res.fieldByName('mobile'), 
+					    specialty: res.fieldByName('specialty'),
+					    qualification: res.fieldByName('qualification'),
+					    introduction: res.fieldByName('introduction'),
+				  		updated: res.fieldByName('updated'),
+					  };
+				}  
+				res.close();
+                db.close();
+                collection.trigger('sync');
+                return arr;
+			},
 			saveArray : function(arr){
 				console.log("model doctor - save array");
 				var collection = this;

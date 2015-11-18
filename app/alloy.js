@@ -14,7 +14,7 @@ var _ = require('underscore')._;
 var API = require('api');
 var CAL = require('calendar');
 //var PUSH = require('push'); 
-var Common = require('common'); 
+var Common = COMMON = common = require('common'); 
 var DBVersionControl = require('DBVersionControl');
 
 DBVersionControl.checkAndUpdate();
@@ -73,6 +73,15 @@ function convertToDBDateFormat(datetime){
 	return newFormat;
 }
 
+function ucwords(str) { 
+  	str = str.toLowerCase();
+	return str.replace(/(^([a-zA-Z\p{M}]))|([ -][a-zA-Z\p{M}])/g,
+        function($1){
+            return $1.toUpperCase();
+	});
+}
+
+
 function children(key, e){
 	if(eval("e."+key.name+"") != key.value){
 		for (var i=0; i < e.children.length; i++) {
@@ -93,6 +102,42 @@ function children(key, e){
     }else{
 		return e;
     }
+}
+
+
+function monthFormat(datetime){
+	
+	var monthNames = [
+        "Jan", "Feb", "Mar",
+        "April", "May", "June", "Jul",
+        "Aug", "Sep", "Oct",
+        "Nov", "Dec"
+    ];
+    
+	var timeStamp = datetime.split(" ");  
+	var newFormat;
+	var ampm = "am";
+	var date = timeStamp[0].split("-");   
+    if(date[1] == "08"){
+		date[1] = "8";
+	}
+	if(date[1] == "09"){
+		date[1] = "9";
+	}
+    month = parseInt(date[1]) -1; 
+	if(timeStamp.length == 1){
+		newFormat =  date[2]+" "+ monthNames[month]+" "+ date[0];
+	}else{
+		var time = timeStamp[1].split(":");  
+		if(time[0] > 12){
+			ampm = "pm";
+			time[0] = time[0] - 12;
+		}
+		
+		newFormat = date[2]+" "+ monthNames[month]+" "+ date[0] + ", "+ time[0]+":"+time[1]+ " "+ ampm;
+	}
+	
+	return newFormat;
 }
 
 function timeFormat(datetime){
