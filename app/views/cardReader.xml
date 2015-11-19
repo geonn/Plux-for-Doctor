@@ -3,10 +3,10 @@
 		<ActionBar platform="android" displayHomeAsUp="true" onHomeIconItemSelected="closeWindow" />
 		 
 		<View class="wfill hsize" top="0">
-			<Label class="h5 wfill hsize themeColor padding" id="label_ida">Reader</Label>
+			<Label class="h5 wfill hsize themeColor padding" id="label_ida">QR Reader</Label>
 	 	</View> 
 	    <View  class="wfill hsize vert"> 
-	    	<Button  id="scanner" class="button" title="Launch Scanner"></Button>
+	    	<Button  id="scanner" class="button" height="60" top="30" width="60%" title="Re-Scan"></Button>
 	    	<View class="gray-line" top="15" bottom="5" />
 	    	<Label text="Patient Information"  class="h4 wfill padding-left" bottom='5' /> 	
 	    	<ScrollView class="vert hfill wfill" contentWidth="Ti.UI.FILL" backgroundColor="#ffffff" contentHeight="Ti.UI.SIZE">

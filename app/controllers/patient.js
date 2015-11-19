@@ -2,15 +2,15 @@ var args = arguments[0] || {};
 var patient_recordsModel = Alloy.createCollection('patient_records'); 
 var details;
 COMMON.construct($); 
-init();
+init(); 
 
-
-function init(){
+function init(){  
+	details = patient_recordsModel.getHistoryList(""); 
  	showList();
 }
 
 function showList(){ 
-	details = patient_recordsModel.getHistoryList(); 
+	
 	var data=[]; 
 	$.recordTable.setData(data);
 	var counter = 0; 
@@ -31,15 +31,14 @@ function showList(){
 		 
 			var contentView = $.UI.create('View',{
 				classes: ['vert','hsize','wfill'], 
-				source: entry.id, 
-				title: entry.name,
+				source: entry.id,  
 				top: 10,
 				bottom: 10
 			});
 			  
 			var clinicLbl = $.UI.create('Label',{
-				classes : ['themeColor', 'h5', 'bold'],
-				text:entry.memno || "",
+				classes : ['themeColor', 'h5'],
+				text:entry.name +" ("+entry.memno  + ")",
 				font:{fontSize:14},
 				source: entry.id, 
 				title: entry.memno, 
@@ -49,7 +48,6 @@ function showList(){
 				height:Ti.UI.SIZE
 			}); 
 			contentView.add(clinicLbl);
-			
 			
 			 var msgLbl =  $.UI.create('Label',{ 
 				classes: ['h6', 'hsize'],
@@ -102,6 +100,36 @@ function showList(){
 function viewDetails(e){ 
 	Alloy.Globals.Navigator.open('patient_details', {record_id:e.source});
 }
+
+
+/***SEARCH FUNCTION***/
+var searchResult = function(){ 
+	$.searchBar.blur(); 
+	//COMMON.showLoading();
+	var str = $.searchBar.getValue(); 
+	if(str != ""){
+		details = patient_recordsModel.getHistoryList(str); 
+	}else{ 
+		details = patient_recordsModel.getHistoryList(""); 
+	}	
+	showList(); 
+};
+
+$.searchBar.addEventListener("return", searchResult);
+
+$.searchBar.addEventListener('focus', function f(e){
+	$.searchBar.removeEventListener('focus', f);
+});
+
+$.searchBar.addEventListener('cancel', function(e){ 
+	//listing = educationModel.getSchoolList("all",educationType,""); 
+//	createSchoolList(); 
+	$.searchBar.blur();
+});
+
+$.searchBar.addEventListener('blur', function(e){
+	
+});
 
 function closeWindow(){
 	$.win.close();

@@ -6,20 +6,17 @@ var details;
 common.construct($);
 common.showLoading();
 
-function doRefresh(){
-	API.loadPanelList({clinicType:""});
+function goMyPanel(){
+	Alloy.Globals.Navigator.open("clinic/myClinic"); 
 }
 
-function listing(){
-	 
+function listing(){ 
 	var data=[];
-	var arr = details;
-   	  
-   	var counter = 0;
-   		
+	var arr = details; 
+   	var counter = 0; 
    		if(arr.length < 1){
 			var noRecord = Ti.UI.createLabel({ 
-			    text: "No record found", 
+			    text: "No record founds", 
 			    color: '#CE1D1C', 
 			    textAlign: 'center',
 			    font:{fontSize:14,fontStyle:'italic'},

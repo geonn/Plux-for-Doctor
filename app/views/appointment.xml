@@ -1,16 +1,57 @@
 <Alloy>
 	<Window  navTintColor="#CE1D1C"  id="win" title="Appointment" navBarHidden="false">
 	<ActionBar platform="android" displayHomeAsUp="true" onHomeIconItemSelected="closeWindow" />
-	<ScrollView class="wfill hfill vert" contentHeight="Ti.UI.SIZE" contentWidth="Ti.UI.FILL">
+	<ScrollView id="main" class="wfill hfill vert" contentHeight="Ti.UI.SIZE" contentWidth="Ti.UI.FILL">
 		<ScrollView class="wfill hsize bg_light_grey" contentWidth="Ti.UI.FILL" contentHeight="Ti.UI.SIZE" top="0">
 			<View class="wfii hsize" id="calendar">
 			</View>
 		</ScrollView>
-		<ScrollView>
-			<TableView editable="true" id="inner_box">
+		<View class="wfill hsize" id="inner_box">
+			<!--<TableView editable="false" id="inner_box">
 				
-			</TableView>
-		</ScrollView>
+		</TableView>-->
+		</View>
     </ScrollView>
+    <ImageView class="wfill hfill" image="/images/transparent-bg.png" id="masked"></ImageView>
+    <ImageView class="wfill hfill" visible="false" zIndex="11" image="/images/transparent-bg.png" id="masked2"></ImageView>
+    <View bottom="0" zIndex="12" class="box hsize wfill vert" backgroundColor="#e5ebee" id="suggested_time" visible="false">
+    	<View class="wfill hsize vert" id="suggested_time_data"></View>
+    	<View class="wfill hsize vert">
+			<View class="gray-line"></View>
+			<Button class="button" backgroundColor="#afdb00" font="font-weight:bold" color="#ffffff" onClick="onOk">OK</Button>
+			<Button class="button" backgroundColor="#c8c8c8" color='#454545' onClick="onCancel">CANCEL</Button>
+			<View class="wfill" height="10"></View>
+		</View>
+    </View>
+    <View bottom="0" zIndex="10" class="box hsize wfill vert" backgroundColor="#e5ebee" id="detail_box">
+		<View class="padding wfill hsize vert">
+			<Label class="h5 wfill hsize">Patient Name</Label>
+			<View class="wfill hsize padding">
+				<Label id="patient_name" class="h6 hsize wfill"></Label>
+			</View>
+			<View class="gray-line"></View>
+			<Label class="h5 wfill hsize">Check-in Time</Label>
+			<View class="wfill hsize padding">
+				<Label id="checkin" class="h6 hsize wfill"></Label>
+			</View>
+			<View class="gray-line"></View>
+			<Label class="h5 wfill hsize">Duration</Label>
+			<View class="wfill hsize padding">
+				<Label id="duration" class="h6 hsize wfill"></Label>
+			</View>
+			<View class="gray-line"></View>
+			<Label class="h5 wfill hsize">Remark</Label>
+			<View class="wfill hsize padding">
+				<Label id="remake_box" class="h6 hsize wfill"></Label>
+			</View>
+		</View>
+		<View class="wfill hsize vert" id="action_box">
+			<View class="gray-line"></View>
+			<Button class="button" backgroundColor="#afdb00" font="font-weight:bold" color="#ffffff" onClick="onAccept">ACCEPT</Button>
+			<Button class="button" backgroundColor="#c8c8c8" color='#454545' onClick="onSuggest">SUGGEST ANOTHER TIME</Button>
+			<Button class="button" onClick="onReject">REJECT</Button>
+		</View>
+		<View class="wfill" height="10"></View>
+	</View>
     </Window>
 </Alloy>

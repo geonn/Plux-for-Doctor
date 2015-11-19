@@ -40,7 +40,8 @@ function parent(key, e){
 		if(eval("typeof e."+key.name) == "undefined"){
 			if(eval("typeof e.parent."+key.name+"") == "undefined"){
 				if(eval("typeof e.parent.parent."+key.name+"") == "undefined"){
-	    			console.log("box not found");
+	    			console.log(key.name+" not found");
+	    			return false;
 	    		}else{
 	    			return eval("e.parent.parent."+key.name);
 	    		}
@@ -158,3 +159,30 @@ function timeFormat(datetime){
 	
 	return newFormat;
 }
+
+function currentDateTime(){
+	var today = new Date();
+	var dd = today.getDate();
+	var mm = today.getMonth()+1; 
+	var yyyy = today.getFullYear();
+	
+	var hours = today.getHours();
+	var minutes = today.getMinutes();
+	var sec = today.getSeconds();
+	if (minutes < 10){
+		minutes = "0" + minutes;
+	} 
+	if (sec < 10){
+		sec = "0" + sec;
+	} 
+	if(dd<10) {
+	    dd='0'+dd;
+	} 
+	
+	if(mm<10) {
+	    mm='0'+mm;
+	} 
+	
+	datetime = yyyy+'-'+mm+'-'+dd + " "+ hours+":"+minutes+":"+sec;
+	return datetime ;
+} 

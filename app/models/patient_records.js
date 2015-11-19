@@ -85,11 +85,16 @@ exports.definition = {
                 collection.trigger('sync');
                 return arr;
 			},
-			getHistoryList : function(){
+			getHistoryList : function(searchKey){
 				var collection = this;
                 
                 db = Ti.Database.open(collection.config.adapter.db_name);
-                var sql = "SELECT * FROM " + collection.config.adapter.collection_name + " ORDER BY visitdate DESC" ;
+                var srh = "";
+				if(searchKey != ""){
+					srh = " WHERE (name LIKE '%"+searchKey+"%' OR empno LIKE '%"+searchKey+"%' OR memno LIKE '%"+searchKey+"%' OR icno LIKE '%"+searchKey+"%' OR corpname LIKE '%"+searchKey+"%' OR corpcode LIKE '%"+searchKey+"%') ";
+				}
+				
+                var sql = "SELECT * FROM " + collection.config.adapter.collection_name + srh+" ORDER BY visitdate DESC" ;
                
                 var res = db.execute(sql);
                 var listArr = []; 

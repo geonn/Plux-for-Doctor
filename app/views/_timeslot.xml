@@ -1,0 +1,30 @@
+<Alloy>
+	<View class="wfill hsize vert" backgroundColor="#f0f5f8">
+		<ScrollView class="wfill horz" height="80" showVerticalScrollIndicator="false" scrollType="horizontal" contentWidth="auto" contentHeight="Ti.UI.FILL" backgroundColor="#d7d7d7" id="date_bar">
+
+		</ScrollView>
+		<View class="wfill hsize horz">
+			<View class=" hsize" width="25%" backgroundColor="#fccd03">
+				<Label class="padding wfill hsize h6 whiteColor" textAlign="center">Pending</Label>
+			</View>
+			<View class=" hsize" width="25%" backgroundColor="#CE1D1C">
+				<Label class="padding wfill hsize h6 whiteColor" textAlign="center">Rejected</Label>
+			</View>
+			<View class=" hsize" width="25%" backgroundColor="#afdb00">
+				<Label class="padding wfill hsize h6 whiteColor" textAlign="center">Accepted</Label>
+			</View>
+			<View class=" hsize" width="25%" backgroundColor="#3f99f9">
+				<Label class="padding wfill hsize h6 whiteColor" textAlign="center">Suggestion</Label>
+			</View>
+		</View>
+		<View class="padding wfill hsize vert" id="inner_box" left="9" right="9" width="301">
+			<ScrollView class="wfill hsize vert" contentWidth="Ti.UI.FILL" disableBounce="true" contentHeight="Ti.UI.SIZE">
+				<View backgroundColor="#d7d7d7" class="wfill hsize">
+					<View left="1" top="1" class="wfill hsize horz" id="timeslot">
+						
+					</View>
+				</View>
+			</ScrollView>
+		</View>
+	</View>
+</Alloy>

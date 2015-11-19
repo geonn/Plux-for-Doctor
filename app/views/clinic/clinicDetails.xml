@@ -3,7 +3,7 @@
 		<ActionBar platform="android" displayHomeAsUp="true" onHomeIconItemSelected="closeWindow" />
 		<RightNavButton platform="ios" >
 	        <View right="0" width="20%">
-		         	<ImageView right='10' id="btnDirection" visible="false" width="25" height="25" image="/images/map.png" />
+		         	<Label onClick="doAdd"  id="addLbl">Add</Label>
 		   		</View>
         </RightNavButton>
 		<View layout="vertical" id="loadingBar" height="120" width="120" borderRadius="15"  backgroundColor="#2E2E2E" >
@@ -14,7 +14,7 @@
  
 		 	<View class="box padding wfill hsize horz" backgroundColor="#F5F5F5" bottom="0">
 		 		<View id="clinicMap" height="0" width="Ti.UI.FILL" >
-		 			<ImageView right='10' top='10' id="showFullMap" zIndex="99" width="25" height="25" image="/images/zoom_in.png" />
+		 			 
 		 		</View>
 		 		<View class="box wfill horz" backgroundColor="#ffffff" top="0" height="80">
 			 		<View width="32%" height="80" onClick="direction2here" layout="vertical">

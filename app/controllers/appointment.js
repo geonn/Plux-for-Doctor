@@ -1,87 +1,166 @@
 var args = arguments[0] || {};
 var clinic_id = Ti.App.Properties.getString('clinic_id') || 0;
+var specialty = Ti.App.Properties.getString('specialty') || 0;
+var pWidth = Ti.Platform.displayCaps.platformWidth;
+var pHeight = Ti.Platform.displayCaps.platformHeight;
 var loading = Alloy.createController("loading");
 var appointment = Alloy.createCollection("appointment");
 var data;
+var detail_box_open = false;
+var suggest_box_open = false;
 var status_text = ["nothing", "Pending", "Rejected", "Approved", "Suggested date", "Deleted"];
-var indicator_color = ['red', 'yellow', 'red', 'green', 'orange', 'black'];
+var indicator_color = ["#ffffff", '#00ee90', 'red', 'green', 'orange', 'black'];
+var selected_id = 0;
+var selected_time = [];
+var patient_id = 0;
+var selected_date = new Date();
+
+$.masked.hide();
+$.masked2.hide();
 // 1 - pending, 2- rejected, 3 - accepted. 4 - suggested date, 5 - delete
 /**
  * Navigate to Conversation by u_id
  */
-function navToConversation(e){
-	var f_id = parent({name: "f_id"}, e.source);
-	Alloy.Globals.Navigator.open("conversation", {f_id: f_id});
+function openDetailBox(e){
+	
+	//check appointment exist and initial into detail box
+	var id = parent({name: "appointment_id"}, e.source);
+	if(id){
+		console.log(id+" appointment id");
+		selected_id = id;
+		selected_date = parent({name: "selected_date"}, e.source);
+		var status = parent({name: "status"}, e.source);
+		var remark_val = parent({name: "remark"}, e.source);
+		var patient_name = parent({name: "patient_name"}, e.source);
+		patient_id = parent({name: "patient_id"}, e.source);
+		var checkin = parent({name: "date_s"}, e.source);
+		var duration = parent({name: "duration"}, e.source);
+		
+		$.remake_box.text = remark_val;
+		$.patient_name.text = patient_name;
+		$.checkin.text = checkin;
+		$.duration.text = duration;
+		
+		if(!detail_box_open){
+			if(status == 3 && status == 2){
+				$.action_box.height = 0;
+				$.action_box.hide();
+			}else{
+				$.action_box.height = Ti.UI.SIZE;
+				$.action_box.show();
+			}
+			$.masked.show();
+			$.masked.opacity = 0;
+			$.masked.animate({opacity: 1, duration: 500});
+			
+			var a_bounce = Ti.UI.createAnimation({
+				left: 30,
+				duration: 500
+			});
+			var b_bounce = Ti.UI.createAnimation({
+				left: 0,
+				duration: 300
+			});
+			$.detail_box.animate(a_bounce);
+			a_bounce.addEventListener("complete", function(e){
+				$.detail_box.animate(b_bounce);
+				detail_box_open = true;
+			});
+		}
+	}
+}
+
+function closeDetailBox(e){
+	if(detail_box_open){
+		$.masked.hide();
+		detail_box_open = false;
+		var a_bounce = Ti.UI.createAnimation({
+			left: -pWidth,
+			duration: 500
+		});
+		$.detail_box.animate(a_bounce);
+	}
+}
+
+function closeSuggestBox(e){
+	if(suggest_box_open){
+		$.masked2.hide();
+		suggest_box_open = false;
+		var a_bounce = Ti.UI.createAnimation({
+			top: -pHeight,
+			duration: 500
+		});
+		$.suggested_time.animate(a_bounce);
+	}
+}
+
+function date_click(e){
+	openDetailBox(e);
+}
+
+function multiple_select(e){
+	var view_time_box = parent({name: "view_time_box", value: 1}, e.source);
+	view_time_box.backgroundColor = "#3f99f9";
+	var start_date = parent({name: "date_s"}, e.source);
+	var duration = parent({name: "duration"}, e.source);
+		
+	var param = { 
+		u_id : patient_id,
+		start_date : start_date,
+		duration : duration,
+		clinic_id  : clinic_id,
+		specialty: specialty,
+		status: 4,
+		remark : "Suggestion Used",
+		created : currentDateTime(),  
+		updated : currentDateTime(),
+		isDoctor: 1
+
+	};
+	selected_time.push(param);
+	//dateSelect(e);
+}
+
+function render_detail_box(){
+	$.detail_box.width = pWidth;
+	$.detail_box.left = -pWidth;
+}
+
+function render_suggest_box(){
+	$.suggested_time_data.removeAllChildren();
+	var _suggested_time = Alloy.createController("_timeslot", {date_click: multiple_select, clinic_id: clinic_id, specialty: specialty, multiple_select: 1, selected_date: selected_date}).getView();
+	$.suggested_time_data.add(_suggested_time);
+	
+	$.suggested_time.top = -pHeight;
+	
+	if(!suggest_box_open){
+		$.suggested_time.show();
+		$.masked2.show();
+		$.masked2.opacity = 0;
+		$.masked2.animate({opacity: 1, duration: 500});
+		
+		var a_bounce = Ti.UI.createAnimation({
+			top: 30,
+			duration: 500
+		});
+		var b_bounce = Ti.UI.createAnimation({
+			top: 0,
+			duration: 100
+		});
+		$.suggested_time.animate(a_bounce);
+		a_bounce.addEventListener("complete", function(e){
+			$.suggested_time.animate(b_bounce);
+			suggest_box_open = true;
+		});
+	}
 }
 
 /*
- 	render friends list
+ 	render timeslot
  * */
-function render_booking_list(){
-	var data_array = [];
-	for (var i=0; i < data.length; i++) {
-		var tvr = $.UI.create("TableViewRow", {});
-		
-		var view_container = $.UI.create("View",{
-			classes: ['wfill', 'horz'],
-			backgroundColor: "#ffffff",
-			height: 60,
-			f_id: data[i].f_id
-		});
-		
-		var view_indicator = $.UI.create("View",{
-			classes: ['indicator_yellow'],
-			backgroundColor: indicator_color[data[i].status]
-		});
-		
-		var view_horz_div = $.UI.create("View",{
-			classes: ['horz_div']
-		});
-		
-		var view_left_column = $.UI.create("View",{
-			classes: ['hfill', 'vert', 'padding'],
-			width: "80"
-		});
-		
-		var view_right_column = $.UI.create("View",{
-			classes: ['hfill', 'vert', 'padding'],
-			width: "auto"
-		});
-		
-		var label_time = $.UI.create("Label",{
-			classes:['h6','wsize','hsize'],
-			text: formatDate(timeFormat(data[i].start_date))
-		});
-		
-		var label_duration = $.UI.create("Label",{
-			classes:['h5','wsize','hsize'],
-			text: convertMinuteToHour(data[i].duration)
-		});
-		
-		var label_patient_name = $.UI.create("Label",{
-			classes:['h5','wfill','hsize'],
-			text: data[i].patient_name
-		});
-		
-		var label_status = $.UI.create("Label",{
-			classes:['h5','wfill','hsize'],
-			text: status_text[data[i].status]
-		});
-		
-		view_left_column.add(label_time);
-		view_left_column.add(label_duration);
-		view_right_column.add(label_patient_name);
-		view_right_column.add(label_status);
-		view_container.add(view_indicator);
-		view_container.add(view_left_column);
-		view_container.add(view_horz_div);
-		view_container.add(view_right_column);
-		tvr.add(view_container);
-		data_array.push(tvr);
-		//view_container.addEventListener("click", navToConversation);
-	};
-	
-	$.inner_box.setData(data_array);
+function render_timeslot(){
+	var _timeslot = Alloy.createController("_timeslot", {date_click: date_click, clinic_id: clinic_id, specialty: specialty}).getView();
+	$.inner_box.add(_timeslot);
 }
 
 /*
@@ -97,33 +176,105 @@ function render_calendar(){
  * */
 function refresh(e){
 	loading.start();
-	var selected_date = new Date();
+	console.log(selected_date);
 	var today_start_date = selected_date.getFullYear()+"-"+('0'+(selected_date.getMonth()+1)).slice(-2)+"-"+('0'+selected_date.getDate()).slice(-2)+" 00:00:00";
 	var today_end_date = selected_date.getFullYear()+"-"+('0'+(selected_date.getMonth()+1)).slice(-2)+"-"+('0'+selected_date.getDate()).slice(-2)+" 23:59:59";
 	var start_date = (typeof e !="undefined")?e.selected_date+" 00:00:00":today_start_date;
 	var end_date = (typeof e != "undefined")?e.selected_date+" 23:59:59":today_end_date;
 	
-	data = appointment.getAppointmentList({clinicId: clinic_id, start_date: start_date, end_date: end_date});
-	console.log(data);
-	render_booking_list();
-	loading.finish();
-	return;
-	
-	var u_id = Ti.App.Properties.getString('user_id') || 0;
 	var checker = Alloy.createCollection('updateChecker'); 
-	var isUpdate = checker.getCheckerById(3, u_id);
+	var isUpdate = checker.getCheckerById(4, clinic_id);
 	var last_update = isUpdate.updated || "";
 	
-	API.callByPost({url:"getFriendListUrl", params: {last_updated: last_update, u_id:u_id}}, function(responseText){
-		var model = Alloy.createCollection("friends");
+	API.callByPost({url:"getAppointmentByClinic", params: {last_updated: last_update, clinic_id:clinic_id}}, function(responseText){
+		var model = Alloy.createCollection("appointment");
 		var res = JSON.parse(responseText);
 		var arr = res.data || null;
 		model.saveArray(arr);
-		data = model.getData();
-		checker.updateModule(3,"friends", Common.now(), u_id);
-		render_friends_list();
-		$.label_friends.text = "Friends ("+data.length+")";
+		checker.updateModule(4,"friends", Common.now(), clinic_id);
+		render_timeslot();
 		loading.finish();
+	});
+}
+
+function onAccept(){
+	var param = {
+		status: 3,
+		id: selected_id,
+		isDoctor: 1
+	};
+	updateAppointmentStatus(param, closeDetailBox);
+}
+
+function onSuggest(){
+	loading.start();
+	render_suggest_box();
+	loading.finish();
+	/*
+	var param = {
+		status: 4,
+		id: selected_id,
+		isDoctor: 1,
+		suggested_date: [{minute: 11}, {minute: 12}]
+	};
+	updateAppointmentStatus(param, closeDetailBox);*/
+}
+
+function onReject(){
+	var param = {
+		status: 2,
+		id: selected_id,
+		isDoctor: 1
+	};
+	updateAppointmentStatus(param, closeDetailBox);
+}
+
+function onOk(){
+	console.log(selected_time);
+	if(!selected_time.length){
+		alert("please select at least one suggested time");
+		return ;
+	}
+	var save_counter = 0;
+	for (var i=0; i < selected_time.length; i++) {
+	  API.callByPost({url:"addAppointmentUrl", params: selected_time[i]}, function(responseText){
+	  	var res = JSON.parse(responseText);
+		var arr = res.data || null;
+		console.log(res.data);		
+	  	appointment.saveArray(res.data);
+	  	save_counter++;
+	  	if(save_counter == selected_time.length){
+	  		var param = {
+				status: 2,
+				id: selected_id,
+				isDoctor: 1
+			};
+			closeSuggestBox();
+			updateAppointmentStatus(param, closeDetailBox);
+	  	}
+	  });
+	};
+}
+
+function onCancel(){
+	selected_time = [];
+	closeSuggestBox();
+}
+
+function updateAppointmentStatus(param, _callback){
+	loading.start();
+	console.log(param);
+	API.callByPost({url:"addAppointmentUrl", params: param}, function(responseText){
+		var res = JSON.parse(responseText);
+		if(res.status == "success"){
+			appointment.updateAppointmentStatus(param.id, param.status);
+			loading.finish();
+			refresh();
+		}else{
+			alert("appointment update fail. Please contact our support team for further assistance.");
+			loading.finish();
+		}
+		_callback && _callback();
 	});
 }
 
@@ -136,13 +287,18 @@ function closeWindow(){
 
 function init(){
 	$.win.add(loading.getView());
-	render_calendar();
+	render_detail_box();
+	//render_calendar();
 	refresh();
-}
-
+} 
 init();
 
+//$.main.addEventListener("scroll", closeDetailBox);
+
 Ti.App.addEventListener('appointment:refresh', refresh);
+
+$.masked.addEventListener("click", closeDetailBox);
+$.masked2.addEventListener("click", closeSuggestBox);
 
 $.win.addEventListener("close", function(){
 	Ti.App.removeEventListener('friends:refresh',refresh);

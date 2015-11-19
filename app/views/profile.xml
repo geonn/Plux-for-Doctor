@@ -14,7 +14,7 @@
 					<View class="horz hsize wfill"  textAlign="right" >
 						<Label text="Name" top="12"  class="h5 wfill padding-left themeColor"  /> 
 						<View width="auto"  class="left-align hsize" >
-							<TextField class="h5" borderColor="#ffffff" backgroundColor="#ffffff" id="name" top="5" bottom='5' right='5'  hintText="Doctor's Name" /> 
+							<TextField class="h5 wfill" borderColor="#ffffff" backgroundColor="#ffffff" id="name" top="5" bottom='5' right='5'  hintText="Doctor's Name" /> 
 						</View> 
 					</View>
 				</View> 
@@ -24,7 +24,7 @@
 					<View class="horz hsize wfill "  textAlign="right" >
 						<Label text="Doctor Code" top="12"  class="h5 wfill padding-left themeColor"  /> 
 						<View width="auto"  class="left-align hsize" >
-							<TextField class="h5" borderColor="#ffffff" backgroundColor="#ffffff" id="code" top="5" bottom='5' right='5'  hintText="Doctor's Name" /> 
+							<TextField class="h5 wfill" borderColor="#ffffff" backgroundColor="#ffffff" id="code" top="5" bottom='5' right='5'  hintText="Doctor's Name" /> 
 						</View> 
 					</View>
 				</View> 
@@ -34,7 +34,7 @@
 					<View class="horz hsize wfill "  textAlign="right" >
 						<Label text="Email" top="12" class="h5 wfill padding-left themeColor"  /> 
 						<View width="auto"  class="left-align hsize" >
-							<TextField class="h5" borderColor="#ffffff" backgroundColor="#ffffff" id="email" top="5" bottom='5' right='5'  hintText="Doctor's Email" /> 
+							<TextField class="h5 wfill" borderColor="#ffffff" backgroundColor="#ffffff" id="email" top="5" bottom='5' right='5'  hintText="Doctor's Email" /> 
 						</View> 
 					</View>
 				</View> 
@@ -44,7 +44,7 @@
 					<View class="horz hsize wfill "  textAlign="right" >
 						<Label text="Mobile No." top="12"  class="h5 wfill padding-left themeColor"  /> 
 						<View width="auto"  class="left-align hsize" >
-							<TextField class="h5" borderColor="#ffffff" backgroundColor="#ffffff" id="mobile" top="5" bottom='5' right='5'  textAlign="left" hintText="Doctor's Mobile" /> 
+							<TextField class="h5 wfill" borderColor="#ffffff" backgroundColor="#ffffff" id="mobile" top="5" bottom='5' right='5'  textAlign="left" hintText="Doctor's Mobile" /> 
 						</View> 
 					</View>
 				</View> 
