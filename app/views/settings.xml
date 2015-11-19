@@ -1,5 +1,5 @@
 <Alloy>
-	<Window   navTintColor="#CE1D1C" id="win" title="Settings" navBarHidden="false">
+	<Window navTintColor="#CE1D1C" id="win" title="Settings" navBarHidden="false">
 		<ActionBar platform="android" displayHomeAsUp="true" onHomeIconItemSelected="closeWindow" />
 		    <ScrollView class="vert hfill wfill" contentWidth="Ti.UI.FILL" contentHeight="Ti.UI.SIZE"> 
 				<View class=" wfill horz" height="95"  >
