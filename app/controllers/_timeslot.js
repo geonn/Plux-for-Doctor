@@ -120,7 +120,7 @@ function render_available_timeslot(){
 	  var time_end_key = Math.floor((booking_min+parseInt(appointmentList[i].duration)) / timeblock);
 	  for(;time_end_key > time_start_key;  time_start_key++){
 	  	console.log(time_start_key+"key");
-	  	booked_time[time_start_key] = ({status: appointmentList[i].status, remark: appointmentList[i].remark, patient_name: appointmentList[i].patient_name, patient_id: u_id,  duration: appointmentList[i].duration, appointment_id: appointmentList[i].id, minute: booking_min});
+	  	booked_time[time_start_key] = ({status: appointmentList[i].status, remark: appointmentList[i].remark, patient_name: appointmentList[i].patient_name, patient_id: appointmentList[i].u_id,  duration: appointmentList[i].duration, appointment_id: appointmentList[i].id, minute: booking_min});
 	  }
 	};
 	

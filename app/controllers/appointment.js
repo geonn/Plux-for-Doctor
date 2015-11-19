@@ -42,7 +42,7 @@ function openDetailBox(e){
 		$.duration.text = duration;
 		
 		if(!detail_box_open){
-			if(status == 3){
+			if(status == 3 && status == 2){
 				$.action_box.height = 0;
 				$.action_box.hide();
 			}else{
@@ -113,7 +113,8 @@ function multiple_select(e){
 		status: 4,
 		remark : "Suggestion Used",
 		created : currentDateTime(),  
-		updated : currentDateTime()
+		updated : currentDateTime(),
+		isDoctor: 1
 
 	};
 	selected_time.push(param);
@@ -181,24 +182,17 @@ function refresh(e){
 	var start_date = (typeof e !="undefined")?e.selected_date+" 00:00:00":today_start_date;
 	var end_date = (typeof e != "undefined")?e.selected_date+" 23:59:59":today_end_date;
 	
-	render_timeslot();
-	loading.finish();
-	return;
-	
-	var u_id = Ti.App.Properties.getString('user_id') || 0;
 	var checker = Alloy.createCollection('updateChecker'); 
-	var isUpdate = checker.getCheckerById(3, u_id);
+	var isUpdate = checker.getCheckerById(4, clinic_id);
 	var last_update = isUpdate.updated || "";
 	
-	API.callByPost({url:"getFriendListUrl", params: {last_updated: last_update, u_id:u_id}}, function(responseText){
-		var model = Alloy.createCollection("friends");
+	API.callByPost({url:"getAppointmentByClinic", params: {last_updated: last_update, clinic_id:clinic_id}}, function(responseText){
+		var model = Alloy.createCollection("appointment");
 		var res = JSON.parse(responseText);
 		var arr = res.data || null;
 		model.saveArray(arr);
-		data = model.getData();
-		checker.updateModule(3,"friends", Common.now(), u_id);
-		render_friends_list();
-		$.label_friends.text = "Friends ("+data.length+")";
+		checker.updateModule(4,"friends", Common.now(), clinic_id);
+		render_timeslot();
 		loading.finish();
 	});
 }

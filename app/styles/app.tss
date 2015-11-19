@@ -252,6 +252,12 @@ overrode the settings with other TSS, XML, or JS settings:
 	}
 },
 
+".h6":{
+	font:{
+		fontSize: 10
+	}
+},
+
 ".normal-text":{
 	font:{
 		fontSize: 14
