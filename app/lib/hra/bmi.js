@@ -262,12 +262,8 @@ function resultPopUp(title, msg){
 	$.hraDetailsWin.add(box);
 	$.hraDetailsWin.add(mask);
 	okButton.addEventListener("click", function(){
-		$.hraDetailsWin.remove(box);
-<<<<<<< HEAD
+		$.hraDetailsWin.remove(box); 
 		$.hraDetailsWin.remove(mask); 
 	});  
-=======
-		$.hraDetailsWin.remove(mask);
-	}); 
->>>>>>> origin/master
+ 
 };
