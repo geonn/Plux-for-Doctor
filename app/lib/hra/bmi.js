@@ -263,11 +263,6 @@ function resultPopUp(title, msg){
 	$.hraDetailsWin.add(mask);
 	okButton.addEventListener("click", function(){
 		$.hraDetailsWin.remove(box);
-		$.hraDetailsWin.remove(mask);
-<<<<<<< Updated upstream
-	}); 
-=======
-	});
-	 
->>>>>>> Stashed changes
+		$.hraDetailsWin.remove(mask); 
+	});  
 };

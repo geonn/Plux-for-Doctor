@@ -18,8 +18,9 @@ function showList(){
 function loadClinic(){
 	clinic_id = Ti.App.Properties.getString('clinic_id');
 	var doctorPanel = Ti.App.Properties.getString('myClinics');
+	 
 	var myPanel = doctorPanel.split(",");
-	if(myPanel.length > 1){ 
+	if(myPanel.length > 0){ 
 		for(var i=0; i< myPanel.length; i++){
 			 
 			var panelDetails = panelListModel.getDataByID(myPanel[i]);
