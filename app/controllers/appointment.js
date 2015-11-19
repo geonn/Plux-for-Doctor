@@ -185,8 +185,7 @@ function refresh(e){
 	
 	var checker = Alloy.createCollection('updateChecker'); 
 	var isUpdate = checker.getCheckerById(4, clinic_id);
-	var last_update = isUpdate.updated || "";
-	
+	var last_update = isUpdate.updated || ""; 
 	API.callByPost({url:"getAppointmentByClinic", params: {last_updated: last_update, clinic_id:clinic_id}}, function(responseText){
 		var model = Alloy.createCollection("appointment");
 		var res = JSON.parse(responseText);
