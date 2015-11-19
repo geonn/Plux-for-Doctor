@@ -31,15 +31,14 @@ function showList(){
 		 
 			var contentView = $.UI.create('View',{
 				classes: ['vert','hsize','wfill'], 
-				source: entry.id, 
-				title: entry.name,
+				source: entry.id,  
 				top: 10,
 				bottom: 10
 			});
 			  
 			var clinicLbl = $.UI.create('Label',{
-				classes : ['themeColor', 'h5', 'bold'],
-				text:entry.memno || "",
+				classes : ['themeColor', 'h5'],
+				text:entry.name +" ("+entry.memno  + ")",
 				font:{fontSize:14},
 				source: entry.id, 
 				title: entry.memno, 
@@ -49,7 +48,6 @@ function showList(){
 				height:Ti.UI.SIZE
 			}); 
 			contentView.add(clinicLbl);
-			
 			
 			 var msgLbl =  $.UI.create('Label',{ 
 				classes: ['h6', 'hsize'],
@@ -110,11 +108,11 @@ var searchResult = function(){
 	//COMMON.showLoading();
 	var str = $.searchBar.getValue(); 
 	if(str != ""){
-		details = patient_recordsModel.getHistoryList(""); 
-	}else{ 
 		details = patient_recordsModel.getHistoryList(str); 
+	}else{ 
+		details = patient_recordsModel.getHistoryList(""); 
 	}	
-	createSchoolList(); 
+	showList(); 
 };
 
 $.searchBar.addEventListener("return", searchResult);

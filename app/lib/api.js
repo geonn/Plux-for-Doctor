@@ -18,6 +18,8 @@ var getIdaListUrl               = "http://"+API_DOMAIN+"/api/getIda?user="+USER+
 var clinicListUrl 				= "http://"+API_DOMAIN+"/api/getClinicLocator?user="+USER+"&key="+KEY; 
 var changePasswordUrl 			= "http://"+API_DOMAIN+"/api/doctorChangePassword?user="+USER+"&key="+KEY; 
 var updateDoctorProfileUrl 		= "http://"+API_DOMAIN+"/api/updateDoctorProfile?user="+USER+"&key="+KEY; 
+var updateDoctorPanelUrl        = "http://"+API_DOMAIN+"/api/updateDoctorPanel?user="+USER+"&key="+KEY; 
+
 //API that call in sequence 
 var APILoadingList = [
 	{url: getAppHomepageBackgroundUrl, model: "background", checkId: "1"},

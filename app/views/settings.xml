@@ -14,7 +14,7 @@
 				<View id="tvrName" top="10"  height="Ti.UI.SIZE"   backgroundColor="#ffffff" > 
 					<Label text="My Profile" top="15" bottom="15"  width="35%" left="5" class="h5 padding-left themeColor"  /> 
 					 
-					<Label id="lblPName" text="" class="wsize  h6 right-align" right="20"  color="#000000"  /> 
+					<Label id="lblPName" text="" class="wsize font_dark_grey h5 right-align" right="20"    /> 
 					<ImageView  class="wsize" right="5" image="/images/btn-forward.png" width="15" />  
 				</View> 
 				

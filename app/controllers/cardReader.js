@@ -3,17 +3,7 @@ var SCANNER = require("scanner");
 Ti.App.Properties.setString('time1', '');  
 var patient_recordsModel = Alloy.createCollection('patient_records'); 
 var id;
-function closeWindow(){
-	$.win.close();
-}
 
-function init(){ 
- 	showList();
-}
-
-function showList(){
-	
-} 
 
 // Create a window to add the picker to and display it. 
 var window = SCANNER.createScannerWindow(); 
@@ -24,6 +14,17 @@ $.scanner.addEventListener('click', function() {
 });
 
 SCANNER.init(window); 
+
+function closeWindow(){
+	$.win.close();
+}
+
+init();
+
+function init(){ 
+	SCANNER.openScanner("1"); 
+}
+ 
 
 function getCardData(e){ 
 	var param =e.data;

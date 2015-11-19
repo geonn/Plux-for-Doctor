@@ -13,12 +13,13 @@ function onload(responseText){
 	}else{
 		loading.finish(); 
 		var arr = result.data;
-		Ti.App.Properties.setString('clinic_id', arr.clinic_id);
+		//Ti.App.Properties.setString('clinic_id', arr.clinic_id);
 		Ti.App.Properties.setString('specialty', arr.specialty);
    		Ti.App.Properties.setString('u_id', arr.id);
    		Ti.App.Properties.setString('name', arr.name);
    		Ti.App.Properties.setString('myClinics', arr.clinic_id);
    		var clinic_id = Ti.App.Properties.getString('clinic_id') || "";
+   	 
    		if(clinic_id ==""){
    			//load clinic
 			var doctorPanel = arr.clinic_id;
@@ -26,6 +27,7 @@ function onload(responseText){
 				panelListModel.updatePanelList(doctorPanel);
 				
 				var myPanel = doctorPanel.split(",");
+				 
 				if(myPanel.length > 1){
 					selectPanel(myPanel);
 				}else{

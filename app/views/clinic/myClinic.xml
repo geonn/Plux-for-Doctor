@@ -1,0 +1,22 @@
+<Alloy>
+	<Window navTintColor="#CE1D1C" id="win" title="My Clinic"  navBarHidden="false">
+		<ActionBar platform="android" displayHomeAsUp="true" onHomeIconItemSelected="closeWindow" />
+		<RightNavButton platform="ios">
+			<View class="wsize hsize">
+				<Label onClick="doEdit"  id="editLbl">Edit</Label>
+				<Label onClick="doDone"  id="doneLbl" visible="false">Done</Label>
+			</View>
+		</RightNavButton> 
+		<View layout="vertical" id="loadingBar" height="120" width="120" borderRadius="15"  backgroundColor="#2E2E2E" >
+		    <ActivityIndicator  id="activityIndicator" />
+			<Label top="5" text="Loading" color="#ffffff" />
+		</View>
+		<View id="containerView" class="vert wfill hsize">
+			<SearchBar barColor="#FFFFFF" tintColor="#CE1D1C" id="searchItem" showCancel="true" text="" height="0" visible="false"  hintText="Search Clinic" /> 
+		 	<View width="Ti.UI.FILL" height="1" backgroundColor="#9E9E9E" /> 
+		 	
+		</View> 		 
+	    
+    </Window>
+</Alloy>   
+ 

@@ -296,8 +296,7 @@ function init(){
 	render_detail_box();
 	//render_calendar();
 	refresh();
-}
-
+} 
 init();
 
 //$.main.addEventListener("scroll", closeDetailBox);

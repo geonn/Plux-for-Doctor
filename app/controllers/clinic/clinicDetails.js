@@ -15,6 +15,17 @@ for (var i = 0; i < contacts.length; i++) {
     } 
 }  
 var phoneArr = [];
+init();
+
+function init(){
+	//$.addLbl.visible = false;
+	var doctorPanel = Ti.App.Properties.getString('myClinics');
+	var myPanel = doctorPanel.split(",");
+	var res = myPanel.indexOf(panel_id); 
+	if(res > -1){
+		$.addLbl.visible = false;
+	} 
+}
 
 function populateMap(mapHeight){
 	if(details.latitude != "" && details.longitude != "") {
@@ -142,7 +153,6 @@ function addToContact(){
 	}
 }
 
-$.btnDirection.addEventListener('click',direction2here );
 function direction2here(){
 	 
 	var locationCallback = function(e) {
@@ -190,28 +200,42 @@ function direction2here(){
 	Titanium.Geolocation.addEventListener('location', locationCallback); 
 }
 
-var showFull = false;
-$.showFullMap.addEventListener('click', function(){
-	if(showFull === false){
-		$.clinicDetails.visible =false;
-		$.clinicDetails.height = 0;
-		$.clinicMap.height = Titanium.Platform.displayCaps.platformHeight;
-		$.showFullMap.image =  "/images/zoom_out.png";
-		$.btnDirection.visible = true;
-		showFull = true;
-		populateMap(Titanium.Platform.displayCaps.platformHeight);
-	}else{
-		$.clinicDetails.visible =true;
-		$.btnDirection.visible = false;
-		$.clinicDetails.height = Ti.UI.SIZE;
-		$.clinicMap.height = 200;
-		$.showFullMap.image =  "/images/zoom_in.png";
-		showFull = false; 
-		populateMap(200);
-	}
-	
-	
-});
+function doAdd(){
+	var dialog = Ti.UI.createAlertDialog({
+		cancel: 1,
+		buttonNames: ['Cancel','Confirm'],
+		message: 'Would you like to add this as your panel?',
+		title: 'Add Panel'
+	});
+	dialog.addEventListener('click', function(ex){
+		if (ex.index === ex.source.cancel){
+		      //Do nothing
+		}
+		if (ex.index === 1){
+			//submit to server
+			var param = { 
+				"u_id"	  :  Ti.App.Properties.getString('u_id'), 
+				"action" : "add",
+				"clinic_id" : panel_id
+			};
+		 
+			API.callByPost({url:"updateDoctorPanelUrl", params: param}, function(responseText){ 
+				var res = JSON.parse(responseText);   
+				if(res.status == "success"){    
+					COMMON.createAlert("Success", "Panel successfully added", function(){ 
+						Ti.App.Properties.setString('myClinics',res.data);
+						init();
+					});
+				}else{
+					COMMON.createAlert("Error", res.data);
+					return false;
+				}
+					
+			});
+		}
+	}); 
+	dialog.show();  
+}
 
 if(Ti.Platform.osname == "android"){
 	$.btnBack.addEventListener('click', function(){ 

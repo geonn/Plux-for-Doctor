@@ -115,7 +115,7 @@ overrode the settings with other TSS, XML, or JS settings:
 	backgroundColor: "#CE1D1C",
 	borderRadius: 6,
 	color: "#ffffff",
-	width: Titanium.UI.FILL,
+	width: "70%",
 	left: 10,
 	right: 10,
 	top: 10,
@@ -127,10 +127,7 @@ overrode the settings with other TSS, XML, or JS settings:
 	backgroundColor: "#CE1D1C",
 	borderRadius: 6,
 	color: "#ffffff",
-	width: Titanium.UI.FILL,
-	left: 10,
-	right: 10,
-	top: 10,
+	width: "70%", 
 },
 '.button[platform=ios formFactor=tablet]': {
 	height: 60,
@@ -322,7 +319,7 @@ overrode the settings with other TSS, XML, or JS settings:
 	color: "#9197a3 "
 },
 '.font_dark_grey' :{
-	color: "#C8C8CD"
+	color: "#939393"
 },
 
 '.left-align' :{
