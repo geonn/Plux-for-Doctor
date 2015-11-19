@@ -261,9 +261,8 @@ function resultPopUp(title, msg){
 	box.add(content); 
 	$.hraDetailsWin.add(box);
 	$.hraDetailsWin.add(mask);
-	okButton.addEventListener("click", function(){
+	okButton.addEventListener("click", function(){ 
 		$.hraDetailsWin.remove(box); 
 		$.hraDetailsWin.remove(mask); 
-	});  
- 
+	});   
 };

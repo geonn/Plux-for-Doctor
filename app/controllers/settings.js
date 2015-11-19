@@ -1,12 +1,14 @@
 var args = arguments[0] || {}; 
 var clinic_id = Ti.App.Properties.getString('clinic_id');
 var panelListModel = Alloy.createCollection('panelList'); 
+var loading = Alloy.createController("loading");
 var u_id = Ti.App.Properties.getString('u_id');
 var name = Ti.App.Properties.getString('name');
 COMMON.construct($);  
 init();
  
 function init(){
+	$.win.add(loading.getView());
  	showList();
 }
 
@@ -16,9 +18,9 @@ function showList(){
 }
 
 function loadClinic(){
+	loading.start();
 	clinic_id = Ti.App.Properties.getString('clinic_id');
-	var doctorPanel = Ti.App.Properties.getString('myClinics');
-	 
+	var doctorPanel = Ti.App.Properties.getString('myClinics') || "";
 	var myPanel = doctorPanel.split(",");
 	if(myPanel.length > 0){ 
 		for(var i=0; i< myPanel.length; i++){
@@ -53,6 +55,7 @@ function loadClinic(){
 			clinicView.addEventListener('click',selectedPanel);  
 		}
 	}
+	loading.finish();
 }
 
 function selectedPanel(e){
@@ -187,7 +190,7 @@ function addDoneEvent(okayBtn,pop,password, newPassword, confirmPassword){
 			"password" : cp.trim(),
 			"newPassword" : nw.trim()
 		};
-	 
+	 	loading.start();
 		API.callByPost({url:"changePasswordUrl", params: param}, function(responseText){ 
 			var res = JSON.parse(responseText);   
 			if(res.status == "success"){    
@@ -198,7 +201,7 @@ function addDoneEvent(okayBtn,pop,password, newPassword, confirmPassword){
 				COMMON.createAlert("Error", res.data);
 				return false;
 			}
-			
+			loading.finish();
 		});
 		
 	});

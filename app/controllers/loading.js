@@ -1,11 +1,13 @@
 var args = arguments[0] || {};
 $.loadingBar.hide();
 $.activityIndicator.hide();
+
 /**
  * function to start the loading animation
  */
 $.start = function() {
 	$.loadingBar.show();
+	console.log("loading show");
 	$.activityIndicator.show();
 };
 
