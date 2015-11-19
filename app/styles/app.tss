@@ -127,6 +127,7 @@ overrode the settings with other TSS, XML, or JS settings:
 	backgroundColor: "#CE1D1C",
 	borderRadius: 6,
 	color: "#ffffff",
+	top: 10,
 	width: "70%", 
 },
 '.button[platform=ios formFactor=tablet]': {

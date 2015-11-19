@@ -43,7 +43,7 @@ function openDetailBox(e){
 		
 		if(!detail_box_open){
 			console.log(status);
-			if(status == 3 && status == 2){
+			if(status == 3 || status == 2){
 				$.action_box.height = 0;
 				$.action_box.hide();
 			}else{
