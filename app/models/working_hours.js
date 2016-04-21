@@ -68,7 +68,7 @@ exports.definition = {
                 arr.forEach(function(entry) {
 	                var sql_query =  "INSERT OR IGNORE INTO "+collection.config.adapter.collection_name+" (id, doctor_panel_id, days, time_start, time_end, duration, status, created, updated) VALUES (?,?,?,?,?,?,?,?,?)";
 					db.execute(sql_query, entry.id, entry.doctor_panel_id, entry.days, entry.time_start, entry.time_end, entry.duration, entry.status, entry.created, entry.updated);
-					var sql_query =  "UPDATE "+collection.config.adapter.collection_name+" SET doctor_panel_id=?, days=?, time_start=?, time_end=?, duration=?, status, created=?, updated=? WHERE id=?";
+					var sql_query =  "UPDATE "+collection.config.adapter.collection_name+" SET doctor_panel_id=?, days=?, time_start=?, time_end=?, duration=?, status=?, created=?, updated=? WHERE id=?";
 					db.execute(sql_query, entry.doctor_panel_id, entry.days, entry.time_start, entry.time_end, entry.duration, entry.status, entry.created, entry.updated, entry.id);
 				});
 				db.execute("COMMIT");
@@ -85,7 +85,7 @@ exports.definition = {
                 
                 var sql_query =  "INSERT OR IGNORE INTO "+collection.config.adapter.collection_name+" (id, doctor_panel_id, days, time_start, time_end, duration, status, created, updated) VALUES (?,?,?,?,?,?,?,?,?)";
 					db.execute(sql_query, entry.id, entry.doctor_panel_id, entry.days, entry.time_start, entry.time_end, entry.duration, entry.status, entry.created, entry.updated);
-					var sql_query =  "UPDATE "+collection.config.adapter.collection_name+" SET doctor_panel_id=?, days=?, time_start=?, time_end=?, duration=?, status, created=?, updated=? WHERE id=?";
+					var sql_query =  "UPDATE "+collection.config.adapter.collection_name+" SET doctor_panel_id=?, days=?, time_start=?, time_end=?, duration=?, status=?, created=?, updated=? WHERE id=?";
 					db.execute(sql_query, entry.doctor_panel_id, entry.days, entry.time_start, entry.time_end, entry.duration, entry.status, entry.created, entry.updated, entry.id);
 			
 	            db.close(); 

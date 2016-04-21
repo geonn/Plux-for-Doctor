@@ -50,8 +50,32 @@ exports.callByPost = function(e, onload, onerror){
 			onload && onload(this.responseText); 
 		};
 		
-		_result.onerror = function(ex) {  
-			API.callByPost(e, onload, onerror); 
+		_result.onerror = function(ex) {
+			console.log('failure callByPost');
+			console.log(ex);
+			//API.callByPost(e, onload, onerror); 
+		};
+	}
+};
+
+// call API by post method
+exports.callByPostWithJson = function(e, onload, onerror){
+	
+	var deviceToken = Ti.App.Properties.getString('deviceToken');
+	if(deviceToken != ""){  
+		var url = eval(e.url);
+		console.log(url);
+		var _result = contactServerByPostWithJson(url, e.params || {});   
+		_result.onload = function(ex) { 
+			console.log('success callByPost');
+			console.log(this.responseText);
+			onload && onload(this.responseText); 
+		};
+		
+		_result.onerror = function(ex) {
+			console.log('failure callByPost');
+			console.log(ex);
+			//API.callByPost(e, onload, onerror); 
 		};
 	}
 };
@@ -210,8 +234,23 @@ function contactServerByPost(url,records) {
 		timeout : 5000
 	});
 	if(OS_ANDROID){
+	 	client.setRequestHeader('ContentType', 'application/x-www-form-urlencoded'); 
+	 }
+	console.log(records);
+	client.open("POST", url);
+	client.send(records);
+	return client;
+};
+
+function contactServerByPostWithJson(url,records) { 
+	var client = Ti.Network.createHTTPClient({
+		timeout : 5000
+	});
+	if(OS_ANDROID){
 	 	client.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded'); 
 	 }
+	client.setRequestHeader('ContentType', 'application/json');
+	client.setRequestHeader('processData', false);
 	console.log(records);
 	client.open("POST", url);
 	client.send(records);

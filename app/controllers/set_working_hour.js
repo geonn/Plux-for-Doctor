@@ -53,10 +53,11 @@ function init(){
 init();
 
 function updateWokingHour(){
-	API.callByPost({url:"addUpdateWorkingHoursUrl", params: {working_hours: JSON.stringify(working_hour_arr)}}, function(responseText){
+	console.log("updateWokingHour");
+	console.log(JSON.stringify(working_hour_arr));
+	API.callByPostWithJson({url:"addUpdateWorkingHoursUrl", params: {working_hours: working_hour_arr}}, function(responseText){
 		var res = JSON.parse(responseText);
 		var arr = res.data || null;
-		console.log(arr);
 	});
 }
 
@@ -75,6 +76,7 @@ Ti.App.addEventListener('set_working_hours:refresh', refresh);
 Ti.App.addEventListener('set_working_hours:collectData', collectData);
 
 $.win.addEventListener("close", function(){
+	//
 	updateWokingHour();
 	Ti.App.removeEventListener('set_working_hours:refresh',refresh);
 	Ti.App.removeEventListener('set_working_hours:collectData', collectData);
