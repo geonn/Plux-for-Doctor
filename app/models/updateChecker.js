@@ -4,6 +4,10 @@ ID       type Name
 ------------------------------------
 1		getAppHomepageBackground
 2		getDoctorList
+4		getAppointmentByDoctor
+5		getMessageByItem
+6		getWorkingHoursByDoctorPanel
+
 ************************************/
 
 exports.definition = {

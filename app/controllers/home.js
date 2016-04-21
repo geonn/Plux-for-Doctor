@@ -10,6 +10,7 @@ var menu_info = [
 	{mod: "ida", image: "/images/btn/ida.png"},
 	{mod: "hra", image: "/images/btn/health-rish-assessment.png"},
 	{mod: "settings", image: "/images/btn/settings.png"},
+	{mod: "askDoctor", image: "/images/btn/settings.png"},
 ];
 
 function doLogout(){

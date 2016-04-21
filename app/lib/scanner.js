@@ -67,6 +67,7 @@ exports.openScanner = function(scanType) {
 			//console.log(barRes[15]);
 			console.log("time1 : "+time1); 
 			console.log("scan Time : "+barRes[13]);
+			console.log( barRes);
 			if(time1 == ""){
 				Ti.App.Properties.setString('time1',barRes[13] ); 
 			}else{

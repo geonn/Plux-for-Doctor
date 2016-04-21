@@ -1,5 +1,5 @@
 var args = arguments[0] || {};
-var clinic_id = Ti.App.Properties.getString('clinic_id') || 0;
+var doctor_id = Ti.App.Properties.getString('doctor_id') || 0;
 var specialty = Ti.App.Properties.getString('specialty') || 0;
 var pWidth = Ti.Platform.displayCaps.platformWidth;
 var pHeight = Ti.Platform.displayCaps.platformHeight;
@@ -13,6 +13,7 @@ var indicator_color = ["#ffffff", '#00ee90', 'red', 'green', 'orange', 'black'];
 var selected_id = 0;
 var selected_time = [];
 var patient_id = 0;
+var doctor_panel_id  = 0;
 var selected_date = new Date();
 
 $.masked.hide();
@@ -25,9 +26,11 @@ function openDetailBox(e){
 	
 	//check appointment exist and initial into detail box
 	var id = parent({name: "appointment_id"}, e.source);
+	var dp_id = parent({name: "doctor_panel_id"}, e.source);
 	if(id){
 		console.log(id+" appointment id");
 		selected_id = id;
+		doctor_panel_id = dp_id;
 		selected_date = parent({name: "selected_date"}, e.source);
 		var status = parent({name: "status"}, e.source);
 		var remark_val = parent({name: "remark"}, e.source);
@@ -104,20 +107,20 @@ function multiple_select(e){
 	view_time_box.backgroundColor = "#3f99f9";
 	var start_date = parent({name: "date_s"}, e.source);
 	var duration = parent({name: "duration"}, e.source);
-		
+	console.log(doctor_panel_id);
+	
 	var param = { 
 		u_id : patient_id,
 		start_date : start_date,
 		duration : duration,
-		clinic_id  : clinic_id,
-		specialty: specialty,
+		doctor_panel_id: doctor_panel_id,
 		status: 4,
-		remark : "Suggestion Used",
+		remark : "For Suggestion Used",
 		created : currentDateTime(),  
 		updated : currentDateTime(),
 		isDoctor: 1
-
 	};
+	
 	selected_time.push(param);
 	//dateSelect(e);
 }
@@ -129,7 +132,7 @@ function render_detail_box(){
 
 function render_suggest_box(){
 	$.suggested_time_data.removeAllChildren();
-	var _suggested_time = Alloy.createController("_timeslot", {date_click: multiple_select, clinic_id: clinic_id, specialty: specialty, multiple_select: 1, selected_date: selected_date}).getView();
+	var _suggested_time = Alloy.createController("_timeslot", {date_click: multiple_select, doctor_id: doctor_id, multiple_select: 1, selected_date: selected_date}).getView();
 	$.suggested_time_data.add(_suggested_time);
 	
 	$.suggested_time.top = -pHeight;
@@ -160,7 +163,7 @@ function render_suggest_box(){
  	render timeslot
  * */
 function render_timeslot(){
-	var _timeslot = Alloy.createController("_timeslot", {date_click: date_click, clinic_id: clinic_id, specialty: specialty}).getView();
+	var _timeslot = Alloy.createController("_timeslot", {date_click: date_click, doctor_id: doctor_id}).getView();
 	$.inner_box.add(_timeslot);
 }
 
@@ -184,14 +187,14 @@ function refresh(e){
 	var end_date = (typeof e != "undefined")?e.selected_date+" 23:59:59":today_end_date;
 	
 	var checker = Alloy.createCollection('updateChecker'); 
-	var isUpdate = checker.getCheckerById(4, clinic_id);
+	var isUpdate = checker.getCheckerById(4, doctor_id);
 	var last_update = isUpdate.updated || ""; 
-	API.callByPost({url:"getAppointmentByClinic", params: {last_updated: last_update, clinic_id:clinic_id}}, function(responseText){
+	API.callByPost({url:"getAppointmentByDoctor", params: {last_updated: last_update, doctor_id:doctor_id}}, function(responseText){
 		var model = Alloy.createCollection("appointment");
 		var res = JSON.parse(responseText);
 		var arr = res.data || null;
 		model.saveArray(arr);
-		checker.updateModule(4,"friends", Common.now(), clinic_id);
+		checker.updateModule(4,"getAppointmentByDoctor", Common.now(), doctor_id);
 		render_timeslot();
 		loading.finish();
 	});

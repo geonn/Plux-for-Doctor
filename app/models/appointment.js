@@ -1,15 +1,17 @@
 exports.definition = {
 	config: {
 		columns: {
-		    "id": "INTEGER PRIMARY KEY",
+		   "id": "INTEGER PRIMARY KEY",
 		    "u_id": "TEXT" , 
 		    "duration": "INTEGER",
-		    "clinic_id": "INTEGER" ,
+		    "clinic_name": "TEXT",
+		    "doctor_name": "TEXT",
+		    "specialty_name" : "TEXT",
+		    "doctor_panel_id": "INTEGER",
 		    "start_date" : "TEXT",
 		    "end_date" : "TEXT",
 		    "remark" : "TEXT",
-		    "specialty" : "TEXT",
-		    "status": "INTEGER",	// 1 - pending, 2- rejected, 3 - accepted. 4 - suggested date, 5 - delete
+		    "status": "INTEGER" ,
 		    "created": "TEXT" ,
 		    "updated": "TEXT",
 		    "date" : "TEXT",
@@ -53,21 +55,21 @@ exports.definition = {
 			},
 			getAppointmentList: function(ex){
 				console.log(ex);
-				var query_clinicid = (typeof ex.clinicId != "undefined")?" clinic_id= ? ":"";
-				var query_specialty = (typeof ex.specialty != "undefined")?" AND specialty= ? ":"";
-				var query_start_date = (typeof ex.start_date != "undefined")?" AND start_date >= ? AND start_date < ? ":"";
+				
+				var query_start_date = (typeof ex.start_date != "undefined")?" AND a.start_date >= ? AND a.start_date < ? ":"";
 				var collection = this;
-                var sql = "SELECT * FROM " + collection.config.adapter.collection_name +" WHERE "+query_clinicid+query_specialty+query_start_date+" AND status != 5 ORDER BY created DESC";
+                var sql = "SELECT a.* FROM appointment as a, doctor_panel as dp WHERE dp.id = a.doctor_panel_id AND dp.doctor_id = ? "+query_start_date+" AND a.status != 5 ORDER BY a.created DESC";
               	 
                 db = Ti.Database.open(collection.config.adapter.db_name);
                 if(Ti.Platform.osname != "android"){
                 	db.file.setRemoteBackup(false);
                 }
-                if(typeof ex.clinicId != "undefined"){
-                	if(typeof ex.clinicId != "undefined"){
-                		var res = db.execute(sql, ex.clinicId, ex.specialty, ex.start_date, ex.end_date);
+                if(typeof ex.doctor_id != "undefined"){
+                	if(typeof ex.start_date != "undefined"){
+                		console.log(ex.start_date+" "+ex.end_date); //"2016-04-21 10:00:00"
+                		var res = db.execute(sql, ex.doctor_id, ex.start_date, ex.end_date);
                 	}else{
-                		var res = db.execute(sql, ex.clinicId);
+                		var res = db.execute(sql, ex.doctor_id);
                 	}
                 }else{
                 	var res = db.execute(sql);
@@ -79,14 +81,15 @@ exports.definition = {
 					listArr[count] = { 
 						id: res.fieldByName('id'),
 						u_id: res.fieldByName('u_id'), 
-						clinic_id : res.fieldByName('clinic_id'),  
+						clinic_name : res.fieldByName('clinic_name'),
+						doctor_panel_id: res.fieldByName('doctor_panel_id'),
+						specialty_name: res.fieldByName('specialty_name'),
 						status: res.fieldByName('status'), 
 						start_date: res.fieldByName('start_date'),
 						duration: res.fieldByName('duration'),
 						remark: res.fieldByName('remark'),
 						created: res.fieldByName('created'),
 						updated: res.fieldByName('updated'),
-						specialty: res.fieldByName('specialty'),
 						patient_name: res.fieldByName('patient_name')
 					};	 
 					res.next();
@@ -107,11 +110,11 @@ exports.definition = {
                 }
                 db.execute("BEGIN"); 
                	arr.forEach(function(entry) {
-		            var sql_query =  "INSERT OR IGNORE INTO "+collection.config.adapter.collection_name+" (id, u_id,clinic_id, remark,  status,start_date,end_date, duration,suggested_date, created, updated, specialty, patient_name) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
-					db.execute(sql_query, entry.id, entry.u_id,entry.clinic_id, entry.remark,entry.status ,entry.start_date, entry.end_date,entry.duration,entry.suggested_date, entry.created,entry.updated, entry.specialty, entry.patient_name);
-				 	var sql_query =  "UPDATE "+collection.config.adapter.collection_name+" SET clinic_id=?,remark=?,status=?,start_date=?,end_date=?, duration=?, suggested_date=?,updated=?, specialty=?, patient_name=? WHERE id=?";
+		           var sql_query =  "INSERT OR IGNORE INTO "+collection.config.adapter.collection_name+" (id, u_id,clinic_name, remark,  status,start_date,end_date, duration,suggested_date, created, updated, specialty_name, patient_name, doctor_panel_id, doctor_name) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+					db.execute(sql_query, entry.id, entry.u_id,entry.clinic_name, entry.remark,entry.status ,entry.start_date, entry.end_date,entry.duration,entry.suggested_date, entry.created,entry.updated, entry.specialty_name, entry.patient_name, entry.doctor_panel_id, entry.doctor_name);
+				 	var sql_query =  "UPDATE "+collection.config.adapter.collection_name+" SET clinic_name=?,remark=?,status=?,start_date=?,end_date=?, duration=?, suggested_date=?,updated=?, specialty_name=?, patient_name=?, doctor_panel_id=?, doctor_name=? WHERE id=?";
 				 	 
-					db.execute(sql_query,entry.clinic_id,entry.remark, entry.status,entry.start_date,entry.end_date,entry.duration,entry.suggested_date,entry.updated, entry.specialty, entry.patient_name, entry.id);
+					db.execute(sql_query,entry.clinic_name,entry.remark, entry.status,entry.start_date,entry.end_date,entry.duration,entry.suggested_date,entry.updated, entry.specialty, entry.patient_name, entry.doctor_panel_id, entry.doctor_name, entry.id);
 				});
 				db.execute("COMMIT");
 	            db.close();

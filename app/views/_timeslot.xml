@@ -3,7 +3,7 @@
 		<ScrollView class="wfill horz" height="80" showVerticalScrollIndicator="false" scrollType="horizontal" contentWidth="auto" contentHeight="Ti.UI.FILL" backgroundColor="#d7d7d7" id="date_bar">
 
 		</ScrollView>
-		<View class="wfill hsize horz">
+		<View class="wfill hsize horz" horizontalWrap="false">
 			<View class=" hsize" width="25%" backgroundColor="#fccd03">
 				<Label class="padding wfill hsize h6 whiteColor" textAlign="center">Pending</Label>
 			</View>

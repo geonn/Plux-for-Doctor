@@ -1,6 +1,7 @@
 var args = arguments[0] || {}; 
 var clinic_id = Ti.App.Properties.getString('clinic_id');
-var panelListModel = Alloy.createCollection('panelList'); 
+var panelListModel = Alloy.createCollection('panelList');
+var doctor_panelModel = Alloy.createCollection('doctor_panel'); 
 var loading = Alloy.createController("loading");
 var u_id = Ti.App.Properties.getString('u_id');
 var name = Ti.App.Properties.getString('name');
@@ -20,29 +21,36 @@ function showList(){
 function loadClinic(){
 	loading.start();
 	clinic_id = Ti.App.Properties.getString('clinic_id');
+	doctor_id = Ti.App.Properties.getString('doctor_id');
+	console.log(doctor_id+" doctor_id");
+	var panel_data = doctor_panelModel.getDataWithClinic(doctor_id);
+	console.log(panel_data);
 	var doctorPanel = Ti.App.Properties.getString('myClinics') || "";
 	var myPanel = doctorPanel.split(",");
-	if(myPanel.length > 0){ 
-		for(var i=0; i< myPanel.length; i++){
+	if(panel_data.length > 0){ 
+		for(var i=0; i< panel_data.length; i++){
 			 
-			var panelDetails = panelListModel.getDataByID(myPanel[i]);
 			var activeClinic = "#FFFFFF";
 			
-			if(myPanel[i] == clinic_id){
+			if(panel_data[i].clinic_id == clinic_id){
 				activeClinic = "#EBFFDE";
 			}
 			var clinicView = $.UI.create('View',{ 
 				height: 40, 
 				classes: ['wfill',  'vert'], 
-				id: panelDetails.id, 
+				clinicName: panel_data[i].clinicName, 
+				doctor_panel_id:  panel_data[i].id, 
+				clinic_id: panel_data[i].clinic_id,
 				backgroundColor: activeClinic
 			}); 
 			
 			var clinicLabel = $.UI.create('Label',{  
 				classes: ['wfill', 'h5','padding-left'],
 				height: 39, 
-				text: panelDetails.clinicName, 
-				id: panelDetails.id, 
+				clinicName: panel_data[i].clinicName, 
+				doctor_panel_id:  panel_data[i].id, 
+				clinic_id: panel_data[i].clinic_id,
+				text: panel_data[i].clinicName,
 			}); 
 			 
 			var seperateView = $.UI.create('View',{  
@@ -52,16 +60,40 @@ function loadClinic(){
 			clinicView.add(seperateView);
 			$.myClinic.add(clinicView);
 			
-			clinicView.addEventListener('click',selectedPanel);  
+			clinicView.addEventListener('click', function(e){
+				console.log(e);
+				var dialog = Ti.UI.createOptionDialog({
+					cancel: 2,
+					options: ['Select Panel', 'Set Working Hours', 'Cancel'],
+					selectedIndex: 2,
+					clinic_id: e.source.clinic_id,
+					doctor_panel_id: e.source.doctor_panel_id,
+  					title: e.source.clinicName
+				});
+				dialog.show();
+				dialog.addEventListener("click", function(ex){
+					console.log(ex.source);
+					if(ex.index == 0){
+						selectedPanel(ex.source.clinic_id);
+					}else if(ex.index == 1){
+						setWorkingHours(ex.source.doctor_panel_id);
+					}
+				});
+			});
 		}
 	}
 	loading.finish();
 }
 
-function selectedPanel(e){
-	var elbl = JSON.stringify(e.source); 
-	var res = JSON.parse(elbl);    
-	if(res.id == clinic_id){
+function setWorkingHours(doctor_panel_id){
+	Alloy.Globals.Navigator.open('set_working_hour', {doctor_panel_id: doctor_panel_id});
+}
+
+function selectedPanel(id){
+	//var elbl = JSON.stringify(e.source); 
+	//var res = JSON.parse(elbl);  
+	  
+	if(id == clinic_id){
 		return false;
 	}
 		 
@@ -75,7 +107,7 @@ function selectedPanel(e){
 		if (e.index === e.source.cancel){ 
 		}
 		if (e.index === 1){
-			Ti.App.Properties.setString('clinic_id', res.id);
+			Ti.App.Properties.setString('clinic_id', id);
 			COMMON.removeAllChildren($.myClinic);
 			loadClinic();
 		}
