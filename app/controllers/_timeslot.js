@@ -1,6 +1,8 @@
 var args = arguments[0] || {};
 var specialty = args.specialty;
 var clinicId = args.clinic_id;
+var doctor_id = args.doctor_id;
+
 var listing = [];
 var selected_date = args.selected_date || new Date();
 var lastday = selected_date;
@@ -103,10 +105,10 @@ function render_available_timeslot(){
 	 get booked timeblock by u_id and clinic from local DB
 	 * */
 	
-	var start_date = selected_date.getFullYear()+"-"+(parseInt(selected_date.getMonth())+1)+"-"+selected_date.getDate()+" 00:00:00";
-	var end_date = selected_date.getFullYear()+"-"+(parseInt(selected_date.getMonth())+1)+"-"+selected_date.getDate()+" 23:59:59";
-	var appointmentList = appointmentModel.getAppointmentList({u_id: u_id, clinicId: clinicId, specialty: specialty, start_date: start_date, end_date:end_date});
-	console.log("appointmentList");
+	var start_date = selected_date.getFullYear()+"-"+("0"+(parseInt(selected_date.getMonth())+1)).slice(-2)+"-"+("0"+selected_date.getDate()).slice(-2)+" 00:00:00";
+	var end_date = selected_date.getFullYear()+"-"+("0"+(parseInt(selected_date.getMonth())+1)).slice(-2)+"-"+("0"+selected_date.getDate()).slice(-2)+" 23:59:59";
+	var appointmentList = appointmentModel.getAppointmentList({u_id: u_id, doctor_id: doctor_id, start_date: start_date, end_date:end_date});
+	console.log("appointmentList "+doctor_id);
 	console.log(appointmentList);
 	/*
 	 generate booked timeslot from appointment list
@@ -120,7 +122,7 @@ function render_available_timeslot(){
 	  var time_end_key = Math.floor((booking_min+parseInt(appointmentList[i].duration)) / timeblock);
 	  for(;time_end_key > time_start_key;  time_start_key++){
 	  	console.log(time_start_key+"key");
-	  	booked_time[time_start_key] = ({status: appointmentList[i].status, remark: appointmentList[i].remark, patient_name: appointmentList[i].patient_name, patient_id: appointmentList[i].u_id,  duration: appointmentList[i].duration, appointment_id: appointmentList[i].id, minute: booking_min});
+	  	booked_time[time_start_key] = ({status: appointmentList[i].status, remark: appointmentList[i].remark, patient_name: appointmentList[i].patient_name, doctor_panel_id: appointmentList[i].doctor_panel_id, patient_id: appointmentList[i].u_id,  duration: appointmentList[i].duration, appointment_id: appointmentList[i].id, minute: booking_min});
 	  }
 	};
 	
@@ -141,7 +143,8 @@ function render_available_timeslot(){
 	for(key in workingHourArray){
 		
 		var patient_id = workingHourArray[key].patient_id || "";
-		console.log('a '+ workingHourArray[key].duration);
+		var doctor_panel_id = workingHourArray[key].doctor_panel_id || 0;
+		console.log('doctor_panel_id '+ doctor_panel_id);
 		var view_time_box = $.UI.create("View", {
 			view_time_box: 1,
 			width: cell_width,
@@ -151,9 +154,10 @@ function render_available_timeslot(){
 			duration: workingHourArray[key].duration,
 			patient_name: workingHourArray[key].patient_name,
 			patient_id: patient_id,
+			doctor_panel_id: doctor_panel_id,
 			appointment_id: workingHourArray[key].appointment_id,
 			backgroundColor: indicator_color[workingHourArray[key].status],
-			date_s:  selected_date.getFullYear()+"-"+(parseInt(selected_date.getMonth())+1)+"-"+selected_date.getDate()+" "+convertMinuteToHour(workingHourArray[key].minute),
+			date_s:  selected_date.getFullYear()+"-"+("0"+(parseInt(selected_date.getMonth())+1)).slice(-2)+"-"+("0"+selected_date.getDate()).slice(-2)+" "+convertMinuteToHour(workingHourArray[key].minute),
 			classes: ["hsize", 'time_gap']
 		});
 	    

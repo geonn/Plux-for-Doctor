@@ -14,8 +14,9 @@ function onload(responseText){
 		loading.finish(); 
 		var arr = result.data;
 		//Ti.App.Properties.setString('clinic_id', arr.clinic_id);
-		Ti.App.Properties.setString('specialty', arr.specialty);
-   		Ti.App.Properties.setString('u_id', arr.id);
+		//Ti.App.Properties.setString('specialty', arr.specialty);
+   		Ti.App.Properties.setString('u_id', arr.doctor_id);
+   		Ti.App.Properties.setString('doctor_id', arr.doctor_id);
    		Ti.App.Properties.setString('name', arr.name);
    		Ti.App.Properties.setString('myClinics', arr.clinic_id);
    		var clinic_id = Ti.App.Properties.getString('clinic_id') || "";

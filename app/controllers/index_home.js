@@ -9,7 +9,7 @@ Alloy.Globals.Navigator = {
 	navGroup: $.nav,
 	
 	open: function(controller, payload){
-		console.log(controller);
+		console.log(payload);
 		var win = Alloy.createController(controller, payload || {}).getView();
 		
 		if(OS_IOS){

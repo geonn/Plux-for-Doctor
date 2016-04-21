@@ -13,20 +13,23 @@ var addAppointmentUrl = "http://"+API_DOMAIN+"/api/addAppointment?user="+USER+"&
 //API when app loading phase
 var getAppHomepageBackgroundUrl = "http://"+API_DOMAIN+"/api/getAppHomepageBackground?user="+USER+"&key="+KEY;
 var getDoctorListUrl            = "http://"+API_DOMAIN+"/api/getDoctorList?user="+USER+"&key="+KEY;
-var getAppointmentByClinic 		= "http://"+API_DOMAIN+"/api/getAppointmentByClinic?user="+USER+"&key="+KEY;
+var getAppointmentByDoctor 		= "http://"+API_DOMAIN+"/api/getAppointmentByDoctor?user="+USER+"&key="+KEY;
 var getIdaListUrl               = "http://"+API_DOMAIN+"/api/getIda?user="+USER+"&key="+KEY;
 var clinicListUrl 				= "http://"+API_DOMAIN+"/api/getClinicLocator?user="+USER+"&key="+KEY; 
 var changePasswordUrl 			= "http://"+API_DOMAIN+"/api/doctorChangePassword?user="+USER+"&key="+KEY; 
 var updateDoctorProfileUrl 		= "http://"+API_DOMAIN+"/api/updateDoctorProfile?user="+USER+"&key="+KEY; 
 var updateDoctorPanelUrl        = "http://"+API_DOMAIN+"/api/updateDoctorPanel?user="+USER+"&key="+KEY; 
+var getDoctorPanelUrl        	= "http://"+API_DOMAIN+"/api/getDoctorPanel?user="+USER+"&key="+KEY; 
+var getWorkingHoursByDoctorPanelUrl = "http://"+API_DOMAIN+"/api/getWorkingHoursByDoctorPanel?user="+USER+"&key="+KEY; 
+var addUpdateWorkingHoursUrl 	= "http://"+API_DOMAIN+"/api/addUpdateWorkingHours?user="+USER+"&key="+KEY;
 
 //API that call in sequence 
 var APILoadingList = [
 	{url: getAppHomepageBackgroundUrl, model: "background", checkId: "1"},
 	{url: getDoctorListUrl, model: "doctor", checkId: "2"},
 	{url: getIdaListUrl, model: "ida", checkId: "3"},
-	{url: getAppointmentByClinic, model: "appointment", checkId: "4"},
 	{url: clinicListUrl, model: "panelList", checkId: "5"},
+	{url: getDoctorPanelUrl, model: "doctor_panel", checkId: "6"},
 ];
 
 /*********************
@@ -134,6 +137,17 @@ exports.loadAPIBySequence = function (ex, counter){
 			API.loadAPIBySequence(ex, counter);
 			return;
 		}
+	}else if(api['model'] == "doctor_panel"){
+		var doctor_id = Ti.App.Properties.getString('doctor_id') || 0;
+		addon_url = "&doctor_id="+doctor_id;
+		console.log(addon_url);
+		var isUpdate = checker.getCheckerById(api['checkId'], doctor_id);
+		var last_updated = isUpdate.updated || "";
+		if(!doctor_id){
+			counter++;
+			API.loadAPIBySequence(ex, counter);
+			return;
+		}
 	}else{
 		var isUpdate = checker.getCheckerById(api['checkId']);
 		var last_updated = isUpdate.updated || "";
@@ -198,6 +212,7 @@ function contactServerByPost(url,records) {
 	if(OS_ANDROID){
 	 	client.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded'); 
 	 }
+	console.log(records);
 	client.open("POST", url);
 	client.send(records);
 	return client;
