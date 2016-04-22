@@ -246,11 +246,9 @@ function contactServerByPostWithJson(url,records) {
 	var client = Ti.Network.createHTTPClient({
 		timeout : 5000
 	});
-	if(OS_ANDROID){
-	 	client.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded'); 
-	 }
+	
 	client.setRequestHeader('ContentType', 'application/json');
-	client.setRequestHeader('processData', false);
+	//client.setRequestHeader('processData', false);
 	console.log(records);
 	client.open("POST", url);
 	client.send(records);
@@ -261,7 +259,7 @@ function contactServerByPostImage(url, records) {
 	var client = Ti.Network.createHTTPClient({
 		timeout : 5000
 	});
-	client.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');  
+	client.setRequestHeader('ContentType', 'application/x-www-form-urlencoded');  
 	client.open("POST", url);
 	client.send(records); 
 	return client;

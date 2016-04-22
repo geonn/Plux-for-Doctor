@@ -55,7 +55,7 @@ init();
 function updateWokingHour(){
 	console.log("updateWokingHour");
 	console.log(JSON.stringify(working_hour_arr));
-	API.callByPostWithJson({url:"addUpdateWorkingHoursUrl", params: {working_hours: working_hour_arr}}, function(responseText){
+	API.callByPostWithJson({url:"addUpdateWorkingHoursUrl", params: {working_hours: JSON.stringify(working_hour_arr)}}, function(responseText){
 		var res = JSON.parse(responseText);
 		var arr = res.data || null;
 	});
