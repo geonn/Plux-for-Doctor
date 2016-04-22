@@ -43,7 +43,7 @@ function onload(responseText){
    		}
    		
 		
-		callback && callback();
+		//callback && callback();
 	}
 }
  
@@ -115,10 +115,19 @@ function selectedPanelEvent(ctable,pop){
 		var elbl = JSON.stringify(e.source); 
 		var res = JSON.parse(elbl);     
 		Ti.App.Properties.setString('clinic_id', res.id);
-		 
+		
+		var doctor_id = Ti.App.Properties.getString('doctor_id');
+		var model = Alloy.createCollection('doctor_panel');  
+		var doctor_panel = model.getDoctorPanelId(doctor_id ,res.id);
+		console.log("doctor_panel");
+		console.log(doctor_panel);
+		Ti.App.Properties.setString('doctor_panel_id', doctor_panel.id);
+		
 		pop.close();
-		var index_home = Alloy.createController("index_home").getView();
-		index_home.open();
+		$.win.close();
+		callback && callback();
+		//var index_home = Alloy.createController("index_home").getView();
+		//index_home.open();
 	}); 
 }
 

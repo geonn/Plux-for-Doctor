@@ -108,6 +108,13 @@ function selectedPanel(id){
 		}
 		if (e.index === 1){
 			Ti.App.Properties.setString('clinic_id', id);
+			var doctor_id = Ti.App.Properties.getString('doctor_id');
+			var model = Alloy.createCollection('doctor_panel');  
+			var doctor_panel = model.getDoctorPanelId(doctor_id, id);
+			console.log("setting doctor_panel");
+			console.log(doctor_panel);
+			Ti.App.Properties.setString('doctor_panel_id', doctor_panel.id);
+		
 			COMMON.removeAllChildren($.myClinic);
 			loadClinic();
 		}

@@ -58,8 +58,8 @@ exports.definition = {
 				
 				var query_start_date = (typeof ex.start_date != "undefined")?" AND a.start_date >= ? AND a.start_date < ? ":"";
 				var collection = this;
-                var sql = "SELECT a.* FROM appointment as a, doctor_panel as dp WHERE dp.id = a.doctor_panel_id AND dp.doctor_id = ? "+query_start_date+" AND a.status != 5 ORDER BY a.created DESC";
-              	 
+                //var sql = "SELECT a.* FROM appointment as a, doctor_panel as dp WHERE dp.id = a.doctor_panel_id AND dp.doctor_id = ? "+query_start_date+" AND a.status != 5 ORDER BY a.created DESC";
+              	var sql = "SELECT * from appointment where doctor_panel_id = ? "+query_start_date+" AND a.status != 5 ORDER BY a.created DESC";
                 db = Ti.Database.open(collection.config.adapter.db_name);
                 if(Ti.Platform.osname != "android"){
                 	db.file.setRemoteBackup(false);
@@ -67,9 +67,9 @@ exports.definition = {
                 if(typeof ex.doctor_id != "undefined"){
                 	if(typeof ex.start_date != "undefined"){
                 		console.log(ex.start_date+" "+ex.end_date); //"2016-04-21 10:00:00"
-                		var res = db.execute(sql, ex.doctor_id, ex.start_date, ex.end_date);
+                		var res = db.execute(sql, ex.doctor_panel_id, ex.start_date, ex.end_date);
                 	}else{
-                		var res = db.execute(sql, ex.doctor_id);
+                		var res = db.execute(sql, ex.doctor_panel_id);
                 	}
                 }else{
                 	var res = db.execute(sql);

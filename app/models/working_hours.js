@@ -29,13 +29,13 @@ exports.definition = {
 			// extended functions and properties go here
 			getData : function(doctor_panel_id){
 				var collection = this;
-                var sql = "SELECT * FROM "+collection.config.adapter.collection_name+" where doctor_panel_id = ?";
+                var sql = "SELECT * FROM "+collection.config.adapter.collection_name+"";
                 
                 db = Ti.Database.open(collection.config.adapter.db_name);
                 if(Ti.Platform.osname != "android"){
                 	db.file.setRemoteBackup(false);
                 }
-                var res = db.execute(sql, doctor_panel_id);
+                var res = db.execute(sql);
                 var arr = []; 
                 var count = 0;
                 while (res.isValidRow()){

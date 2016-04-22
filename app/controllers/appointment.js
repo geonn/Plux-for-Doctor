@@ -1,6 +1,7 @@
 var args = arguments[0] || {};
 var doctor_id = Ti.App.Properties.getString('doctor_id') || 0;
 var specialty = Ti.App.Properties.getString('specialty') || 0;
+var doctor_panel_id = Ti.App.Properties.getString('doctor_panel_id') || 0;
 var pWidth = Ti.Platform.displayCaps.platformWidth;
 var pHeight = Ti.Platform.displayCaps.platformHeight;
 var loading = Alloy.createController("loading");
@@ -163,7 +164,7 @@ function render_suggest_box(){
  	render timeslot
  * */
 function render_timeslot(){
-	var _timeslot = Alloy.createController("_timeslot", {date_click: date_click, doctor_id: doctor_id}).getView();
+	var _timeslot = Alloy.createController("_timeslot", {date_click: date_click, doctor_id: doctor_id, doctor_panel_id: doctor_panel_id}).getView();
 	$.inner_box.add(_timeslot);
 }
 

@@ -48,6 +48,29 @@ exports.definition = {
                 collection.trigger('sync');
                 return arr;
 			},
+			getDoctorPanelId : function(doctor_id, clinic_id){
+				var collection = this;
+                var sql = "SELECT * FROM "+collection.config.adapter.collection_name+" where doctor_id = ? and clinic_id = ?";
+                
+                db = Ti.Database.open(collection.config.adapter.db_name);
+                if(Ti.Platform.osname != "android"){
+                	db.file.setRemoteBackup(false);
+                }
+                var res = db.execute(sql, doctor_id, clinic_id);
+                var arr; 
+                var count = 0;
+                if (res.isValidRow()){
+					arr = {
+					    id: res.fieldByName('id'),
+					    doctor_id: res.fieldByName('doctor_id'),
+					    clinic_id: res.fieldByName('clinic_id'),
+					};
+				}
+				res.close();
+                db.close();
+                collection.trigger('sync');
+                return arr;
+			},
 			getDataWithClinic : function(doctor_id){
 				var collection = this;
                 var sql = "SELECT doctor_panel.*, panelList.clinicName FROM "+collection.config.adapter.collection_name+" left outer join panelList on panelList.id = doctor_panel.clinic_id where doctor_panel.doctor_id = ?";
