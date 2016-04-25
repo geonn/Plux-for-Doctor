@@ -2,7 +2,10 @@ var args = arguments[0] || {};
 var specialty = args.specialty;
 var clinicId = args.clinic_id;
 var doctor_id = args.doctor_id;
+//var doctor_panel_id = args.doctor_panel_id;
+var doctor_panel_id = Ti.App.Properties.getString('doctor_panel_id');
 
+var working_hour = [];
 var listing = [];
 var selected_date = args.selected_date || new Date();
 var lastday = selected_date;
@@ -73,6 +76,25 @@ function render_date_bar(){
 }
 
 function render_available_timeslot(){
+	for (var i=0; i < working_hour.length; i++) {
+		if(working_hour[i].days == selected_date.getDay()){
+	  		console.log(working_hour[i]);
+	  		console.log(working_hour[i].time_start+" "+working_hour[i].duration);
+	  		var whb = working_hour[i].time_start.split(":");
+	  		var whe = working_hour[i].time_end.split(":");
+	  		console.log(parseInt(whb[0]) * 60 + parseInt(whb[1]));
+	  		
+	  		Ti.App.Properties.setString('working_hour_begin', parseInt(whb[0]) * 60 + parseInt(whb[1]));
+			Ti.App.Properties.setString('working_hour_end', parseInt(whe[0]) * 60 + parseInt(whe[1]));
+			Ti.App.Properties.setString('timeblock', working_hour[i].duration);
+			break;
+	  	}else{
+	  		Ti.App.Properties.setString('working_hour_begin', 0);
+			Ti.App.Properties.setString('working_hour_end', 0);
+			Ti.App.Properties.setString('timeblock', 0);
+	  	}
+  	}
+	  
 	var pw = Ti.Platform.displayCaps.platformWidth;
 	var ldf = Ti.Platform.displayCaps.logicalDensityFactor;
 	var pwidth = parseInt(pw / (ldf || 1), 10);
@@ -107,7 +129,7 @@ function render_available_timeslot(){
 	
 	var start_date = selected_date.getFullYear()+"-"+("0"+(parseInt(selected_date.getMonth())+1)).slice(-2)+"-"+("0"+selected_date.getDate()).slice(-2)+" 00:00:00";
 	var end_date = selected_date.getFullYear()+"-"+("0"+(parseInt(selected_date.getMonth())+1)).slice(-2)+"-"+("0"+selected_date.getDate()).slice(-2)+" 23:59:59";
-	var appointmentList = appointmentModel.getAppointmentList({u_id: u_id, doctor_id: doctor_id, start_date: start_date, end_date:end_date});
+	var appointmentList = appointmentModel.getAppointmentList({u_id: u_id, doctor_panel_id: doctor_panel_id, start_date: start_date, end_date:end_date});
 	console.log("appointmentList "+doctor_id);
 	console.log(appointmentList);
 	/*
@@ -208,12 +230,21 @@ function changeDate(e){
 }
 
 function refresh(){
-	//listing = panelListModel.getPanelListTest();
-	render_date_bar();
-	render_available_timeslot();
+	/*var model = Alloy.createCollection('working_hours');  
+	console.log(doctor_panel_id+" doctor_panel_id");
+	
+	working_hour = model.getData(doctor_panel_id);
+	console.log(working_hour);*/
+	API.callByPost({url:"getWorkingHoursByDoctorPanelUrl", params: {doctor_panel_id: doctor_panel_id}}, function(responseText){
+		var model = Alloy.createCollection("doctor_panel");
+		var res = JSON.parse(responseText);
+		working_hour = res.data || null;
+		render_available_timeslot();
+	});
 }
 
 function init(){
+	render_date_bar();
 	refresh();
 }
 

@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ti:app xmlns:ti="http://ti.appcelerator.org">
-    <id>com.freejini.pluxfordoctor</id>
+    <id>com.plux.doctor</id>
     <name>Plux-for-Doctor</name>
     <version>1.0</version>
     <publisher>PLUX Health</publisher>
     <url>http://</url>
-    <description>undefined</description>
-    <copyright>2015 by PLUX Health</copyright>
+    <description>PLUX for Doctor</description>
+    <copyright>2016 by PLUX Health</copyright>
     <icon>appicon.png</icon>
     <fullscreen>false</fullscreen>
     <navbar-hidden>false</navbar-hidden>
     <analytics>true</analytics>
-   <guid>8a29b61f-6cef-4bf1-9ddd-7fff432210b3</guid>
+    <guid>8a29b61f-6cef-4bf1-9ddd-7fff432210b3</guid>
     <property name="ti.ui.defaultunit" type="string">dp</property>
     <ios>
         <plist>
@@ -66,9 +66,8 @@
         <target device="iphone">true</target>
         <target device="mobileweb">false</target>
         <target device="windows">false</target>
-    </deployment-targets> 
-    <sdk-version>5.1.2.GA</sdk-version>
- 
+    </deployment-targets>
+    <sdk-version>5.2.1.GA</sdk-version>
     <plugins>
         <plugin version="1.0">ti.alloy</plugin>
     </plugins>
