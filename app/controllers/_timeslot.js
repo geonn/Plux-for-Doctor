@@ -4,7 +4,7 @@ var clinicId = args.clinic_id;
 var doctor_id = args.doctor_id;
 //var doctor_panel_id = args.doctor_panel_id;
 var doctor_panel_id = Ti.App.Properties.getString('doctor_panel_id');
-
+console.log(doctor_panel_id+" init doctor_panel_id");
 var working_hour = [];
 var listing = [];
 var selected_date = args.selected_date || new Date();
@@ -78,11 +78,8 @@ function render_date_bar(){
 function render_available_timeslot(){
 	for (var i=0; i < working_hour.length; i++) {
 		if(working_hour[i].days == selected_date.getDay()){
-	  		console.log(working_hour[i]);
-	  		console.log(working_hour[i].time_start+" "+working_hour[i].duration);
 	  		var whb = working_hour[i].time_start.split(":");
 	  		var whe = working_hour[i].time_end.split(":");
-	  		console.log(parseInt(whb[0]) * 60 + parseInt(whb[1]));
 	  		
 	  		Ti.App.Properties.setString('working_hour_begin', parseInt(whb[0]) * 60 + parseInt(whb[1]));
 			Ti.App.Properties.setString('working_hour_end', parseInt(whe[0]) * 60 + parseInt(whe[1]));
@@ -130,8 +127,7 @@ function render_available_timeslot(){
 	var start_date = selected_date.getFullYear()+"-"+("0"+(parseInt(selected_date.getMonth())+1)).slice(-2)+"-"+("0"+selected_date.getDate()).slice(-2)+" 00:00:00";
 	var end_date = selected_date.getFullYear()+"-"+("0"+(parseInt(selected_date.getMonth())+1)).slice(-2)+"-"+("0"+selected_date.getDate()).slice(-2)+" 23:59:59";
 	var appointmentList = appointmentModel.getAppointmentList({u_id: u_id, doctor_panel_id: doctor_panel_id, start_date: start_date, end_date:end_date});
-	console.log("appointmentList "+doctor_id);
-	console.log(appointmentList);
+	
 	/*
 	 generate booked timeslot from appointment list
 	 * */
@@ -143,7 +139,7 @@ function render_available_timeslot(){
 	  var time_start_key = Math.floor(booking_min / timeblock);
 	  var time_end_key = Math.floor((booking_min+parseInt(appointmentList[i].duration)) / timeblock);
 	  for(;time_end_key > time_start_key;  time_start_key++){
-	  	console.log(time_start_key+"key");
+	  	
 	  	booked_time[time_start_key] = ({status: appointmentList[i].status, remark: appointmentList[i].remark, patient_name: appointmentList[i].patient_name, doctor_panel_id: appointmentList[i].doctor_panel_id, patient_id: appointmentList[i].u_id,  duration: appointmentList[i].duration, appointment_id: appointmentList[i].id, minute: booking_min});
 	  }
 	};
@@ -151,22 +147,27 @@ function render_available_timeslot(){
 	/*
 	 replace booked slot at workingHourArray
 	 * */
-	console.log(booked_time);
+	
 	booked_time.forEach( function ( val, i ) {
 		workingHourArray[i] = val;
 	});
 	
 	//workingHourArray = _.omit(workingHourArray, booked_time);
-	console.log("workingHourArray");
-	console.log(workingHourArray);
+	
 	/*
 	 render workingHourArray 
 	 * */
+	var timeslot = $.UI.create("View",{
+		left:1,
+		top:1,
+		classes:['wfill','hsize','horz']
+	});
+		
 	for(key in workingHourArray){
 		
 		var patient_id = workingHourArray[key].patient_id || "";
-		var doctor_panel_id = workingHourArray[key].doctor_panel_id || 0;
-		console.log('doctor_panel_id '+ doctor_panel_id);
+		var dpi = workingHourArray[key].doctor_panel_id || 0;
+		
 		var view_time_box = $.UI.create("View", {
 			view_time_box: 1,
 			width: cell_width,
@@ -176,7 +177,7 @@ function render_available_timeslot(){
 			duration: workingHourArray[key].duration,
 			patient_name: workingHourArray[key].patient_name,
 			patient_id: patient_id,
-			doctor_panel_id: doctor_panel_id,
+			doctor_panel_id: dpi,
 			appointment_id: workingHourArray[key].appointment_id,
 			backgroundColor: indicator_color[workingHourArray[key].status],
 			date_s:  selected_date.getFullYear()+"-"+("0"+(parseInt(selected_date.getMonth())+1)).slice(-2)+"-"+("0"+selected_date.getDate()).slice(-2)+" "+convertMinuteToHour(workingHourArray[key].minute),
@@ -192,7 +193,8 @@ function render_available_timeslot(){
 		});
 		
 		view_time_box.add(label_time);
-		$.timeslot.add(view_time_box);
+		
+		timeslot.add(view_time_box);
 		if(args.multiple_select){
 			if(!workingHourArray[key].status){
 				view_time_box.addEventListener("click", args.date_click);
@@ -201,9 +203,12 @@ function render_available_timeslot(){
 			view_time_box.addEventListener("click", args.date_click);
 		}
 	}
+	$.timeslot.add(timeslot);
+	Ti.App.fireEvent("appointment:loadingOff");
 }
 
 function changeDate(e){
+	Ti.App.fireEvent("appointment:loadingOn");
 	var sdate = parent({name: "date_s"}, e.source);
 	var childrens = $.date_bar.getChildren();
 	

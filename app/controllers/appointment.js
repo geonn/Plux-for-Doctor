@@ -29,7 +29,7 @@ function openDetailBox(e){
 	var id = parent({name: "appointment_id"}, e.source);
 	var dp_id = parent({name: "doctor_panel_id"}, e.source);
 	if(id){
-		console.log(id+" appointment id");
+		
 		selected_id = id;
 		doctor_panel_id = dp_id;
 		selected_date = parent({name: "selected_date"}, e.source);
@@ -46,7 +46,7 @@ function openDetailBox(e){
 		$.duration.text = duration;
 		
 		if(!detail_box_open){
-			console.log(status);
+			
 			if(status == 3 || status == 2){
 				$.action_box.height = 0;
 				$.action_box.hide();
@@ -108,7 +108,7 @@ function multiple_select(e){
 	view_time_box.backgroundColor = "#3f99f9";
 	var start_date = parent({name: "date_s"}, e.source);
 	var duration = parent({name: "duration"}, e.source);
-	console.log(doctor_panel_id);
+	
 	
 	var param = { 
 		u_id : patient_id,
@@ -181,7 +181,6 @@ function render_calendar(){
  * */
 function refresh(e){
 	loading.start();
-	console.log(selected_date);
 	var today_start_date = selected_date.getFullYear()+"-"+('0'+(selected_date.getMonth()+1)).slice(-2)+"-"+('0'+selected_date.getDate()).slice(-2)+" 00:00:00";
 	var today_end_date = selected_date.getFullYear()+"-"+('0'+(selected_date.getMonth()+1)).slice(-2)+"-"+('0'+selected_date.getDate()).slice(-2)+" 23:59:59";
 	var start_date = (typeof e !="undefined")?e.selected_date+" 00:00:00":today_start_date;
@@ -197,7 +196,6 @@ function refresh(e){
 		model.saveArray(arr);
 		checker.updateModule(4,"getAppointmentByDoctor", Common.now(), doctor_id);
 		render_timeslot();
-		loading.finish();
 	});
 }
 
@@ -234,7 +232,7 @@ function onReject(){
 }
 
 function onOk(){
-	console.log(selected_time);
+	
 	if(!selected_time.length){
 		alert("please select at least one suggested time");
 		return ;
@@ -244,7 +242,7 @@ function onOk(){
 	  API.callByPost({url:"addAppointmentUrl", params: selected_time[i]}, function(responseText){
 	  	var res = JSON.parse(responseText);
 		var arr = res.data || null;
-		console.log(res.data);		
+			
 	  	appointment.saveArray(res.data);
 	  	save_counter++;
 	  	if(save_counter == selected_time.length){
@@ -267,7 +265,7 @@ function onCancel(){
 
 function updateAppointmentStatus(param, _callback){
 	loading.start();
-	console.log(param);
+	
 	API.callByPost({url:"addAppointmentUrl", params: param}, function(responseText){
 		var res = JSON.parse(responseText);
 		if(res.status == "success"){
@@ -280,6 +278,15 @@ function updateAppointmentStatus(param, _callback){
 		}
 		_callback && _callback();
 	});
+}
+
+function loadingOff(){
+	loading.finish();
+}
+
+function loadingOn(){
+	console.log('on?');
+	loading.start();
 }
 
 /**
@@ -298,14 +305,17 @@ function init(){
 init();
 
 //$.main.addEventListener("scroll", closeDetailBox);
-
+Ti.App.addEventListener('appointment:loadingOn', loadingOn);
+Ti.App.addEventListener('appointment:loadingOff', loadingOff);
 Ti.App.addEventListener('appointment:refresh', refresh);
 
 $.masked.addEventListener("click", closeDetailBox);
 $.masked2.addEventListener("click", closeSuggestBox);
 
 $.win.addEventListener("close", function(){
-	Ti.App.removeEventListener('friends:refresh',refresh);
+	Ti.App.removeEventListener('appointment:refresh',refresh);
+	Ti.App.removeEventListener('appointment:loadingOff',loadingOff);
+	Ti.App.removeEventListener('appointment:loadingOn',loadingOn);
 	$.destroy();
 	console.log("window close");
 });
@@ -316,7 +326,7 @@ $.win.addEventListener("close", function(){
 
 function formatDate(date) {
     var d = new Date(date);
-    console.log(d);
+    
     var hh = d.getHours();
     var m = d.getMinutes();
     var s = d.getSeconds();
@@ -340,7 +350,7 @@ function formatDate(date) {
 
 function convertMinuteToHour(minutes){
 	minutes = parseInt(minutes);
-	console.log(minutes);
+	
 	var hour = Math.floor(minutes/60);
 	var minute = minutes%60;
     return hour+"h "+('0' + minute).slice(-2)+" m";
