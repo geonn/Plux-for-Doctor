@@ -285,7 +285,6 @@ function loadingOff(){
 }
 
 function loadingOn(){
-	console.log('on?');
 	loading.start();
 }
 
@@ -317,7 +316,6 @@ $.win.addEventListener("close", function(){
 	Ti.App.removeEventListener('appointment:loadingOff',loadingOff);
 	Ti.App.removeEventListener('appointment:loadingOn',loadingOn);
 	$.destroy();
-	console.log("window close");
 });
 
 /*

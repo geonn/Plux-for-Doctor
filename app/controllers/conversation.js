@@ -22,8 +22,8 @@ function SendMessage(){
 		var model = Alloy.createCollection("message");
 		var res = JSON.parse(responseText);
 		var arr = res.data || null;
-		console.log('message sent');
-		console.log(arr);
+		//console.log('message sent');
+		//console.log(arr);
 		model.saveRecord(arr);
 		
 		$.message.value = "";
@@ -46,7 +46,7 @@ function render_conversation(){
 		var view_container = $.UI.create("View",{
 			classes: ['hsize','wfill','horz']
 		});
-		console.log("u_id: "+data[i].u_id+" = "+u_id+", message:"+data[i].message+", dr_id:"+data[i].dr_id);
+		//console.log("u_id: "+data[i].u_id+" = "+u_id+", message:"+data[i].message+", dr_id:"+data[i].dr_id);
 		/*var thumb_path = (data[i].u_id == u_id)?user_thumb_path:friend_thumb_path;
 		var imageview_thumb_path = $.UI.create("ImageView", {
 			top: 10,
@@ -97,8 +97,8 @@ function getConversationByRoomId(callback){
 		var model = Alloy.createCollection("message");
 		var res = JSON.parse(responseText);
 		var arr = res.data || null;
-		console.log('api get message');
-		console.log(arr);
+		//console.log('api get message');
+		//console.log(arr);
 		model.saveArray(arr, callback);
 		checker.updateModule(5, "getMessageByItem", Common.now());
 		
@@ -156,5 +156,5 @@ Ti.App.addEventListener('conversation:refresh', refresh);
 $.win.addEventListener("close", function(){
 	Ti.App.removeEventListener('conversation:refresh',refresh);
 	$.destroy();
-	console.log("window close");
+	//console.log("window close");
 });

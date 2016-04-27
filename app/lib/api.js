@@ -44,14 +44,11 @@ exports.callByPost = function(e, onload, onerror){
 		var url = eval(e.url);
 		console.log(url);
 		var _result = contactServerByPost(url, e.params || {});   
-		_result.onload = function(ex) { 
-			console.log('success callByPost');
-			console.log(this.responseText);
+		_result.onload = function(ex) {  
 			onload && onload(this.responseText); 
 		};
 		
-		_result.onerror = function(ex) {
-			console.log('failure callByPost');
+		_result.onerror = function(ex) { 
 			console.log(ex);
 			//API.callByPost(e, onload, onerror); 
 		};
@@ -140,11 +137,12 @@ exports.sendNotification = function(e){
 
 exports.loadAPIBySequence = function (ex, counter){ 
 	counter = (typeof counter == "undefined")?0:counter;
-	if(counter >= APILoadingList.length){
+	console.log('a - '+ counter +" == " +  APILoadingList.length);
+	if(counter >=  APILoadingList.length){
 		Ti.App.fireEvent('app:next_loading');
 		return false;
 	}
-	console.log('a');
+	
 	var api = APILoadingList[counter];
 	var model = Alloy.createCollection(api['model']);
 	var checker = Alloy.createCollection('updateChecker'); 
