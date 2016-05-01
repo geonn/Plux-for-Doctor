@@ -20,6 +20,7 @@ var changePasswordUrl 			= "http://"+API_DOMAIN+"/api/doctorChangePassword?user=
 var updateDoctorProfileUrl 		= "http://"+API_DOMAIN+"/api/updateDoctorProfile?user="+USER+"&key="+KEY; 
 var updateDoctorPanelUrl        = "http://"+API_DOMAIN+"/api/updateDoctorPanel?user="+USER+"&key="+KEY; 
 var getDoctorPanelUrl        	= "http://"+API_DOMAIN+"/api/getDoctorPanel?user="+USER+"&key="+KEY; 
+var uploadDoctorImageUrl		= "http://"+API_DOMAIN+"/api/uploadDoctorImage?user="+USER+"&key="+KEY; 
 var getWorkingHoursByDoctorPanelUrl = "http://"+API_DOMAIN+"/api/getWorkingHoursByDoctorPanel?user="+USER+"&key="+KEY; 
 var addUpdateWorkingHoursUrl 	= "http://"+API_DOMAIN+"/api/addUpdateWorkingHours?user="+USER+"&key="+KEY;
 
@@ -42,7 +43,7 @@ exports.callByPost = function(e, onload, onerror){
 	var deviceToken = Ti.App.Properties.getString('deviceToken');
 	if(deviceToken != ""){  
 		var url = eval(e.url);
-		console.log(url);
+		 
 		var _result = contactServerByPost(url, e.params || {});   
 		_result.onload = function(ex) {  
 			onload && onload(this.responseText); 
@@ -80,10 +81,10 @@ exports.callByPostWithJson = function(e, onload, onerror){
 // call API by post method
 exports.callByPostImage = function(e, onload, onerror) { 
 	var client = Ti.Network.createHTTPClient({
-		timeout : 5000
+		timeout : 50000
 	});
 	var url = eval(e.url);
-	var _result = contactServerByPostImage(url, e.params || {});
+	var _result = contactServerByPostImage(url+"&u_id="+e.params.u_id,e.img);
 	_result.onload = function(e) { 
 		console.log('success');
 		onload && onload(this.responseText); 
@@ -253,14 +254,17 @@ function contactServerByPostWithJson(url,records) {
 	return client;
 };
 
-function contactServerByPostImage(url, records) { 
+function contactServerByPostImage(url, img) { 
+ 
 	var client = Ti.Network.createHTTPClient({
-		timeout : 5000
+		timeout : 50000
 	});
-	client.setRequestHeader('ContentType', 'application/x-www-form-urlencoded');  
+	 
+	//client.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');  
 	client.open("POST", url);
-	client.send(records); 
+	client.send({Filedata: img.photo}); 
 	return client;
+	
 };
 
 function onErrorCallback(e) { 

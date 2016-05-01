@@ -7,6 +7,7 @@ exports.definition = {
 		    "email": "INTEGER",
 		    "mobile": "INTEGER",
 		    "specialty": "TEXT",
+		    "img_path": "TEXT",
 		    "qualification": "TEXT",
 		    "introduction": "TEXT",
 		    "status": "INTEGER",
@@ -29,6 +30,25 @@ exports.definition = {
 	extendCollection: function(Collection) {
 		_.extend(Collection.prototype, {
 			// extended functions and properties go here
+			addColumn : function( newFieldName, colSpec) {
+				var collection = this;
+				var db = Ti.Database.open(collection.config.adapter.db_name);
+				if(Ti.Platform.osname != "android"){
+                	db.file.setRemoteBackup(false);
+                }
+				var fieldExists = false;
+				resultSet = db.execute('PRAGMA TABLE_INFO(' + collection.config.adapter.collection_name + ')');
+				while (resultSet.isValidRow()) {
+					if(resultSet.field(1)==newFieldName) {
+						fieldExists = true;
+					}
+					resultSet.next();
+				}
+			 	if(!fieldExists) { 
+					db.execute('ALTER TABLE ' + collection.config.adapter.collection_name + ' ADD COLUMN '+newFieldName + ' ' + colSpec);
+				}
+				db.close();
+			},
 			getData : function(){
 				var collection = this;
                 var sql = "SELECT * FROM "+collection.config.adapter.collection_name+" where status = 1";
@@ -71,6 +91,7 @@ exports.definition = {
 					    mobile: res.fieldByName('mobile'), 
 					    specialty: res.fieldByName('specialty'),
 					    qualification: res.fieldByName('qualification'),
+					    img_path: res.fieldByName('img_path'),
 					    introduction: res.fieldByName('introduction'),
 				  		updated: res.fieldByName('updated'),
 					  };
@@ -89,10 +110,10 @@ exports.definition = {
                 }
                 db.execute("BEGIN");
                 arr.forEach(function(entry) {
-	                var sql_query =  "INSERT OR IGNORE INTO "+collection.config.adapter.collection_name+" (id, name, dr_code, email, mobile, specialty, qualification, introduction, status, updated, created) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
-					db.execute(sql_query, entry.id, entry.name, entry.dr_code, entry.email, entry.mobile, entry.specialty, entry.qualification, entry.introduction,  entry.status, Common.now(), Common.now());
-					var sql_query =  "UPDATE "+collection.config.adapter.collection_name+" SET name=?, dr_code=?, email=?, mobile=?, specialty=?, qualification=?, introduction=?, status=?, updated=? WHERE id=?";
-					db.execute(sql_query, entry.name, entry.dr_code, entry.email, entry.mobile, entry.specialty, entry.qualification, entry.introduction,  entry.status, Common.now(), entry.id);
+	                var sql_query =  "INSERT OR IGNORE INTO "+collection.config.adapter.collection_name+" (id, name, dr_code, email, mobile, specialty, qualification,img_path, introduction, status, updated, created) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+					db.execute(sql_query, entry.id, entry.name, entry.dr_code, entry.email, entry.mobile, entry.specialty, entry.qualification,entry.img_path, entry.introduction,  entry.status, Common.now(), Common.now());
+					var sql_query =  "UPDATE "+collection.config.adapter.collection_name+" SET name=?, dr_code=?, email=?, mobile=?, specialty=?, qualification=?,img_path=?, introduction=?, status=?, updated=? WHERE id=?";
+					db.execute(sql_query, entry.name, entry.dr_code, entry.email, entry.mobile, entry.specialty, entry.qualification,entry.img_path, entry.introduction,  entry.status, Common.now(), entry.id);
 				});
 				db.execute("COMMIT");
 	            db.close();
@@ -106,10 +127,10 @@ exports.definition = {
                 	db.file.setRemoteBackup(false);
                 }
                 
-                var sql_query =  "INSERT OR IGNORE INTO "+collection.config.adapter.collection_name+" (id, name, dr_code, email, mobile, specialty, qualification, introduction, status, updated, created) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
-				db.execute(sql_query, entry.id, entry.name, entry.dr_code, entry.email, entry.mobile, entry.specialty, entry.qualification, entry.introduction,  entry.status, Common.now(), Common.now());
-				var sql_query =  "UPDATE "+collection.config.adapter.collection_name+" SET name=?, dr_code=?, email=?, mobile=?, specialty=?, qualification=?, introduction=?, status=?, updated=? WHERE id=?";
-				db.execute(sql_query, entry.name, entry.dr_code, entry.email, entry.mobile, entry.specialty, entry.qualification, entry.introduction,  entry.status, Common.now(), entry.id);
+                var sql_query =  "INSERT OR IGNORE INTO "+collection.config.adapter.collection_name+" (id, name, dr_code, email, mobile, specialty, qualification,img_path, introduction, status, updated, created) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+				db.execute(sql_query, entry.id, entry.name, entry.dr_code, entry.email, entry.mobile, entry.specialty, entry.qualification,entry.img_path, entry.introduction,  entry.status, Common.now(), Common.now());
+				var sql_query =  "UPDATE "+collection.config.adapter.collection_name+" SET name=?, dr_code=?, email=?, mobile=?, specialty=?, qualification=?,img_path=?, introduction=?, status=?, updated=? WHERE id=?";
+				db.execute(sql_query, entry.name, entry.dr_code, entry.email, entry.mobile, entry.specialty, entry.qualification, entry.img_path,entry.introduction,  entry.status, Common.now(), entry.id);
 			
 	            db.close();
 	            collection.trigger('sync');
