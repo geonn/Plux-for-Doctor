@@ -129,8 +129,7 @@ function doAddRemoveSpecialty(e){
 		if(res.status == "success"){    
 			var param2 = { 
 				"doctor_id"	  :  u_id 
-			};
-		 
+			}; 
 			API.callByPost({url:"getDoctorPanelUrl", params: param2}, function(responseText){ 
 				var resDp = JSON.parse(responseText);   
 				var arrDp = resDp.data; 

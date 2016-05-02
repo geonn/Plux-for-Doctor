@@ -1,11 +1,14 @@
 var args = arguments[0] || {}; 
 var panelListModel = Alloy.createCollection('panelList'); 
+var doctorPanelModel = Alloy.createCollection('doctor_panel');
+var u_id = Ti.App.Properties.getString('u_id');
 common.construct($); 
 
 init();
 
 function init(){
 	common.showLoading();
+	 
 	showList("0"); 
 }
 
@@ -22,10 +25,12 @@ function doDone(){
 }
 
 function showList(showEdit){
-	var doctorPanel = Ti.App.Properties.getString('myClinics');
+	//var doctorPanel = Ti.App.Properties.getString('myClinics');
 	//console.log("doctorPanel : "+doctorPanel);
-	var myPanel = doctorPanel.split(",");
+	//var myPanel = doctorPanel.split(",");
 	
+	var myPanel = doctorPanelModel.getData(u_id);
+	console.log(myPanel);
 	if(myPanel.length > 1){ 
 		var data = []; 
 		var clinicListTv = Titanium.UI.createTableView({
@@ -37,7 +42,7 @@ function showList(showEdit){
 			width: Ti.UI.FILL
 		});
 		for(var i=0; i< myPanel.length; i++){
-			var entry = panelListModel.getDataByID(myPanel[i]);
+			var entry = panelListModel.getDataByID(myPanel[i].clinic_id);
 	   			var row = Titanium.UI.createTableViewRow({
 				    touchEnabled: true,
 				    height: Ti.UI.SIZE,
@@ -130,20 +135,31 @@ function showList(showEdit){
 				if (ex.index === 1){
 					//submit to server
 					var param = { 
-						"u_id"	  :  Ti.App.Properties.getString('u_id'), 
-						"action" : "remove",
+						"doctor_id"	  :  Ti.App.Properties.getString('u_id'), 
+						"action" : "delete",
 						"clinic_id" : e.rowData.source
 					};
-				 
+				 	console.log(param);
 					API.callByPost({url:"updateDoctorPanelUrl", params: param}, function(responseText){ 
 						var res = JSON.parse(responseText);   
+						console.log(res);
 						if(res.status == "success"){    
-							COMMON.createAlert("Success", "Panel successfully removed", function(){
-								$.editLbl.visible = true;
-								$.doneLbl.visible = false;
-								Ti.App.Properties.setString('myClinics',res.data);
-								showList("0");
+							var param2 = { 
+								"doctor_id"	  :  u_id 
+							}; 
+							API.callByPost({url:"getDoctorPanelUrl", params: param2}, function(responseText){ 
+								var resDp = JSON.parse(responseText);   
+								var arrDp = resDp.data; 
+								doctorPanelModel.resetRecordByDoctor(u_id);
+					        	doctorPanelModel.saveArray(arrDp);
+					        	COMMON.createAlert("Success", "Panel successfully removed", function(){
+									$.editLbl.visible = true;
+									$.doneLbl.visible = false; 
+									showList("0");
+								});
 							});
+							
+							
 						}else{
 							COMMON.createAlert("Error", res.data);
 							return false;
