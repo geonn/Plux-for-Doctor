@@ -11,8 +11,9 @@ function onload(responseText){
 		loading.finish();
 		return false;
 	}else{
+		loading.start();
 		
-		
+		setTimeout(function(){
 			loading.finish(); 
 			var arr = result.data;
 			console.log(arr);
@@ -24,7 +25,11 @@ function onload(responseText){
 	   		Ti.App.Properties.setString('myClinics', arr.clinic_id);
 	   		Ti.App.Properties.setString('clinic_ids', arr.clinic_id);
 	   		callback && callback();
-	   		  
+	   		$.win.close();
+	   		var index_home = Alloy.createController("index_home").getView();
+			index_home.open();	
+		},2000);
+			
 	}
 }
 
@@ -45,7 +50,7 @@ function do_login(){
 		password: password
 	};
 	//API.doLogin(params, $); 
-	loading.start();
+	
 	API.callByPost({url: "doLoginUrl", params: params}, onload);
 }
 
