@@ -29,12 +29,7 @@ exports.showLoading = function(){
 	mainView.loadingBar.opacity = 1;
 	mainView.loadingBar.zIndex = 100;
 	mainView.loadingBar.height = 120;
-	 
-	if(OS_ANDROID){ 
-		mainView.activityIndicator.style = Ti.UI.ActivityIndicatorStyle.BIG; 
-	}else if (OS_IOS){ 
-		mainView.activityIndicator.style = Ti.UI.iPhone.ActivityIndicatorStyle.BIG;
-	}  
+	mainView.activityIndicator.style = Ti.UI.ActivityIndicatorStyle.BIG; 
 };
 
 //function closeWindow(win){

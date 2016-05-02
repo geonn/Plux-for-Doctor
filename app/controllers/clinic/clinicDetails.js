@@ -23,7 +23,7 @@ function init(){
 	var myPanel = doctorPanel.split(",");
 	var res = myPanel.indexOf(panel_id); 
 	if(res > -1){
-		$.addLbl.visible = false;
+		$.addLbl.text = "Edit";
 	} 
 }
 
@@ -201,6 +201,10 @@ function direction2here(){
 }
 
 function doAdd(){
+	 
+	Alloy.Globals.Navigator.open('clinic/specialtyList', {panel_id:panel_id}); 
+	return false;
+	
 	var dialog = Ti.UI.createAlertDialog({
 		cancel: 1,
 		buttonNames: ['Cancel','Confirm'],

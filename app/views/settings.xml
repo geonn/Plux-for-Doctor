@@ -7,7 +7,7 @@
 						<View class="vert wfill hsize" left="10" top="10">
 							<Label class=" themeColor wfill h4 bold left-align">PLUX for Doctor</Label>
 							<Label class=" wfill h5 left-align">Version 1.0.0</Label>
-							<Label class=" wfill h5 left-align">Copyright ©2015. All Rights Reserved.</Label>
+							<Label class=" wfill h5 left-align">Copyright ©2016. All Rights Reserved.</Label>
 						</View>  
 				</View> 
 				
@@ -23,13 +23,11 @@
 					<ImageView  class="wsize" right="5" image="/images/btn-forward.png" width="15" /> 
 				</View> 
 				
-				<View id="tvrClinics" top="10"  height="Ti.UI.SIZE" backgroundColor="#ffffff" > 
-					<Label text="My Clinic / Panel" top="15" bottom="15" left="5" class="wfill h5 padding-left themeColor"  />  
-					 
-					<View class="wfill hsize vert" id='myClinic' top="40">
-						  
-					</View>
-				</View> 
+				<View id="tvrClinics" top="10"  height="Ti.UI.SIZE" backgroundColor="#ffffff" >  
+					<Label  text="My Clinic / Panel" top="15" bottom="15" left="5" class="wfill  h5 padding-left themeColor"  />
+					<Label  text="Add Panel" top="15" bottom="15" right="5" id="addPanel" class=" h5   themeColor"  />  
+				 </View> 
+				<View class="wfill hsize vert" id='myClinic'></View>
 			</ScrollView> 
 	</Window>
 </Alloy>

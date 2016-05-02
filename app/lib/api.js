@@ -18,12 +18,12 @@ var getIdaListUrl               = "http://"+API_DOMAIN+"/api/getIda?user="+USER+
 var clinicListUrl 				= "http://"+API_DOMAIN+"/api/getClinicLocator?user="+USER+"&key="+KEY; 
 var changePasswordUrl 			= "http://"+API_DOMAIN+"/api/doctorChangePassword?user="+USER+"&key="+KEY; 
 var updateDoctorProfileUrl 		= "http://"+API_DOMAIN+"/api/updateDoctorProfile?user="+USER+"&key="+KEY; 
-var updateDoctorPanelUrl        = "http://"+API_DOMAIN+"/api/updateDoctorPanel?user="+USER+"&key="+KEY; 
+var updateDoctorPanelUrl        = "http://"+API_DOMAIN+"/api/updateDoctorPanel?user="+USER+"&key="+KEY;  
 var getDoctorPanelUrl        	= "http://"+API_DOMAIN+"/api/getDoctorPanel?user="+USER+"&key="+KEY; 
 var uploadDoctorImageUrl		= "http://"+API_DOMAIN+"/api/uploadDoctorImage?user="+USER+"&key="+KEY; 
 var getWorkingHoursByDoctorPanelUrl = "http://"+API_DOMAIN+"/api/getWorkingHoursByDoctorPanel?user="+USER+"&key="+KEY; 
 var addUpdateWorkingHoursUrl 	= "http://"+API_DOMAIN+"/api/addUpdateWorkingHours?user="+USER+"&key="+KEY;
-
+var getSpecialtylistUrl         = "http://"+API_DOMAIN+"/api/getSpecialtylist?user="+USER+"&key="+KEY; 
 //API that call in sequence 
 var APILoadingList = [
 	{url: getAppHomepageBackgroundUrl, model: "background", checkId: "1"},
@@ -31,6 +31,7 @@ var APILoadingList = [
 	{url: getIdaListUrl, model: "ida", checkId: "3"},
 	{url: clinicListUrl, model: "panelList", checkId: "5"},
 	{url: getDoctorPanelUrl, model: "doctor_panel", checkId: "6"},
+	{url: getSpecialtylistUrl, model: "specialty", checkId: "7"},
 ];
 
 /*********************
