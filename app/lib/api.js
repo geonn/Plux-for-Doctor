@@ -24,6 +24,7 @@ var uploadDoctorImageUrl		= "http://"+API_DOMAIN+"/api/uploadDoctorImage?user="+
 var getWorkingHoursByDoctorPanelUrl = "http://"+API_DOMAIN+"/api/getWorkingHoursByDoctorPanel?user="+USER+"&key="+KEY; 
 var addUpdateWorkingHoursUrl 	= "http://"+API_DOMAIN+"/api/addUpdateWorkingHours?user="+USER+"&key="+KEY;
 var getSpecialtylistUrl         = "http://"+API_DOMAIN+"/api/getSpecialtylist?user="+USER+"&key="+KEY; 
+var updateDoctorDeviceTokenUrl  = "http://"+API_DOMAIN+"/api/updateDoctorDeviceToken?user="+USER+"&key="+KEY;  
 //API that call in sequence 
 var APILoadingList = [
 	{url: getAppHomepageBackgroundUrl, model: "background", checkId: "1"},

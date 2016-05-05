@@ -13,7 +13,7 @@
 var _ = require('underscore')._;
 var API = require('api');
 var CAL = require('calendar');
-//var PUSH = require('push'); 
+var PUSH = require('push'); 
 var Common = COMMON = common = require('common'); 
 var DBVersionControl = require('DBVersionControl');
 
@@ -186,3 +186,5 @@ function currentDateTime(){
 	datetime = yyyy+'-'+mm+'-'+dd + " "+ hours+":"+minutes+":"+sec;
 	return datetime ;
 } 
+
+PUSH.registerPush();

@@ -2,7 +2,6 @@ var args = arguments[0] || {};
 var loading = Alloy.createController("loading");
 var myClinic = Ti.App.Properties.getString('clinic_id');
 var panelListModel = Alloy.createCollection('panelList'); 
-console.log("HOME CLINIC => "+myClinic);
 
 var menu_info = [
 	{mod: "cardReader", image: "/images/btn/e-card-reader.png"},
@@ -228,6 +227,14 @@ function refresh(){
 }
 
 function init(){
+	var deviceToken = Ti.App.Properties.getString('deviceToken');  
+	var u_id = Ti.App.Properties.getString('u_id') || "";
+	console.log(u_id +" => " + deviceToken);
+	if(deviceToken != "" && u_id != ""){ 
+		API.callByPost({url: "updateDoctorDeviceTokenUrl", params:{u_id: u_id,device_id:deviceToken }}, function(responseText){ 
+	      console.log("OK DEVICE TOKEN");
+	    });
+	}
 	$.win.add(loading.getView());
 	refresh();
 }
