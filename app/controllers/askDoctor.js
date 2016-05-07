@@ -257,13 +257,6 @@ function convert_ampm(timeStamp){
 	return time[0]+":"+time[1]+ " "+ ampm;
 }
 
-
-if(Ti.Platform.osname == "android"){
-	$.btnBack.addEventListener('click', function(){ 
-		nav.closeWindow($.win); 
-	}); 
-}
-
 Ti.App.addEventListener('displayRecords', render_conversation_list);
 /** close all editProfile eventListener when close the page**/
 $.win.addEventListener("close", function(){

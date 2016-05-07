@@ -17,11 +17,9 @@ common.showLoading();
 
 $.clinicTypeSelection.text = clinicType;
 $.clinicLocationSelection.text = clinicLocationSelection;
-if(OS_IOS){
-	$.win.title = "Locator List";
-}else{
-	$.pageTitle.text =  "Locator List";
-} 
+
+$.win.title = "Locator List";
+
 
 setTimeout(function(){
 	loadData(corp);
@@ -131,29 +129,10 @@ function listing(){
 	   		common.hideLoading();
 		}
 		
-		$.clinicListTv.addEventListener('click', function(e) { 
-			Alloy.Globals.Navigator.open("clinic/clinicDetails", {panel_id:e.rowData.source});
+		$.clinicListTv.addEventListener('click', function(e) {
+			Alloy.Globals.Navigator.open("clinic/clinicDetails", {panel_id:e.rowData.source, displayHomeAsUp: true});
 		});
 }
-
-
-$.btnSearch.addEventListener('click', function(){    
-	var isVis=  $.searchItem.getVisible(); 
-	if(isVis === true){ 
-		$.searchItem.visible = false;
-		$.searchItem.height = 0;
-		
-	}else{ 
-		$.searchItem.visible = true;
-		$.searchItem.height = 50;
-	}
-}); 
-
-if(Ti.Platform.osname == "android"){
-	$.btnBack.addEventListener('click', function(){ 
-		$.win.close();
-	}); 
-} 
 	/***SEARCH FUNCTION***/
 	function searchResult(){
 		$.searchItem.blur(); 
@@ -269,10 +248,6 @@ function showLocationSelection(){
 	});
 }
 
-$.btnMap.addEventListener('click', function(){ 
-	Alloy.Globals.Navigator.open("clinic/clinicLocator", { clinicType: Ti.App.Properties.getString('clinicTypeSelection'), location: Ti.App.Properties.getString('clinicLocationSelection') });
-});
-
 function loadData(corp){
 	if(clinicType == "24 Hours"){ 
 		list = library.getPanelBy24Hours("", corp);   
@@ -281,4 +256,21 @@ function loadData(corp){
 	} 
 	common.showLoading();
 	listing();
+}
+
+if(OS_IOS){
+	$.btnSearch.addEventListener('click', function(){    
+		var isVis=  $.searchItem.getVisible(); 
+		if(isVis === true){ 
+			$.searchItem.visible = false;
+			$.searchItem.height = 0;
+			
+		}else{ 
+			$.searchItem.visible = true;
+			$.searchItem.height = 50;
+		}
+	}); 
+	$.btnMap.addEventListener('click', function(){ 
+		Alloy.Globals.Navigator.open("clinic/clinicLocator", { clinicType: Ti.App.Properties.getString('clinicTypeSelection'), location: Ti.App.Properties.getString('clinicLocationSelection'), displayHomeAsUp: true });
+	});
 }

@@ -1,6 +1,6 @@
 <Alloy>
-	<Window   navTintColor="#CE1D1C" id="win" title="Health Risk Assessment"  navBarHidden="false">
-		<ActionBar platform="android" displayHomeAsUp="true" onHomeIconItemSelected="closeWindow" />
+	<Window navTintColor="#CE1D1C" id="win" title="Health Risk Assessment" navBarHidden="false">
+		<ActionBar platform="android" displayHomeAsUp="true" />
 		 
 		<View class="wfill hsize vert" top="0">
 			<Label class="h5 wfill hsize themeColor padding" id="label_ida">Health Risk Assessment</Label>

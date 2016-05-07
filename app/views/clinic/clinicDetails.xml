@@ -1,6 +1,5 @@
 <Alloy>
 	<Window navTintColor="#CE1D1C" id="win" title="Clinic Details"  navBarHidden="false">
-		<ActionBar platform="android" displayHomeAsUp="true" onHomeIconItemSelected="closeWindow" />
 		<RightNavButton platform="ios" >
 	        <View right="0" width="20%">
 		         	<Label onClick="doAdd"  id="addLbl">Add</Label>

@@ -1,6 +1,5 @@
 <Alloy>
 	<Window   navTintColor="#CE1D1C" id="win" title="eCard Reader"  navBarHidden="false">
-		<ActionBar platform="android" displayHomeAsUp="true" onHomeIconItemSelected="closeWindow" />
 		 
 		<View class="wfill hsize" top="0">
 			<Label class="h5 wfill hsize themeColor padding" id="label_ida">QR Reader</Label>

@@ -1,6 +1,6 @@
 <Alloy>
-	<Window navTintColor="#CE1D1C" id="win" title="Settings" navBarHidden="false">
-		<ActionBar platform="android" displayHomeAsUp="true" onHomeIconItemSelected="closeWindow" />
+	<Window navTintColor="#CE1D1C" id="win" title="Settings" navBarHidden="false" displayHomeAsUp="true">
+		
 		    <ScrollView class="vert hfill wfill" contentWidth="Ti.UI.FILL" contentHeight="Ti.UI.SIZE"> 
 				<View class=" wfill horz" height="95"  >
 						<ImageView borderRadius="10" width="80" height="80" left="10" top="10" image="/images/appicon.png" />

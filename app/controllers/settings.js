@@ -86,7 +86,7 @@ function loadClinic(){
 }
 
 function setWorkingHours(doctor_panel_id){
-	Alloy.Globals.Navigator.open('set_working_hour', {doctor_panel_id: doctor_panel_id});
+	Alloy.Globals.Navigator.open('set_working_hour', {doctor_panel_id: doctor_panel_id, displayHomeAsUp: true});
 }
 
 function selectedPanel(id){
@@ -257,7 +257,7 @@ $.addPanel.addEventListener('click', function(){
 });
 
 $.tvrName.addEventListener('click', function(){
-	Alloy.Globals.Navigator.open('profile');
+	Alloy.Globals.Navigator.open('profile', {displayHomeAsUp: true});
 });
 
 function closeWindow(){

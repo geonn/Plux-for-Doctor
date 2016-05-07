@@ -7,7 +7,7 @@ common.construct($);
 common.showLoading();
 
 function goMyPanel(){
-	Alloy.Globals.Navigator.open("clinic/myClinic"); 
+	Alloy.Globals.Navigator.open("clinic/myClinic", {displayHomeAsUp: true}); 
 }
 
 function listing(){ 
@@ -113,14 +113,8 @@ $.win.addEventListener('close',function(){
 	det24 = null;
 });
 
-if(OS_ANDROID){
-	$.btnBack.addEventListener('click', function(){ 
-		$.win.close();
-	}); 
-}
-
 Ti.App.addEventListener('aspClinic',init);
 
 $.tblview.addEventListener('click', function(e){ 
-	Alloy.Globals.Navigator.open("clinic/clinicList", {clinicType:e.rowData.id}); 
+	Alloy.Globals.Navigator.open("clinic/clinicList", {clinicType:e.rowData.id, displayHomeAsUp: true}); 
 });

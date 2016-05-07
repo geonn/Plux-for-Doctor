@@ -1,8 +1,5 @@
 <Alloy>
 	<Window   navTintColor="#CE1D1C" id="hraDetailsWin" title="Health Risk Assessment"  navBarHidden="false">
-		<ActionBar platform="android" displayHomeAsUp="true" onHomeIconItemSelected="closeWindow" />
-		 
-		 
 			 <ScrollView class="wfill hfill vert" top="0" contentHeight="Ti.UI.SIZE" contentWidth="Ti.UI.FILL" layout="vertical" >
 				<View id="input_box" height="Ti.UI.SIZE"></View>
 				<View id="description" height="Ti.UI.SIZE"></View>

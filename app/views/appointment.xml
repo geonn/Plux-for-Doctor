@@ -1,6 +1,5 @@
 <Alloy>
 	<Window  navTintColor="#CE1D1C"  id="win" title="Appointment" navBarHidden="false">
-	<ActionBar platform="android" displayHomeAsUp="true" onHomeIconItemSelected="closeWindow" />
 	<ScrollView id="main" class="wfill hfill vert" contentHeight="Ti.UI.SIZE" contentWidth="Ti.UI.FILL">
 		<ScrollView class="wfill hsize bg_light_grey" contentWidth="Ti.UI.FILL" contentHeight="Ti.UI.SIZE" top="0">
 			<View class="wfii hsize" id="calendar">

@@ -61,8 +61,8 @@ function init(){
 
 $.checkAuth = function(cb){
 	var u_id = Ti.App.Properties.getString('u_id') || 0; 
+	console.log(u_id+" login?");
 	if(u_id > 0){
-    	 
 		cb && cb();
     }else{ 
     	callback = cb;

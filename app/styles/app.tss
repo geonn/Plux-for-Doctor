@@ -61,6 +61,7 @@ overrode the settings with other TSS, XML, or JS settings:
 'TextField[platform=android]': {
     height: 40,
 	borderColor: "#dfe0e4",
+	color: "#000000",
 	borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
 	verticalAlign: Titanium.UI.TEXT_VERTICAL_ALIGNMENT_CENTER,
 	textAlign: Titanium.UI.TEXT_ALIGNMENT_LEFT,
@@ -116,8 +117,6 @@ overrode the settings with other TSS, XML, or JS settings:
 	borderRadius: 6,
 	color: "#ffffff",
 	width: "70%",
-	left: 10,
-	right: 10,
 	top: 10,
 },
 '.button[platform=ios formFactor=handheld]': {

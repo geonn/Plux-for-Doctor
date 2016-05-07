@@ -35,16 +35,15 @@ function next_loading(){
 }
 
 function navToHomepage(){
-	var index_home = Alloy.createController("index_home").getView();
-	index_home.open();
+	var index_home = Alloy.createController("index_home");
 }
 
 /*
  * exposed function to finish the loading animation. Animates the rocket off the screen.
  */
 var finish = function() {
-	$.win.close();
 	navToHomepage();
+	$.win.close();
 	loadingView = null;
 };
 

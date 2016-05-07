@@ -98,7 +98,7 @@ function showList(){
 }
 
 function viewDetails(e){ 
-	Alloy.Globals.Navigator.open('patient_details', {record_id:e.source});
+	Alloy.Globals.Navigator.open('patient_details', {record_id:e.source, displayHomeAsUp: true});
 }
 
 

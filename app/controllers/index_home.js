@@ -9,7 +9,6 @@ Alloy.Globals.Navigator = {
 	navGroup: $.nav,
 	
 	open: function(controller, payload){
-		console.log(payload);
 		var win = Alloy.createController(controller, payload || {}).getView();
 		
 		if(OS_IOS){
@@ -19,7 +18,8 @@ Alloy.Globals.Navigator = {
 		}else{
 			
 			// added this property to the payload to know if the window is a child
-			if (payload.displayHomeAsUp){
+			console.log(typeof payload.displayHomeAsUp);
+			if (typeof payload.displayHomeAsUp !="undefined"){
 				
 				win.addEventListener('open',function(evt){
 					var activity=win.activity;
@@ -29,14 +29,11 @@ Alloy.Globals.Navigator = {
 					};
 				});
 			}
+			console.log(controller+" is open now");
 			win.open();
 		}
 	}
 };
-
-function navToHomepage(){
-	Alloy.Globals.Navigator.navGroup.open();
-}
 
 function init(){
 	if(OS_IOS){
@@ -44,6 +41,7 @@ function init(){
 	}else{
 		Alloy.Globals.Navigator.navGroup = $.index.getView();
 	}
+	Alloy.Globals.Navigator.navGroup.open({navBarHidden: true, fullscreen: true});
 }
 
 init();

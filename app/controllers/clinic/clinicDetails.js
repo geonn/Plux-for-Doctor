@@ -240,9 +240,3 @@ function doAdd(){
 	}); 
 	dialog.show();  
 }
-
-if(Ti.Platform.osname == "android"){
-	$.btnBack.addEventListener('click', function(){ 
-		$.win.close(); 
-	}); 
-}

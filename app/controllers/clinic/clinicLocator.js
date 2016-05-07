@@ -72,7 +72,7 @@ function init(e){
 			});
 	
 			detBtn.addEventListener('click', function(ex){ 
-				Alloy.Globals.Navigator.open("clinic/clinicDetails", {panel_id:ex.source.panel_id});
+				Alloy.Globals.Navigator.open("clinic/clinicDetails", {panel_id:ex.source.panel_id, displayHomeAsUp: true});
 			});      
 			viewRight.add(detBtn);
 			if(entry.latitude != "" && entry.longitude != ""){
@@ -101,7 +101,7 @@ function init(e){
 	// Handle click events on any annotations on this map.
 	if(Ti.Platform.osname == "android"){
 		mapview.addEventListener('click', function(evt) {
-			 Alloy.Globals.Navigator.open("clinic/clinicDetails", {panel_id:evt.annotation.panel_id});
+			 Alloy.Globals.Navigator.open("clinic/clinicDetails", {panel_id:evt.annotation.panel_id, isplayHomeAsUp: true});
 		    // Ti.API.info("Annotation " + evt.title + " clicked, id: " + evt.annotation.panel_id);
 		});
 	}
@@ -115,8 +115,8 @@ function setCurLoc(e){
     mapview.setLocation(region);
 }
 
-$.btnList.addEventListener('click', function(){    
-	Alloy.Globals.Navigator.open("clinic/clinicNearby", {longitude:longitude, latitude:latitude, clinicType: clinicType });
+$.btnList.addEventListener('click', function(){
+	Alloy.Globals.Navigator.open("clinic/clinicNearby", {longitude:longitude, latitude:latitude, clinicType: clinicType, displayHomeAsUp: true });
 }); 
 
 if(Ti.Platform.osname == "android"){

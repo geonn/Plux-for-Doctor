@@ -11,6 +11,7 @@ function init(){
 	doctorModel.addColumn("img_path", "TEXT");
 	
 	var login = Alloy.createController("auth/login");
+	console.log();
 	login.checkAuth(navToLoading);
 }
 

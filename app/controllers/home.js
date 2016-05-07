@@ -27,7 +27,7 @@ function doLogout(){
  * Navigate by mod
  */
 function navToMod(e){
-	Alloy.Globals.Navigator.open(e.source.mod);
+	Alloy.Globals.Navigator.open(e.source.mod, {displayHomeAsUp: true});
 }
 
 /*	
@@ -47,8 +47,9 @@ function render_background(){
  * */
 function render_menu_list(){
 	//get screen width to calculate button width
-	var pWidth = Titanium.Platform.displayCaps.platformWidth;
+	var pWidth = (OS_ANDROID)?(Titanium.Platform.displayCaps.platformWidth / (Titanium.Platform.displayCaps.dpi / 160)):Titanium.Platform.displayCaps.platformWidth;
 	var button_width = Math.floor((pWidth - 30) / 2);
+	console.log(button_width+" button width"+pWidth+" "+Titanium.Platform.displayCaps.dpi+" "+Titanium.Platform.displayCaps.platformWidth);
 	$.menu_scrollview.width = "100%";
 	if (Ti.Platform.osname == 'ipad'){
 		button_width = Math.floor((pWidth - 30) / 4);

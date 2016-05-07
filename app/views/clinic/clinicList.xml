@@ -1,6 +1,5 @@
 <Alloy>
 	<Window navTintColor="#CE1D1C" id="win" title="Clinic List"  navBarHidden="false">
-		<ActionBar platform="android" displayHomeAsUp="true" onHomeIconItemSelected="closeWindow" />
 		<RightNavButton platform="ios">
 			<View class="horz" right='5' >
 				<ImageView  right="10" id="btnMap" width="25" height="25" image="/images/map.png" />

@@ -9,10 +9,3 @@ $.panelMap.add(Ti.UI.createWebView({
 	height:Ti.UI.FILL, 
 	
 }));  
-
-
-if(Ti.Platform.osname == "android"){
-	$.btnBack.addEventListener('click', function(){ 
-		nav.closeWindow($.panelMapWin); 
-	}); 
-}
