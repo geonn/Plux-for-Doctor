@@ -27,73 +27,24 @@ if(Ti.Platform.osname == "android"){
 function receivePush(e) {   
 	var target;
 	var url;
-	if(OS_IOS){
-		var param = {
-			"id": e.data.id || "",
-			"member_no": e.data.mem_no || "",
-			"subject": e.data.title || "",
-			"message" : e.data.message || "",
-			"url" : e.data.extra || "",
-			"isRead" : "0",
-			"expired" : "",
-			"created" : e.data.created,
-			"updated" : e.data.updated,
-			"from" : "push"
-		};
+	if(OS_IOS){ 
+		Titanium.UI.iPhone.setAppBadge("0"); 
 		target = e.data.target;
 		url = e.data.extra;
-	}else{
-		var param = {
-			"id": e.id || "",
-			"member_no": e.mem_no || "",
-			"subject": e.android.title || "",
-			"message" : e.message || "",
-			"url" : e.extra || "",
-			"isRead" : "0",
-			"expired" : "",
-			"status" : e.status,
-			"created" : e.created,
-			"updated" : e.updated,
-		};
+	}else{ 
 		target = e.target;
 		url = e.extra;
 	}  
 	console.log(target+" and redirect "+redirect); 
-	if(target == "conversation"){
+	if(target =="appointment"){
 		if(redirect){
-			nav.navigateWithArgs("conversation");
+			setTimeout(function(){
+				Alloy.Globals.Navigator.open('appointment');
+			},2000);
 		}else{
-			Ti.App.fireEvent("conversation:refresh");
+			Ti.App.fireEvent("appointment:refresh");
 		}
-	}else{
-		var notificationModel = Alloy.createCollection('notification');  
-	    notificationModel.addData(param); 
-		var dialog = Ti.UI.createAlertDialog({
-			cancel: 1,
-			buttonNames: ['Cancel','OK'],
-			message: 'New message available. Do you want to read now?',
-			title: 'Confirmation'
-		});
-		dialog.addEventListener('click', function(ex){
-			if (ex.index === 0){
-				//Do nothing
-			}
-		
-			if (ex.index === 1){
-				if(target == "claimDetail"){ 
-					nav.navigateWithArgs("asp/notification");
-				}
-				
-				if(target == "webview"){
-					nav.navigateWithArgs(target, {
-						url: url
-					});
-				}
-			}
-		});
-		dialog.show();  	
-		Ti.App.fireEvent("updateNotification");
-	}
+	} 
 	 
 	return false;
 }

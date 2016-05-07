@@ -44,7 +44,8 @@
         </plist>
     </ios>
     <android xmlns:android="http://schemas.android.com/apk/res/android">
-        <manifest>
+ 
+        <manifest android:versionCode="1" android:versionName="1.0.0"> 
             <application android:debuggable="false" android:theme="@style/Theme.AppCompat.Light.NoActionBar">
                 <meta-data
                     android:name="com.google.android.maps.v2.API_KEY" android:value="AIzaSyBJ0EF9lpsbttU_OdKA3BBxscR0ygt9D2A"/>
@@ -52,9 +53,10 @@
                     <action android:name="android.intent.action.SEND"/>
                     <category android:name="android.intent.category.DEFAULT"/>
                     <data android:mimeType="image/*"/>
-                </intent-filter>
+                </intent-filter> 
                 <activity android:label="plux"
                     android:name="com.facebook.LoginActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+ 
                 <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/app_id"/>
                 <activity
                     android:configChanges="keyboardHidden|orientation|screenSize"
@@ -66,8 +68,8 @@
                     </intent-filter>
                     <data android:host="" android:scheme="waze"/>
                 </activity>
-                <manifest android:installLocation="auto"
-                    android:versionCode="2" android:versionName="1.0.2"/>
+                <manifest android:installLocation="auto" 
+                    android:versionCode="1" android:versionName="1.0.0"/> 
             </application>
             <uses-sdk android:minSdkVersion="16" android:targetSdkVersion="23"/>
         </manifest>
@@ -95,7 +97,7 @@
         <target device="mobileweb">false</target>
         <target device="windows">false</target>
     </deployment-targets>
-    <sdk-version>5.2.1.GA</sdk-version>
+    <sdk-version>5.2.2.GA</sdk-version>
     <plugins>
         <plugin version="1.0">ti.alloy</plugin>
     </plugins>

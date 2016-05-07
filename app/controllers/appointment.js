@@ -14,7 +14,7 @@ var indicator_color = ["#ffffff", '#00ee90', 'red', 'green', 'orange', 'black'];
 var selected_id = 0;
 var selected_time = [];
 var patient_id = 0;
-var doctor_panel_id  = 0;
+//var doctor_panel_id  = 0;
 var selected_date = new Date();
 
 $.masked.hide();
@@ -296,6 +296,25 @@ function closeWindow(){
 }
 
 function init(){
+	//console.log("doctor_panel_id: "+doctor_panel_id);
+	if(doctor_panel_id == ""){
+		var dialog = Ti.UI.createAlertDialog({
+			cancel: 1,
+			buttonNames: ['Cancel','OK'],
+			message: "You don't have active panel selected yet. Are you want to select now?",
+			title: 'Select Panel'
+		});
+		dialog.addEventListener('click', function(ex){
+			if (ex.index === 0){
+				//Do nothing
+			}
+		
+			if (ex.index === 1){
+				 Alloy.Globals.Navigator.open('settings');
+			}
+		});
+		dialog.show();  
+	}
 	$.win.add(loading.getView());
 	render_detail_box();
 	//render_calendar();
@@ -309,7 +328,7 @@ Ti.App.addEventListener('appointment:loadingOff', loadingOff);
 Ti.App.addEventListener('appointment:refresh', refresh);
 
 $.masked.addEventListener("click", closeDetailBox);
-$.masked2.addEventListener("click", closeSuggestBox);
+$.masked2.addEventListener("click", closeSuggestBox);  
 
 $.win.addEventListener("close", function(){
 	Ti.App.removeEventListener('appointment:refresh',refresh);

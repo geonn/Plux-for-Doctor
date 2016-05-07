@@ -1,5 +1,5 @@
 var args = arguments[0] || {};
-var loading = Alloy.createController("loading");
+//var loading = Alloy.createController("loading");
 var myClinic = Ti.App.Properties.getString('clinic_id');
 var panelListModel = Alloy.createCollection('panelList'); 
 
@@ -220,11 +220,11 @@ function selectedPanelEvent(ctable,pop){
 
 
 function refresh(){ 
-	loading.start();
+	//loading.start();
 	render_header_info();
 	render_menu_list();
 	//render_background();
-	loading.finish();
+	//loading.finish();
 }
 
 function init(){
@@ -236,7 +236,7 @@ function init(){
 	      console.log("OK DEVICE TOKEN");
 	    });
 	}
-	$.win.add(loading.getView());
+	//$.win.add(loading.getView());
 	refresh();
 }
 init();
