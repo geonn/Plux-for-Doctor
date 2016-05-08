@@ -1,6 +1,5 @@
 <Alloy>
 	<Window navTintColor="#CE1D1C" id="win" title="Specialty List"  navBarHidden="false">
-		<ActionBar platform="android" displayHomeAsUp="true" onHomeIconItemSelected="closeWindow" />
 		
 		<View layout="vertical" id="loadingBar" height="120" width="120" borderRadius="15"  backgroundColor="#2E2E2E" >
 		    <ActivityIndicator  id="activityIndicator" />

@@ -7,7 +7,7 @@ var working_hour_arr = [];
 function render_working_hour(){
 	for (var i=1; i <= 7; i++) {
 		
-		var args = {doctor_panel_id:123, days:i, time_start:"08:00", time_end:"17:00",duration:"30", status: 0};
+		var args = {doctor_panel_id:doctor_panel_id, days:i, time_start:"08:00", time_end:"17:00",duration:"30", status: 0};
 		for (var a=0; a < data.length; a++) {
 		 	if(data[a].days == i){
 		 		args = data[a];

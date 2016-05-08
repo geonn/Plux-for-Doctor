@@ -1,5 +1,5 @@
 <Alloy>
-	<Window id="win" class="container">
+	<Window id="win" class="container" navBarHidden="true" theme="Theme.NoActionBar">
 		<View id="overlay" />
 		<ImageView id="logo"/>
 		<Label id="loading_text" class="wsize hsize" bottom="50" color="#000000"></Label>

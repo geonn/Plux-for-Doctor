@@ -6,16 +6,17 @@ var pop;
 
 function onload(responseText){
 	var result = JSON.parse(responseText); 
+	console.log("done onload");
 	console.log(result);
 	if(result.status == "error"){
 		Common.createAlert("Error", result.data[0]);
 		loading.finish();
 		return false;
 	}else{
-		loading.start();
+		//loading.start();
 		
 		setTimeout(function(){
-			loading.finish(); 
+			//loading.finish(); 
 			var arr = result.data;
 			console.log("login page");
 			console.log(arr);
