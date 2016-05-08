@@ -28,8 +28,7 @@ Alloy.Globals.Navigator = {
 						evt.source.close();
 					};
 				});
-			}
-			console.log(controller+" is open now");
+			} 
 			win.open();
 		}
 	}
