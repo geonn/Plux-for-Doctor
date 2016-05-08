@@ -2,8 +2,9 @@
 	<Window title="" color="#ffffff" id="win">
 		<View class="wfill hfill vert" backgroundImage="/images/home_background.jpg">
 			<ImageView image="/images/appicon.png" top="50" bottom="50" height="auto"  width="120" />
-			
+			 
 			<TextField id="username" value="yahya@gleneagleskl.com.my" color="#000000" hintText="Email"></TextField>
+ 
 			<TextField id="password" value="123456" top="10" hintText="Password" passwordMask="true"></TextField>
 			<Button onClick="do_login" class="button" top="10" title="Login"></Button>
 			<!--<Button onClick="do_signup" class="button" backgroundColor="#5375BD" title="Register"></Button>-->

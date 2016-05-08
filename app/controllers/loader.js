@@ -28,7 +28,7 @@ function next_loading(){
 	if(type == "api"){
 		API.loadAPIBySequence();
 	}else if(type == "model"){
-		console.log(counter+" "+type);
+		console.log("geo test : "+counter+" "+type);
 		var model = Alloy.createCollection(loader.model);
 		eval("model."+loader.func+"()");
 	}

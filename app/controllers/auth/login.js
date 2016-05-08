@@ -6,6 +6,7 @@ var pop;
 
 function onload(responseText){
 	var result = JSON.parse(responseText); 
+	console.log(result);
 	if(result.status == "error"){
 		Common.createAlert("Error", result.data[0]);
 		loading.finish();
