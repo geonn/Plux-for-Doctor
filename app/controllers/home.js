@@ -19,9 +19,10 @@ function doLogout(){
 	Ti.App.Properties.removeProperty('u_id');
 	Ti.App.Properties.removeProperty('name');
 	Ti.App.Properties.removeProperty('clinic_id');
-	Alloy.Globals.Navigator.navGroup.close();
-	var win = Alloy.createController("auth/login").getView();
+	
+	var win = Alloy.createController("index").getView();
 	win.open();
+	$.win.close();
 }
 
 /**
@@ -241,5 +242,10 @@ Ti.App.addEventListener('home:refresh',refresh);
 
 $.win.addEventListener("close", function(){
 	Ti.App.removeEventListener('home:refresh',refresh);
+	console.log("home closing from home");
 	$.destroy();
+});
+
+$.win.addEventListener("open", function(){
+	console.log("home window open");
 });

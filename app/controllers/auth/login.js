@@ -28,8 +28,6 @@ function onload(responseText){
 	   		Ti.App.Properties.setString('clinic_ids', arr.clinic_id);
 	   		callback && callback();
 	   		$.win.close();
-	   		var index_home = Alloy.createController("index_home").getView();
-			index_home.open();
 		},2000);
 			
 	}
@@ -57,8 +55,11 @@ function do_login(){
 }
 
 function init(){
+	console.log("login stop init before window open");
 	$.win.open();
+	console.log("login stop init after window open");
 	$.win.add(loading.getView());
+	console.log("login stop init adding loading");
 }
 
 $.checkAuth = function(cb){
