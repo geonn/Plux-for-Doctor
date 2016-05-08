@@ -18,11 +18,10 @@ var menu_info = [
 function doLogout(){
 	Ti.App.Properties.removeProperty('u_id');
 	Ti.App.Properties.removeProperty('name');
-	Ti.App.Properties.removeProperty('clinic_id');
-	
+	Ti.App.Properties.removeProperty('clinic_id'); 
 	var win = Alloy.createController("index");
 	win.open();
-	Alloy.Globals.Navigator.navGroup.close(); 
+	Alloy.Globals.Navigator.navGroup.close();  
 }
 
 /**
@@ -242,5 +241,10 @@ Ti.App.addEventListener('home:refresh',refresh);
 
 $.win.addEventListener("close", function(){
 	Ti.App.removeEventListener('home:refresh',refresh);
+	console.log("home closing from home");
 	$.destroy();
+});
+
+$.win.addEventListener("open", function(){
+	console.log("home window open");
 });

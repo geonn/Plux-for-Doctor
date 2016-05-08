@@ -8,10 +8,15 @@ function navToLoading(){
 
 function init(){
 	var doctorModel = Alloy.createCollection('doctor'); 
-	doctorModel.addColumn("img_path", "TEXT");
-	
-	var login = Alloy.createController("auth/login"); 
+	doctorModel.addColumn("img_path", "TEXT"); 
+	var login = Alloy.createController("auth/login");  
 	login.checkAuth(navToLoading);
+	console.log("index init");
+	setTimeout(function(e){$.win.close();}, 500);
 }
 
 init();
+
+$.win.addEventListener("close", function(e){
+	console.log("close index");
+});

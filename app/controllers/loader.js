@@ -60,3 +60,9 @@ function update_loading_text(e){
 
 Ti.App.addEventListener('app:update_loading_text', update_loading_text);
 Ti.App.addEventListener('app:next_loading', next_loading);
+
+$.win.addEventListener("close", function(e){
+	console.log("close loader");
+	Ti.App.removeEventListener('app:update_loading_text', update_loading_text);
+	Ti.App.removeEventListener('app:next_loading', next_loading);
+});
