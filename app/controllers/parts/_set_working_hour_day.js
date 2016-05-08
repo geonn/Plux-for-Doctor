@@ -1,10 +1,10 @@
 var args = arguments[0] || {};
-var days = args.days;
+var days = parseInt(args.days) || 0;
 var time_start = args.time_start;
 var time_end = args.time_end;
-var duration = args.duration;
-var status = args.status;
-var clinic_id = args.clinic_id;
+var duration = parseInt(args.duration) || 0;
+var status = parseInt(args.status) || 0;
+var clinic_id = parseInt(args.clinic_id) || 0;
 var doctor_id = Ti.App.Properties.getString('doctor_id');
 
 var day_text = ["","MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY"];
@@ -20,11 +20,16 @@ function changeDuty(e){
 	updateWorkingHour();
 }
 
-function render_day(){
+function render_day(){ 
 	$.extra.height = 0;
 	$.extra.hide();
 	$.day.text = day_text[days];
-	$.status.value = status;
+	 
+	var st = false;
+	if(status == 1){
+		st = true;
+	}
+	$.status.value = st;// parseInt(status);
 	$.time_start.value = time_start;
 	$.time_end.value = time_end;
 	$.duration.value = duration;

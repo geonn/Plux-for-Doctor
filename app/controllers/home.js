@@ -18,10 +18,11 @@ var menu_info = [
 function doLogout(){
 	Ti.App.Properties.removeProperty('u_id');
 	Ti.App.Properties.removeProperty('name');
-	Ti.App.Properties.removeProperty('clinic_id'); 
-	var win = Alloy.createController("index");
+	Ti.App.Properties.removeProperty('clinic_id');
+	
+	var win = Alloy.createController("index").getView();
 	win.open();
-	Alloy.Globals.Navigator.navGroup.close();  
+	$.win.close();
 }
 
 /**
