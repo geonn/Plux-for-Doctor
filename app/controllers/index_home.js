@@ -29,12 +29,8 @@ Alloy.Globals.Navigator = {
 					};
 				});
 			}
-<<<<<<< Updated upstream
 			console.log(controller+" is open now");
 			win.open();
-=======
-			$.index.win.open();
->>>>>>> Stashed changes
 		}
 	}
 };

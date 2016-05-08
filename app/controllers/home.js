@@ -2,6 +2,7 @@ var args = arguments[0] || {};
 //var loading = Alloy.createController("loading");
 var myClinic = Ti.App.Properties.getString('clinic_id');
 var panelListModel = Alloy.createCollection('panelList'); 
+var doctor_id = Ti.App.Properties.getString('doctor_id');
 
 var menu_info = [
 	{mod: "cardReader", image: "/images/btn/e-card-reader.png"},
@@ -119,22 +120,15 @@ function render_header_info(){
 	
 	//geo: hijack clinic panel select checking
 	var clinic_id = Ti.App.Properties.getString('clinic_id') || ""; 
-	console.log(clinic_id);
 	if(clinic_id ==""){  
 		//load clinic
-		var doctorPanel =  Ti.App.Properties.getString('clinic_ids'); 
-		console.log(doctorPanel+" home");
-		if(doctorPanel != ""){   
-			
-			panelListModel.updatePanelList(doctorPanel); 
-			var myPanel = doctorPanel.split(",");  
-			if(myPanel.length > 1){ 
-				setTimeout(function(e){selectPanel(myPanel);}, 500);
-			}else{ 
-				Ti.App.Properties.setString('clinic_id', doctorPanel); 
-			}
-			 
-		} 
+		var doctor_panel = Alloy.createCollection('doctor_panel'); 
+		var myPanel = doctor_panel.getData(doctor_id);
+		if(myPanel.length > 1){ 
+			setTimeout(function(e){selectPanel(myPanel);}, 500);
+		}else{
+			alert("No panel found, please create your clinic panel.");
+		}
 	} 
 }
 
@@ -174,12 +168,13 @@ function selectPanel(myPanel){
 		}); 
 		var data = []; 	
 		for(var i=0; i< myPanel.length; i++){
-			  
-			var panelDetails = panelListModel.getDataByID(myPanel[i]);
+			var panelDetails = panelListModel.getDataByID(myPanel[i].clinic_id);
 			 
 			var tblRowView = $.UI.create('TableViewRow',{ 
-				height: 30, 
+				height: 30,
+				color: "#000000",
 				classes: ['h6'],
+				left: 10,
 				title: panelDetails.clinicName,
 				id: panelDetails.id, 
 			}); 
@@ -209,7 +204,6 @@ function selectedPanelEvent(ctable,pop){
 		var res = JSON.parse(elbl);     
 		Ti.App.Properties.setString('clinic_id', res.id);
 		
-		var doctor_id = Ti.App.Properties.getString('doctor_id');
 		var model = Alloy.createCollection('doctor_panel');  
 		var doctor_panel = model.getDoctorPanelId(doctor_id ,res.id);
 		 
