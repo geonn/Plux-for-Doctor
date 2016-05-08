@@ -1,6 +1,5 @@
 <Alloy>
 	<Window navTintColor="#CE1D1C" id="win" title="Working Hours"  navBarHidden="false">
-
 	 	<ScrollView id="working_list" class="wfill hfill vert conthsize contwfill" contentHeight="Ti.UI.SIZE" contentWidth="Ti.UI.FILL">
  			
  		</ScrollView>

@@ -20,7 +20,6 @@ $.clinicLocationSelection.text = clinicLocationSelection;
 
 $.win.title = "Locator List";
 
-
 setTimeout(function(){
 	loadData(corp);
 }, 1000);
@@ -129,9 +128,16 @@ function listing(){
 	   		common.hideLoading();
 		}
 		
-		$.clinicListTv.addEventListener('click', function(e) {
-			Alloy.Globals.Navigator.open("clinic/clinicDetails", {panel_id:e.rowData.source, displayHomeAsUp: true});
-		});
+		_.debounce(navClinicDetail, 3000, true);
+		
+		$.clinicListTv.addEventListener('click', navClinicDetail);
+}
+
+function navClinicDetail(e){
+	common.showLoading();
+	console.log(e.rowData.source+" pandel_id");
+	Alloy.Globals.Navigator.open("clinic/clinicDetails", {panel_id:e.rowData.source, displayHomeAsUp: true});
+	common.hideLoading();
 }
 	/***SEARCH FUNCTION***/
 	function searchResult(){
@@ -185,23 +191,23 @@ function showTypeSelection(){
 		});
 		
 		dialog.show();
-		
-		dialog.addEventListener("click", function(e){   
-			if(cancelBtn != e.index){
-				dialog.selectedIndex = e.index;
-				$.clinicTypeSelection.text = clinicArr[e.index]; 
-				Ti.App.Properties.setString('clinicTypeSelection', clinicArr[e.index]);  
-				if(clinicArr[e.index] == "24 Hours"){   
-					list = library.getPanelBy24Hours("", corp);   
-				}else{
-					list = library.getPanelByClinicType(clinicArr[e.index],"", corp);   
-				}
+		_.debounce(dialogClinicTypeSelect, 3000);
+		dialog.addEventListener("click", dialogClinicTypeSelect);
+}
 
-				common.showLoading();
-				listing();
-		 
-			}
-		});
+function dialogClinicTypeSelect(e){
+	if(cancelBtn != e.index){
+		dialog.selectedIndex = e.index;
+		$.clinicTypeSelection.text = clinicArr[e.index]; 
+		Ti.App.Properties.setString('clinicTypeSelection', clinicArr[e.index]);  
+		if(clinicArr[e.index] == "24 Hours"){   
+			list = library.getPanelBy24Hours("", corp);   
+		}else{
+			list = library.getPanelByClinicType(clinicArr[e.index],"", corp);   
+		}
+		common.showLoading();
+		listing();
+	}
 }
 
 function showLocationSelection(){ 
@@ -223,29 +229,31 @@ function showLocationSelection(){
 	});
 		
 	dialog.show();
+	_.debounce(dialogChoiceLocation, 3000);	
+	dialog.addEventListener("click", dialogChoiceLocation);
+}
+
+function dialogChoiceLocation(e){
+	if(cancelBtn != e.index){
+		dialog.selectedIndex = e.index;
+		$.clinicLocationSelection.text = clinicLocationArr[e.index];
 		
-	dialog.addEventListener("click", function(e){   
-		if(cancelBtn != e.index){
-			dialog.selectedIndex = e.index;
-			$.clinicLocationSelection.text = clinicLocationArr[e.index];
-			
-			if(e.index == "0"){
-				Ti.App.Properties.setString('clinicLocationSelection', null); 
-			}else{
-				Ti.App.Properties.setString('clinicLocationSelection', clinicLocationArr[e.index]);  
-			}
-			
-				
-			//list = library.getPanelByClinicType(Ti.App.Properties.getString('clinicTypeSelection'),"", corp); 
-			if(Ti.App.Properties.getString('clinicTypeSelection') == "24 Hours"){   
-				list = library.getPanelBy24Hours("", corp);   
-			}else{
-				list = library.getPanelByClinicType(Ti.App.Properties.getString('clinicTypeSelection'),"", corp);   
-			}
-			common.showLoading();
-			listing();    
+		if(e.index == "0"){
+			Ti.App.Properties.setString('clinicLocationSelection', null); 
+		}else{
+			Ti.App.Properties.setString('clinicLocationSelection', clinicLocationArr[e.index]);  
 		}
-	});
+		
+			
+		//list = library.getPanelByClinicType(Ti.App.Properties.getString('clinicTypeSelection'),"", corp); 
+		if(Ti.App.Properties.getString('clinicTypeSelection') == "24 Hours"){   
+			list = library.getPanelBy24Hours("", corp);   
+		}else{
+			list = library.getPanelByClinicType(Ti.App.Properties.getString('clinicTypeSelection'),"", corp);   
+		}
+		common.showLoading();
+		listing();    
+	}
 }
 
 function loadData(corp){
@@ -259,7 +267,12 @@ function loadData(corp){
 }
 
 if(OS_IOS){
-	$.btnSearch.addEventListener('click', function(){    
+	_.debounce(btnSearch, 3000);
+	_.debounce(navClinicLcator, 3000);
+	$.btnSearch.addEventListener('click', btnSearch);
+	$.btnMap.addEventListener('click', navClinicLcator);
+	
+	function btnSearch(e){
 		var isVis=  $.searchItem.getVisible(); 
 		if(isVis === true){ 
 			$.searchItem.visible = false;
@@ -269,8 +282,9 @@ if(OS_IOS){
 			$.searchItem.visible = true;
 			$.searchItem.height = 50;
 		}
-	}); 
-	$.btnMap.addEventListener('click', function(){ 
+	}
+	
+	function navClinicLcator(e){
 		Alloy.Globals.Navigator.open("clinic/clinicLocator", { clinicType: Ti.App.Properties.getString('clinicTypeSelection'), location: Ti.App.Properties.getString('clinicLocationSelection'), displayHomeAsUp: true });
-	});
+	}
 }

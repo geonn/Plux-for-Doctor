@@ -202,7 +202,7 @@ function direction2here(){
 
 function doAdd(){
 	 
-	Alloy.Globals.Navigator.open('clinic/specialtyList', {panel_id:panel_id}); 
+	Alloy.Globals.Navigator.open('clinic/specialtyList', {panel_id:panel_id, displayHomeAsUp: true}); 
 	return false;
 	
 	var dialog = Ti.UI.createAlertDialog({
@@ -211,32 +211,35 @@ function doAdd(){
 		message: 'Would you like to add this as your panel?',
 		title: 'Add Panel'
 	});
-	dialog.addEventListener('click', function(ex){
-		if (ex.index === ex.source.cancel){
-		      //Do nothing
-		}
-		if (ex.index === 1){
-			//submit to server
-			var param = { 
-				"u_id"	  :  Ti.App.Properties.getString('u_id'), 
-				"action" : "add",
-				"clinic_id" : panel_id
-			};
-		 
-			API.callByPost({url:"updateDoctorPanelUrl", params: param}, function(responseText){ 
-				var res = JSON.parse(responseText);   
-				if(res.status == "success"){    
-					COMMON.createAlert("Success", "Panel successfully added", function(){ 
-						Ti.App.Properties.setString('myClinics',res.data);
-						init();
-					});
-				}else{
-					COMMON.createAlert("Error", res.data);
-					return false;
-				}
-					
-			});
-		}
-	}); 
+	_.debounce(dialogAddPanel, 3000);
+	dialog.addEventListener('click', dialogAddPanel); 
 	dialog.show();  
+}
+
+function dialogAddPanel(ex){
+	if (ex.index === ex.source.cancel){
+	      //Do nothing
+	}
+	if (ex.index === 1){
+		//submit to server
+		var param = { 
+			"u_id"	  :  Ti.App.Properties.getString('u_id'), 
+			"action" : "add",
+			"clinic_id" : panel_id
+		};
+	 
+		API.callByPost({url:"updateDoctorPanelUrl", params: param}, function(responseText){ 
+			var res = JSON.parse(responseText);   
+			if(res.status == "success"){    
+				COMMON.createAlert("Success", "Panel successfully added", function(){ 
+					Ti.App.Properties.setString('myClinics',res.data);
+					init();
+				});
+			}else{
+				COMMON.createAlert("Error", res.data);
+				return false;
+			}
+				
+		});
+	}
 }

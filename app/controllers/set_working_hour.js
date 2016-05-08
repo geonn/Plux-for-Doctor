@@ -5,7 +5,6 @@ var data = [];
 var working_hour_arr = [];
 
 function render_working_hour(){
-	console.log(data);
 	for (var i=1; i <= 7; i++) {
 		
 		var args = {doctor_panel_id:123, days:i, time_start:"08:00", time_end:"17:00",duration:"30", status: 0};
@@ -32,8 +31,6 @@ function refresh(){
 		model.saveArray(arr);
 		checker.updateModule(6, "getWorkingHoursByDoctorPanel", Common.now());
 		data = model.getData(doctor_panel_id);
-		console.log(data);
-
 		render_working_hour();
 		loading.finish();
 	});
@@ -46,7 +43,6 @@ function closeWindow(){
 
 function init(){
 	$.win.add(loading.getView());
-	console.log("init");
 	refresh();
 }
 

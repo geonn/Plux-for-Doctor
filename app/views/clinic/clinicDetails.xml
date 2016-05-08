@@ -5,6 +5,9 @@
 		         	<Label onClick="doAdd"  id="addLbl">Add</Label>
 		   		</View>
         </RightNavButton>
+        <Menu>
+            <MenuItem title="Add" onClick="doAdd" showAsAction="Titanium.Android.SHOW_AS_ACTION_ALWAYS" />
+        </Menu>
 		<View layout="vertical" id="loadingBar" height="120" width="120" borderRadius="15"  backgroundColor="#2E2E2E" >
 		    <ActivityIndicator  id="activityIndicator" />
 			<Label top="5" text="Loading" color="#ffffff" />

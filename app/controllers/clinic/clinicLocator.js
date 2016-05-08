@@ -38,7 +38,7 @@ function alerts(){
 var longitude;
 var latitude;   
 function init(e){   
-	 
+	_.debounce(navToclinicDetails, 3000);
 	longitude = e.coords.longitude;
     latitude = e.coords.latitude;
     var altitude = e.coords.altitude;
@@ -71,9 +71,7 @@ function init(e){
 			    height: Ti.UI.SIZE
 			});
 	
-			detBtn.addEventListener('click', function(ex){ 
-				Alloy.Globals.Navigator.open("clinic/clinicDetails", {panel_id:ex.source.panel_id, displayHomeAsUp: true});
-			});      
+			detBtn.addEventListener('click', navToclinicDetails);
 			viewRight.add(detBtn);
 			if(entry.latitude != "" && entry.longitude != ""){
 				var merchantLoc = Map.createAnnotation({
@@ -100,11 +98,12 @@ function init(e){
 	$.win_map.add(mapview);
 	// Handle click events on any annotations on this map.
 	if(Ti.Platform.osname == "android"){
-		mapview.addEventListener('click', function(evt) {
-			 Alloy.Globals.Navigator.open("clinic/clinicDetails", {panel_id:evt.annotation.panel_id, isplayHomeAsUp: true});
-		    // Ti.API.info("Annotation " + evt.title + " clicked, id: " + evt.annotation.panel_id);
-		});
+		mapview.addEventListener('click', navToclinicDetails);
 	}
+}
+
+function navToclinicDetails(e){
+	Alloy.Globals.Navigator.open("clinic/clinicDetails", {panel_id:e.annotation.panel_id, isplayHomeAsUp: true});
 }
 
 function setCurLoc(e){
@@ -114,13 +113,15 @@ function setCurLoc(e){
     };
     mapview.setLocation(region);
 }
-
-$.btnList.addEventListener('click', function(){
-	Alloy.Globals.Navigator.open("clinic/clinicNearby", {longitude:longitude, latitude:latitude, clinicType: clinicType, displayHomeAsUp: true });
-}); 
+_.debounce(navToclinicNearby, 3000);
+$.btnList.addEventListener('click', navToclinicNearby); 
 
 if(Ti.Platform.osname == "android"){
 	$.btnBack.addEventListener('click', function(){ 
 		$.clinicLocator.close(); 
 	}); 
+}
+
+function navToclinicNearby(e){
+	Alloy.Globals.Navigator.open("clinic/clinicNearby", {longitude:longitude, latitude:latitude, clinicType: clinicType, displayHomeAsUp: true });
 }

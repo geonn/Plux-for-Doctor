@@ -3,10 +3,10 @@ var days = args.days;
 var time_start = args.time_start;
 var time_end = args.time_end;
 var duration = args.duration;
-var status = args.status;
+var status = (args.status)?true:false;
 var clinic_id = args.clinic_id;
 var doctor_id = Ti.App.Properties.getString('doctor_id');
-
+console.log("parts/workinghour");
 var day_text = ["","MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY"];
 
 function changeDuty(e){
