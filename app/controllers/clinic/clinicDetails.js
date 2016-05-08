@@ -22,8 +22,27 @@ function init(){
 	var doctorPanel = Ti.App.Properties.getString('myClinics');
 	var myPanel = doctorPanel.split(",");
 	var res = myPanel.indexOf(panel_id); 
+	
+	var rightText = "Add";
 	if(res > -1){
-		$.addLbl.text = "Edit";
+		 rightText = "Edit"; 
+	}
+	
+	if(OS_IOS){
+			$.addLbl.text = rightText;
+	}else{
+			var activity = $.win.activity;
+
+			activity.onCreateOptionsMenu = function(e){
+			  var menu = e.menu;
+			  var menuItem = menu.add({
+			    title: rightText, 
+			    showAsAction: Ti.Android.SHOW_AS_ACTION_IF_ROOM
+			  });
+			  menuItem.addEventListener("click", function(e) {
+			   doAdd();
+			  });
+			};
 	} 
 }
 
@@ -202,7 +221,7 @@ function direction2here(){
 
 function doAdd(){
 	 
-	Alloy.Globals.Navigator.open('clinic/specialtyList', {panel_id:panel_id}); 
+	Alloy.Globals.Navigator.open('clinic/specialtyList', {panel_id:panel_id, displayHomeAsUp: true}); 
 	return false;
 	
 	var dialog = Ti.UI.createAlertDialog({

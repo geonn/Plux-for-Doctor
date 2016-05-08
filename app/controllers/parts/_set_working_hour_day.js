@@ -3,7 +3,7 @@ var days = parseInt(args.days) || 0;
 var time_start = args.time_start;
 var time_end = args.time_end;
 var duration = parseInt(args.duration) || 0;
-var status = parseInt(args.status) || 0;
+var status = (args.status)?true:false;
 var clinic_id = parseInt(args.clinic_id) || 0;
 var doctor_id = Ti.App.Properties.getString('doctor_id');
 
@@ -24,12 +24,8 @@ function render_day(){
 	$.extra.height = 0;
 	$.extra.hide();
 	$.day.text = day_text[days];
-	 
-	var st = false;
-	if(status == 1){
-		st = true;
-	}
-	$.status.value = st;// parseInt(status);
+	  
+	$.status.value = status;
 	$.time_start.value = time_start;
 	$.time_end.value = time_end;
 	$.duration.value = duration;

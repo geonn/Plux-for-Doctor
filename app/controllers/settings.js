@@ -252,8 +252,8 @@ function cancelEvent(cancelBtn,pop){
 	});
 }
 
-$.addPanel.addEventListener('click', function(){
-	Alloy.Globals.Navigator.open('clinic/listing');
+$.addPanel.addEventListener('click', function(){ 
+	Alloy.Globals.Navigator.open('clinic/listing', {displayHomeAsUp: true});
 });
 
 $.tvrName.addEventListener('click', function(){
