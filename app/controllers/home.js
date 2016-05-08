@@ -123,12 +123,13 @@ function render_header_info(){
 	if(clinic_id ==""){  
 		//load clinic
 		var doctorPanel =  Ti.App.Properties.getString('clinic_ids'); 
+		console.log(doctorPanel+" home");
 		if(doctorPanel != ""){   
 			
 			panelListModel.updatePanelList(doctorPanel); 
 			var myPanel = doctorPanel.split(",");  
 			if(myPanel.length > 1){ 
-				selectPanel(myPanel);
+				setTimeout(function(e){selectPanel(myPanel);}, 500);
 			}else{ 
 				Ti.App.Properties.setString('clinic_id', doctorPanel); 
 			}

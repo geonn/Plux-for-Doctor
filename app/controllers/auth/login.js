@@ -16,6 +16,7 @@ function onload(responseText){
 		setTimeout(function(){
 			loading.finish(); 
 			var arr = result.data;
+			console.log("login page");
 			console.log(arr);
 			//Ti.App.Properties.setString('clinic_id', arr.clinic_id);
 			//Ti.App.Properties.setString('specialty', arr.specialty);
@@ -27,7 +28,7 @@ function onload(responseText){
 	   		callback && callback();
 	   		$.win.close();
 	   		var index_home = Alloy.createController("index_home").getView();
-			index_home.open();	
+			index_home.open();
 		},2000);
 			
 	}

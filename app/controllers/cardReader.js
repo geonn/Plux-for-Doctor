@@ -22,7 +22,7 @@ function closeWindow(){
 init();
 
 function init(){ 
-	SCANNER.openScanner("1"); 
+	setTimeout(function(e){SCANNER.openScanner("1");}, 500);
 }
  
 

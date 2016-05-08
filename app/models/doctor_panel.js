@@ -58,6 +58,8 @@ exports.definition = {
                 if(Ti.Platform.osname != "android"){
                 	db.file.setRemoteBackup(false);
                 }
+                console.log(typeof clinic_id+" "+clinic_id);
+                clinic_id = (typeof clinic_id != "undefined")?clinic_id:0;
                 var res = db.execute(sql, doctor_id, clinic_id); 
                 var arr = []; 
                 var count = 0;
@@ -84,6 +86,8 @@ exports.definition = {
                 if(Ti.Platform.osname != "android"){
                 	db.file.setRemoteBackup(false);
                 }
+                console.log(typeof clinic_id+" "+clinic_id);
+                clinic_id = (typeof clinic_id != "undefined")?clinic_id:0;
                 var res = db.execute(sql, doctor_id, clinic_id);
                 var arr; 
                 var count = 0;

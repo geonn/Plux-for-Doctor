@@ -18,7 +18,7 @@ Alloy.Globals.Navigator = {
 		}else{
 			
 			// added this property to the payload to know if the window is a child
-			console.log(typeof payload.displayHomeAsUp);
+			console.log(typeof payload.displayHomeAsUp+" action bar");
 			if (typeof payload.displayHomeAsUp !="undefined"){
 				
 				win.addEventListener('open',function(evt){

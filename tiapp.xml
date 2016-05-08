@@ -11,7 +11,7 @@
     <fullscreen>false</fullscreen>
     <navbar-hidden>false</navbar-hidden>
     <analytics>true</analytics>
-    <guid>8a29b61f-6cef-4bf1-9ddd-7fff432210b3</guid>
+     <guid>73e86c38-864d-4c85-9222-6afe06ffe88e</guid>
     <property name="ti.ui.defaultunit" type="string">dp</property>
     <ios>
         <plist>
@@ -45,7 +45,7 @@
     </ios>
     <android xmlns:android="http://schemas.android.com/apk/res/android">
         <manifest>
-            <application android:debuggable="false" android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            <application android:debuggable="false">
                 <meta-data
                     android:name="com.google.android.maps.v2.API_KEY" android:value="AIzaSyBJ0EF9lpsbttU_OdKA3BBxscR0ygt9D2A"/>
                 <intent-filter>
@@ -95,7 +95,7 @@
         <target device="mobileweb">false</target>
         <target device="windows">false</target>
     </deployment-targets>
-    <sdk-version>5.2.1.GA</sdk-version>
+    <sdk-version>6.0.0.v20151218093451</sdk-version>
     <plugins>
         <plugin version="1.0">ti.alloy</plugin>
     </plugins>
