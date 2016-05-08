@@ -1,5 +1,5 @@
 <Alloy>
-	<Window title="" color="#ffffff" id="win">
+	<Window title="" color="#ffffff" id="win" navBarHidden="true" theme="Theme.NoActionBar">
 		<View class="wfill hfill vert" backgroundImage="/images/home_background.jpg">
 			<ImageView image="/images/appicon.png" top="50" bottom="50" height="auto"  width="120" />
 			 

@@ -121,7 +121,7 @@ function render_header_info(){
 	//geo: hijack clinic panel select checking
 	var clinic_id = Ti.App.Properties.getString('clinic_id') || ""; 
 	if(clinic_id ==""){  
-		//load clinic
+		//load clinic 
 		var doctor_panel = Alloy.createCollection('doctor_panel'); 
 		var myPanel = doctor_panel.getData(doctor_id);
 		if(myPanel.length > 1){ 
@@ -129,6 +129,7 @@ function render_header_info(){
 		}else{
 			alert("No panel found, please create your clinic panel.");
 		}
+ 
 	} 
 }
 
