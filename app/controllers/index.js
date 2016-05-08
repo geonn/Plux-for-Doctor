@@ -10,8 +10,7 @@ function init(){
 	var doctorModel = Alloy.createCollection('doctor'); 
 	doctorModel.addColumn("img_path", "TEXT");
 	
-	var login = Alloy.createController("auth/login");
-	console.log();
+	var login = Alloy.createController("auth/login"); 
 	login.checkAuth(navToLoading);
 }
 

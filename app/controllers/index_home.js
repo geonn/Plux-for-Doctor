@@ -29,7 +29,7 @@ Alloy.Globals.Navigator = {
 					};
 				});
 			} 
-			win.open();
+			win.open(); 
 		}
 	}
 };

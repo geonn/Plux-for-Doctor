@@ -19,9 +19,10 @@ function doLogout(){
 	Ti.App.Properties.removeProperty('u_id');
 	Ti.App.Properties.removeProperty('name');
 	Ti.App.Properties.removeProperty('clinic_id');
-	Alloy.Globals.Navigator.navGroup.close();
-	var win = Alloy.createController("auth/login").getView();
+	
+	var win = Alloy.createController("index");
 	win.open();
+	Alloy.Globals.Navigator.navGroup.close(); 
 }
 
 /**
