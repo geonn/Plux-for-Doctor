@@ -11,7 +11,7 @@
     <fullscreen>false</fullscreen>
     <navbar-hidden>false</navbar-hidden>
     <analytics>true</analytics>
-    <guid>fb335e76-88c2-482f-9fff-7812f16fcac3</guid>
+    <guid>8a29b61f-6cef-4bf1-9ddd-7fff432210b3</guid>
     <property name="ti.ui.defaultunit" type="string">dp</property>
     <ios>
         <plist>
@@ -92,7 +92,7 @@
         <target device="mobileweb">false</target>
         <target device="windows">false</target>
     </deployment-targets>
-    <sdk-version>6.0.0.v20151218093451</sdk-version>
+    <sdk-version>5.2.2.GA</sdk-version>
     <plugins>
         <plugin version="1.0">ti.alloy</plugin>
     </plugins>
