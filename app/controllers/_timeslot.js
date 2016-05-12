@@ -127,7 +127,7 @@ function render_available_timeslot(){
 	var start_date = selected_date.getFullYear()+"-"+("0"+(parseInt(selected_date.getMonth())+1)).slice(-2)+"-"+("0"+selected_date.getDate()).slice(-2)+" 00:00:00";
 	var end_date = selected_date.getFullYear()+"-"+("0"+(parseInt(selected_date.getMonth())+1)).slice(-2)+"-"+("0"+selected_date.getDate()).slice(-2)+" 23:59:59";
 	var appointmentList = appointmentModel.getAppointmentList({u_id: u_id, doctor_panel_id: doctor_panel_id, start_date: start_date, end_date:end_date});
-	
+	console.log(appointmentList);
 	/*
 	 generate booked timeslot from appointment list
 	 * */
@@ -139,8 +139,7 @@ function render_available_timeslot(){
 	  var time_start_key = Math.floor(booking_min / timeblock);
 	  var time_end_key = Math.floor((booking_min+parseInt(appointmentList[i].duration)) / timeblock);
 	  for(;time_end_key > time_start_key;  time_start_key++){
-	  	
-	  	booked_time[time_start_key] = ({status: appointmentList[i].status, remark: appointmentList[i].remark, patient_name: appointmentList[i].patient_name, doctor_panel_id: appointmentList[i].doctor_panel_id, patient_id: appointmentList[i].u_id,  duration: appointmentList[i].duration, appointment_id: appointmentList[i].id, minute: booking_min});
+		booked_time[time_start_key] = ({status: appointmentList[i].status, remark: appointmentList[i].remark, patient_name: appointmentList[i].patient_name, doctor_panel_id: appointmentList[i].doctor_panel_id, patient_id: appointmentList[i].u_id,  duration: appointmentList[i].duration, appointment_id: appointmentList[i].id, minute: booking_min});
 	  }
 	};
 	

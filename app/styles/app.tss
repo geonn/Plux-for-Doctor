@@ -43,6 +43,7 @@ overrode the settings with other TSS, XML, or JS settings:
     modal: false, // make android windows all heavyweight
     navBarHidden: true,
     fullscreen: true,
+    width: Ti.UI.FILL,
 },
 
 'TextField[platform=ios formFactor=handheld]': {
@@ -116,9 +117,12 @@ overrode the settings with other TSS, XML, or JS settings:
 	backgroundColor: "#CE1D1C",
 	borderRadius: 6,
 	color: "#ffffff",
-	width: "70%",
+	width: Ti.UI.FILL,
+	left: 30,
+	right: 30,
 	top: 10,
 },
+
 '.button[platform=ios formFactor=handheld]': {
 	height: 40,
 	borderColor: "#C6C8CA",

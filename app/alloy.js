@@ -187,4 +187,8 @@ function currentDateTime(){
 	return datetime ;
 } 
 
+function pixelToDp(px) {
+    return ( parseInt(px) / (Titanium.Platform.displayCaps.dpi / 160));
+}
+
 PUSH.registerPush();

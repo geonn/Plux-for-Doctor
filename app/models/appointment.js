@@ -11,8 +11,8 @@ exports.definition = {
 		    "start_date" : "TEXT",
 		    "end_date" : "TEXT",
 		    "remark" : "TEXT",
-		    "status": "INTEGER" ,
-		    "created": "TEXT" ,
+		    "status": "INTEGER",
+		    "created": "TEXT",
 		    "updated": "TEXT",
 		    "date" : "TEXT",
 		    "suggested_date" : "TEXT",
@@ -55,11 +55,12 @@ exports.definition = {
 			},
 			getAppointmentList: function(ex){
 				console.log(ex);
-				
+				var query_doctor_panel_id = (typeof ex.doctor_panel_id != "undefined")?" doctor_panel_id = ? ":"";
 				var query_start_date = (typeof ex.start_date != "undefined")?" AND start_date >= ? AND start_date < ? ":"";
 				var collection = this;
                 //var sql = "SELECT a.* FROM appointment as a, doctor_panel as dp WHERE dp.id = a.doctor_panel_id AND dp.doctor_id = ? "+query_start_date+" AND a.status != 5 ORDER BY a.created DESC";
               	var sql = "SELECT * from appointment where doctor_panel_id = ? "+query_start_date+" AND status != 5 ORDER BY created DESC";
+              	console.log(sql);
                 db = Ti.Database.open(collection.config.adapter.db_name);
                 if(Ti.Platform.osname != "android"){
                 	db.file.setRemoteBackup(false);

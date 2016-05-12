@@ -1,39 +1,24 @@
 var args = arguments[0] || {};
-var doctor_id = Ti.App.Properties.getString('doctor_id') || 0;
-var specialty = Ti.App.Properties.getString('specialty') || 0;
+var appointmentModel = Alloy.createCollection('appointment');
+var appointmentList;
 var doctor_panel_id = Ti.App.Properties.getString('doctor_panel_id') || 0;
-var pWidth = Ti.Platform.displayCaps.platformWidth;
-var pHeight = Ti.Platform.displayCaps.platformHeight;
-var loading = Alloy.createController("loading");
-var appointment = Alloy.createCollection("appointment");
-var data;
-var detail_box_open = false;
-var suggest_box_open = false;
-var status_text = ["nothing", "Pending", "Rejected", "Approved", "Suggested date", "Deleted"];
 var indicator_color = ["#ffffff", '#fccd03', '#CE1D1C', '#afdb00', '#3f99f9', 'black'];
-var font_color = ["#000000", '#ffffff', "#ffffff", '#ffffff', '#ffffff', '#ffffff'];
-
-var selected_id = 0;
-var selected_time = [];
-var patient_id = 0;
-//var doctor_panel_id  = 0;
-var selected_date = new Date();
+var status_text = ["", "Pending", "Rejected", "Accepted", "Suggestion", "Deleted"];
 var current_date = "";
-var pw = Ti.Platform.displayCaps.platformWidth;
-var ldf = Ti.Platform.displayCaps.logicalDensityFactor;
-var listed = false;
+var loading = Alloy.createController("loading");
+var selected_date = new Date();
 
-if(!OS_IOS){
-	pWidth = pixelToDp(pw);
+init();
+
+function init(){
+	$.win.add(loading.getView());
+	loading.start();
+	render_appointment_list();
 }
-
-$.masked.hide();
-$.masked2.hide();
-// 1 - pending, 2- rejected, 3 - accepted. 4 - suggested date, 5 - delete
 
 function render_appointment_list(){ 
 	$.appointment_list.removeAllChildren();
-	appointmentList = appointment.getAppointmentList({doctor_panel_id: doctor_panel_id}); 
+	appointmentList = appointmentModel.getAppointmentList({doctor_panel_id: doctor_panel_id}); 
 	var data=[];
 	var counter = 0;  
 	if(appointmentList.length < 1){
@@ -65,20 +50,17 @@ function openDetailBox(e){
 	//check appointment exist and initial into detail box
 	var id = parent({name: "appointment_id"}, e.source);
 	var dp_id = parent({name: "doctor_panel_id"}, e.source);
-	console.log(id+" id found");
 	if(id){
 		
 		selected_id = id;
 		doctor_panel_id = dp_id;
-		
+		selected_date = parent({name: "selected_date"}, e.source);
 		var status = parent({name: "status"}, e.source);
 		var remark_val = parent({name: "remark"}, e.source);
 		var patient_name = parent({name: "patient_name"}, e.source);
+		patient_id = parent({name: "patient_id"}, e.source);
 		var checkin = parent({name: "date_s"}, e.source);
 		var duration = parent({name: "duration"}, e.source);
-		
-		patient_id = parent({name: "patient_id"}, e.source);
-		selected_date = parent({name: "selected_date"}, e.source);
 		
 		$.remake_box.text = remark_val;
 		$.patient_name.text = patient_name;
@@ -112,20 +94,6 @@ function openDetailBox(e){
 				detail_box_open = true;
 			});
 		}
-	}
-}
-
-function navToList(){
-	// Alloy.Globals.Navigator.open('appointment_list');
-	if(listed){
-		listed = false;
-		$.appointment_list.hide();
-		$.main.show();
-	}else{
-		listed = true;
-		$.main.hide();
-		render_appointment_list();
-		$.appointment_list.show();
 	}
 }
 
@@ -216,45 +184,6 @@ function render_suggest_box(){
 	}
 }
 
-/*
- 	render timeslot
- * */
-function render_timeslot(){
-	var _timeslot = Alloy.createController("_timeslot", {date_click: date_click, doctor_id: doctor_id, doctor_panel_id: doctor_panel_id}).getView();
-	$.inner_box.add(_timeslot);
-}
-
-/*
- Render Calendar
- * */
-function render_calendar(){
-	var calendar = CAL.getCalendar();
-	$.calendar.add(calendar);
-}
-
-/*
- 	Refresh
- * */
-function refresh(e){
-	loading.start();
-	var today_start_date = selected_date.getFullYear()+"-"+('0'+(selected_date.getMonth()+1)).slice(-2)+"-"+('0'+selected_date.getDate()).slice(-2)+" 00:00:00";
-	var today_end_date = selected_date.getFullYear()+"-"+('0'+(selected_date.getMonth()+1)).slice(-2)+"-"+('0'+selected_date.getDate()).slice(-2)+" 23:59:59";
-	var start_date = (typeof e !="undefined")?e.selected_date+" 00:00:00":today_start_date;
-	var end_date = (typeof e != "undefined")?e.selected_date+" 23:59:59":today_end_date;
-	
-	var checker = Alloy.createCollection('updateChecker'); 
-	var isUpdate = checker.getCheckerById(4, doctor_id);
-	var last_update = isUpdate.updated || ""; 
-	API.callByPost({url:"getAppointmentByDoctor", params: {last_updated: last_update, doctor_id:doctor_id}}, function(responseText){
-		var model = Alloy.createCollection("appointment");
-		var res = JSON.parse(responseText);
-		var arr = res.data || null;
-		model.saveArray(arr);
-		checker.updateModule(4,"getAppointmentByDoctor", Common.now(), doctor_id);
-		render_timeslot();
-	});
-}
-
 function onAccept(){
 	var param = {
 		status: 3,
@@ -323,7 +252,6 @@ function updateAppointmentStatus(param, _callback){
 	loading.start();
 	
 	API.callByPost({url:"addAppointmentUrl", params: param}, function(responseText){
-		console.log(responseText);
 		var res = JSON.parse(responseText);
 		if(res.status == "success"){
 			appointment.updateAppointmentStatus(param.id, param.status);
@@ -345,62 +273,18 @@ function loadingOn(){
 	loading.start();
 }
 
-/**
- * Closes the Window
- */
-function closeWindow(){
-	$.win.close();
+function new_appointment(){ 
+	nav.navigateWithArgs("appointment/index",{id : ""});
 }
 
-function init(){
-	//console.log("doctor_panel_id: "+doctor_panel_id);
-	if(doctor_panel_id == ""){
-		var dialog = Ti.UI.createAlertDialog({
-			cancel: 1,
-			buttonNames: ['Cancel','OK'],
-			message: "You don't have active panel selected yet. Are you want to select now?",
-			title: 'Select Panel'
-		});
-		dialog.addEventListener('click', function(ex){
-			if (ex.index === 0){
-				//Do nothing
-			}
-		
-			if (ex.index === 1){
-				 Alloy.Globals.Navigator.open('settings');
-			}
-		});
-		dialog.show();  
-	}
-	$.win.add(loading.getView());
-	render_detail_box();
-	//render_calendar();
-	refresh();
-} 
-init();
-
-//$.main.addEventListener("scroll", closeDetailBox);
-Ti.App.addEventListener('appointment:loadingOn', loadingOn);
-Ti.App.addEventListener('appointment:loadingOff', loadingOff);
-Ti.App.addEventListener('appointment:refresh', refresh);
-
-$.masked.addEventListener("click", closeDetailBox);
-$.masked2.addEventListener("click", closeSuggestBox);  
-
-$.win.addEventListener("close", function(){
-	Ti.App.removeEventListener('appointment:refresh',refresh);
-	Ti.App.removeEventListener('appointment:loadingOff',loadingOff);
-	Ti.App.removeEventListener('appointment:loadingOn',loadingOn);
-	$.destroy();
-});
-
 /*
- private function
+ Private Function
  * */
 
 function add_appointment_row(entry){
 	var datetime = entry.start_date.split(" ");
 	var time = datetime[1];
+	var patient_id = entry.patient_id || "";
 	var dpi = entry.doctor_panel_id || 0;
 		
 	var view_row = $.UI.create("View", {
@@ -414,13 +298,13 @@ function add_appointment_row(entry){
 		remark: entry.remark,
 		duration: entry.duration,
 		patient_name: entry.patient_name,
-		appointment_id: entry.id,
-		patient_id: entry.u_id,
+		appointment_id: entry.appointment_id,
+		patient_id: patient_id,
 		doctor_panel_id: dpi,
 		selected_date: selected_date,
-		date_s: entry.start_date
+		date_s:  selected_date.getFullYear()+"-"+("0"+(parseInt(selected_date.getMonth())+1)).slice(-2)+"-"+("0"+selected_date.getDate()).slice(-2)+" "+convertMinuteToHour(workingHourArray[key].minute),
+		
 	});
-	
 	
 	var view_date_status_box = $.UI.create("View", {
 		classes: ['hfill', 'vert'],
@@ -431,7 +315,7 @@ function add_appointment_row(entry){
 	var label_time = $.UI.create("Label", {
 		classes: ['wfill', 'hsize','padding'],
 		textAlign: "center",
-		color: font_color[entry.status],
+		color: "#ffffff",
 		bottom: 0,
 		minimumFontSize: 12,
 		text: convert_ampm(time)
@@ -441,7 +325,7 @@ function add_appointment_row(entry){
 		classes: ['wfill', 'hsize','padding'],
 		textAlign: "center",
 		top: 0,
-		color: font_color[entry.status],
+		color: "#ffffff",
 		font:{
 			fontSize: 12
 		},
@@ -482,8 +366,65 @@ function add_appointment_row(entry){
 	view_row.add(view_date_status_box);
 	view_row.add(view_clinic_specialty_box);
 	
-	view_row.addEventListener("click", openDetailBox);
+	view_row.addEventListener("click", create_dialog_box);
 	return view_row;
+}
+
+function create_dialog_box(ex){
+	var id = parent({name: "appointment_id"}, ex.source);
+	var doctor_panel_id = parent({name: "doctor_panel_id"}, ex.source);
+	var status = parent({name: "status"}, ex.source);
+	var buttonName = [], message = "";
+	//var view_row = parent({name: "view_row", value: 1}, ex.source);
+	switch(status){
+		case 1:
+		case 2:	
+			buttonName = ['Cancel Appointment', "Cancel"];
+			message = "Are you sure want to cancel this appointment?";
+			break;
+		case 4:
+			buttonName = ['Accept', "Cancel"];
+			message = "Please confirm if this appointment time is convenient for you.";
+			break;
+		case 3:
+			return;	
+		
+	}
+	var dialog = Ti.UI.createAlertDialog({
+	    cancel: 1,
+	    buttonNames: buttonName,
+	    message: message,
+	    title: 'Actions'
+	  });
+	  dialog.addEventListener('click', function(e){
+	    if (e.index === 0){
+	      if(status == 4){
+	      	loading.start();
+	      	API.callByPost({url: "suggestedAppointmentUrl", params:{id: id}}, function(responseText){ 
+	      		var model = Alloy.createCollection("appointment");
+				var res = JSON.parse(responseText);
+				var arr = res.data || null;
+				console.log("doctor_panel_id"+doctor_panel_id);
+				console.log(arr);
+				model.saveArray(arr);
+				model.updateSuggestedAppointmentStatus(doctor_panel_id);
+				setTimeout(render_appointment_list, 1000);
+				loading.finish();
+	      	});
+	      }else if(status == 1 || status == 2){
+	      	loading.start();
+	      	API.callByPost({url: "addAppointmentUrl", params:{id: id, isDoctor:1, status: 5}}, function(responseText){ 
+	      		var model = Alloy.createCollection("appointment");
+				var res = JSON.parse(responseText);
+				var arr = res.data || null;
+				model.updateAppointmentStatus(id, 5);
+				render_appointment_list();
+				loading.finish();
+	      	});
+	      }
+	    }
+	  });
+	  dialog.show();
 }
 
 function check_update_currentdate(date){
@@ -511,6 +452,45 @@ function check_update_currentdate(date){
 		$.appointment_list.add(view_date);
 	}
 }
+
+function convert_ampm(timeStamp){
+	var time = timeStamp.split(":");
+	var ampm = "am";
+	if(time[0] > 12){
+		ampm = "pm";
+		time[0] = time[0] - 12;
+	}
+	
+	return time[0]+":"+time[1]+ " "+ ampm;
+}
+
+
+if(Ti.Platform.osname == "android"){
+	$.btnBack.addEventListener('click', function(){ 
+		nav.closeWindow($.win); 
+	}); 
+}
+
+Ti.App.addEventListener('displayRecords', render_appointment_list);
+Ti.App.addEventListener('appointment_list:refresh', render_appointment_list);
+Ti.App.addEventListener('appointment_list:loadingOn', loadingOn);
+Ti.App.addEventListener('appointment_list:loadingOff', loadingOff);
+
+$.masked.addEventListener("click", closeDetailBox);
+$.masked2.addEventListener("click", closeSuggestBox);  
+
+/** close all editProfile eventListener when close the page**/
+$.win.addEventListener("close", function(){
+	$.destroy(); 
+    Ti.App.removeEventListener('displayRecords', render_appointment_list);
+    Ti.App.removeEventListener('appointment_list:refresh', render_appointment_list);
+	Ti.App.removeEventListener('appointment_list:loadingOff',loadingOff);
+	Ti.App.removeEventListener('appointment_list:loadingOn',loadingOn);
+});
+
+/*
+ private function
+ * */
 
 function formatDate(date) {
     var d = new Date(date);
@@ -542,15 +522,4 @@ function convertMinuteToHour(minutes){
 	var hour = Math.floor(minutes/60);
 	var minute = minutes%60;
     return hour+"h "+('0' + minute).slice(-2)+" m";
-}
-
-function convert_ampm(timeStamp){
-	var time = timeStamp.split(":");
-	var ampm = "am";
-	if(time[0] > 12){
-		ampm = "pm";
-		time[0] = time[0] - 12;
-	}
-	
-	return time[0]+":"+time[1]+ " "+ ampm;
 }

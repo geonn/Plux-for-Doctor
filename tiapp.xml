@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ti:app xmlns:ti="http://ti.appcelerator.org">
-    <id>com.plux.doctor</id>
+    <id>com.freejini.pluxfordoctor</id>
     <name>Plux-for-Doctor</name>
     <version>1.0</version>
     <publisher>PLUX Health</publisher>
@@ -82,7 +82,7 @@
         <module platform="android">com.mirasense.scanditsdk</module>
         <module platform="iphone">com.mirasense.scanditsdk</module>
         <module platform="android">ti.cloudpush</module>
-        <module platform="android" version="2.3.6">ti.map</module>
+        <module platform="android" version="2.3.10">ti.map</module>
         <module platform="iphone">ti.map</module>
     </modules>
     <deployment-targets>
