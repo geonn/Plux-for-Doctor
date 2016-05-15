@@ -2,13 +2,21 @@ var args = arguments[0] || {};
 var specialty = args.specialty;
 var clinicId = args.clinic_id;
 var doctor_id = args.doctor_id;
+var appointment_id = args.appointment_id;
+var appointment_selected;
 //var doctor_panel_id = args.doctor_panel_id;
 var doctor_panel_id = Ti.App.Properties.getString('doctor_panel_id');
 console.log(doctor_panel_id+" init doctor_panel_id");
 var working_hour = [];
 var listing = [];
-var selected_date = args.selected_date || new Date();
-var lastday = selected_date;
+var d = new Date();
+d.setHours = 0;
+d.setMinutes = 0;
+d.setSeconds = 0;
+d.setMilliseconds = 0;
+
+var selected_date = args.selected_date || d;
+var lastday = d;
 var days = ["SUN","MON","TUE","WED","THU","FRI","SAT"];
 var months = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
 var u_id = Ti.App.Properties.getString('u_id') || 0;
@@ -47,6 +55,8 @@ function render_date_bar(){
 	$.date_bar.height = 80;
 	var dateArray = getDates(lastday, (lastday).addDays(10));
 	for (i = 0; i < dateArray.length; i ++ ) {
+		console.log(selected_date);
+		console.log(dateArray[i]);
 		var active_view = (selected_date == dateArray[i])?"active_view":"";
 		var active_label = (selected_date == dateArray[i])?"active_label":"";
 	    var day = days[dateArray[i].getDay()];

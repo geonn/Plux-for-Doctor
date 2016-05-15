@@ -27,19 +27,24 @@ if(Ti.Platform.osname == "android"){
 function receivePush(e) {   
 	var target;
 	var url;
+	var id;
 	if(OS_IOS){ 
 		Titanium.UI.iPhone.setAppBadge("0"); 
 		target = e.data.target;
 		url = e.data.extra;
+		id = e.data.id;
+		created = e.data.created;
 	}else{ 
 		target = e.target;
 		url = e.extra;
+		id = e.id;
+		created = e.created;
 	}  
 	console.log(target+" and redirect "+redirect); 
 	if(target =="appointment"){
 		if(redirect){
 			setTimeout(function(){
-				Alloy.Globals.Navigator.open('appointment');
+				Alloy.Globals.Navigator.open('appointment', {id: id, created: created});
 			},2000);
 		}else{
 			Ti.App.fireEvent("appointment:refresh");

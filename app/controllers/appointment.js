@@ -224,16 +224,9 @@ function render_suggest_box(){
  	render timeslot
  * */
 function render_timeslot(){ 
-	var _timeslot = Alloy.createController("_timeslot", {date_click: date_click, doctor_id: doctor_id, doctor_panel_id: doctor_panel_id}).getView();
+	
+	var _timeslot = Alloy.createController("_timeslot", {date_click: date_click, doctor_id: doctor_id, doctor_panel_id: doctor_panel_id, appointment_id: args.id, selected_date: args.created}).getView();
 	$.inner_box.add(_timeslot);
-}
-
-/*
- Render Calendar
- * */
-function render_calendar(){
-	var calendar = CAL.getCalendar();
-	$.calendar.add(calendar);
 }
 
 /*
