@@ -19,7 +19,7 @@ function doLogout(){
 	Ti.App.Properties.removeProperty('u_id');
 	Ti.App.Properties.removeProperty('name');
 	Ti.App.Properties.removeProperty('clinic_id');
-	
+	Ti.App.Properties.removeProperty('doctor_panel_id');
 	var win = Alloy.createController("index").getView();
 	win.open();
 	$.win.close();
@@ -228,6 +228,8 @@ function init(){
 	var deviceToken = Ti.App.Properties.getString('deviceToken');  
 	var u_id = Ti.App.Properties.getString('u_id') || "";
 	console.log(u_id +" => " + deviceToken);
+	console.log( "doctor_panel_id => " + Ti.App.Properties.getString('doctor_panel_id'));
+	 
 	if(deviceToken != "" && u_id != ""){ 
 		API.callByPost({url: "updateDoctorDeviceTokenUrl", params:{u_id: u_id,device_id:deviceToken }}, function(responseText){ 
 	      console.log("OK DEVICE TOKEN");

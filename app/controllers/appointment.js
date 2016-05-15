@@ -24,7 +24,8 @@ var ldf = Ti.Platform.displayCaps.logicalDensityFactor;
 var listed = false;
 
 if(!OS_IOS){
-	pWidth = pixelToDp(pw);
+	pWidth = pixelToDp(pw);  
+	
 }
 
 $.masked.hide();
@@ -33,7 +34,9 @@ $.masked2.hide();
 
 function render_appointment_list(){ 
 	$.appointment_list.removeAllChildren();
+	console.log("doctor_panel_id: "+doctor_panel_id);
 	appointmentList = appointment.getAppointmentList({doctor_panel_id: doctor_panel_id}); 
+	console.log(appointmentList);
 	var data=[];
 	var counter = 0;  
 	if(appointmentList.length < 1){
@@ -124,6 +127,7 @@ function navToList(){
 	}else{
 		listed = true;
 		$.main.hide();
+		$.appointment_list.height = Ti.UI.FILL;
 		render_appointment_list();
 		$.appointment_list.show();
 	}
@@ -219,7 +223,7 @@ function render_suggest_box(){
 /*
  	render timeslot
  * */
-function render_timeslot(){
+function render_timeslot(){ 
 	var _timeslot = Alloy.createController("_timeslot", {date_click: date_click, doctor_id: doctor_id, doctor_panel_id: doctor_panel_id}).getView();
 	$.inner_box.add(_timeslot);
 }
@@ -301,17 +305,17 @@ function onOk(){
 			
 	  	appointment.saveArray(res.data);
 	  	save_counter++;
-	  	if(save_counter == selected_time.length){
-	  		var param = {
-				status: 2,
-				id: selected_id,
-				isDoctor: 1
-			};
-			closeSuggestBox();
-			updateAppointmentStatus(param, closeDetailBox);
-	  	}
+	  	 
 	  });
 	};
+	
+	var param = {
+		status: 2,
+		id: selected_id,
+		isDoctor: 1
+	};
+	closeSuggestBox();
+	updateAppointmentStatus(param, closeDetailBox);
 }
 
 function onCancel(){
@@ -320,10 +324,9 @@ function onCancel(){
 }
 
 function updateAppointmentStatus(param, _callback){
-	loading.start();
+	loading.start(); 
 	
-	API.callByPost({url:"addAppointmentUrl", params: param}, function(responseText){
-		console.log(responseText);
+	API.callByPost({url:"addAppointmentUrl", params: param}, function(responseText){ 
 		var res = JSON.parse(responseText);
 		if(res.status == "success"){
 			appointment.updateAppointmentStatus(param.id, param.status);
@@ -353,6 +356,24 @@ function closeWindow(){
 }
 
 function init(){
+	$.appointment_list.hide();
+	if(OS_ANDROID){
+		var activity = $.win.activity;
+
+		activity.onCreateOptionsMenu = function(e){
+		  var menu = e.menu;
+		  var menuItem = menu.add({
+		    title: "List", 
+		    icon: "/images/list.png",
+		    showAsAction: Ti.Android.SHOW_AS_ACTION_IF_ROOM
+		  });
+		  menuItem.addEventListener("click", function(e) {
+		   navToList();
+		  });
+		}; 
+	}
+	
+	
 	//console.log("doctor_panel_id: "+doctor_panel_id);
 	if(doctor_panel_id == ""){
 		var dialog = Ti.UI.createAlertDialog({
@@ -457,6 +478,15 @@ function add_appointment_row(entry){
 		width: "auto",
 	});
 	
+	var label_patient = $.UI.create("Label", {
+		classes: ['wfill', 'hsize','padding'],
+		bottom: 0,
+		top: 10,
+		font:{
+			fontSize: 14
+		},
+		text: entry.patient_name
+	});
 	var label_clinic = $.UI.create("Label", {
 		classes: ['wfill', 'hsize','padding'],
 		bottom: 0,
@@ -475,7 +505,7 @@ function add_appointment_row(entry){
 		},
 		text: entry.specialty_name
 	});
-	
+	view_clinic_specialty_box.add(label_patient);
 	view_clinic_specialty_box.add(label_clinic);
 	view_clinic_specialty_box.add(label_specialty);
 	

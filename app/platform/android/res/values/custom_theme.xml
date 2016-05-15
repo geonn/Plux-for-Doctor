@@ -8,6 +8,11 @@
         <item name="android:windowNoTitle">true</item>
         <item name="android:editTextStyle">@style/editText</item>
     </style>
+    <style name="Theme.HaveActionBar" parent="@style/Theme.Titanium">
+        <item name="android:windowActionBar">true</item>
+        <item name="android:windowNoTitle">false</item>
+        <item name="android:editTextStyle">@style/editText</item>
+    </style>
     <string name="facebook_app_id">684687638302896</string>
     <style name="editText" parent="@android:style/Widget.EditText">
 	    <item name="android:textCursorDrawable">@null</item>   

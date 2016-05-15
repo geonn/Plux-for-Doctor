@@ -1,13 +1,17 @@
 <Alloy>
-	<Window  navTintColor="#CE1D1C" class="wfill" id="win" title="Appointment" navBarHidden="false">
-		<RightNavButton>
+	<Window  navTintColor="#CE1D1C" class="wfill" id="win" title="Appointment" navBarHidden="false" >
+		<RightNavButton platform="ios"> 
 	        <View>
-	         	<ImageView left='10' onClick="navToList" id="newRecord" width="25" height="20" image="/images/search.png" /> 
+	         	<ImageView left='10' onClick="navToList" id="newRecord" width="25" height="20" image="/images/list.png" /> 
 	        </View>
         </RightNavButton>
-		<ScrollView id="main" class="wfill hfill vert" contentHeight="Ti.UI.SIZE" contentWidth="Ti.UI.FILL">
+        <Menu title="List"  platform="android"> 
+            <MenuItem icon="/images/list.png" title="List" onClick="navToList" showAsAction="Titanium.Android.SHOW_AS_ACTION_ALWAYS" />
+        </Menu>
+        
+		<ScrollView id="main" class="wfill hfill vert" contentHeight="Ti.UI.SIZE" contentWidth="Ti.UI.FILL" >
 			<ScrollView class="wfill hsize bg_light_grey" contentWidth="Ti.UI.FILL" contentHeight="Ti.UI.SIZE" top="0">
-				<View class="wfii hsize" id="calendar">
+				<View class="wfill hsize" id="calendar" >
 				</View>
 			</ScrollView>
 			<View class="wfill hsize" id="inner_box">
@@ -16,7 +20,7 @@
 			</TableView>-->
 			</View>
 	    </ScrollView>
-	    <ScrollView class="wfill hfill vert" contentWidth="Ti.UI.FILL" contentHeight="Ti.UI.SIZE" id="appointment_list"></ScrollView>
+	    <ScrollView class="wfill vert" height="0" contentWidth="Ti.UI.FILL" contentHeight="Ti.UI.SIZE" id="appointment_list"></ScrollView>
 	    <ImageView class="wfill hfill" image="/images/transparent-bg.png" id="masked"></ImageView>
 	    <ImageView class="wfill hfill" visible="false" zIndex="11" image="/images/transparent-bg.png" id="masked2"></ImageView>
 	    <View bottom="0" zIndex="12" class="box hsize wfill vert" backgroundColor="#e5ebee" id="suggested_time" visible="false">
