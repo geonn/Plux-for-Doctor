@@ -17,11 +17,14 @@ d.setMilliseconds = 0;
 
 var sd = args.selected_date || ""; 
 var res;
-if(res != ""){
-	res = sd.replace(" ", "T"); 
+var selected_date;
+if(sd != ""){
+	res = sd.replace(" ", "T");  
+	selected_date = new Date(res);
+}else{ 
+	selected_date = d;
 }
-
-var selected_date = new Date(res) || d;
+ 
 var lastday = d;
 var days = ["SUN","MON","TUE","WED","THU","FRI","SAT"];
 var months = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
@@ -67,7 +70,7 @@ function render_date_bar(){
 	    
 		var active_view = (selected_date.getDate() == date)?"active_view":"";
 		var active_label = (selected_date.getDate() == date)?"active_label":"";
-	   	console.log(selected_date.getDate()+" = "+date);
+	   	//console.log(selected_date.getDate()+" = "+date);
 	    var view_date_box = $.UI.create("View",{
 	    	width: 80,
 	    	height: 80,
@@ -143,7 +146,7 @@ function render_available_timeslot(){
 	var start_date = selected_date.getFullYear()+"-"+("0"+(parseInt(selected_date.getMonth())+1)).slice(-2)+"-"+("0"+selected_date.getDate()).slice(-2)+" 00:00:00";
 	var end_date = selected_date.getFullYear()+"-"+("0"+(parseInt(selected_date.getMonth())+1)).slice(-2)+"-"+("0"+selected_date.getDate()).slice(-2)+" 23:59:59";
 	var appointmentList = appointmentModel.getAppointmentList({u_id: u_id, doctor_panel_id: doctor_panel_id, start_date: start_date, end_date:end_date});
-	console.log(appointmentList);
+	//console.log(appointmentList);
 	/*
 	 generate booked timeslot from appointment list
 	 * */
