@@ -15,7 +15,13 @@ d.setMinutes = 0;
 d.setSeconds = 0;
 d.setMilliseconds = 0;
 
-var selected_date = args.selected_date || d;
+var sd = args.selected_date || ""; 
+var res;
+if(res != ""){
+	res = sd.replace(" ", "T"); 
+}
+
+var selected_date = new Date(res) || d;
 var lastday = d;
 var days = ["SUN","MON","TUE","WED","THU","FRI","SAT"];
 var months = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
