@@ -18,9 +18,17 @@ d.setMilliseconds = 0;
 var sd = args.selected_date || ""; 
 var res;
 var selected_date;
+console.log(sd);
 if(sd != ""){
-	res = sd.replace(" ", "T");  
-	selected_date = new Date(res);
+  
+	if(isDate(sd) === true){
+		selected_date = new Date(sd);
+	}else{
+		res = sd.replace(" ", "T");  
+		selected_date = new Date(res);
+	}
+	
+	console.log(selected_date);
 }else{ 
 	selected_date = d;
 }
@@ -38,6 +46,10 @@ Date.prototype.addDays = function(days) {
 	dat.setDate(dat.getDate() + days);
 	return dat;
 };
+
+function isDate(date) {
+    return (new Date(date) !== "Invalid Date" && !isNaN(new Date(date)) ) ? true : false;
+}
 
 function getDates(startDate, stopDate) {
 	var dateArray = new Array();
