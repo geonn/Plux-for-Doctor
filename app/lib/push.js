@@ -28,20 +28,24 @@ function receivePush(e) {
 	var target;
 	var url;
 	var id;
+	var doctor_panel_id;
 	if(OS_IOS){ 
 		Titanium.UI.iPhone.setAppBadge("0"); 
 		target = e.data.target;
 		url = e.data.extra;
 		id = e.data.id;
 		created = e.data.created;
+		doctor_panel_id = e.data.doctor_panel_id;
 	}else{ 
 		target = e.target;
 		url = e.extra;
 		id = e.id;
 		created = e.created;
+		doctor_panel_id = e.doctor_panel_id;
 	}  
 	console.log(target+" and redirect "+redirect); 
 	if(target =="appointment"){
+		Ti.App.Properties.setString('doctor_panel_id', doctor_panel_id);
 		if(redirect){
 			setTimeout(function(){
 				Alloy.Globals.Navigator.open('appointment', {id: id, created: created});
