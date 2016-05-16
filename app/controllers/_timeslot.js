@@ -61,13 +61,13 @@ function render_date_bar(){
 	$.date_bar.height = 80;
 	var dateArray = getDates(lastday, (lastday).addDays(10));
 	for (i = 0; i < dateArray.length; i ++ ) {
-		console.log(selected_date);
-		console.log(dateArray[i]);
-		var active_view = (selected_date == dateArray[i])?"active_view":"";
-		var active_label = (selected_date == dateArray[i])?"active_label":"";
-	    var day = days[dateArray[i].getDay()];
+		var day = days[dateArray[i].getDay()];
 	    var month = months[dateArray[i].getMonth()];
 	    var date = dateArray[i].getDate();
+	    
+		var active_view = (selected_date.getDate() == date)?"active_view":"";
+		var active_label = (selected_date.getDate() == date)?"active_label":"";
+	   	console.log(selected_date.getDate()+" = "+date);
 	    var view_date_box = $.UI.create("View",{
 	    	width: 80,
 	    	height: 80,
