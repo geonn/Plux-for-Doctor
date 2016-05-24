@@ -34,8 +34,8 @@ $.masked2.hide();
 
 function render_appointment_list(){ 
 	$.appointment_list.removeAllChildren();
-	console.log("doctor_panel_id: "+doctor_panel_id);
-	appointmentList = appointment.getAppointmentList({doctor_panel_id: doctor_panel_id}); 
+	console.log("doctor_panel_id: "+doctor_id);
+	appointmentList = appointment.getAppointmentListByDoctorId({doctor_id: doctor_id}); 
 	console.log(appointmentList);
 	var data=[];
 	var counter = 0;  
@@ -53,7 +53,6 @@ function render_appointment_list(){
 	}else{
 		var all_date = _.sortBy(appointmentList, 'start_date');
 		//all_date = all_date.reverse(); 
-		console.log(all_date);
 		for (var i=0; i < all_date.length; i++) {
 			var datetime = all_date[i].start_date.split(" ");
 			check_update_currentdate(datetime[0]);
@@ -248,6 +247,7 @@ function refresh(e){
 		var arr = res.data || null;
 		model.saveArray(arr);
 		checker.updateModule(4,"getAppointmentByDoctor", Common.now(), doctor_id);
+		render_appointment_list();
 		render_timeslot();
 	});
 }
@@ -329,6 +329,7 @@ function updateAppointmentStatus(param, _callback){
 			alert("appointment update fail. Please contact our support team for further assistance.");
 			loading.finish();
 		}
+		Ti.App.fireEvent('home:refresh');
 		_callback && _callback();
 	});
 }
@@ -349,7 +350,7 @@ function closeWindow(){
 }
 
 function init(){
-	$.appointment_list.hide();
+	navToList();
 	if(OS_ANDROID){
 		var activity = $.win.activity;
 

@@ -1,0 +1,5 @@
+<Alloy>
+	<Window navTintColor="#CE1D1C" class="wfill" id="win" title="Receipt" navBarHidden="false" >
+		<WebView class="wfill hfill" url="html/receipt.html" enableZoomControls="false" disableBounce="true"></WebView>
+    </Window>
+</Alloy>

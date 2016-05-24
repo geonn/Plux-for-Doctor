@@ -102,6 +102,55 @@ exports.definition = {
                 collection.trigger('sync');
                 return listArr;
 			},
+			getAppointmentListByDoctorId: function(ex){
+				console.log(ex);
+				var d = new Date();
+				var start_date = d.getFullYear()+"-"+('0'+(d.getMonth()+1)).slice(-2)+"-"+('0'+d.getDate()).slice(-2)+" 00:00:00";
+				var query_start_date = (typeof ex.start_date != "undefined")?" AND appointment.start_date >= ? AND appointment.start_date < ? ":"";
+				var collection = this;
+              	var sql = "SELECT appointment.* from appointment, doctor_panel where doctor_panel.id = appointment.doctor_panel_id AND doctor_panel.doctor_id = ? "+query_start_date+" AND appointment.status != 5 AND appointment.start_date >= ? ORDER BY appointment.created DESC";
+              	console.log(sql);
+                db = Ti.Database.open(collection.config.adapter.db_name);
+                if(Ti.Platform.osname != "android"){
+                	db.file.setRemoteBackup(false);
+                }
+                if(typeof ex.doctor_id != "undefined"){
+                	if(typeof ex.start_date != "undefined"){
+                		console.log(ex.start_date+" "+ex.end_date); //"2016-04-21 10:00:00"
+                		var res = db.execute(sql, ex.doctor_id || "0", ex.start_date, ex.end_date);
+                	}else{
+                		var res = db.execute(sql, ex.doctor_id, start_date);
+                	}
+                }else{
+                	var res = db.execute(sql, start_date);
+                }
+                 
+                var listArr = []; 
+                var count = 0;
+                while (res.isValidRow()){ 
+					listArr[count] = { 
+						id: res.fieldByName('id'),
+						u_id: res.fieldByName('u_id'), 
+						clinic_name : res.fieldByName('clinic_name'),
+						doctor_panel_id: res.fieldByName('doctor_panel_id'),
+						specialty_name: res.fieldByName('specialty_name'),
+						status: res.fieldByName('status'), 
+						start_date: res.fieldByName('start_date'),
+						duration: res.fieldByName('duration'),
+						remark: res.fieldByName('remark'),
+						created: res.fieldByName('created'),
+						updated: res.fieldByName('updated'),
+						patient_name: res.fieldByName('patient_name')
+					};	 
+					res.next();
+					count++;
+				}
+			 
+				res.close();
+                db.close();
+                collection.trigger('sync');
+                return listArr;
+			},
 			saveArray : function(arr){
 				var collection = this;
 				
@@ -167,6 +216,27 @@ exports.definition = {
                 db.close();
                 collection.trigger('sync');
                 return arr;
+			},
+			getNumberOfPending: function(doctor_id){ 
+                var collection = this;
+                var d = new Date();
+				var start_date = d.getFullYear()+"-"+('0'+(d.getMonth()+1)).slice(-2)+"-"+('0'+d.getDate()).slice(-2)+" 00:00:00";
+				
+                var sql = "SELECT count(*) as unread FROM appointment, doctor_panel WHERE appointment.start_date >= ? AND appointment.status = 1 AND doctor_panel.doctor_id = ? AND doctor_panel.id = appointment.doctor_panel_id";
+                console.log(sql+" "+doctor_id+" "+start_date);
+                db = Ti.Database.open(collection.config.adapter.db_name);
+                if(Ti.Platform.osname != "android"){
+                	db.file.setRemoteBackup(false);
+                }
+                var res = db.execute(sql, start_date, doctor_id);
+                var number_of_unread = 0;
+                if (res.isValidRow()){
+				   number_of_unread = res.fieldByName('unread');
+				} 
+				res.close();
+                db.close();
+                collection.trigger('sync');
+                return number_of_unread;
 			}, 
 			  
 		});

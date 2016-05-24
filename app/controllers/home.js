@@ -12,6 +12,7 @@ var menu_info = [
 	{mod: "ida", image: "/images/btn/ida.png"},
 	{mod: "hra", image: "/images/btn/health-rish-assessment.png"},
 	{mod: "settings", image: "/images/btn/settings.png"},
+	//{mod: "receipt", image: "/images/btn/settings.png"},
 	//{mod: "askDoctor", image: "/images/btn/settings.png"},
 ];
 
@@ -49,6 +50,7 @@ function render_background(){
  * */
 function render_menu_list(){
 	//get screen width to calculate button width
+	$.menu_scrollview.removeAllChildren();
 	var pWidth = (OS_ANDROID)?(Titanium.Platform.displayCaps.platformWidth / (Titanium.Platform.displayCaps.dpi / 160)):Titanium.Platform.displayCaps.platformWidth;
 	var button_width = Math.floor((pWidth - 30) / 2);
 	console.log(button_width+" button width"+pWidth+" "+Titanium.Platform.displayCaps.dpi+" "+Titanium.Platform.displayCaps.platformWidth);
@@ -59,17 +61,39 @@ function render_menu_list(){
 	};
 
 	for (var i=0; i < menu_info.length; i++) {
-		
 		var imageView_menu = $.UI.create("ImageView", {
-			mod: menu_info[i].mod,
-			width: button_width,
-			left: 10,
-			top: 10,
-			image: menu_info[i].image,
-		});
+				mod: menu_info[i].mod,
+				width: button_width,
+				left: 10,
+				top: 10,
+				image: menu_info[i].image,
+			});
+			
+		if(menu_info[i].mod == "appointment"){
+			var appointmentModel = Alloy.createCollection('appointment'); 
+			var gotNotification = appointmentModel.getNumberOfPending(doctor_id);
+			var container = $.UI.create("View", {
+				classes: ['wsize','hsize']
+			});
+			var notification_view = $.UI.create("View", {
+				width: 30,
+				height: 30,
+				borderRadius: 15,
+				backgroundColor: "#CE1D1C",
+				top: 20,
+				right: 15
+			});
+			var label = $.UI.create("Label", {color: "#ffffff", text: gotNotification});
+			container.add(imageView_menu);
+			notification_view.add(label);
+			container.add(notification_view);
+			imageView_menu.addEventListener("click", navToMod);
+			$.menu_scrollview.add(container);
+		}else{
+			imageView_menu.addEventListener("click", navToMod);
+			$.menu_scrollview.add(imageView_menu);
+		}
 		
-		imageView_menu.addEventListener("click", navToMod);
-		$.menu_scrollview.add(imageView_menu);
 	};
 }
 
