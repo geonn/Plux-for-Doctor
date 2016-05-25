@@ -190,5 +190,7 @@ function currentDateTime(){
 function pixelToDp(px) {
     return ( parseInt(px) / (Titanium.Platform.displayCaps.dpi / 160));
 }
-
+if(OS_IOS){ 
+	Titanium.UI.iPhone.setAppBadge("0"); 
+}
 PUSH.registerPush();

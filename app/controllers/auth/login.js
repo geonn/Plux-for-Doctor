@@ -9,7 +9,7 @@ function onload(responseText){
 	console.log("done onload");
 	console.log(result);
 	if(result.status == "error"){
-		Common.createAlert("Error", result.data[0]);
+		Common.createAlert("Error", result.data );
 		loading.finish();
 		return false;
 	}else{

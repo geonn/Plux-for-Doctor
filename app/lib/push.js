@@ -43,6 +43,7 @@ function receivePush(e) {
 		created = e.created;
 		doctor_panel_id = e.doctor_panel_id;
 	}  
+	 
 	console.log(target+" and redirect "+redirect); 
 	if(target =="appointment"){
 		Ti.App.Properties.setString('doctor_panel_id', doctor_panel_id);
@@ -153,7 +154,8 @@ Ti.App.addEventListener("resumed", function(e){
 */
 exports.setInApp = function(){
 	console.log('In App');
-	redirect = false;
+	Titanium.UI.iPhone.setAppBadge("0"); 
+	//redirect = false;
 };
 
 exports.registerPush = function(){
