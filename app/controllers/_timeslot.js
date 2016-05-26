@@ -5,8 +5,6 @@ var doctor_id = args.doctor_id;
 var appointment_id = args.appointment_id;
 var appointment_selected;
 //var doctor_panel_id = args.doctor_panel_id;
-var doctor_panel_id = Ti.App.Properties.getString('doctor_panel_id');
-console.log(doctor_panel_id+" init doctor_panel_id");
 var working_hour = [];
 var listing = [];
 var d = new Date();
@@ -107,6 +105,7 @@ function render_date_bar(){
 }
 
 function render_available_timeslot(){
+	var doctor_panel_id = Ti.App.Properties.getString('doctor_panel_id');
 	for (var i=0; i < working_hour.length; i++) {
 		if(working_hour[i].days == selected_date.getDay()){
 	  		var whb = working_hour[i].time_start.split(":");
@@ -201,6 +200,7 @@ function render_available_timeslot(){
 		var view_time_box = $.UI.create("View", {
 			view_time_box: 1,
 			width: cell_width,
+			doctor_panel_id: doctor_panel_id,
 			remark: workingHourArray[key].remark,
 			status: workingHourArray[key].status,
 			selected_date: selected_date,
@@ -265,11 +265,15 @@ function changeDate(e){
 }
 
 function refresh(){
+	var doctor_panel_id = Ti.App.Properties.getString('doctor_panel_id');
 	/*var model = Alloy.createCollection('working_hours');  
 	console.log(doctor_panel_id+" doctor_panel_id");
 	
 	working_hour = model.getData(doctor_panel_id);
 	console.log(working_hour);*/
+	console.log("doctor_panel_id"+doctor_panel_id);
+	setClinicLabel();
+	
 	API.callByPost({url:"getWorkingHoursByDoctorPanelUrl", params: {doctor_panel_id: doctor_panel_id}}, function(responseText){
 		var model = Alloy.createCollection("doctor_panel");
 		var res = JSON.parse(responseText);
@@ -278,9 +282,40 @@ function refresh(){
 	});
 }
 
+function setClinicLabel(){
+	var doctor_panel_id = Ti.App.Properties.getString('doctor_panel_id');
+	
+	var model = Alloy.createCollection("doctor_panel");
+	var current_clinic = model.getDataById({doctor_panel_id: doctor_panel_id});
+	console.log(doctor_panel_id+" "+current_clinic);
+	if(typeof current_clinic != "undefined"){
+		$.clinic_label.text = current_clinic.clinicName;
+	}
+}
+
 function init(){
+	$.clinic.hide();
 	render_date_bar();
 	refresh();
 }
 
 init();
+
+$.clinic_list.addEventListener("click", function(e){
+	var clinicName = parent({name: "clinic_name"}, e.source);
+	var doctor_panel_id = parent({name: "id"}, e.source);
+	Ti.App.Properties.setString('doctor_panel_id', doctor_panel_id);
+	console.log(clinicName+" doctor_panel_id is"+doctor_panel_id);
+	$.clinic.hide();
+	$.clinic_list.removeAllChildren();
+	refresh();
+});
+
+$.openClinic.addEventListener("click", function(e){
+	var model = Alloy.createCollection("doctor_panel");
+	var clinic = model.getDataWithClinic(doctor_id);
+	$.clinic.show();
+	$.clinic_list.removeAllChildren();
+	$.clinic_list.setData(clinic);
+});
+

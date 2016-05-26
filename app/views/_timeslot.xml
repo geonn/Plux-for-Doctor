@@ -1,28 +1,41 @@
 <Alloy>
-	<View class="wfill hsize vert" backgroundColor="#f0f5f8">
-		<ScrollView class="wfill horz" height="80" showVerticalScrollIndicator="false" scrollType="horizontal" contentWidth="auto" contentHeight="Ti.UI.FILL" backgroundColor="#d7d7d7" id="date_bar">
-
-		</ScrollView>
-		<View class="wfill hsize horz" horizontalWrap="false">
-			<View class=" hsize" width="25%" backgroundColor="#fccd03">
-				<Label class="padding wfill hsize h6 whiteColor" textAlign="center">Pending</Label>
-			</View>
-			<View class=" hsize" width="25%" backgroundColor="#CE1D1C">
-				<Label class="padding wfill hsize h6 whiteColor" textAlign="center">Rejected</Label>
-			</View>
-			<View class=" hsize" width="25%" backgroundColor="#afdb00">
-				<Label class="padding wfill hsize h6 whiteColor" textAlign="center">Accepted</Label>
-			</View>
-			<View class=" hsize" width="25%" backgroundColor="#3f99f9">
-				<Label class="padding wfill hsize h6 whiteColor" textAlign="center">Suggestion</Label>
-			</View>
+	<View class="hsize wfill">
+		<View zIndex="10" top="40" backgroundColor="#e1e2e2" class="wfill hsize vert" id="clinic">
+			<Label class="padding wfill hsize" color="#cd1a19" textAlign="center">Select the panel</Label>
+			<TableView backgroundColor="#e1e2e2" id="clinic_list" class="wfill hsize">
+			</TableView>
 		</View>
-		<View class="padding wfill hsize vert" id="inner_box" left="9" right="9" width="301">
-			<ScrollView class="wfill hsize vert" contentWidth="Ti.UI.FILL" disableBounce="true" contentHeight="Ti.UI.SIZE">
-				<View backgroundColor="#d7d7d7" class="wfill hsize" id="timeslot">
+		<View class="wfill hsize vert" backgroundColor="#f0f5f8">
+			<View class="wfill hsize box">
+				<Label class="wfill hsize padding h5" color="#000000" right="50" id="clinic_label">
 					
-				</View>
+				</Label>
+				<ImageView image="/images/btn-down.png" id="openClinic" top="10" width="30" height="20" right="0"></ImageView>
+			</View>
+			<ScrollView class="wfill horz" height="80" showVerticalScrollIndicator="false" scrollType="horizontal" contentWidth="auto" contentHeight="Ti.UI.FILL" backgroundColor="#d7d7d7" id="date_bar">
+	
 			</ScrollView>
+			<View class="wfill hsize horz" horizontalWrap="false">
+				<View class=" hsize" width="25%" backgroundColor="#fccd03">
+					<Label class="padding wfill hsize h6 whiteColor" textAlign="center">Pending</Label>
+				</View>
+				<View class=" hsize" width="25%" backgroundColor="#CE1D1C">
+					<Label class="padding wfill hsize h6 whiteColor" textAlign="center">Rejected</Label>
+				</View>
+				<View class=" hsize" width="25%" backgroundColor="#afdb00">
+					<Label class="padding wfill hsize h6 whiteColor" textAlign="center">Accepted</Label>
+				</View>
+				<View class=" hsize" width="25%" backgroundColor="#3f99f9">
+					<Label class="padding wfill hsize h6 whiteColor" textAlign="center">Suggestion</Label>
+				</View>
+			</View>
+			<View class="padding wfill hsize vert" id="inner_box" left="9" right="9" width="301">
+				<ScrollView class="wfill hsize vert" contentWidth="Ti.UI.FILL" disableBounce="true" contentHeight="Ti.UI.SIZE">
+					<View backgroundColor="#d7d7d7" class="wfill hsize" id="timeslot">
+						
+					</View>
+				</ScrollView>
+			</View>
 		</View>
 	</View>
 </Alloy>

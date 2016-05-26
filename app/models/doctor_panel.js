@@ -50,6 +50,33 @@ exports.definition = {
                 collection.trigger('sync');
                 return arr;
 			},
+			getDataById: function(param){
+				var id = param.doctor_panel_id;
+				var collection = this;
+                var sql = "SELECT doctor_panel.*, panelList.clinicName FROM doctor_panel, panelList where doctor_panel.clinic_id = panelList.id AND doctor_panel.id = ?";
+                
+                db = Ti.Database.open(collection.config.adapter.db_name);
+                if(Ti.Platform.osname != "android"){
+                	db.file.setRemoteBackup(false);
+                }
+                console.log(id+" doctor_panel_id");
+                var res = db.execute(sql, id);
+                var arr; 
+                var count = 0;
+                if (res.isValidRow()){
+					arr = {
+					    id: res.fieldByName('id'),
+					    doctor_id: res.fieldByName('doctor_id'),
+					    clinicName: res.fieldByName("clinicName"),
+					    clinic_id: res.fieldByName('clinic_id'),
+					    specialty_id: res.fieldByName('specialty_id'),
+					};
+				}
+				res.close();
+                db.close();
+                collection.trigger('sync');
+                return arr;
+			},
 			getDoctorPanelSpecialty : function(doctor_id, clinic_id){
 				var collection = this;
                 var sql = "SELECT * FROM "+collection.config.adapter.collection_name+" where doctor_id = ? and clinic_id = ?";
@@ -121,7 +148,8 @@ exports.definition = {
 					    doctor_id: res.fieldByName('doctor_id'),
 					    clinic_id: res.fieldByName('clinic_id'),
 					    specialty_id: res.fieldByName('specialty_id'),
-					    clinicName: res.fieldByName('clinicName')
+					    clinicName: res.fieldByName('clinicName'),
+					    title: res.fieldByName('clinicName'),
 					};
 					res.next();
 					count++;

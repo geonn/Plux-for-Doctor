@@ -34,7 +34,6 @@ $.masked2.hide();
 
 function render_appointment_list(){ 
 	$.appointment_list.removeAllChildren();
-	console.log("doctor_panel_id: "+doctor_id);
 	appointmentList = appointment.getAppointmentListByDoctorId({doctor_id: doctor_id}); 
 	console.log(appointmentList);
 	var data=[];
@@ -162,6 +161,7 @@ function date_click(e){
 
 function multiple_select(e){
 	var view_time_box = parent({name: "view_time_box", value: 1}, e.source);
+	var doctor_panel_id = parent({name: "doctor_panel_id"}, e.source);
 	view_time_box.backgroundColor = "#3f99f9";
 	var start_date = parent({name: "date_s"}, e.source);
 	var duration = parent({name: "duration"}, e.source);
@@ -223,7 +223,6 @@ function render_suggest_box(){
  	render timeslot
  * */
 function render_timeslot(){ 
-	
 	var _timeslot = Alloy.createController("_timeslot", {date_click: date_click, doctor_id: doctor_id, doctor_panel_id: doctor_panel_id, appointment_id: args.id, selected_date: args.created}).getView();
 	$.inner_box.add(_timeslot);
 }
