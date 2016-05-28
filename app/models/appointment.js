@@ -67,8 +67,8 @@ exports.definition = {
                 }
                 if(typeof ex.doctor_panel_id != "undefined"){
                 	if(typeof ex.start_date != "undefined"){
-                		console.log(ex.start_date+" "+ex.end_date); //"2016-04-21 10:00:00"
-                		var res = db.execute(sql, ex.doctor_panel_id || "0", ex.start_date, ex.end_date);
+                		console.log(ex.doctor_panel_id+" "+ex.start_date+" "+ex.end_date); //"2016-04-21 10:00:00"
+                		var res = db.execute(sql, ex.doctor_panel_id, ex.start_date, ex.end_date);
                 	}else{
                 		var res = db.execute(sql, ex.doctor_panel_id);
                 	}

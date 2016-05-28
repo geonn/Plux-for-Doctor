@@ -30,7 +30,11 @@ overrode the settings with other TSS, XML, or JS settings:
 "Actionbar":{
 	backgroundColor: "#75d0cb",
 },
-
+"TableViewRow[platform=android]":{
+	color: "#606060",
+	top:10,
+	bottom:10,
+},
 'Window': {
     backgroundColor: '#f1f5f7', // white background instead of default transparent #e5ebee
     titleAttributes:  {

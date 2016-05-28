@@ -157,7 +157,8 @@ function render_available_timeslot(){
 	var start_date = selected_date.getFullYear()+"-"+("0"+(parseInt(selected_date.getMonth())+1)).slice(-2)+"-"+("0"+selected_date.getDate()).slice(-2)+" 00:00:00";
 	var end_date = selected_date.getFullYear()+"-"+("0"+(parseInt(selected_date.getMonth())+1)).slice(-2)+"-"+("0"+selected_date.getDate()).slice(-2)+" 23:59:59";
 	var appointmentList = appointmentModel.getAppointmentList({u_id: u_id, doctor_panel_id: doctor_panel_id, start_date: start_date, end_date:end_date});
-	//console.log(appointmentList);
+	console.log('u_id'+u_id+"doctor_panel_id"+doctor_panel_id+"start_date"+start_date+"end_date"+end_date)
+	console.log(appointmentList);
 	/*
 	 generate booked timeslot from appointment list
 	 * */
@@ -302,8 +303,9 @@ function init(){
 init();
 
 $.clinic_list.addEventListener("click", function(e){
-	var clinicName = parent({name: "clinic_name"}, e.source);
-	var doctor_panel_id = parent({name: "id"}, e.source);
+	console.log(e.rowData);
+	var clinicName = e.rowData.clinicName;
+	var doctor_panel_id = e.rowData.id;
 	Ti.App.Properties.setString('doctor_panel_id', doctor_panel_id);
 	console.log(clinicName+" doctor_panel_id is"+doctor_panel_id);
 	$.clinic.hide();
@@ -316,6 +318,15 @@ $.openClinic.addEventListener("click", function(e){
 	var clinic = model.getDataWithClinic(doctor_id);
 	$.clinic.show();
 	$.clinic_list.removeAllChildren();
-	$.clinic_list.setData(clinic);
+	var arr = Array();
+	for (var i=0; i < clinic.length; i++) {
+		var row = $.UI.create("TableViewRow",{
+			title: clinic[i].clinicName,
+			clinicName: clinic[i].clinicName,
+	  		id: clinic[i].id
+		});
+	  arr.push(row);
+	};
+	$.clinic_list.setData(arr);
 });
 
