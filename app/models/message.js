@@ -42,9 +42,9 @@ exports.definition = {
                  * debug use
                  */
                 var row_count = res.fieldCount;
-                for(var a = 0; a < row_count; a++){
+                /**for(var a = 0; a < row_count; a++){
             		 console.log(a+":"+res.fieldName(a)+":"+res.field(a));
-            	 }
+            	 }*/
             	
                 while (res.isValidRow()){
 					arr[count] = {
@@ -144,7 +144,7 @@ exports.definition = {
                 }
 				var sql_query =  "UPDATE "+collection.config.adapter.collection_name+" SET read=1 WHERE room_id=?";
 				db.execute(sql_query, entry.room_id);
-				console.log(db.getRowsAffected()+" "+entry.room_id+" read");
+				//console.log(db.getRowsAffected()+" "+entry.room_id+" read");
 	            db.close();
 	            collection.trigger('sync');
 			},

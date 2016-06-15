@@ -53,21 +53,20 @@ exports.definition = {
 				}
 				db.close();
 			},
-			getAppointmentList: function(ex){
-				console.log(ex);
+			getAppointmentList: function(ex){ 
 				var query_doctor_panel_id = (typeof ex.doctor_panel_id != "undefined")?" doctor_panel_id = ? ":"";
 				var query_start_date = (typeof ex.start_date != "undefined")?" AND start_date >= ? AND start_date < ? ":"";
 				var collection = this;
                 //var sql = "SELECT a.* FROM appointment as a, doctor_panel as dp WHERE dp.id = a.doctor_panel_id AND dp.doctor_id = ? "+query_start_date+" AND a.status != 5 ORDER BY a.created DESC";
               	var sql = "SELECT * from appointment where doctor_panel_id = ? "+query_start_date+" AND status != 5 ORDER BY created DESC";
-              	console.log(sql);
+              
                 db = Ti.Database.open(collection.config.adapter.db_name);
                 if(Ti.Platform.osname != "android"){
                 	db.file.setRemoteBackup(false);
                 }
                 if(typeof ex.doctor_panel_id != "undefined"){
                 	if(typeof ex.start_date != "undefined"){
-                		console.log(ex.doctor_panel_id+" "+ex.start_date+" "+ex.end_date); //"2016-04-21 10:00:00"
+                		//console.log(ex.doctor_panel_id+" "+ex.start_date+" "+ex.end_date); //"2016-04-21 10:00:00"
                 		var res = db.execute(sql, ex.doctor_panel_id, ex.start_date, ex.end_date);
                 	}else{
                 		var res = db.execute(sql, ex.doctor_panel_id);
@@ -223,7 +222,7 @@ exports.definition = {
 				var start_date = d.getFullYear()+"-"+('0'+(d.getMonth()+1)).slice(-2)+"-"+('0'+d.getDate()).slice(-2)+" 00:00:00";
 				
                 var sql = "SELECT count(*) as unread FROM appointment, doctor_panel WHERE appointment.start_date >= ? AND appointment.status = 1 AND doctor_panel.doctor_id = ? AND doctor_panel.id = appointment.doctor_panel_id";
-                console.log(sql+" "+doctor_id+" "+start_date);
+               // console.log(sql+" "+doctor_id+" "+start_date);
                 db = Ti.Database.open(collection.config.adapter.db_name);
                 if(Ti.Platform.osname != "android"){
                 	db.file.setRemoteBackup(false);

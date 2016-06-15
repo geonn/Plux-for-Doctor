@@ -86,8 +86,7 @@ exports.definition = {
                 collection.trigger('sync');
                 return arr;
 			},
-			saveArray : function(arr){
-				console.log("model doctor - save array");
+			saveArray : function(arr){ 
 				var collection = this;
                 db = Ti.Database.open(collection.config.adapter.db_name);
                 if(Ti.Platform.osname != "android"){

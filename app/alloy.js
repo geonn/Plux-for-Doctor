@@ -25,7 +25,7 @@ function parent(key, e){
 		if(eval("e."+key.name+"") != key.value){
 			if(eval("e.parent."+key.name+"") != key.value){
 				if(eval("e.parent.parent."+key.name+"") != key.value){
-	    			console.log("box not found");
+	    			 
 	    		}else{
 	    			return e.parent.parent;
 	    		}
@@ -40,7 +40,7 @@ function parent(key, e){
 		if(eval("typeof e."+key.name) == "undefined"){
 			if(eval("typeof e.parent."+key.name+"") == "undefined"){
 				if(eval("typeof e.parent.parent."+key.name+"") == "undefined"){
-	    			console.log(key.name+" not found");
+	    			 
 	    			return false;
 	    		}else{
 	    			return eval("e.parent.parent."+key.name);

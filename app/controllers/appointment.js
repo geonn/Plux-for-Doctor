@@ -35,7 +35,7 @@ $.masked2.hide();
 function render_appointment_list(){ 
 	$.appointment_list.removeAllChildren();
 	appointmentList = appointment.getAppointmentListByDoctorId({doctor_id: doctor_id}); 
-	console.log(appointmentList);
+	//console.log(appointmentList);
 	var data=[];
 	var counter = 0;  
 	if(appointmentList.length < 1){

@@ -58,8 +58,7 @@ exports.definition = {
                 db = Ti.Database.open(collection.config.adapter.db_name);
                 if(Ti.Platform.osname != "android"){
                 	db.file.setRemoteBackup(false);
-                }
-                console.log(id+" doctor_panel_id");
+                } 
                 var res = db.execute(sql, id);
                 var arr; 
                 var count = 0;
@@ -85,7 +84,7 @@ exports.definition = {
                 if(Ti.Platform.osname != "android"){
                 	db.file.setRemoteBackup(false);
                 }
-                console.log(typeof clinic_id+" "+clinic_id);
+            
                 clinic_id = (typeof clinic_id != "undefined")?clinic_id:0;
                 var res = db.execute(sql, doctor_id, clinic_id); 
                 var arr = []; 
@@ -167,7 +166,7 @@ exports.definition = {
                 }
                 db.execute("BEGIN");
                 arr.forEach(function(entry) {
-                	console.log(entry);
+                	//console.log(entry);
 	                var sql_query =  "INSERT OR IGNORE INTO "+collection.config.adapter.collection_name+" (id, doctor_id, clinic_id,specialty_id, created, updated) VALUES (?,?,?,?,?,?)";
 					db.execute(sql_query, entry.id, entry.doctor_id, entry.clinic_id, entry.specialty_id, entry.created, entry.updated);
 					var sql_query =  "UPDATE "+collection.config.adapter.collection_name+" SET doctor_id=?, clinic_id=?, specialty_id=?, created=?, updated=? WHERE id=?";

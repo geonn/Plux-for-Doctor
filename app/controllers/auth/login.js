@@ -5,9 +5,7 @@ var callback;
 var pop;
 
 function onload(responseText){
-	var result = JSON.parse(responseText); 
-	console.log("done onload");
-	console.log(result);
+	var result = JSON.parse(responseText);  
 	if(result.status == "error"){
 		Common.createAlert("Error", result.data );
 		loading.finish();
@@ -17,9 +15,7 @@ function onload(responseText){
 		
 		setTimeout(function(){
 			//loading.finish(); 
-			var arr = result.data;
-			console.log("login page");
-			console.log(arr);
+			var arr = result.data; 
 			//Ti.App.Properties.setString('clinic_id', arr.clinic_id);
 			//Ti.App.Properties.setString('specialty', arr.specialty);
 	   		Ti.App.Properties.setString('u_id', arr.doctor_id);
@@ -55,17 +51,13 @@ function do_login(){
 	API.callByPost({url: "doLoginUrl", params: params}, onload);
 }
 
-function init(){
-	console.log("login stop init before window open");
-	$.win.open();
-	console.log("login stop init after window open");
-	$.win.add(loading.getView());
-	console.log("login stop init adding loading");
+function init(){ 
+	$.win.open(); 
+	$.win.add(loading.getView()); 
 }
 
 $.checkAuth = function(cb){
-	var u_id = Ti.App.Properties.getString('u_id') || 0; 
-	console.log(u_id+" login?");
+	var u_id = Ti.App.Properties.getString('u_id') || 0;  
 	if(u_id > 0){
 		cb && cb();
     }else{ 
