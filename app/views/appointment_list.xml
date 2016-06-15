@@ -36,9 +36,9 @@
 			</View>
 			<View class="wfill hsize vert" id="action_box">
 				<View class="gray-line"></View>
-				<Button class="button" backgroundColor="#afdb00" font="font-weight:bold" color="#ffffff" onClick="onAccept">ACCEPT</Button>
-				<Button class="button" backgroundColor="#c8c8c8" color='#454545' onClick="onSuggest">SUGGEST ANOTHER TIME</Button>
-				<Button class="button" onClick="onReject">REJECT</Button>
+				<Button class="button" id="acceptBtn" backgroundColor="#afdb00" font="font-weight:bold" color="#ffffff" onClick="onAccept">ACCEPT</Button>
+				<Button class="button" id="suggestBtn" backgroundColor="#c8c8c8" color='#454545' onClick="onSuggest">SUGGEST ANOTHER TIME</Button>
+				<Button class="button" id="rejectBtn" onClick="onReject">REJECT</Button>
 			</View>
 			<View class="wfill" height="10"></View>
 		</View>
