@@ -170,6 +170,22 @@ overrode the settings with other TSS, XML, or JS settings:
 	height: Ti.UI.SIZE
 },
 
+'.conthsize':{
+	contentHeight: Ti.UI.SIZE
+},
+
+'.conthfill':{
+	contentHeight: Ti.UI.FILL
+},
+
+'.contwsize':{
+	contentWidth: Ti.UI.SIZE
+}
+
+'.contwfill':{
+	contentWidth: Ti.UI.FILL
+}
+
 '.padding':{
 	top: 10,
 	left: 10,

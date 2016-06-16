@@ -24,7 +24,11 @@ var uploadDoctorImageUrl		= "http://"+API_DOMAIN+"/api/uploadDoctorImage?user="+
 var getWorkingHoursByDoctorPanelUrl = "http://"+API_DOMAIN+"/api/getWorkingHoursByDoctorPanel?user="+USER+"&key="+KEY; 
 var addUpdateWorkingHoursUrl 	= "http://"+API_DOMAIN+"/api/addUpdateWorkingHours?user="+USER+"&key="+KEY;
 var getSpecialtylistUrl         = "http://"+API_DOMAIN+"/api/getSpecialtylist?user="+USER+"&key="+KEY; 
-var updateDoctorDeviceTokenUrl  = "http://"+API_DOMAIN+"/api/updateDoctorDeviceToken?user="+USER+"&key="+KEY;  
+var updateDoctorDeviceTokenUrl  = "http://"+API_DOMAIN+"/api/updateDoctorDeviceToken?user="+USER+"&key="+KEY;
+var getDiagList = "http://"+API_DOMAIN+"/api/getDiagList?user="+USER+"&key="+KEY;
+var panellogin = "http://appsapi.aspmedic.com/aida/panellogin.aspx";
+var terminalsub = "http://appsapi.aspmedic.com/aida/terminalsub.aspx";
+ 
 //API that call in sequence 
 var APILoadingList = [
 	{url: getAppHomepageBackgroundUrl, model: "background", checkId: "1"},
@@ -56,6 +60,19 @@ exports.callByPost = function(e, onload, onerror){
 			//API.callByPost(e, onload, onerror); 
 		};
 	}
+};
+
+exports.callByGet  = function(e, onload, onerror){
+	var url =  eval(e.url) + "?"+e.params;
+	console.log(url);
+	var _result = contactServerByGet(encodeURI(url));   
+	_result.onload = function(e) {   
+		onload && onload(this.responseText); 
+	};
+		
+	_result.onerror = function(e) { 
+		onerror && onerror(); 
+	};	
 };
 
 // call API by post method

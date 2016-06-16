@@ -157,7 +157,7 @@ function render_available_timeslot(){
 	var start_date = selected_date.getFullYear()+"-"+("0"+(parseInt(selected_date.getMonth())+1)).slice(-2)+"-"+("0"+selected_date.getDate()).slice(-2)+" 00:00:00";
 	var end_date = selected_date.getFullYear()+"-"+("0"+(parseInt(selected_date.getMonth())+1)).slice(-2)+"-"+("0"+selected_date.getDate()).slice(-2)+" 23:59:59";
 	var appointmentList = appointmentModel.getAppointmentList({u_id: u_id, doctor_panel_id: doctor_panel_id, start_date: start_date, end_date:end_date});
-	console.log('u_id'+u_id+"doctor_panel_id"+doctor_panel_id+"start_date"+start_date+"end_date"+end_date)
+	console.log('u_id'+u_id+"doctor_panel_id"+doctor_panel_id+"start_date"+start_date+"end_date"+end_date);
 	console.log(appointmentList);
 	/*
 	 generate booked timeslot from appointment list

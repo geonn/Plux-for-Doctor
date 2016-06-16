@@ -1,11 +1,116 @@
 <Alloy>
 	<Window   navTintColor="#CE1D1C" id="win" title="eCard Reader"  navBarHidden="false">
-		 
 		<View class="wfill hsize" top="0">
 			<Label class="h5 wfill hsize themeColor padding" id="label_ida">QR Reader</Label>
-	 	</View> 
-	    <View  class="wfill hsize vert"> 
-	    	<Button  id="scanner" class="button" height="60" top="30" width="60%" title="Re-Scan"></Button>
+	 	</View>
+	 	<View class="wfill hsize box" top="0" zIndex="10">
+			<Label class="wfill hsize padding h5" color="#000000" right="50" id="clinic_label">
+				
+			</Label>
+			<ImageView image="/images/btn-down.png" id="openClinic" top="10" width="30" height="20" right="0"></ImageView>
+		</View>
+	 	<ImageView class="wfill hfill" image="/images/transparent-bg.png" zIndex="9" id="masked"></ImageView>
+	 	<View zIndex="10" top="40" backgroundColor="#e1e2e2" class="wfill hsize vert" id="clinic">
+			<Label class="padding wfill hsize" color="#cd1a19" textAlign="center">Select the panel</Label>
+			<TableView backgroundColor="#e1e2e2" id="clinic_list" class="wfill hsize">
+			</TableView>
+		</View>
+		<View zIndex="10" class="wfill hsize box" backgroundColor="#fff" id="login">
+			<View class="wfill hsize padding vert">
+				<Label id="login_clinic"></Label>
+				<Label>login for setup purpose</Label>
+				<TextField class="wfill hsize padding" height="40" id="login_username" hintText="Username"></TextField>
+				<TextField class="wfill hsize padding" height="40" id="login_password" hintText="Password"></TextField>
+				<Button class="button" height="40" top="10" onClick="clinic_login" width="80%" title="Login"></Button>
+			</View>
+		</View>
+		<View zIndex="10" class="wfill hsize box" backgroundColor="#fff" id="inner_pay">
+			<ScrollView class="wfill hsize padding vert conthsize contwfill" onScroll="closeKeyboard">
+				<Label id="login_clinic"></Label>
+				<Label>claim submission</Label>
+				<TextField class="wfill hsize padding" editable="false" height="40" id="terminal_id" hintText="Terminal ID"></TextField>
+				<TextField class="wfill hsize padding" editable="false" height="40" id="cardno" hintText="Card Number"></TextField>
+				<TextField platform="ios" editable="false" onClick="openDiagPicker" class="wfill hsize padding" height="40" id="diag1" hintText="first diagnosis"></TextField>
+				<TextField platform="ios" editable="false" onClick="openDiagPicker" class="wfill hsize padding" height="40" id="diag2" hintText="second diagnosis"></TextField>
+				<TextField class="wfill hsize padding" keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" height="40" id="mc" hintText="MC days">
+					<KeyboardToolbar>
+               			<Toolbar>
+                    		<Items>
+                    			<Button onClick="hideKeyboard" onClick="hideKeyboard" systemButton="Ti.UI.iPhone.SystemButton.DONE" />
+                			</Items>
+            			</Toolbar>
+            		</KeyboardToolbar>
+				</TextField>
+				<TextField class="wfill hsize padding" keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" height="40" id="consday" hintText="consultation charges (day)">
+					<KeyboardToolbar>
+               			<Toolbar>
+                    		<Items>
+                    			<Button onClick="hideKeyboard" onClick="hideKeyboard" systemButton="Ti.UI.iPhone.SystemButton.DONE" />
+                			</Items>
+            			</Toolbar>
+            		</KeyboardToolbar>
+				</TextField>
+				<TextField class="wfill hsize padding" keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" height="40" id="consnight" hintText="consultation charges (night)">
+					<KeyboardToolbar>
+               			<Toolbar>
+                    		<Items>
+                    			<Button onClick="hideKeyboard" onClick="hideKeyboard" systemButton="Ti.UI.iPhone.SystemButton.DONE" />
+                			</Items>
+            			</Toolbar>
+            		</KeyboardToolbar>
+				</TextField>
+				<TextField class="wfill hsize padding" keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" height="40" id="medication" hintText="medication charges">
+					<KeyboardToolbar>
+               			<Toolbar>
+                    		<Items>
+                    			<Button onClick="hideKeyboard" onClick="hideKeyboard" systemButton="Ti.UI.iPhone.SystemButton.DONE" />
+                			</Items>
+            			</Toolbar>
+            		</KeyboardToolbar>
+				</TextField>
+				<TextField class="wfill hsize padding" keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" height="40" id="injection" hintText="injection charges">
+					<KeyboardToolbar>
+               			<Toolbar>
+                    		<Items>
+                    			<Button onClick="hideKeyboard" onClick="hideKeyboard" systemButton="Ti.UI.iPhone.SystemButton.DONE" />
+                			</Items>
+            			</Toolbar>
+            		</KeyboardToolbar>
+				</TextField>
+				<TextField class="wfill hsize padding" keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" height="40" id="xray" hintText="x-ray charges">
+					<KeyboardToolbar>
+               			<Toolbar>
+                    		<Items>
+                    			<Button onClick="hideKeyboard" onClick="hideKeyboard" systemButton="Ti.UI.iPhone.SystemButton.DONE" />
+                			</Items>
+            			</Toolbar>
+            		</KeyboardToolbar>
+				</TextField>
+				<TextField class="wfill hsize padding" keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" height="40" id="surgical" hintText="surginal procedure charges">
+					<KeyboardToolbar>
+               			<Toolbar>
+                    		<Items>
+                    			<Button onClick="hideKeyboard" onClick="hideKeyboard" systemButton="Ti.UI.iPhone.SystemButton.DONE" right="10" />
+                			</Items>
+            			</Toolbar>
+            		</KeyboardToolbar>
+				</TextField>
+				<TextField class="wfill hsize padding" keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" height="40" id="total" hintText="total">
+					<KeyboardToolbar>
+               			<Toolbar>
+                    		<Items>
+                    			<Button onClick="hideKeyboard" onClick="hideKeyboard" systemButton="Ti.UI.iPhone.SystemButton.DONE" right="10" />
+                			</Items>
+            			</Toolbar>
+            		</KeyboardToolbar>
+				</TextField>
+				<Button class="button" height="40" top="10" onClick="claim_submit" width="80%" title="Submit"></Button>
+			</ScrollView>
+		</View>
+	    <View top="40" class="wfill hsize vert"> 
+	    	<Button  id="scanner" class="button" height="40" top="10" width="60%" title="Scan"></Button>
+	    	<Button class="button" onClick="doInquiry" height="40" top="10" width="60%" title="Check Balance"></Button>
+	    	<Button class="button" onClick="doPay" height="40" top="10" width="60%" title="Pay"></Button>
 	    	<View class="gray-line" top="15" bottom="5" />
 	    	<Label text="Patient Information"  class="h4 wfill padding-left" bottom='5' /> 	
 	    	<ScrollView class="vert hfill wfill" contentWidth="Ti.UI.FILL" backgroundColor="#ffffff" contentHeight="Ti.UI.SIZE">
@@ -19,7 +124,7 @@
 				</View> 
 				<View class="gray-line" /> 
 				
-				 <View id="tvruserIc"  height="Ti.UI.SIZE" layout="vertical" selectedBackgroundColor="#ffffff" >
+				<View id="tvruserIc"  height="Ti.UI.SIZE" layout="vertical" selectedBackgroundColor="#ffffff" >
 					<View class="horz hsize wfill "  textAlign="right" >
 						<Label text="Patient I/C" top="12" width="35%" class="h5 padding-left themeColor"  /> 
 						<View width="auto"  class="right-align hsize" >
@@ -38,7 +143,15 @@
 					</View>
 				</View> 
 				<View class="gray-line" /> 
-				
+				<View id="tvrCard"  height="Ti.UI.SIZE" layout="vertical" selectedBackgroundColor="#ffffff" >
+					<View class="horz hsize wfill "  textAlign="right" >
+						<Label text="Card. No." top="12" width="35%" class="h5 padding-left themeColor"  /> 
+						<View width="auto"  class="right-align hsize" >
+							<Label id="cardno" text=""  class="wfill padding padding-right h6 right-align" top="12" color="#000000"   />  
+						</View> 
+					</View>
+				</View> 
+				<View class="gray-line" />
 				<View id="tvrCorpName"  height="Ti.UI.SIZE" layout="vertical" selectedBackgroundColor="#ffffff" >
 					<View class="horz hsize wfill "  textAlign="right" >
 						<Label text="Corp. Name" top="12" width="35%" class="h5 padding-left themeColor"  /> 
@@ -65,8 +178,7 @@
 						</View> 
 					</View>
 				</View> 
-				<Button  id="saveBtn" class="button" title="Save" top="10" visible="false"></Button> 
-				
+				<Button  id="saveBtn" class="button" title="Save" top="10" visible="false"></Button>
 	    	</ScrollView>
 	   	</View>
     </Window>
