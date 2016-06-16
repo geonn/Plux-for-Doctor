@@ -61,11 +61,15 @@ function render_menu_list(){
 	};
 
 	for (var i=0; i < menu_info.length; i++) {
+		var topR =10;
+		if(i == 0 || i == 1){
+			topR = 239;
+		}
 		var imageView_menu = $.UI.create("ImageView", {
 				mod: menu_info[i].mod,
 				width: button_width,
 				left: 10,
-				top: 10,
+				top: topR,
 				image: menu_info[i].image,
 			});
 			

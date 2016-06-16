@@ -16,7 +16,7 @@ d.setMilliseconds = 0;
 var sd = args.selected_date || ""; 
 var res;
 var selected_date;
-console.log(sd);
+//console.log(sd);
 if(sd != ""){
   
 	if(isDate(sd) === true){
@@ -26,7 +26,7 @@ if(sd != ""){
 		selected_date = new Date(res);
 	}
 	
-	console.log(selected_date);
+	//console.log(selected_date);
 }else{ 
 	selected_date = d;
 }
@@ -157,8 +157,7 @@ function render_available_timeslot(){
 	var start_date = selected_date.getFullYear()+"-"+("0"+(parseInt(selected_date.getMonth())+1)).slice(-2)+"-"+("0"+selected_date.getDate()).slice(-2)+" 00:00:00";
 	var end_date = selected_date.getFullYear()+"-"+("0"+(parseInt(selected_date.getMonth())+1)).slice(-2)+"-"+("0"+selected_date.getDate()).slice(-2)+" 23:59:59";
 	var appointmentList = appointmentModel.getAppointmentList({u_id: u_id, doctor_panel_id: doctor_panel_id, start_date: start_date, end_date:end_date});
-	console.log('u_id'+u_id+"doctor_panel_id"+doctor_panel_id+"start_date"+start_date+"end_date"+end_date);
-	console.log(appointmentList);
+
 	/*
 	 generate booked timeslot from appointment list
 	 * */
@@ -303,11 +302,11 @@ function init(){
 init();
 
 $.clinic_list.addEventListener("click", function(e){
-	console.log(e.rowData);
+	//console.log(e.rowData);
 	var clinicName = e.rowData.clinicName;
 	var doctor_panel_id = e.rowData.id;
 	Ti.App.Properties.setString('doctor_panel_id', doctor_panel_id);
-	console.log(clinicName+" doctor_panel_id is"+doctor_panel_id);
+	//console.log(clinicName+" doctor_panel_id is"+doctor_panel_id);
 	$.clinic.hide();
 	$.clinic_list.removeAllChildren();
 	refresh();

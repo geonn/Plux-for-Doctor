@@ -35,7 +35,7 @@ $.masked2.hide();
 function render_appointment_list(){ 
 	$.appointment_list.removeAllChildren();
 	appointmentList = appointment.getAppointmentListByDoctorId({doctor_id: doctor_id}); 
-	console.log(appointmentList);
+	//console.log(appointmentList);
 	var data=[];
 	var counter = 0;  
 	if(appointmentList.length < 1){
@@ -66,7 +66,7 @@ function openDetailBox(e){
 	//check appointment exist and initial into detail box
 	var id = parent({name: "appointment_id"}, e.source);
 	var dp_id = parent({name: "doctor_panel_id"}, e.source);
-	console.log(id+" id found");
+	
 	if(id){
 		
 		selected_id = id;
@@ -83,17 +83,24 @@ function openDetailBox(e){
 		
 		$.remake_box.text = remark_val;
 		$.patient_name.text = patient_name;
-		$.checkin.text = checkin;
+		$.checkin.text = timeFormat(checkin);
 		$.duration.text = duration;
 		
-		if(!detail_box_open){
-			
-			if(status == 3 || status == 2){
+		if(!detail_box_open){ 
+			if( status == 2){//status == 3 ||
 				$.action_box.height = 0;
 				$.action_box.hide();
+				
+				
 			}else{
 				$.action_box.height = Ti.UI.SIZE;
 				$.action_box.show();
+				if(status == 3){ 
+					$.acceptBtn.height = 0;
+					$.suggestBtn.height = 0;
+					$.acceptBtn.hide();
+					$.suggestBtn.hide();
+				}
 			}
 			$.masked.show();
 			$.masked.opacity = 0;

@@ -5,8 +5,8 @@
 		<View zIndex="4" id="myinfo_view" layout="horizontal" height="Ti.UI.SIZE" top="20" backgroundColor="#B3000000">
 			<View layout="horizontal" left="110" width="Ti.UI.FILL" top="10" bottom="10" height="60" id="myInfo" />
 		</View>
-        <ScrollView zIndex="3" id="menu_scrollview" class="hfill horz" contentHeight="Ti.UI.SIZE" contentWidth="Ti.UI.FILL">
-        	<View height="150" class="wfill"></View>
+        <ScrollView zIndex="3" id="menu_scrollview" scrollType="vertical" class="hfill horz" contentHeight="Ti.UI.SIZE" contentWidth="Ti.UI.FILL">
+        	<View height="150"  top="239" class="wfill"></View>
 		</ScrollView>
     </Window>
 </Alloy>
