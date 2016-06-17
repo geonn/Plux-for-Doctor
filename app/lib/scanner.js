@@ -58,16 +58,14 @@ exports.openScanner = function(scanType) {
 	picker.setSuccessCallback(function(e) { 
 		// 1 - scan and assigned resources and finish goods
 		if(scanType == "1"){ 
-			var time1 = Ti.App.Properties.getString('time1'); 
-			var time2 = Ti.App.Properties.getString('time2'); 
+			var time1 = Ti.App.Properties.getString('time1') || ""; 
+			var time2 = Ti.App.Properties.getString('time2') || ""; 
 			var barcode = e.barcode;
 			var barRes = barcode.split('||');
 	
 			//Ti.App.Properties.setString('sales'+barRes[0], '1'); 
 			//console.log(barRes[15]);
-			console.log("time1 : "+time1); 
-			console.log("scan Time : "+barRes[13]);
-			console.log( barRes);
+			 
 			if(time1 == ""){
 				Ti.App.Properties.setString('time1',barRes[13] ); 
 			}else{
@@ -88,6 +86,7 @@ exports.openScanner = function(scanType) {
 						allergy : barRes[10],
 						isver : barRes[11],
 						verno : barRes[12],
+						cardno : barRes[14],
 					}; 
 				
 					Ti.App.Properties.setString('time1', '');  

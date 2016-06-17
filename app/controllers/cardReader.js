@@ -6,7 +6,7 @@ var patient_recordsModel = Alloy.createCollection('patient_records');
 var id;
 var terminal_id;
 var clinic_name = "";
-var cardno = "6000201000113580";
+var cardno;// = "6000201000113580";
 
 
 // Create a window to add the picker to and display it. 
@@ -35,14 +35,12 @@ function refresh(){
 
 function checkTerminateIdExist(){
 	var doctor_panel_id = Ti.App.Properties.getString('doctor_panel_id');
-	console.log("terminal_id_"+clinic_name);
+	//console.log("terminal_id_"+clinic_name);
 	terminal_id = Ti.App.Properties.getString("terminal_id_"+clinic_name);
-	console.log(terminal_id+" anything?");
-	if(terminal_id != null){
-		console.log('why');
+	 
+	if(terminal_id != null){ 
 		return true;
-	}else{
-		console.log('yes');
+	}else{ 
 		return false;
 	}
 }
@@ -132,9 +130,13 @@ function claim_submit(){
 	var xray = $.xray.value || 0;
 	var surgical = $.surgical.value || 0;
 	var total = $.total.value || 0;
-	
+	 
+	if(diag1 == "0"){
+		alert("Please select Diagnosis");
+		return false;
+	}
 	API.callByGet({url:"terminalsub", params: "action=PAY&cardno="+cardno+"&terminal="+terminal_id+"&diag1="+diag1+"&diag2="+diag2+"&mc="+mc+"&consday="+consday+"&consnight="+consnight+"&medication="+medication+"&injection="+injection+"&xray="+xray+"&surgical="+surgical+"&total="+total}, function(responseText){
-	  	console.log(responseText);
+	  	//console.log(responseText);
 	  	var res = JSON.parse(responseText);
 	  	var msg = res[0].message.split("\n\n\n________________________");
 	  	var signature = (_.isUndefined(msg[1]))?false:true;
@@ -145,11 +147,18 @@ function claim_submit(){
 	
 }
 
+function cancel_submit(){
+	$.masked.hide();
+	$.inner_pay.hide();
+}
+
 function doPay(){
+	
 	$.masked.show();
 	$.terminal_id.value = terminal_id;
-	$.cardno.value = cardno; // empno
-	$.inner_pay.show();
+	$.cardno.value =  cardno; // empno
+	$.inner_pay.show(); 
+	 
 }
 
 $.openClinic.addEventListener("click", function(e){
@@ -171,26 +180,26 @@ $.openClinic.addEventListener("click", function(e){
 });
 
 $.clinic_list.addEventListener("click", function(e){
-	console.log(e.rowData);
+	 
 	var clinicName = e.rowData.clinicName;
 	var doctor_panel_id = e.rowData.id;
 	Ti.App.Properties.setString('doctor_panel_id', doctor_panel_id);
-	console.log(clinicName+" doctor_panel_id is"+doctor_panel_id);
+	//console.log(clinicName+" doctor_panel_id is"+doctor_panel_id);
 	$.clinic.hide();
 	$.clinic_list.removeAllChildren();
 	refresh();
 });
 
 function getCardData(e){ 
-	var param =e.data;
+	var param =e.data; 
 	id = patient_recordsModel.addUserData(param);
 	$.saveBtn.visible = true;
 	$.lblName.text = param.name;
 	$.lblIc.text = param.icno;
 	$.lblEmp.text = param.empno;
-	$.cardno.text = param.cardno;
-	cardno = param.cardno;
-	$.lblCorpName.text = param.corpname; 
+	$.cardnolbl.text = param.cardno;
+	cardno = param.cardno; 
+	$.lblCorpName.text = param.corpname;  
 }	
 		
 function hideKeyboard(e){
