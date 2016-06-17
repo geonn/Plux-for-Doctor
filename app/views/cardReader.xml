@@ -94,7 +94,7 @@
             			</Toolbar>
             		</KeyboardToolbar>
 				</TextField>
-				<TextField class="wfill hsize padding" keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" height="40" id="total" hintText="total">
+				<!--<TextField class="wfill hsize padding" keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" height="40" id="total" hintText="total">
 					<KeyboardToolbar>
                			<Toolbar>
                     		<Items>
@@ -103,6 +103,7 @@
             			</Toolbar>
             		</KeyboardToolbar>
 				</TextField>
+			-->
 				<View class="horz wfill hsize">
 					<Button class="button" height="40" top="10"  backgroundColor="#7B7B7B" onClick="cancel_submit" left="5%" width="40%" title="Cancel"></Button>
 					<Button class="button" height="40" top="10" onClick="claim_submit" left="5%" width="40%" title="Submit"></Button>

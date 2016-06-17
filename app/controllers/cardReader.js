@@ -6,7 +6,7 @@ var patient_recordsModel = Alloy.createCollection('patient_records');
 var id;
 var terminal_id;
 var clinic_name = "";
-var cardno;// = "6000201000113580";
+var cardno = "6000201000113580";
 
 
 // Create a window to add the picker to and display it. 
@@ -68,7 +68,7 @@ function doInquiry(){
 	  	console.log(res);
 	  	var msg = res[0].message.split("\n\n\n________________________");
 	  	var signature = (_.isUndefined(msg[1]))?false:true;
-		Alloy.Globals.Navigator.open("receipt", {displayHomeAsUp: true, message: res[0].message, signature: signature});
+		Alloy.Globals.Navigator.open("receipt", {displayHomeAsUp: true, message: res[0].message, signature: signature, appcode: ""});
 	});
 }
 
@@ -129,7 +129,7 @@ function claim_submit(){
 	var injection = $.injection.value || 0;
 	var xray = $.xray.value || 0;
 	var surgical = $.surgical.value || 0;
-	var total = $.total.value || 0;
+	var total = parseInt(consday) + parseInt(consnight) + parseInt(medication) + parseInt(injection) + parseInt(xray) + parseInt(surgical);
 	 
 	if(diag1 == "0"){
 		alert("Please select Diagnosis");
@@ -138,9 +138,11 @@ function claim_submit(){
 	API.callByGet({url:"terminalsub", params: "action=PAY&cardno="+cardno+"&terminal="+terminal_id+"&diag1="+diag1+"&diag2="+diag2+"&mc="+mc+"&consday="+consday+"&consnight="+consnight+"&medication="+medication+"&injection="+injection+"&xray="+xray+"&surgical="+surgical+"&total="+total}, function(responseText){
 	  	//console.log(responseText);
 	  	var res = JSON.parse(responseText);
+	  	console.log("test");
+	  	console.log(res[0]);
 	  	var msg = res[0].message.split("\n\n\n________________________");
 	  	var signature = (_.isUndefined(msg[1]))?false:true;
-		Alloy.Globals.Navigator.open("receipt", {displayHomeAsUp: true, message: msg[0], signature: signature});
+		Alloy.Globals.Navigator.open("receipt", {displayHomeAsUp: true, message: msg[0], signature: signature, appcode: res[0].appcode});
 		$.masked.hide();
 		$.inner_pay.hide();
 	});
@@ -211,8 +213,7 @@ function hideKeyboard(e){
 	$.medication.blur();
 	$.injection.blur();
 	$.xray.blur();
-	$.surgical.blur();
-	$.total.blur();
+	$.surgical.blur(); 
 }
 
 function openDiagPicker(tf){
