@@ -3,16 +3,19 @@
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-		<title>Drawingboard.js: a simple canvas based drawing app that you can integrate easily on your website.</title>
+		<title>Claim submission receipt</title>
 		<meta name="description" content="">
 		<meta name="viewport" content="width=device-width">
 		<link rel="stylesheet" href="drawingboard.css">
 		<link href='https://fonts.googleapis.com/css?family=Roboto:400,400italic,700' rel='stylesheet' type='text/css'>
 		<script src="jquery.js"></script>
 		<script src="drawingboard.min.js"></script>
+		<script src="html2canvas.js"></script>
 		<style>
 			body{
 				font-family: 'Roboto', sans-serif;
+				font-size:12px;
+				background-color:#ffffff;
 			}
 		</style>
 		<script>
@@ -30,6 +33,15 @@
 					$("#signatureboard").show();
 				}
                 $("#message_box").html(nl2br(e.message));
+            });
+            
+            Ti.App.addEventListener("web:screenshot", function(e) {
+				html2canvas(document.body, {
+				  onrendered: function(canvas) {
+				    var dataURL = canvas.toDataURL("image/png");
+				    Ti.App.fireEvent("app:screenshot",{blob: dataURL } );
+				  }
+				});
             });
             
             function nl2br (str, is_xhtml) {   
@@ -72,7 +84,7 @@
 			<div style="width: 100%; height: 200px; display: absolute;" id="simple-board">
 				
 			</div>
-			<p style="border-top: 1px solid #000000; padding-top:0;margin-top:0;">Signature</p>
+			<p style=" padding-top:0;margin-top:0;">Signature</p>
 			<p>I hereby agreed to disclose the medical<br/>
 			treatment to the TPA.
 			</p>
@@ -84,6 +96,8 @@
 				enlargeYourContainer: true,
 				webStorage: false
 			});	
+			
+			
 		</script>
 	</body>
 </html>

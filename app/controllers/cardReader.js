@@ -138,9 +138,9 @@ function claim_submit(){
 	API.callByGet({url:"terminalsub", params: "action=PAY&cardno="+cardno+"&terminal="+terminal_id+"&diag1="+diag1+"&diag2="+diag2+"&mc="+mc+"&consday="+consday+"&consnight="+consnight+"&medication="+medication+"&injection="+injection+"&xray="+xray+"&surgical="+surgical+"&total="+total}, function(responseText){
 	  	//console.log(responseText);
 	  	var res = JSON.parse(responseText);
-	  	console.log("test");
-	  	console.log(res[0]);
-	  	var msg = res[0].message.split("\n\n\n________________________");
+	  	
+	  	var msg = res[0].message.split("\n          ________________________");
+	  	console.log(msg);
 	  	var signature = (_.isUndefined(msg[1]))?false:true;
 		Alloy.Globals.Navigator.open("receipt", {displayHomeAsUp: true, message: msg[0], signature: signature, appcode: res[0].appcode});
 		$.masked.hide();
