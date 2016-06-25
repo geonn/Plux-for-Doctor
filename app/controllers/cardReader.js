@@ -6,6 +6,10 @@ var patient_recordsModel = Alloy.createCollection('patient_records');
 var id;
 var terminal_id;
 var clinic_name = "";
+var diagCategoryArr = [];
+var diagCategoryIdArr = [];
+var selectedDiag1;
+var selectedDiag2;
 var cardno = "6000201000113580";
 
 
@@ -77,7 +81,9 @@ function init(){
 	$.masked.hide();
 	$.inner_pay.hide();
 	$.clinic.hide();
+	$.remark.blur();
 	setClinicLabel();
+	getDiagCategory();
 	if(!checkTerminateIdExist()){
 		$.login.show();
 		$.masked.show();
@@ -118,10 +124,10 @@ function inputOnfocus(){
 function claim_submit(){
 	var diag1 = $.diag1.value;
 	var tmp= diag1.split("-");
-	diag1 = tmp[1] || 0;
+	diag1 = tmp[0] || 0;
 	var diag2 = $.diag2.value;
 	var tmp2 = diag2.split("-");
-	diag2 = tmp2[1] || 0;
+	diag2 = tmp2[0] || 0; 
 	var mc = $.mc.value || 0;
 	var consday = $.consday.value || 0;
 	var consnight = $.consnight.value || 0;
@@ -139,8 +145,7 @@ function claim_submit(){
 	  	//console.log(responseText);
 	  	var res = JSON.parse(responseText);
 	  	
-	  	var msg = res[0].message.split("\n          ________________________");
-	  	console.log(msg);
+	  	var msg = res[0].message.split("\n          ________________________"); 
 	  	var signature = (_.isUndefined(msg[1]))?false:true;
 		Alloy.Globals.Navigator.open("receipt", {displayHomeAsUp: true, message: msg[0], signature: signature, appcode: res[0].appcode});
 		$.masked.hide();
@@ -216,29 +221,51 @@ function hideKeyboard(e){
 	$.surgical.blur(); 
 }
 
+function getDiagCategory(){
+	API.callByPost({url:"getDiagList"}, function(responseText){ 
+		res = JSON.parse(responseText); 
+		 
+		for (var i=0; i < res.data.length; i++) { 
+			diagCategoryIdArr.push(res.data[i].code);
+			diagCategoryArr.push( res.data[i].code+"-"+res.data[i].desc); 
+		}
+		
+	 	if(OS_IOS){
+			diagCategoryArr.push("Cancel"); 
+		}
+		 
+	}); 
+}
+
 function openDiagPicker(tf){
-	API.callByPost({url:"getDiagList"}, function(responseText){
-	  	var res = JSON.parse(responseText);
-	  	var picker = $.UI.create("Picker", {bottom: 0, backgroundColor: "#cccccc"});
-		var data = Array();
-		var selected_index = 0;
-	  	for (var i=0; i < res.data.length; i++) {
-	  		if(res.data[i].desc+"-"+res.data[i].code == tf.source.value){
-	  			selected_index = i;
-	  		}
-			data.push($.UI.create("PickerRow", {title: res.data[i].desc, value: res.data[i].code}));
-		  };
-		picker.add(data);
-		picker.setSelectedRow(0, selected_index, false);
-		$.inner_pay.add(picker);
-		var count = 0;
-		picker.addEventListener('change',function(e){
-		  tf.source.value = e.row.title+"-"+e.row.value;
-		  if(count){
-		  	$.inner_pay.remove(picker);
-		  }
-		  count++;
-		});
+	console.log(tf.source.id+"]]");
+	var curSelection = "0";
+	var cancelBtn = diagCategoryArr.length -1;
+	if(tf.source.id == "diag1"){
+		curSelection = selectedDiag1;
+	}else{
+		curSelection = selectedDiag2;
+	}
+			
+	var dialog = Ti.UI.createOptionDialog({
+	 cancel: diagCategoryArr.length -1,
+	 options: diagCategoryArr,
+	  selectedIndex: parseInt(curSelection),
+	  title: 'Choose Diag Type'
+	});
+		
+	dialog.show(); 
+	dialog.addEventListener("click", function(e){   
+		if(cancelBtn != e.index){ 
+			//diag1 = diagCategoryIdArr[e.index];
+			if(tf.source.id == "diag1"){
+				selectedDiag1 = e.index;
+			}else{
+				selectedDiag2 = e.index;
+			}
+			tf.source.value = diagCategoryArr[e.index];  
+			tf.source.color = "#000000";
+		}
 	});
 }
 
