@@ -57,6 +57,7 @@ function clinic_login(){
 				Ti.App.Properties.setString("terminal_id_"+clinic_name, res[0].terminalid);
 				$.masked.hide();
 				$.login.hide();
+				terminal_id = Ti.App.Properties.getString("terminal_id_"+clinic_name);
 			}else{
 				alert("INCORRECT CLINIC LOGIN");
 			}
@@ -159,6 +160,16 @@ function claim_submit(){
 	API.callByGet({url:"terminalsub", params: "action=PAY&cardno="+cardno+"&terminal="+terminal_id+"&diag1="+diag1+"&diag2="+diag2+"&mc="+mc+"&consday="+consday+"&consnight="+consnight+"&medication="+medication+"&injection="+injection+"&xray="+xray+"&surgical="+surgical+"&total="+total}, function(responseText){
 	  	//console.log(responseText);
 	  	var res = JSON.parse(responseText);
+	  	
+	  	$.diag1.value = "";
+	  	$.diag2.value = "";
+		$.consday.value ="";
+	 	$.consnight.value ="";
+	 	$.mc.value ="";
+	 	$.medication.value ="";
+	 	$.injection.value ="";
+	 	$.xray.value ="";
+	 	$.surgical.value ="";
 	  	
 	  	var msg = res[0].message.split("\n          ________________________"); 
 	  	var signature = (_.isUndefined(msg[1]))?false:true;

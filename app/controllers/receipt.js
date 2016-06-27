@@ -13,17 +13,16 @@ function refresh(){
 }
 
 function convertViewToBlob(){  
-	 Ti.App.fireEvent("web:screenshot" );
+	 Ti.App.fireEvent("web:screenshot");
 }
 
-Ti.App.addEventListener("app:screenshot", function(e) { 
+function screenshot(e){
 	var blob = e.blob; 
 	 var index = blob.indexOf('base64,');
 	blob = blob.substring(index + 'base64,'.length); 
 	screenShotBlob =Ti.Utils.base64decode(blob);
-	submit_receipt(); 
-});
-
+	submit_receipt();
+}
 	
 function submit_receipt(){
 	 
@@ -59,6 +58,8 @@ function init(){
 	setTimeout(function(e){Ti.App.fireEvent("web:render_message", {message: message, signature: args.signature});}, 1000);
 }
 
+Ti.App.addEventListener("app:screenshot", screenshot);
+
 $.win.addEventListener("close", function(){ 
-	//Ti.App.removeEventListener('getCardData', getCardData);
+	Ti.App.removeEventListener('app:screenshot', screenshot);
 });

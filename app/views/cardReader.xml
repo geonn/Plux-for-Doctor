@@ -97,7 +97,7 @@
             		</KeyboardToolbar>
 				</TextField>
 
-				<View class="horz wfill hsize">
+				<View class="wfill hsize">
 					<Button class="button" height="40" top="10"  backgroundColor="#7B7B7B" onClick="cancel_submit" left="0" width="40%" title="Cancel"></Button>
 					<Button class="button" height="40" top="10" onClick="claim_submit" right="0" width="40%" title="Submit"></Button>	
 				</View>
