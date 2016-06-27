@@ -25,6 +25,7 @@ var getWorkingHoursByDoctorPanelUrl = "http://"+API_DOMAIN+"/api/getWorkingHours
 var addUpdateWorkingHoursUrl 	= "http://"+API_DOMAIN+"/api/addUpdateWorkingHours?user="+USER+"&key="+KEY;
 var getSpecialtylistUrl         = "http://"+API_DOMAIN+"/api/getSpecialtylist?user="+USER+"&key="+KEY; 
 var updateDoctorDeviceTokenUrl  = "http://"+API_DOMAIN+"/api/updateDoctorDeviceToken?user="+USER+"&key="+KEY;
+var uploadReceiptImageUrl		= "http://"+API_DOMAIN+"/api/uploadReceiptImageUrl?user="+USER+"&key="+KEY; 
 var getDiagList = "http://"+API_DOMAIN+"/api/getDiagList?user="+USER+"&key="+KEY;
 var panellogin = "http://appsapi.aspmedic.com/aida/panellogin.aspx";
 var terminalsub = "http://appsapi.aspmedic.com/aida/terminalsub.aspx";
@@ -102,8 +103,16 @@ exports.callByPostImage = function(e, onload, onerror) {
 	var client = Ti.Network.createHTTPClient({
 		timeout : 50000
 	});
+	 
 	var url = eval(e.url);
-	var _result = contactServerByPostImage(url+"&u_id="+e.params.u_id,e.img);
+	var item_id = e.params.item_id || "";
+	 
+	var itemStr;
+	if(item_id != ""){
+		itemStr =  "&item_id="+item_id;
+	}
+	 
+	var _result = contactServerByPostImage(url+"&u_id="+e.params.u_id+itemStr,e.img);
 	_result.onload = function(e) { 
 		console.log('success');
 		onload && onload(this.responseText); 

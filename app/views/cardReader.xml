@@ -4,8 +4,7 @@
 			<Label class="h5 wfill hsize themeColor padding" id="label_ida">QR Reader</Label>
 	 	</View>
 	 	<View class="wfill hsize box" top="0" zIndex="10">
-			<Label class="wfill hsize padding h5" color="#000000" right="50" id="clinic_label">
-				
+			<Label class="wfill hsize padding h5" color="#000000" right="50" id="clinic_label"> 
 			</Label>
 			<ImageView image="/images/btn-down.png" id="openClinic" top="10" width="30" height="20" right="0"></ImageView>
 		</View>
@@ -18,7 +17,7 @@
 		<View zIndex="10" class="wfill hsize box" backgroundColor="#fff" id="login">
 			<View class="wfill hsize padding vert">
 				<Label id="login_clinic"></Label>
-				<Label>login for setup purpose</Label>
+				<Label>Clinic Terminal Login</Label>
 				<TextField class="wfill hsize padding" height="40" id="login_username" hintText="Username"></TextField>
 				<TextField class="wfill hsize padding" height="40" id="login_password" hintText="Password"></TextField>
 				<Button class="button" height="40" top="10" onClick="clinic_login" width="80%" title="Login"></Button>
@@ -30,10 +29,12 @@
 				<Label>claim submission</Label>
 				<TextField class="wfill hsize padding" editable="false" height="40" id="terminal_id" hintText="Terminal ID"></TextField>
 				<TextField class="wfill hsize padding" editable="false" height="40" id="cardno" hintText="Card Number"></TextField>
+				<Picker platform="android" id="diag1"></Picker>
+				<Picker platform="android" id="diag2"></Picker>
 				<TextField platform="ios" editable="false" onClick="openDiagPicker" class="wfill hsize padding" height="40" id="diag1" hintText="first diagnosis"></TextField>
 				<TextField platform="ios" editable="false" onClick="openDiagPicker" class="wfill hsize padding" height="40" id="diag2" hintText="second diagnosis"></TextField>
 				<TextField class="wfill hsize padding" keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" height="40" id="mc" hintText="MC days">
-					<KeyboardToolbar>
+					<KeyboardToolbar platform="ios">
                			<Toolbar>
                     		<Items>
                     			<Button onClick="hideKeyboard" onClick="hideKeyboard" systemButton="Ti.UI.iPhone.SystemButton.DONE" />
@@ -42,7 +43,7 @@
             		</KeyboardToolbar>
 				</TextField>
 				<TextField class="wfill hsize padding" keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" height="40" id="consday" hintText="consultation charges (day)">
-					<KeyboardToolbar>
+					<KeyboardToolbar platform="ios">
                			<Toolbar>
                     		<Items>
                     			<Button onClick="hideKeyboard" onClick="hideKeyboard" systemButton="Ti.UI.iPhone.SystemButton.DONE" />
@@ -51,7 +52,7 @@
             		</KeyboardToolbar>
 				</TextField>
 				<TextField class="wfill hsize padding" keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" height="40" id="consnight" hintText="consultation charges (night)">
-					<KeyboardToolbar>
+					<KeyboardToolbar platform="ios">
                			<Toolbar>
                     		<Items>
                     			<Button onClick="hideKeyboard" onClick="hideKeyboard" systemButton="Ti.UI.iPhone.SystemButton.DONE" />
@@ -60,7 +61,7 @@
             		</KeyboardToolbar>
 				</TextField>
 				<TextField class="wfill hsize padding" keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" height="40" id="medication" hintText="medication charges">
-					<KeyboardToolbar>
+					<KeyboardToolbar platform="ios">
                			<Toolbar>
                     		<Items>
                     			<Button onClick="hideKeyboard" onClick="hideKeyboard" systemButton="Ti.UI.iPhone.SystemButton.DONE" />
@@ -69,7 +70,7 @@
             		</KeyboardToolbar>
 				</TextField>
 				<TextField class="wfill hsize padding" keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" height="40" id="injection" hintText="injection charges">
-					<KeyboardToolbar>
+					<KeyboardToolbar platform="ios">
                			<Toolbar>
                     		<Items>
                     			<Button onClick="hideKeyboard" onClick="hideKeyboard" systemButton="Ti.UI.iPhone.SystemButton.DONE" />
@@ -78,7 +79,7 @@
             		</KeyboardToolbar>
 				</TextField>
 				<TextField class="wfill hsize padding" keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" height="40" id="xray" hintText="x-ray charges">
-					<KeyboardToolbar>
+					<KeyboardToolbar platform="ios">
                			<Toolbar>
                     		<Items>
                     			<Button onClick="hideKeyboard" onClick="hideKeyboard" systemButton="Ti.UI.iPhone.SystemButton.DONE" />
@@ -87,7 +88,7 @@
             		</KeyboardToolbar>
 				</TextField>
 				<TextField class="wfill hsize padding" keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" height="40" id="surgical" hintText="surginal procedure charges">
-					<KeyboardToolbar>
+					<KeyboardToolbar platform="ios">
                			<Toolbar>
                     		<Items>
                     			<Button onClick="hideKeyboard" onClick="hideKeyboard" systemButton="Ti.UI.iPhone.SystemButton.DONE" right="10" />
@@ -95,8 +96,13 @@
             			</Toolbar>
             		</KeyboardToolbar>
 				</TextField>
+<<<<<<< HEAD
 				<TextField class="wfill hsize padding" keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" height="40" id="total" hintText="total">
+					<KeyboardToolbar platform="ios">
+=======
+				<!--<TextField class="wfill hsize padding" keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" height="40" id="total" hintText="total">
 					<KeyboardToolbar>
+>>>>>>> origin/master
                			<Toolbar>
                     		<Items>
                     			<Button onClick="hideKeyboard" onClick="hideKeyboard" systemButton="Ti.UI.iPhone.SystemButton.DONE" right="10" />
@@ -104,13 +110,19 @@
             			</Toolbar>
             		</KeyboardToolbar>
 				</TextField>
-				<Button class="button" height="40" top="10" onClick="claim_submit" width="80%" title="Submit"></Button>
+			-->
+				<View class="horz wfill hsize">
+					<Button class="button" height="40" top="10"  backgroundColor="#7B7B7B" onClick="cancel_submit" left="5%" width="40%" title="Cancel"></Button>
+					<Button class="button" height="40" top="10" onClick="claim_submit" left="5%" width="40%" title="Submit"></Button>
+				</View>
 			</ScrollView>
 		</View>
 	    <View top="40" class="wfill hsize vert"> 
-	    	<Button  id="scanner" class="button" height="40" top="10" width="60%" title="Scan"></Button>
-	    	<Button class="button" onClick="doInquiry" height="40" top="10" width="60%" title="Check Balance"></Button>
-	    	<Button class="button" onClick="doPay" height="40" top="10" width="60%" title="Pay"></Button>
+	    	<View class="horz wfill hsize">
+		    	<Button  id="scanner" class="button" height="80" top="10" left="1%" width="32%" title="Scan"></Button>
+		    	<Button class="button" onClick="doInquiry" height="80" top="10" left="1%" width="32%" title="Inquiry"></Button>
+		    	<Button class="button" onClick="doPay" height="80" top="10" left="1%" width="32%" title="Pay"></Button>
+	    	</View>
 	    	<View class="gray-line" top="15" bottom="5" />
 	    	<Label text="Patient Information"  class="h4 wfill padding-left" bottom='5' /> 	
 	    	<ScrollView class="vert hfill wfill" contentWidth="Ti.UI.FILL" backgroundColor="#ffffff" contentHeight="Ti.UI.SIZE">
@@ -147,7 +159,7 @@
 					<View class="horz hsize wfill "  textAlign="right" >
 						<Label text="Card. No." top="12" width="35%" class="h5 padding-left themeColor"  /> 
 						<View width="auto"  class="right-align hsize" >
-							<Label id="cardno" text=""  class="wfill padding padding-right h6 right-align" top="12" color="#000000"   />  
+							<Label id="cardnolbl" text=""  class="wfill padding padding-right h6 right-align" top="12" color="#000000"   />  
 						</View> 
 					</View>
 				</View> 

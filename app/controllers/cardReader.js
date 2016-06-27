@@ -35,14 +35,12 @@ function refresh(){
 
 function checkTerminateIdExist(){
 	var doctor_panel_id = Ti.App.Properties.getString('doctor_panel_id');
-	console.log("terminal_id_"+clinic_name);
+	//console.log("terminal_id_"+clinic_name);
 	terminal_id = Ti.App.Properties.getString("terminal_id_"+clinic_name);
-	console.log(terminal_id+" anything?");
-	if(terminal_id != null){
-		console.log('why');
+	 
+	if(terminal_id != null){ 
 		return true;
-	}else{
-		console.log('yes');
+	}else{ 
 		return false;
 	}
 }
@@ -70,11 +68,26 @@ function doInquiry(){
 	  	console.log(res);
 	  	var msg = res[0].message.split("\n\n\n________________________");
 	  	var signature = (_.isUndefined(msg[1]))?false:true;
-		Alloy.Globals.Navigator.open("receipt", {displayHomeAsUp: true, message: res[0].message, signature: signature});
+		Alloy.Globals.Navigator.open("receipt", {displayHomeAsUp: true, message: res[0].message, signature: signature, appcode: ""});
+	});
+}
+
+function getDiag(picker){
+	API.callByPost({url:"getDiagList"}, function(responseText){
+	  	var res = JSON.parse(responseText);
+		var data = Array();
+	  	for (var i=0; i < res.data.length; i++) {
+			data.push($.UI.create("PickerRow", {title: res.data[i].desc, value: res.data[i].code}));
+		  };
+		picker.add(data);
 	});
 }
 
 function init(){
+	if(Ti.Platform.osname == "android" ){
+		getDiag($.diag1);
+		getDiag($.diag2);
+	}
 	$.login.hide();
 	$.masked.hide();
 	$.inner_pay.hide();
@@ -131,25 +144,36 @@ function claim_submit(){
 	var injection = $.injection.value || 0;
 	var xray = $.xray.value || 0;
 	var surgical = $.surgical.value || 0;
-	var total = $.total.value || 0;
-	
+	var total = parseInt(consday) + parseInt(consnight) + parseInt(medication) + parseInt(injection) + parseInt(xray) + parseInt(surgical);
+	 
+	if(diag1 == "0"){
+		alert("Please select Diagnosis");
+		return false;
+	}
 	API.callByGet({url:"terminalsub", params: "action=PAY&cardno="+cardno+"&terminal="+terminal_id+"&diag1="+diag1+"&diag2="+diag2+"&mc="+mc+"&consday="+consday+"&consnight="+consnight+"&medication="+medication+"&injection="+injection+"&xray="+xray+"&surgical="+surgical+"&total="+total}, function(responseText){
-	  	console.log(responseText);
+	  	//console.log(responseText);
 	  	var res = JSON.parse(responseText);
-	  	var msg = res[0].message.split("\n\n\n________________________");
+	  	var msg = res[0].message.split("________________________");
 	  	var signature = (_.isUndefined(msg[1]))?false:true;
-		Alloy.Globals.Navigator.open("receipt", {displayHomeAsUp: true, message: msg[0], signature: signature});
+		Alloy.Globals.Navigator.open("receipt", {displayHomeAsUp: true, message: msg[0], signature: signature, appcode: res[0].appcode});
 		$.masked.hide();
 		$.inner_pay.hide();
 	});
 	
 }
 
+function cancel_submit(){
+	$.masked.hide();
+	$.inner_pay.hide();
+}
+
 function doPay(){
+	
 	$.masked.show();
 	$.terminal_id.value = terminal_id;
-	$.cardno.value = cardno; // empno
-	$.inner_pay.show();
+	$.cardno.value =  cardno; // empno
+	$.inner_pay.show(); 
+	 
 }
 
 $.openClinic.addEventListener("click", function(e){
@@ -171,26 +195,26 @@ $.openClinic.addEventListener("click", function(e){
 });
 
 $.clinic_list.addEventListener("click", function(e){
-	console.log(e.rowData);
+	 
 	var clinicName = e.rowData.clinicName;
 	var doctor_panel_id = e.rowData.id;
 	Ti.App.Properties.setString('doctor_panel_id', doctor_panel_id);
-	console.log(clinicName+" doctor_panel_id is"+doctor_panel_id);
+	//console.log(clinicName+" doctor_panel_id is"+doctor_panel_id);
 	$.clinic.hide();
 	$.clinic_list.removeAllChildren();
 	refresh();
 });
 
 function getCardData(e){ 
-	var param =e.data;
+	var param =e.data; 
 	id = patient_recordsModel.addUserData(param);
 	$.saveBtn.visible = true;
 	$.lblName.text = param.name;
 	$.lblIc.text = param.icno;
 	$.lblEmp.text = param.empno;
-	$.cardno.text = param.cardno;
-	cardno = param.cardno;
-	$.lblCorpName.text = param.corpname; 
+	$.cardnolbl.text = param.cardno;
+	cardno = param.cardno; 
+	$.lblCorpName.text = param.corpname;  
 }	
 		
 function hideKeyboard(e){
@@ -202,8 +226,7 @@ function hideKeyboard(e){
 	$.medication.blur();
 	$.injection.blur();
 	$.xray.blur();
-	$.surgical.blur();
-	$.total.blur();
+	$.surgical.blur(); 
 }
 
 function openDiagPicker(tf){
