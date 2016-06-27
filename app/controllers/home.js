@@ -75,7 +75,7 @@ function render_menu_list(){
 			
 		if(menu_info[i].mod == "appointment"){
 			var appointmentModel = Alloy.createCollection('appointment'); 
-			var gotNotification = appointmentModel.getNumberOfPending(doctor_id);
+			 
 			var container = $.UI.create("View", {
 				classes: ['wsize','hsize']
 			});
@@ -87,12 +87,20 @@ function render_menu_list(){
 				top: 20,
 				right: 15
 			});
-			var label = $.UI.create("Label", {color: "#ffffff", text: gotNotification});
+				
 			container.add(imageView_menu);
-			notification_view.add(label);
-			container.add(notification_view);
+				
+			setTimeout(function(){
+				var gotNotification = appointmentModel.getNumberOfPending(doctor_id);
+				var label = $.UI.create("Label", {color: "#ffffff", text: gotNotification});
+				notification_view.add(label);
+				if(gotNotification != "0"){
+					container.add(notification_view);
+				}
+			},500);
 			imageView_menu.addEventListener("click", navToMod);
 			$.menu_scrollview.add(container);
+			 
 		}else{
 			imageView_menu.addEventListener("click", navToMod);
 			$.menu_scrollview.add(imageView_menu);

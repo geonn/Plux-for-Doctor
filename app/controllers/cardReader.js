@@ -10,7 +10,7 @@ var diagCategoryArr = [];
 var diagCategoryIdArr = [];
 var selectedDiag1;
 var selectedDiag2;
-var cardno = "6000201000113580";
+var cardno ;// = "6000201000113580";
 
 
 // Create a window to add the picker to and display it. 
@@ -69,7 +69,7 @@ function clinic_login(){
 function doInquiry(){
 	API.callByGet({url:"terminalsub", params: "action=INQUIRY&cardno="+cardno+"&terminal="+terminal_id}, function(responseText){
 	  	var res = JSON.parse(responseText);
-	  	console.log(res);
+	  	//console.log(res);
 	  	var msg = res[0].message.split("\n\n\n________________________");
 	  	var signature = (_.isUndefined(msg[1]))?false:true;
 		Alloy.Globals.Navigator.open("receipt", {displayHomeAsUp: true, message: res[0].message, signature: signature, appcode: ""});
@@ -96,7 +96,7 @@ function setClinicLabel(){
 	
 	var model = Alloy.createCollection("doctor_panel");
 	var current_clinic = model.getDataById({doctor_panel_id: doctor_panel_id});
-	console.log(doctor_panel_id+" "+current_clinic);
+	 
 	if(typeof current_clinic != "undefined"){
 		clinic_name = current_clinic.clinicName;
 		$.clinic_label.text = current_clinic.clinicName;
@@ -143,8 +143,16 @@ function claim_submit(){
 	}
 	API.callByGet({url:"terminalsub", params: "action=PAY&cardno="+cardno+"&terminal="+terminal_id+"&diag1="+diag1+"&diag2="+diag2+"&mc="+mc+"&consday="+consday+"&consnight="+consnight+"&medication="+medication+"&injection="+injection+"&xray="+xray+"&surgical="+surgical+"&total="+total}, function(responseText){
 	  	//console.log(responseText);
-	  	var res = JSON.parse(responseText);
-	  	
+	  	$.diag1.value = "";
+	  	$.diag2.value = "";
+		$.consday.value ="";
+	 	$.consnight.value ="";
+	 	$.mc.value ="";
+	 	$.medication.value ="";
+	 	$.injection.value ="";
+	 	$.xray.value ="";
+	 	$.surgical.value ="";
+	  	var res = JSON.parse(responseText); 
 	  	var msg = res[0].message.split("\n          ________________________"); 
 	  	var signature = (_.isUndefined(msg[1]))?false:true;
 		Alloy.Globals.Navigator.open("receipt", {displayHomeAsUp: true, message: msg[0], signature: signature, appcode: res[0].appcode});
@@ -162,7 +170,7 @@ function cancel_submit(){
 function doPay(){
 	
 	$.masked.show();
-	$.terminal_id.value = terminal_id;
+	$.terminal_id.value = Ti.App.Properties.getString("terminal_id_"+clinic_name);
 	$.cardno.value =  cardno; // empno
 	$.inner_pay.show(); 
 	 
@@ -238,7 +246,7 @@ function getDiagCategory(){
 }
 
 function openDiagPicker(tf){
-	console.log(tf.source.id+"]]");
+	 
 	var curSelection = "0";
 	var cancelBtn = diagCategoryArr.length -1;
 	if(tf.source.id == "diag1"){

@@ -55,7 +55,9 @@ function init(){
 	console.log("geo resit:");
 	console.log(appcode);
 	console.log(message);
-	
+	setTimeout(function(e){
+		$.receiptView.url = "/html/receipt.html";
+	}, 500);
 	setTimeout(function(e){Ti.App.fireEvent("web:render_message", {message: message, signature: args.signature});}, 1000);
 }
 

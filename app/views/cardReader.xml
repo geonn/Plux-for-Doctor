@@ -19,7 +19,7 @@
 				<Label id="login_clinic"></Label>
 				<Label>Clinic Terminal Login</Label>
 				<TextField class="wfill hsize padding" height="40" id="login_username" hintText="Username"></TextField>
-				<TextField class="wfill hsize padding" height="40" id="login_password" hintText="Password"></TextField>
+				<TextField class="wfill hsize padding" height="40" passwordMask="true" id="login_password" hintText="Password"></TextField>
 				<Button class="button" height="40" top="10" onClick="clinic_login" width="80%" title="Login"></Button>
 			</View>
 		</View>
