@@ -113,6 +113,7 @@ function takePhoto(){
 					 	var img_param = {  
 							"photo" : blobContainer, 
 						};
+						
 						API.callByPostImage({url:"uploadDoctorImageUrl", params: param, img: img_param}, function(responseText){ 
 						 
 							var res = JSON.parse(responseText);   
@@ -178,8 +179,9 @@ function takePhoto(){
 				 	var img_param = {  
 						"photo" : blobContainer, 
 					};
+					
 					API.callByPostImage({url:"uploadDoctorImageUrl", params: param, img: img_param}, function(responseText){ 
-					 
+					 	console.log(responseText);
 						var res = JSON.parse(responseText);   
 						 
 						if(res.status == "success"){    

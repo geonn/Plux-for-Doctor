@@ -107,11 +107,11 @@ exports.callByPostImage = function(e, onload, onerror) {
 	var url = eval(e.url);
 	var item_id = e.params.item_id || "";
 	 
-	var itemStr;
-	if(item_id != ""){
+	var itemStr = "";
+	if(item_id != "" && typeof item_id != 'undefined'){
 		itemStr =  "&item_id="+item_id;
 	}
-	 
+	// console.log(url+"&u_id="+e.params.u_id+itemStr);return false;
 	var _result = contactServerByPostImage(url+"&u_id="+e.params.u_id+itemStr,e.img);
 	_result.onload = function(e) { 
 		console.log('success');
