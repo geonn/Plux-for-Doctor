@@ -1,6 +1,6 @@
 <Alloy>
 	<Window navTintColor="#CE1D1C" class="wfill" id="win" title="Receipt" navBarHidden="false" >
-		<WebView id="receiptView" class="wfill hfill" bottom="50" url="html/receipt.html" enableZoomControls="false" disableBounce="true"></WebView>
+		<WebView id="receiptView" class="wfill hfill" bottom="50" url="/html/receipt.html" enableZoomControls="false" disableBounce="true"></WebView>
     	<View class="horz wfill hsize" bottom="5" >
 			<Button class="button" height="40" left="10%" onClick="convertViewToBlob" width="80%" title="Submit"></Button>
 		</View>

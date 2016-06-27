@@ -120,10 +120,7 @@ overrode the settings with other TSS, XML, or JS settings:
 	textAlign: Titanium.UI.TEXT_ALIGNMENT_CENTER,
 	backgroundColor: "#CE1D1C",
 	borderRadius: 6,
-	color: "#ffffff",
-	width: Ti.UI.FILL,
-	left: 30,
-	right: 30,
+	color: "#ffffff",  
 	top: 10,
 },
 
