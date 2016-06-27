@@ -57,6 +57,7 @@ function clinic_login(){
 				Ti.App.Properties.setString("terminal_id_"+clinic_name, res[0].terminalid);
 				$.masked.hide();
 				$.login.hide();
+				terminal_id = Ti.App.Properties.getString("terminal_id_"+clinic_name);
 			}else{
 				alert("INCORRECT CLINIC LOGIN");
 			}
@@ -76,7 +77,22 @@ function doInquiry(){
 	});
 }
 
+function getDiag(picker){
+	API.callByPost({url:"getDiagList"}, function(responseText){
+	  	var res = JSON.parse(responseText);
+		var data = Array();
+	  	for (var i=0; i < res.data.length; i++) {
+			data.push($.UI.create("PickerRow", {title: res.data[i].desc, value: res.data[i].code}));
+		  };
+		picker.add(data);
+	});
+}
+
 function init(){
+	if(Ti.Platform.osname == "android" ){
+		getDiag($.diag1);
+		getDiag($.diag2);
+	}
 	$.login.hide();
 	$.masked.hide();
 	$.inner_pay.hide();
@@ -143,16 +159,17 @@ function claim_submit(){
 	}
 	API.callByGet({url:"terminalsub", params: "action=PAY&cardno="+cardno+"&terminal="+terminal_id+"&diag1="+diag1+"&diag2="+diag2+"&mc="+mc+"&consday="+consday+"&consnight="+consnight+"&medication="+medication+"&injection="+injection+"&xray="+xray+"&surgical="+surgical+"&total="+total}, function(responseText){
 	  	//console.log(responseText);
+ 
+	  	var res = JSON.parse(responseText); 
 	  	$.diag1.value = "";
 	  	$.diag2.value = "";
-		$.consday.value ="";
-	 	$.consnight.value ="";
-	 	$.mc.value ="";
-	 	$.medication.value ="";
-	 	$.injection.value ="";
-	 	$.xray.value ="";
-	 	$.surgical.value ="";
-	  	var res = JSON.parse(responseText); 
+			$.consday.value ="";
+		 	$.consnight.value ="";
+		 	$.mc.value ="";
+		 	$.medication.value ="";
+		 	$.injection.value ="";
+		 	$.xray.value ="";
+		 	$.surgical.value =""; 
 	  	var msg = res[0].message.split("\n          ________________________"); 
 	  	var signature = (_.isUndefined(msg[1]))?false:true;
 		Alloy.Globals.Navigator.open("receipt", {displayHomeAsUp: true, message: msg[0], signature: signature, appcode: res[0].appcode});
