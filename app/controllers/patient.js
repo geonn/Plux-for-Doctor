@@ -51,7 +51,7 @@ function showList(){
 			
 			 var msgLbl =  $.UI.create('Label',{ 
 				classes: ['h6', 'hsize'],
-				text:  entry.corpname, 
+				text:  entry.corpname,
 				source: entry.id,   
 				textAlign:'left', 
 				left:15, 

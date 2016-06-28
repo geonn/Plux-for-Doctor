@@ -16,7 +16,9 @@ exports.definition = {
 		   	"isver" : "TEXT",
 		    "verno" : "TEXT",
 		    "remark" : "TEXT",
-		    "visitdate" : "TEXT"
+		    "visitdate" : "TEXT",
+		    "type": "TEXT",
+		    "receipt_url": "TEXT"
 		},
 		adapter: {
 			type: "sql",
@@ -77,7 +79,9 @@ exports.definition = {
 					    isver: res.fieldByName('isver'),
 					    verno: res.fieldByName('verno'),
 					    remark: res.fieldByName('remark'),
-			 			visitdate: res.fieldByName('visitdate')
+			 			visitdate: res.fieldByName('visitdate'),
+			 			type: res.fieldByName('type'),
+			 			receipt_url: res.fieldByName('receipt_url'),
 					  };
 				}  
 				res.close();
@@ -117,7 +121,9 @@ exports.definition = {
 					    isver: res.fieldByName('isver'),
 					    verno: res.fieldByName('verno'),
 					    remark: res.fieldByName('remark'),
-			 			visitdate: res.fieldByName('visitdate')
+			 			visitdate: res.fieldByName('visitdate'),
+			 			type: res.fieldByName('type'),
+			 			receipt_url: res.fieldByName('receipt_url'),
 					};
 					res.next();
 					count++;
@@ -232,7 +238,7 @@ exports.definition = {
 			},
 			addUserData : function(entry) {
 				var collection = this; 
-	            var sql = "INSERT INTO "+ collection.config.adapter.collection_name + " (name, memno, icno, relation, empno,corpcode,corpname,costcenter,dept, allergy, isver, verno, visitdate) VALUES ('"+entry.name+"', '"+entry.memno +"','"+entry.icno+"','"+entry.relation+"', '"+ entry.empno +"',  '"+ entry.corpcode +"',  '"+ entry.corpname +"',  '"+ entry.costcenter +"',  '"+ entry.dept +"', '"+ entry.allergy +"', '"+ entry.isver +"', '"+ entry.verno +"', '"+ COMMON.now()+"')";
+	            var sql = "INSERT INTO "+ collection.config.adapter.collection_name + " (name, memno, icno, relation, empno,corpcode,corpname,costcenter,dept, allergy, isver, verno, visitdate, receipt_url, type) VALUES ('"+entry.name+"', '"+entry.memno +"','"+entry.icno+"','"+entry.relation+"', '"+ entry.empno +"',  '"+ entry.corpcode +"',  '"+ entry.corpname +"',  '"+ entry.costcenter +"',  '"+ entry.dept +"', '"+ entry.allergy +"', '"+ entry.isver +"', '"+ entry.verno +"', '"+ COMMON.now()+"', '"+ entry.receipt_url+"', '"+ entry.type+"')";
 	            db = Ti.Database.open(collection.config.adapter.db_name);
 	            db.execute(sql);
 	            

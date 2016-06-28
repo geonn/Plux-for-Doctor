@@ -12,6 +12,7 @@ function init(){
 
 function showList(){ 
 	var param = patient_recordsModel.getById(record_id);
+	$.receipt_url.image = param.receipt_url;
 	$.lblVisitId.text = param.id;
 	$.lblName.text = param.name;
 	$.lblIc.text = param.icno;

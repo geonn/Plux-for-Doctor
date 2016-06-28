@@ -44,6 +44,10 @@
 				});
             });
             
+            Ti.App.addEventListener("web:resetSignature", function(e){
+            	resetBoard();
+            });
+            
             function nl2br (str, is_xhtml) {   
 			    var breakTag = (is_xhtml || typeof is_xhtml === 'undefined') ? '<br />' : '<br>';    
 			    return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1'+ breakTag +'$2');
@@ -84,6 +88,7 @@
 			<div style="width: 100%; height: 200px; display: absolute;" id="simple-board">
 				
 			</div>
+			
 			<p style=" padding-top:0;margin-top:0;">Signature</p>
 			<p>I hereby agreed to disclose the medical<br/>
 			treatment to the TPA.
@@ -93,10 +98,19 @@
 			var simpleBoard = new DrawingBoard.Board('simple-board', {
 				controls: false,
 				background: "#feffac",
-				enlargeYourContainer: true,
+				enlargeYourContainer: false,
 				webStorage: false
 			});	
 			
+			function resetBoard(){
+				$("#simple-board").empty();
+				var simpleBoard = new DrawingBoard.Board('simple-board', {
+					controls: false,
+					background: "#feffac",
+					enlargeYourContainer: false,
+					webStorage: false
+				});	
+			}
 			
 		</script>
 	</body>

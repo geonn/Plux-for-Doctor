@@ -157,6 +157,7 @@ function claim_submit(){
 		alert("Please select Diagnosis");
 		return false;
 	}
+	cardno = "6000201000113580";
 	API.callByGet({url:"terminalsub", params: "action=PAY&cardno="+cardno+"&terminal="+terminal_id+"&diag1="+diag1+"&diag2="+diag2+"&mc="+mc+"&consday="+consday+"&consnight="+consnight+"&medication="+medication+"&injection="+injection+"&xray="+xray+"&surgical="+surgical+"&total="+total}, function(responseText){
 	  	//console.log(responseText);
  
@@ -223,8 +224,10 @@ $.clinic_list.addEventListener("click", function(e){
 });
 
 function getCardData(e){ 
-	var param =e.data; 
+	var param =e.data;
+	Ti.App.Properties.setString("card_data", JSON.stringify(e.data));
 	id = patient_recordsModel.addUserData(param);
+	
 	$.saveBtn.visible = true;
 	$.lblName.text = param.name;
 	$.lblIc.text = param.icno;
@@ -302,5 +305,6 @@ $.saveBtn.addEventListener('click', function(){
 Ti.App.addEventListener('getCardData', getCardData);
 		 
 $.win.addEventListener("close", function(){ 
+	Ti.App.Properties.setString("card_data","");
 	Ti.App.removeEventListener('getCardData', getCardData);
 });

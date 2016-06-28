@@ -55,11 +55,13 @@ function render_menu_list(){
 	var button_width = Math.floor((pWidth - 30) / 2);
 	console.log(button_width+" button width"+pWidth+" "+Titanium.Platform.displayCaps.dpi+" "+Titanium.Platform.displayCaps.platformWidth);
 	$.menu_scrollview.width = "100%";
+	$.menu_scrollview.width = 293;
+	button_width = 139;
 	if (Ti.Platform.osname == 'ipad'){
 		button_width = Math.floor((pWidth - 30) / 4);
 		$.menu_scrollview.width = "80%";
 	};
-
+	
 	for (var i=0; i < menu_info.length; i++) {
 		var topR =10;
 		if(i == 0 || i == 1){
@@ -68,7 +70,7 @@ function render_menu_list(){
 		var imageView_menu = $.UI.create("ImageView", {
 				mod: menu_info[i].mod,
 				width: button_width,
-				left: 10,
+				left: 5,
 				top: topR,
 				image: menu_info[i].image,
 			});

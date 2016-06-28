@@ -23,6 +23,10 @@ function screenshot(e){
 	screenShotBlob =Ti.Utils.base64decode(blob);
 	submit_receipt();
 }
+
+function resetSignature(){
+	Ti.App.fireEvent("web:resetSignature");
+}
 	
 function submit_receipt(){
 	 
@@ -38,7 +42,12 @@ function submit_receipt(){
 	API.callByPostImage({url:"uploadReceiptImageUrl", params: param, img: img_param}, function(responseText){ 
 		var res = JSON.parse(responseText);    
 		if(res.status == "success"){    
-			COMMON.createAlert("Success", "Receipt successfully submitted", function(){ 
+			COMMON.createAlert("Success", "Receipt successfully submitted", function(){
+				var patient_recordsModel = Alloy.createCollection('patient_records'); 
+				var string_card_data = Ti.App.Properties.getString("card_data");
+				var patient_param = JSON.parse(string_card_data);
+				_.extend(patient_param, {type: "paid", receipt_url: res.data.receipt_url});
+				patient_recordsModel.addUserData(patient_param);
 				closeWindow();
 			});
 		}else{

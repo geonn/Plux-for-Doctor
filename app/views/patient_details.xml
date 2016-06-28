@@ -76,7 +76,13 @@
 						</View> 
 					</View>
 				</View> 
-				
+				<View class="gray-line" /> 
+				<View id="tvrVisitDate"  height="Ti.UI.SIZE" layout="vertical" selectedBackgroundColor="#ffffff" >
+					<View class="horz hsize wfill "  textAlign="right" >
+						<Label text="Receipt" top="12" width="35%" class="h5 padding-left themeColor"  />
+					</View>
+					<ImageView id="receipt_url" class="wfill hsize"></ImageView>
+				</View> 
 				<View class="gray-line" /> 
 				<View id="tvrCorpName"  height="Ti.UI.SIZE" layout="vertical" selectedBackgroundColor="#ffffff" >
 					<View class="horz hsize wfill "  textAlign="right" >
