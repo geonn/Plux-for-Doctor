@@ -2,6 +2,8 @@ var args = arguments[0] || {};
 var message = args.message;
 var appcode = args.appcode;
 var screenShotBlob;
+var loading = Alloy.createController("loading");
+
 function closeWindow(){
 	$.win.close();
 }
@@ -29,7 +31,7 @@ function resetSignature(){
 }
 	
 function submit_receipt(){
-	 
+	loading.start();
 	//submit to server
 	var param = { 
 		"u_id"	  :  Ti.App.Properties.getString('u_id'),   
@@ -45,16 +47,18 @@ function submit_receipt(){
 			COMMON.createAlert("Success", "Receipt successfully submitted", function(){
 				var patient_recordsModel = Alloy.createCollection('patient_records'); 
 				var string_card_data = Ti.App.Properties.getString("card_data");
+				var remark = Ti.App.Properties.getString("remark");
 				var patient_param = JSON.parse(string_card_data);
-				_.extend(patient_param, {type: "paid", receipt_url: res.data.receipt_url});
+				_.extend(patient_param, {type: "paid", receipt_url: res.data.receipt_url, remark: remark});
 				patient_recordsModel.addUserData(patient_param);
 				closeWindow();
+				Ti.App.fireEvent("cardReader:closeWindow");
 			});
 		}else{
 			COMMON.createAlert("Error", res.data);
 			return false;
 		}
-			
+		loading.finish();
 	});	
 }
 
@@ -63,6 +67,7 @@ function init(){
 	console.log("geo resit:");
 	console.log(appcode);
 	console.log(message);
+	$.win.add(loading.getView());
 	setTimeout(function(e){
 		$.receiptView.url = "/html/receipt.html";
 	}, 500);

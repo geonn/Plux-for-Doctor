@@ -11,7 +11,7 @@ var diagCategoryIdArr = [];
 var selectedDiag1;
 var selectedDiag2;
 var cardno ;// = "6000201000113580";
-
+var loading = Alloy.createController("loading");
 
 // Create a window to add the picker to and display it. 
 var window = SCANNER.createScannerWindow(); 
@@ -68,12 +68,20 @@ function clinic_login(){
 }
 
 function doInquiry(){
+	if(!cardno){
+		COMMON.createAlert("Warning", "Card No not found, please scan the patient card.", function(){
+			
+		});
+		return;
+	}
+	loading.start();
 	API.callByGet({url:"terminalsub", params: "action=INQUIRY&cardno="+cardno+"&terminal="+terminal_id}, function(responseText){
 	  	var res = JSON.parse(responseText);
 	  	//console.log(res);
 	  	var msg = res[0].message.split("\n\n\n________________________");
 	  	var signature = (_.isUndefined(msg[1]))?false:true;
 		Alloy.Globals.Navigator.open("receipt", {displayHomeAsUp: true, message: res[0].message, signature: signature, appcode: ""});
+		loading.finish();
 	});
 }
 
@@ -89,6 +97,7 @@ function getDiag(picker){
 }
 
 function init(){
+	$.win.add(loading.getView());
 	if(Ti.Platform.osname == "android" ){
 		getDiag($.diag1);
 		getDiag($.diag2);
@@ -138,6 +147,7 @@ function inputOnfocus(){
 }
 
 function claim_submit(){
+	loading.start();
 	var diag1 = $.diag1.value;
 	var tmp= diag1.split("-");
 	diag1 = tmp[0] || 0;
@@ -155,6 +165,7 @@ function claim_submit(){
 	 
 	if(diag1 == "0"){
 		alert("Please select Diagnosis");
+		loading.finish();
 		return false;
 	}
 	cardno = "6000201000113580";
@@ -176,6 +187,7 @@ function claim_submit(){
 		Alloy.Globals.Navigator.open("receipt", {displayHomeAsUp: true, message: msg[0], signature: signature, appcode: res[0].appcode});
 		$.masked.hide();
 		$.inner_pay.hide();
+		loading.finish();
 	});
 	
 }
@@ -186,7 +198,13 @@ function cancel_submit(){
 }
 
 function doPay(){
-	
+	console.log(typeof cardno);
+	if(!cardno){
+		COMMON.createAlert("Warning", "Card No not found, please scan the patient card.", function(){
+			
+		});
+		return;
+	}
 	$.masked.show();
 	$.terminal_id.value = Ti.App.Properties.getString("terminal_id_"+clinic_name);
 	$.cardno.value =  cardno; // empno
@@ -241,6 +259,7 @@ function hideKeyboard(e){
 	$.diag1.blur();
 	$.diag2.blur();
 	$.mc.blur();
+	$.remark.blur();
 	$.consday.blur();
 	$.consnight.blur();
 	$.medication.blur();
@@ -299,12 +318,16 @@ function openDiagPicker(tf){
 
 $.saveBtn.addEventListener('click', function(){ 
 	var remark = $.remark.value;
-	patient_recordsModel.saveRemark(id,remark);  
+	//patient_recordsModel.saveRemark(id,remark);
+	Ti.App.Properties.setString("remark", remark);
 });	
 		
 Ti.App.addEventListener('getCardData', getCardData);
+Ti.App.addEventListener('cardReader:closeWindow', closeWindow);
 		 
 $.win.addEventListener("close", function(){ 
 	Ti.App.Properties.setString("card_data","");
+	Ti.App.Properties.setString("remark", "");
+	Ti.App.removeEventListener('cardReader:closeWindow', closeWindow);
 	Ti.App.removeEventListener('getCardData', getCardData);
 });

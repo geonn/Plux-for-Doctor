@@ -238,7 +238,7 @@ exports.definition = {
 			},
 			addUserData : function(entry) {
 				var collection = this; 
-	            var sql = "INSERT INTO "+ collection.config.adapter.collection_name + " (name, memno, icno, relation, empno,corpcode,corpname,costcenter,dept, allergy, isver, verno, visitdate, receipt_url, type) VALUES ('"+entry.name+"', '"+entry.memno +"','"+entry.icno+"','"+entry.relation+"', '"+ entry.empno +"',  '"+ entry.corpcode +"',  '"+ entry.corpname +"',  '"+ entry.costcenter +"',  '"+ entry.dept +"', '"+ entry.allergy +"', '"+ entry.isver +"', '"+ entry.verno +"', '"+ COMMON.now()+"', '"+ entry.receipt_url+"', '"+ entry.type+"')";
+	            var sql = "INSERT INTO "+ collection.config.adapter.collection_name + " (name, memno, icno, relation, empno,corpcode,corpname,costcenter,dept, allergy, isver, verno, visitdate, receipt_url, type, remark) VALUES ('"+entry.name+"', '"+entry.memno +"','"+entry.icno+"','"+entry.relation+"', '"+ entry.empno +"',  '"+ entry.corpcode +"',  '"+ entry.corpname +"',  '"+ entry.costcenter +"',  '"+ entry.dept +"', '"+ entry.allergy +"', '"+ entry.isver +"', '"+ entry.verno +"', '"+ COMMON.now()+"', '"+ entry.receipt_url+"', '"+ entry.type+"', '"+ entry.remark+"')";
 	            db = Ti.Database.open(collection.config.adapter.db_name);
 	            db.execute(sql);
 	            
