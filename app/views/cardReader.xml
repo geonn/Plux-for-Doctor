@@ -30,9 +30,9 @@
 				<TextField class="wfill hsize padding" editable="false" height="40" id="terminal_id" hintText="Terminal ID"></TextField>
 				<TextField class="wfill hsize padding" editable="false" height="40" id="cardno" hintText="Card Number"></TextField>
 
-				<TextField editable="false" onClick="openDiagPicker" class="wfill hsize padding" height="40" id="diag1" hintText="first diagnosis"></TextField>
-				<TextField editable="false" onClick="openDiagPicker" class="wfill hsize padding" height="40" id="diag2" hintText="second diagnosis"></TextField>
-
+				<TextField editable="false" onClick="openDiagPicker"  class="wfill hsize padding" height="40" id="diag1" hintText="first diagnosis"></TextField>
+				<TextField editable="false" onClick="openDiagPicker"  class="wfill hsize padding" height="40" id="diag2" hintText="second diagnosis"></TextField>
+				 
 				<TextField class="wfill hsize padding" keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" height="40" id="mc" hintText="MC days">
 					<KeyboardToolbar platform="ios">
                			<Toolbar>

@@ -5,8 +5,8 @@ var panelListModel = Alloy.createCollection('panelList');
 var doctor_id = Ti.App.Properties.getString('doctor_id');
 
 var menu_info = [
-	//{mod: "cardReader", image: "/images/btn/e-card-reader.png"},
-	//{mod: "patient", image: "/images/btn/patient-record.png"}, 
+	{mod: "cardReader", image: "/images/btn/e-card-reader.png"},
+	{mod: "patient", image: "/images/btn/patient-record.png"}, 
 	{mod: "appointment", image: "/images/btn/appointment.png"},
 	{mod: "clinic/listing", image: "/images/btn/clinic-locator.png"},
 	{mod: "ida", image: "/images/btn/ida.png"},

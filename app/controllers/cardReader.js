@@ -99,8 +99,8 @@ function getDiag(picker){
 function init(){
 	$.win.add(loading.getView());
 	if(Ti.Platform.osname == "android" ){
-		getDiag($.diag1);
-		getDiag($.diag2);
+		//getDiag($.diag1);
+	//	getDiag($.diag2);
 	}
 	$.login.hide();
 	$.masked.hide();
@@ -277,9 +277,9 @@ function getDiagCategory(){
 			diagCategoryArr.push( res.data[i].code+"-"+res.data[i].desc); 
 		}
 		
-	 	if(OS_IOS){
+	 	//if(OS_IOS){
 			diagCategoryArr.push("Cancel"); 
-		}
+		//}
 		 
 	}); 
 }
