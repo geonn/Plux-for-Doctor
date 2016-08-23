@@ -62,20 +62,20 @@ function submit_receipt(){
 	});	
 }
 
+function web_receipt_loaded(){
+	Ti.App.fireEvent("web:render_message", {message: message, signature: args.signature});
+}
+
 function init(){
 	//Ti.App.fireEvent("web:render_message", {message: message});
-	console.log("geo resit:");
-	console.log(appcode);
-	console.log(message);
 	$.win.add(loading.getView());
-	setTimeout(function(e){
-		$.receiptView.url = "/html/receipt.html";
-	}, 500);
-	setTimeout(function(e){Ti.App.fireEvent("web:render_message", {message: message, signature: args.signature});}, 1000);
+	$.receiptView.url = "/html/receipt.html";
 }
 
 Ti.App.addEventListener("app:screenshot", screenshot);
+Ti.App.addEventListener("web_receipt_loaded", web_receipt_loaded);
 
 $.win.addEventListener("close", function(){ 
 	Ti.App.removeEventListener('app:screenshot', screenshot);
+	Ti.App.removeEventListener("web_receipt_loaded", web_receipt_loaded);
 });
