@@ -263,6 +263,9 @@ function refresh(){
 }
 
 function init(){
+	var AppVersionControl = require('AppVersionControl');
+	AppVersionControl.checkAndUpdate();
+	
 	var deviceToken = Ti.App.Properties.getString('deviceToken');  
 	var u_id = Ti.App.Properties.getString('u_id') || "";
 	console.log(u_id +" => " + deviceToken);

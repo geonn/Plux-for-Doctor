@@ -89,7 +89,7 @@ function deviceTokenSuccess(ex) {
 					});
 			    } else {
 			        console.log('Error:\n' +
-			            ((e.error && e.message) || JSON.stringify(e)));
+			            ((ey.error && ey.message) || JSON.stringify(ey)));
 			    }
 			});
 
@@ -172,5 +172,8 @@ exports.setInApp = function(){
 };
 
 exports.registerPush = function(){
+	if(OS_IOS){ 
+		Ti.UI.iPhone.setAppBadge(0); 
+	}
 	registerPush();
 };

@@ -11,6 +11,7 @@ var doSignUpUrl = "http://"+API_DOMAIN+"/api/pluxDoctorSignup?user="+USER+"&key=
 var addAppointmentUrl = "http://"+API_DOMAIN+"/api/addAppointment?user="+USER+"&key="+KEY; 
 
 //API when app loading phase
+var checkAppVersionUrl 			= "http://"+API_DOMAIN+"/api/checkDoctorAppVersion?user="+USER+"&key="+KEY;
 var getAppHomepageBackgroundUrl = "http://"+API_DOMAIN+"/api/getAppHomepageBackground?user="+USER+"&key="+KEY;
 var getDoctorListUrl            = "http://"+API_DOMAIN+"/api/getDoctorList?user="+USER+"&key="+KEY;
 var getAppointmentByDoctor 		= "http://"+API_DOMAIN+"/api/getAppointmentByDoctor?user="+USER+"&key="+KEY;
@@ -75,6 +76,31 @@ exports.callByGet  = function(e, onload, onerror){
 		onerror && onerror(); 
 	};	
 };
+
+
+exports.checkAppVersion = function(callback_download){
+	var appVersion = Ti.App.Properties.getString("appVersion");
+	var url = checkAppVersionUrl + "&appVersion="+appVersion+"&appPlatform="+Titanium.Platform.osname;
+	console.log(url);
+	var client = Ti.Network.createHTTPClient({
+		// function called when the response data is available
+		onload : function(e) {
+			var result = JSON.parse(this.responseText);
+		 console.log(result);
+			if(result.status == "error"){ 
+				callback_download && callback_download(result);
+			}
+		},
+		// function called when an error occurs, including a timeout
+		onerror : function(e) {
+			console.log("error check version");
+		},
+		timeout : 60000  // in milliseconds
+	}); 
+	client.open("GET", url); 
+	client.send(); 
+};
+
 
 // call API by post method
 exports.callByPostWithJson = function(e, onload, onerror){

@@ -9,7 +9,8 @@
 "#logo": {
 	opacity: 1,
 	duration: 0.02,
+	width:200,
 	images: [
-		"/images/appicon.png"
+		"/images/MarketplaceArtwork.png"
 	]
 },
