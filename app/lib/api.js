@@ -86,9 +86,8 @@ exports.checkAppVersion = function(callback_download){
 	var client = Ti.Network.createHTTPClient({
 		// function called when the response data is available
 		onload : function(e) {
-			var result = JSON.parse(this.responseText);
-		 console.log(result);
-			if(result.status == "error"){ 
+			var result = JSON.parse(this.responseText); 
+			if(result.status == "error"){  
 				callback_download && callback_download(result);
 			}
 		},

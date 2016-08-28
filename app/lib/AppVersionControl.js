@@ -12,6 +12,8 @@ exports.checkAndUpdate = function(e){
 };
 
 function callback_download(e){
+	var urlToUpdate = e.data;
+ 
 	var dialog = Ti.UI.createAlertDialog({
 	  cancel: 1,
 	  buttonNames: ['Download', 'Cancel'],
@@ -19,13 +21,12 @@ function callback_download(e){
 	  message: 'Latest version found : '+e.currentVersion
 	});
 	
-	dialog.show();
-	
+	dialog.show(); 
 	dialog.addEventListener("click", function(ex){
 		if(ex.index == 0){
 			try {
-				console.log(e.data);
-				Ti.Platform.openURL(e.data);/*
+			
+				Ti.Platform.openURL(urlToUpdate);/*
 				var intent = Ti.Android.createIntent({
 				    action: Ti.Android.ACTION_VIEW,
 				    data: "http://bit.ly/1U7Qmd8",

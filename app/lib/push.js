@@ -59,8 +59,8 @@ function receivePush(e) {
 	return false;
 }
 
-function deviceTokenSuccess(ex) {
-    deviceToken = ex.deviceToken; 
+function deviceTokenSuccess(ev) {
+    deviceToken = ev.deviceToken; 
     Cloud.Users.login({
 	    login: 'geomilano',
 	    password: 'geonn2015'
