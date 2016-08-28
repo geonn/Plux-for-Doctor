@@ -23,7 +23,7 @@
 	    <ScrollView class="wfill vert" height="0" contentWidth="Ti.UI.FILL" contentHeight="Ti.UI.SIZE" id="appointment_list"></ScrollView>
 	    <ImageView class="wfill hfill" image="/images/transparent-bg.png" id="masked"></ImageView>
 	    <ImageView class="wfill hfill" visible="false" zIndex="11" image="/images/transparent-bg.png" id="masked2"></ImageView>
-	    <ScrollView bottom="0" zIndex="12" class="box hsize wfill vert contwfill conthsize" backgroundColor="#e5ebee" id="suggested_time" visible="false">
+	    <ScrollView bottom="0" zIndex="12" scrollType="vertical" class="box hsize wfill vert contwfill conthsize" backgroundColor="#e5ebee" id="suggested_time" visible="false">
 	    	<View class="wfill hsize vert" id="suggested_time_data"></View>
 	    	<View class="wfill hsize vert">
 				<View class="gray-line"></View>

@@ -29,8 +29,8 @@
 					<Label class="padding wfill hsize h6 whiteColor" textAlign="center">Suggestion</Label>
 				</View>
 			</View>
-			<View class="padding wfill hsize vert" id="inner_box" left="9" right="9" width="301">
-				<ScrollView class="wfill hsize vert" contentWidth="Ti.UI.FILL" disableBounce="true" contentHeight="Ti.UI.SIZE">
+			<View class="padding wfill hsize vert" backgroundColor="red" id="inner_box" left="9" right="9" width="301">
+				<ScrollView class="wfill hsize vert" backgroundColor="orange" scrollType="vertical" contentWidth="Ti.UI.FILL" disableBounce="true" contentHeight="Ti.UI.SIZE">
 					<View backgroundColor="#d7d7d7" class="wfill hsize" id="timeslot">
 						
 					</View>

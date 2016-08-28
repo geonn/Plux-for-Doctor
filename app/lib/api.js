@@ -30,7 +30,8 @@ var uploadReceiptImageUrl		= "http://"+API_DOMAIN+"/api/uploadReceiptImageUrl?us
 var getDiagList = "http://"+API_DOMAIN+"/api/getDiagList?user="+USER+"&key="+KEY;
 var panellogin = "http://appsapi.aspmedic.com/aida/panellogin.aspx";
 var terminalsub = "http://appsapi.aspmedic.com/aida/terminalsub.aspx";
- 
+var dateNow = "http://plux.freejini.com.my/main/dateNow";
+
 //API that call in sequence 
 var APILoadingList = [
 	{url: getAppHomepageBackgroundUrl, model: "background", checkId: "1"},
@@ -284,7 +285,7 @@ function contactServerByGet(url) {
 
 function contactServerByPost(url,records) { 
 	var client = Ti.Network.createHTTPClient({
-		timeout : 5000
+		timeout : 60000
 	});
 	if(OS_ANDROID){
 	 	client.setRequestHeader('ContentType', 'application/x-www-form-urlencoded'); 
