@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1064822920357",
+    "firebase_url": "https://plux-for-doctor.firebaseio.com",
+    "project_id": "plux-for-doctor",
+    "storage_bucket": "plux-for-doctor.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1064822920357:android:42a5646dddc22b49",
+        "android_client_info": {
+          "package_name": "com.plux.doctor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1064822920357-1446fj5968j8vf26ke8bq771d2rk45f3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDnV5LPzQz6Of-y-lPkIGLxrLXSdzbM7ZA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

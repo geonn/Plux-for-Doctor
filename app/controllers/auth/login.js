@@ -11,10 +11,10 @@ function onload(responseText){
 		loading.finish();
 		return false;
 	}else{
-		//loading.start();
+		//
 		
 		setTimeout(function(){
-			//loading.finish(); 
+			loading.finish(); 
 			var arr = result.data; 
 			//Ti.App.Properties.setString('clinic_id', arr.clinic_id);
 			//Ti.App.Properties.setString('specialty', arr.specialty);
@@ -47,11 +47,13 @@ function do_login(){
 		password: password
 	};
 	//API.doLogin(params, $); 
-	
+	loading.start();
+	Ti.App.Properties.setString('remember_username', username);
 	API.callByPost({url: "doLoginUrl", params: params}, onload);
 }
 
 function init(){ 
+	$.username.value = Ti.App.Properties.getString('remember_username');
 	$.win.open(); 
 	$.win.add(loading.getView()); 
 }

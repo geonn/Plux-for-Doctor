@@ -168,7 +168,7 @@ function date_click(e){
 
 function multiple_select(e){
 	var view_time_box = parent({name: "view_time_box", value: 1}, e.source);
-	var doctor_panel_id = parent({name: "doctor_panel_id"}, e.source);
+	//var doctor_panel_id = parent({name: "doctor_panel_id"}, e.source);
 	view_time_box.backgroundColor = "#3f99f9";
 	var start_date = parent({name: "date_s"}, e.source);
 	var duration = parent({name: "duration"}, e.source);
@@ -298,10 +298,11 @@ function onOk(){
 	}
 	var save_counter = 0;
 	for (var i=0; i < selected_time.length; i++) {
+		console.log(selected_time[i]);
 	  API.callByPost({url:"addAppointmentUrl", params: selected_time[i]}, function(responseText){
 	  	var res = JSON.parse(responseText);
 		var arr = res.data || null;
-			
+		console.log(arr);	
 	  	appointment.saveArray(res.data);
 	  	save_counter++;
 	  	 
@@ -375,7 +376,7 @@ function init(){
 	
 	
 	//console.log("doctor_panel_id: "+doctor_panel_id);
-	if(doctor_panel_id == ""){
+	if(doctor_panel_id == "" || doctor_panel_id == "0"){
 		var dialog = Ti.UI.createAlertDialog({
 			cancel: 1,
 			buttonNames: ['Cancel','OK'],
