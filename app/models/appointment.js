@@ -151,6 +151,8 @@ exports.definition = {
                 return listArr;
 			},
 			saveArray : function(arr){
+				console.log('save array');
+				console.log(arr);
 				var collection = this;
 				
                 db = Ti.Database.open(collection.config.adapter.db_name);
@@ -176,7 +178,7 @@ exports.definition = {
                 if(Ti.Platform.osname != "android"){
                 	db.file.setRemoteBackup(false);
                 }
-             	
+             	console.log(id+" id "+statusCode);
              	var sql_query =  "UPDATE "+collection.config.adapter.collection_name+" SET status=? WHERE id=?";
 				db.execute(sql_query, statusCode,  id);
 			 

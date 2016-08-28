@@ -34,7 +34,7 @@ function render_appointment_list(){
 		$.appointment_list.add(view_norecord);
 	}else{
 		var all_date = _.sortBy(appointmentList, 'start_date');
-		//all_date = all_date.reverse(); 
+		all_date = all_date.reverse(); 
 		console.log(all_date);
 		for (var i=0; i < all_date.length; i++) {
 			var datetime = all_date[i].start_date.split(" ");

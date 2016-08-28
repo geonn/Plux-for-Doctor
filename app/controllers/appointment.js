@@ -177,7 +177,7 @@ function multiple_select(e){
 	var param = { 
 		u_id : patient_id,
 		start_date : start_date,
-		duration : duration,
+		duration  : duration,
 		doctor_panel_id: doctor_panel_id,
 		status: 4,
 		remark : "For Suggestion Used",
@@ -187,6 +187,7 @@ function multiple_select(e){
 	};
 	
 	selected_time.push(param);
+	_suggested_time.set_selected_time(selected_time);
 	//dateSelect(e);
 }
 
@@ -196,11 +197,12 @@ function render_detail_box(){
 	$.detail_box.left = -pWidth;
 	
 }
+var _suggested_time;
 
 function render_suggest_box(){
 	$.suggested_time_data.removeAllChildren();
-	var _suggested_time = Alloy.createController("_timeslot", {date_click: multiple_select, doctor_id: doctor_id, multiple_select: 1, selected_date: selected_date}).getView();
-	$.suggested_time_data.add(_suggested_time);
+	_suggested_time = Alloy.createController("_timeslot", {date_click: multiple_select, doctor_id: doctor_id, multiple_select: 1, selected_date: selected_date});
+	$.suggested_time_data.add(_suggested_time.getView());
 	
 	$.suggested_time.top = -pHeight;
 	
