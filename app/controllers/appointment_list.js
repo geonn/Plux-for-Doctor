@@ -107,6 +107,7 @@ function closeDetailBox(e){
 		});
 		$.detail_box.animate(a_bounce);
 	}
+	loading.close();
 }
 
 function closeSuggestBox(e){
@@ -208,6 +209,7 @@ function onSuggest(){
 }
 
 function onReject(){
+	loading.start();
 	var param = {
 		status: 2,
 		id: selected_id,
@@ -217,7 +219,7 @@ function onReject(){
 }
 
 function onOk(){
-	
+	loading.start();
 	if(!selected_time.length){
 		alert("please select at least one suggested time");
 		return ;

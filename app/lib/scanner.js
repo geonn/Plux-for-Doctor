@@ -70,7 +70,7 @@ exports.openScanner = function(scanType) {
 				Ti.App.Properties.setString('time1',barRes[13] ); 
 			}else{
 				if(time1 == barRes[13]){
-					alert("Invalid scan. Please scan again with PLUX Health app");
+					console.log("Invalid scan. Please scan again with PLUX Health app");
 				}else{
 					var param = {
 						name : barRes[0],

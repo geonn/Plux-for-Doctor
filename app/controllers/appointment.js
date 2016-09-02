@@ -5,7 +5,8 @@ var doctor_panel_id = Ti.App.Properties.getString('doctor_panel_id') || 0;
 var pWidth = Ti.Platform.displayCaps.platformWidth;
 var pHeight = Ti.Platform.displayCaps.platformHeight;
 var loading = Alloy.createController("loading");
-var appointment = Alloy.createCollection("appointment");
+var appointment = Alloy.createCollection("appointment"); 
+Ti.App.Properties.setString('currentAppointmentWindow','1');
 var data;
 var detail_box_open = false;
 var suggest_box_open = false;
@@ -389,7 +390,7 @@ function init(){
 	}
 	
 	
-	//console.log("doctor_panel_id: "+doctor_panel_id);
+	console.log("doctor_panel_id: "+doctor_panel_id);
 	if(doctor_panel_id == "" || doctor_panel_id == "0"){
 		var dialog = Ti.UI.createAlertDialog({
 			cancel: 1,
@@ -407,6 +408,7 @@ function init(){
 			}
 		});
 		dialog.show();  
+		return false;
 	}
 	$.win.add(loading.getView());
 	render_detail_box();
@@ -426,7 +428,8 @@ $.masked2.addEventListener("click", closeSuggestBox);
 $.win.addEventListener("close", function(){
 	Ti.App.removeEventListener('appointment:refresh',refresh);
 	Ti.App.removeEventListener('appointment:loadingOff',loadingOff);
-	Ti.App.removeEventListener('appointment:loadingOn',loadingOn);
+	Ti.App.removeEventListener('appointment:loadingOn',loadingOn); 
+	Ti.App.Properties.setString('currentAppointmentWindow','');
 	$.destroy();
 });
 

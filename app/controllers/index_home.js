@@ -21,10 +21,9 @@ function navTo(controller, payload){
 	}else if(OS_MOBILEWEB){
 		Alloy.Globals.Navigator.navGroup.open(win);
 	}else{
-		
+		console.log(payload);
 		// added this property to the payload to know if the window is a child
-		console.log(typeof payload.displayHomeAsUp+" action bar");
-		if (typeof payload.displayHomeAsUp !="undefined"){
+		if (typeof payload.displayHomeAsUp !="undefined" || typeof payload !="undefined"){
 			win.addEventListener('open',function(evt){
 				var activity=win.activity;
 				activity.actionBar.displayHomeAsUp=payload.displayHomeAsUp;

@@ -284,8 +284,11 @@ function getDiagCategory(){
 	}); 
 }
 
-function openDiagPicker(tf){
-	 
+function openDiagPicker(tf){ 
+	 if(Ti.Platform.osname === 'android'){
+         Ti.UI.Android.hideSoftKeyboard();
+    }
+    
 	var curSelection = "0";
 	var cancelBtn = diagCategoryArr.length -1;
 	if(tf.source.id == "diag1"){
@@ -293,7 +296,7 @@ function openDiagPicker(tf){
 	}else{
 		curSelection = selectedDiag2;
 	}
-			
+	 
 	var dialog = Ti.UI.createOptionDialog({
 	 cancel: diagCategoryArr.length -1,
 	 options: diagCategoryArr,

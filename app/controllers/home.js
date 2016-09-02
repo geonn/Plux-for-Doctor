@@ -159,7 +159,9 @@ function render_header_info(){
 	
 	//geo: hijack clinic panel select checking
 	var clinic_id = Ti.App.Properties.getString('clinic_id') || ""; 
-	if(clinic_id ==""){  
+	var dp = Ti.App.Properties.getString('doctor_panel_id') || ""; 
+	console.log("clinic_id:"+clinic_id);
+	if(clinic_id =="" || dp == ""){  
 		//load clinic 
 		var doctor_panel = Alloy.createCollection('doctor_panel'); 
 		var myPanel = doctor_panel.getData(doctor_id);
@@ -168,7 +170,6 @@ function render_header_info(){
 		}else{
 			alert("No panel found, please create your clinic panel.");
 		}
- 
 	} 
 }
 

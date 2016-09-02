@@ -47,13 +47,32 @@ function receivePush(e) {
 	console.log(target+" and redirect "+redirect); 
 	if(target =="appointment"){
 		Ti.App.Properties.setString('doctor_panel_id', doctor_panel_id);
-		if(redirect){
-			setTimeout(function(){
-				Alloy.Globals.Navigator.open('appointment', {id: id, created: created});
-			},2000);
-		}else{
-			Ti.App.fireEvent("appointment:refresh");
+		
+		var theWindow = Ti.App.Properties.getString('currentAppointmentWindow') || "";
+	 
+		if(theWindow == ""){  
+			var dialog = Ti.UI.createAlertDialog({
+				cancel: 1,
+				buttonNames: ['Cancel','OK'],
+				message: '[Appointment] New message available. Do you want to read now?',
+				title: 'Confirmation'
+			});
+			dialog.addEventListener('click', function(ex){
+				if (ex.index === 0){
+					//Do nothing
+				}
+				if (ex.index === 1){ 
+					setTimeout(function(){
+						Alloy.Globals.Navigator.open('appointment', {id: id, created: created,displayHomeAsUp: true});
+					},2000);
+				}
+			});	
+			dialog.show();  	
+		}else { 
+		 Ti.App.fireEvent("appointment:refresh");
 		}
+		
+ 
 	} 
 	 
 	return false;
@@ -88,6 +107,22 @@ function deviceTokenSuccess(ev) {
 					    }
 					});
 			    } else {
+			    	Cloud.PushNotifications.subscribe({
+					    channel: 'survey',
+					    type:Ti.Platform.name == 'android' ? 'android' : 'ios', 
+					    device_token: deviceToken
+					}, function (e) { 
+					    if (e.success  ) { 
+					     
+					    	/** User device token**/
+			         		Ti.App.Properties.setString('deviceToken', deviceToken); 
+							//API.updateNotificationToken();
+							 
+					    } else {
+					    	registerPush();
+					    }
+					});
+
 			        console.log('Error:\n' +
 			            ((ey.error && ey.message) || JSON.stringify(ey)));
 			    }

@@ -21,10 +21,8 @@ function showList(){
 function loadClinic(){
 	loading.start();
 	clinic_id = Ti.App.Properties.getString('clinic_id');
-	doctor_id = Ti.App.Properties.getString('doctor_id');
-	console.log(doctor_id+" doctor_id");
-	var panel_data = doctor_panelModel.getDataWithClinic(doctor_id);
-	console.log(panel_data);
+	doctor_id = Ti.App.Properties.getString('doctor_id'); 
+	var panel_data = doctor_panelModel.getDataWithClinic(doctor_id); 
 	var doctorPanel = Ti.App.Properties.getString('myClinics') || "";
 	var myPanel = doctorPanel.split(",");
 	if(panel_data.length > 0){ 

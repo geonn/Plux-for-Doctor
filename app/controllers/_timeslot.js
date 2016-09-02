@@ -210,7 +210,7 @@ function render_available_timeslot(){
 		
 		var patient_id = workingHourArray[key].patient_id || "";
 		var dpi = workingHourArray[key].doctor_panel_id || doctor_panel_id;
-		console.log(dpi+" from workingHourArray");
+	 
 		var view_time_box = $.UI.create("View", {
 			view_time_box: 1,
 			width: cell_width,
