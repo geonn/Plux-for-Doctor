@@ -255,10 +255,9 @@ exports.loadAPIBySequence = function (ex, counter){
 	     // function called when an error occurs, including a timeout
 	     onerror : function(err) {
 	     	console.log("loadAPIBySequence error");
-	     	console.log(err);
 	     	API.loadAPIBySequence(ex, counter);
 	     },
-	     timeout : 7000  // in milliseconds
+	     timeout : 30000  // in milliseconds
 	 });
 	 if(Ti.Platform.osname == "android"){
 	 	client.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded'); 
