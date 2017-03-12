@@ -42,15 +42,18 @@ function submit_receipt(){
 	};
  console.log(param);
 	API.callByPostImage({url:"uploadReceiptImageUrl", params: param, img: img_param}, function(responseText){ 
-		var res = JSON.parse(responseText);    
+		var res = JSON.parse(responseText); 
+		console.log(res);   
 		if(res.status == "success"){    
 			COMMON.createAlert("Success", "Receipt successfully submitted", function(){
 				var patient_recordsModel = Alloy.createCollection('patient_records'); 
 				var string_card_data = Ti.App.Properties.getString("card_data");
-				var remark = Ti.App.Properties.getString("remark");
-				var patient_param = JSON.parse(string_card_data);
-				_.extend(patient_param, {type: "paid", receipt_url: res.data.receipt_url, remark: remark});
-				patient_recordsModel.addUserData(patient_param);
+				console.log("check here");
+				console.log(args.record);
+				var patient_param = args.record;
+				_.extend(patient_param, {type: "paid", receipt_url: res.data.receipt_url, terminal_id: args.terminal_id});
+				console.log(patient_param);
+				patient_recordsModel.addUserData([patient_param]);
 				closeWindow();
 				Ti.App.fireEvent("cardReader:closeWindow");
 			});
@@ -64,9 +67,14 @@ function submit_receipt(){
 
 function web_receipt_loaded(){
 	Ti.App.fireEvent("web:render_message", {message: message, signature: args.signature});
+	loading.finish();
 }
 
 function init(){
+	loading.start();
+	if(!args.signature){
+		$.button_panel.hide();
+	}
 	//Ti.App.fireEvent("web:render_message", {message: message});
 	$.win.add(loading.getView());
 	$.receiptView.url = "/html/receipt.html";

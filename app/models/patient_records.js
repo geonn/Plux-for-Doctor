@@ -2,21 +2,12 @@ exports.definition = {
 	config: {
 		columns: {
 		    "id": "INTEGER PRIMARY KEY AUTOINCREMENT",
-		    "asp_id": "INTEGER",
 		    "memno": "TEXT",
-		    "icno": "TEXT",
 		    "name" : "TEXT",
-		    "relation" : "TEXT", 
-		    "empno" : "TEXT",
 		    "corpcode" : "TEXT",
 		    "corpname" : "TEXT",
-		    "costcenter" : "TEXT",
-		    "dept" : "TEXT",
-		    "allergy" : "TEXT",
-		   	"isver" : "TEXT",
-		    "verno" : "TEXT",
-		    "remark" : "TEXT",
 		    "visitdate" : "TEXT",
+		    "terminal_id": "TEXT",
 		    "type": "TEXT",
 		    "receipt_url": "TEXT"
 		},
@@ -56,78 +47,60 @@ exports.definition = {
 			},
 			getById : function(id){
 				var collection = this; 
+				var columns = collection.config.columns;
+				var names = [];
+				for (var k in columns) {
+	                names.push(k);
+	            }
+
                 db = Ti.Database.open(collection.config.adapter.db_name);
                 var sql = "SELECT * FROM " + collection.config.adapter.collection_name + " WHERE id='"+id+"'";
                
                 var res = db.execute(sql);
                 var arr = []; 
+                
+                var eval_column = "";
+            	for (var i=0; i < names.length; i++) {
+					eval_column = eval_column+names[i]+": res.fieldByName('"+names[i]+"'),";
+				};
                
                 if (res.isValidRow()){
-					arr = {
-					    id: res.fieldByName('id'),
-					    asp_id: res.fieldByName('asp_id'),
-					    name: res.fieldByName('name'),
-					    memno: res.fieldByName('memno'),
-					    icno: res.fieldByName('icno'),
-					    relation: res.fieldByName('relation'), 
-					    empno: res.fieldByName('empno'),
-					    corpcode: res.fieldByName('corpcode'),
-					    corpname: res.fieldByName('corpname'),
-					    costcenter: res.fieldByName('costcenter'),
-					    dept: res.fieldByName('dept'),
-					    allergy: res.fieldByName('allergy'),
-					    isver: res.fieldByName('isver'),
-					    verno: res.fieldByName('verno'),
-					    remark: res.fieldByName('remark'),
-			 			visitdate: res.fieldByName('visitdate'),
-			 			type: res.fieldByName('type'),
-			 			receipt_url: res.fieldByName('receipt_url'),
-					  };
+                	eval("arr = {"+eval_column+"}");
 				}  
 				res.close();
                 db.close();
                 collection.trigger('sync');
                 return arr;
 			},
-			getHistoryList : function(searchKey){
+			getHistoryList : function(searchKey, terminal_id){
 				var collection = this;
-                
+                var columns = collection.config.columns;
+				var names = [];
+				for (var k in columns) {
+	                names.push(k);
+	            }
                 db = Ti.Database.open(collection.config.adapter.db_name);
                 var srh = "";
 				if(searchKey != ""){
-					srh = " WHERE (name LIKE '%"+searchKey+"%' OR empno LIKE '%"+searchKey+"%' OR memno LIKE '%"+searchKey+"%' OR icno LIKE '%"+searchKey+"%' OR corpname LIKE '%"+searchKey+"%' OR corpcode LIKE '%"+searchKey+"%') ";
+					srh = " WHERE terminal_id = ? AND (name LIKE '%"+searchKey+"%' OR empno LIKE '%"+searchKey+"%' OR memno LIKE '%"+searchKey+"%' OR icno LIKE '%"+searchKey+"%' OR corpname LIKE '%"+searchKey+"%' OR corpcode LIKE '%"+searchKey+"%') ";
 				}
 				
-                var sql = "SELECT * FROM " + collection.config.adapter.collection_name + srh+" ORDER BY visitdate DESC" ;
+                var sql = "SELECT * FROM " + collection.config.adapter.collection_name + srh+" WHERE terminal_id = ? ORDER BY visitdate DESC" ;
                
-                var res = db.execute(sql);
+                var res = db.execute(sql, terminal_id);
                 var listArr = []; 
                 var count = 0;
-                 
-                while (res.isValidRow()){ 
-					listArr[count] = {
-					    id: res.fieldByName('id'),
-					    asp_id: res.fieldByName('asp_id'),
-					    name: res.fieldByName('name'),
-					    memno: res.fieldByName('memno'),
-					    icno: res.fieldByName('icno'),
-					    relation: res.fieldByName('relation'), 
-					    empno: res.fieldByName('empno'),
-					    corpcode: res.fieldByName('corpcode'),
-					    corpname: res.fieldByName('corpname'),
-					    costcenter: res.fieldByName('costcenter'),
-					    dept: res.fieldByName('dept'),
-					    allergy: res.fieldByName('allergy'),
-					    isver: res.fieldByName('isver'),
-					    verno: res.fieldByName('verno'),
-					    remark: res.fieldByName('remark'),
-			 			visitdate: res.fieldByName('visitdate'),
-			 			type: res.fieldByName('type'),
-			 			receipt_url: res.fieldByName('receipt_url'),
-					};
-					res.next();
+                
+                var eval_column = "";
+            	for (var i=0; i < names.length; i++) {
+					eval_column = eval_column+names[i]+": res.fieldByName('"+names[i]+"'),";
+				};
+                while (res.isValidRow()){
+                	eval("listArr[count] = {"+eval_column+"}");
+                	res.next();
 					count++;
-				} 
+                }
+                 
 				res.close();
                 db.close();
                 collection.trigger('sync');
@@ -236,20 +209,55 @@ exports.definition = {
                 collection.trigger('sync');
                 return arr;
 			},
-			addUserData : function(entry) {
-				var collection = this; 
-	            var sql = "INSERT INTO "+ collection.config.adapter.collection_name + " (name, memno, icno, relation, empno,corpcode,corpname,costcenter,dept, allergy, isver, verno, visitdate, receipt_url, type, remark) VALUES ('"+entry.name+"', '"+entry.memno +"','"+entry.icno+"','"+entry.relation+"', '"+ entry.empno +"',  '"+ entry.corpcode +"',  '"+ entry.corpname +"',  '"+ entry.costcenter +"',  '"+ entry.dept +"', '"+ entry.allergy +"', '"+ entry.isver +"', '"+ entry.verno +"', '"+ COMMON.now()+"', '"+ entry.receipt_url+"', '"+ entry.type+"', '"+ entry.remark+"')";
-	            db = Ti.Database.open(collection.config.adapter.db_name);
-	            db.execute(sql);
-	            
-	           	collection.trigger('sync'); 
-	           	
-	           	var sql1 = "SELECT id FROM "+ collection.config.adapter.collection_name + "  ORDER BY id DESC LIMIT 1";
-	            
-	            var res = db.execute(sql1);
-	            var insertId = res.fieldByName('id');
+			addUserData : function(arr) {
+				var collection = this;
+				var columns = collection.config.columns;
+				var names = [];
+				for (var k in columns) {
+	                names.push(k);
+	            }
+                db = Ti.Database.open(collection.config.adapter.db_name);
+                if(Ti.Platform.osname != "android"){
+                	db.file.setRemoteBackup(false);
+                }
+                db.execute("BEGIN");
+                arr.forEach(function(entry) {
+                	var keys = [];
+                	var questionmark = [];
+                	var eval_values = [];
+                	var update_questionmark = [];
+                	var update_value = [];
+                	for(var k in entry){
+	                	if (entry.hasOwnProperty(k)){
+	                		_.find(names, function(name){
+	                			if(name == k){
+	                				console.log(name+" "+k);
+	                				keys.push(k);
+			                		questionmark.push("?");
+			                		eval_values.push("entry."+k);
+			                		update_questionmark.push(k+"=?");
+	                			}
+	                		});
+	                	}
+                	}
+                	var without_pk_list = _.rest(update_questionmark);
+	                var without_pk_value = _.rest(eval_values);
+	                var sql_query =  "INSERT OR REPLACE INTO "+collection.config.adapter.collection_name+" (visitdate, "+keys.join()+") VALUES ((DATETIME('now')), "+questionmark.join()+")";
+	                eval("db.execute(sql_query, "+eval_values.join()+")");
+				});
+				db.execute("COMMIT");
+				//console.log(db.getRowsAffected()+" affected row");
 	            db.close();
-	            return insertId;
+	            collection.trigger('sync');
+            },
+            updateTerminateId : function(terminal_id){
+            	var collection = this; 
+                var sql_query = "UPDATE " + collection.config.adapter.collection_name + " SET terminal_id= ? ";
+		        db = Ti.Database.open(collection.config.adapter.db_name);
+		        db.execute(sql_query, terminal_id);
+		        
+         		db.close();
+	            collection.trigger('sync');
             },
             saveRemark : function(id, remark){
 				var collection = this; 

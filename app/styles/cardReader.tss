@@ -1,4 +1,14 @@
-
-".container" : {
-  
+".circle":{
+	width: 10,
+	height: 10,
+	borderRadius: 5,
+	borderColor: "#ffffff",
+	borderWidth: 1
+}
+".big_circle":{
+	width: 60,
+	height: 60,
+	borderRadius: 30,
+	borderColor: "#ffffff",
+	borderWidth: 1	
 }

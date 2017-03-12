@@ -1,12 +1,12 @@
 <Alloy>
-	<Window title="PLUX FOR DOCTOR" color="#ffffff" id="win" navBarHidden="true" theme="Theme.NoActionBar">
+	<Window title="PLUX FOR CLINIC" color="#ffffff" id="win" navBarHidden="true" theme="Theme.NoActionBar">
 		<View class="wfill hfill vert" backgroundImage="/images/home_background.jpg">
 			<ImageView image="/images/appicon.png" top="50" bottom="50" height="120"  width="120" />
 			 
-			<TextField id="username" value="" color="#000000" hintText="Email"></TextField>
+			<TextField id="username" value="" color="#000000" hintText="Clinic Code"></TextField>
  
 			<TextField id="password" value="" top="10" hintText="Password" passwordMask="true"></TextField>
-			<Button onClick="do_login" class="button" top="10" title="Login"></Button>
+			<Button onClick="clinic_login" class="button" top="10" title="Login"></Button>
 			<!--<Button onClick="do_signup" class="button" backgroundColor="#5375BD" title="Register"></Button>-->
 		</View>
 	</Window>

@@ -5,7 +5,10 @@ COMMON.construct($);
 init(); 
 
 function init(){  
-	details = patient_recordsModel.getHistoryList(""); 
+	var terminal_id = Ti.App.Properties.getString("terminal_id");
+	//patient_recordsModel.updateTerminateId(terminal_id);
+	details = patient_recordsModel.getHistoryList("", terminal_id); 
+	console.log(details);
  	showList();
 }
 
@@ -61,7 +64,7 @@ function showList(){
 			contentView.add(msgLbl);
 			
 			var visitdate = entry.visitdate;
-			visitdate = visitdate.replace("  "," ");
+			//visitdate = visitdate.replace("  "," ");
 			var appLbl =  $.UI.create('Label',{ 
 				classes: ['h6'],
 				text:  "Visit Updated : "+monthFormat(visitdate), 
