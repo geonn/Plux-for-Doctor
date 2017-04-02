@@ -15,6 +15,49 @@ var loading = Alloy.createController("loading");
 var status = "", check_pin="", pin_confirm="";
 var pin = [];
 
+function RunLayout(){
+	var pin_circle = $.pin_circle.getChildren();
+	var keyinPin_1 = $.keyinPin_1.getChildren();
+	var keyinPin_2 = $.keyinPin_2.getChildren();
+	var keyinPin_3 = $.keyinPin_3.getChildren();
+	var keyinPin_4 = $.keyinPin_4.getChildren();
+	var dp = Ti.Platform.displayCaps.platformWidth / (Titanium.Platform.displayCaps.dpi / 160);
+	var pin_dp = dp * 3 / 100;
+	var pin_radius = pin_dp * 2;
+	var keyinPin_dp = dp * 18 / 100;
+	var keyinPin_radius = keyinPin_dp * 2;
+	var fsize = keyinPin_dp * 40 / 100;
+	var i1 = 1, i2 = 4, i3 = 7;
+
+	for(var i = 0; i < pin_circle.length; i++) {
+		pin_circle[i].width = pin_dp;
+		pin_circle[i].height = pin_dp;
+		pin_circle[i].borderRadius = pin_radius;
+	}
+	
+	for(var i = 0; i < keyinPin_1.length; i++) {
+		keyinPin_1[i].width = keyinPin_dp;
+		keyinPin_1[i].height = keyinPin_dp;
+		keyinPin_1[i].borderRadius = keyinPin_radius;
+		keyinPin_2[i].width = keyinPin_dp;
+		keyinPin_2[i].height = keyinPin_dp;
+		keyinPin_2[i].borderRadius = keyinPin_radius;
+		keyinPin_3[i].width = keyinPin_dp;
+		keyinPin_3[i].height = keyinPin_dp;
+		keyinPin_3[i].borderRadius = keyinPin_radius;
+		keyinPin_1[i].add($.UI.create("Label", {text: i1, classes: ['white'], font:{fontSize:fsize}}));
+		i1++;
+		keyinPin_2[i].add($.UI.create("Label", {text: i2, classes: ['white'], font:{fontSize:fsize}}));
+		i2++;
+		keyinPin_3[i].add($.UI.create("Label", {text: i3, classes: ['white'], font:{fontSize:fsize}}));
+		i3++;
+	}
+	keyinPin_4[0].width = keyinPin_dp;
+	keyinPin_4[0].height = keyinPin_dp;
+	keyinPin_4[0].borderRadius = keyinPin_radius;
+	keyinPin_4[0].add($.UI.create("Label", {text: 0, classes: ['white'], font:{fontSize:fsize}}));
+}
+
 function closeWindow(){
 	$.win.close();
 }
@@ -107,6 +150,7 @@ function validateUserPinViaServer(cardno){
 		}else{
 			$.pin_title.text = "Enter PIN";
 		}
+		RunLayout();
 		$.pin_panel.show();
 		$.masked.show();
 	}); 

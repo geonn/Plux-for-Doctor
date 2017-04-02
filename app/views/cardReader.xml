@@ -52,23 +52,23 @@
 				<View class="circle" left="20"></View>
 				<View class="circle" left="20" right="20"></View>
 			</View>
-			<View class="wsize hsize horz" top="40">
-				<View class="big_circle" onClick="keyinPin" left="20" number="1"><Label class="h3 white">1</Label></View>
-				<View class="big_circle" onClick="keyinPin" left="20" number="2"><Label class="h3 white">2</Label></View>
-				<View class="big_circle" onClick="keyinPin" left="20" right="20" number="3"><Label class="h3 white">3</Label></View>
+			<View class="wsize hsize horz" top="40" id="keyinPin_1">
+				<View class="big_circle" onClick="keyinPin" left="20" number="1"></View>
+				<View class="big_circle" onClick="keyinPin" left="20" number="2"></View>
+				<View class="big_circle" onClick="keyinPin" left="20" right="20" number="3"></View>
 			</View>
-			<View class="wsize hsize horz" top="20">
-				<View class="big_circle" onClick="keyinPin" left="20" number="4"><Label class="h3 white">4</Label></View>
-				<View class="big_circle" onClick="keyinPin" left="20" number="5"><Label class="h3 white">5</Label></View>
-				<View class="big_circle white"  onClick="keyinPin"left="20" right="20" number='5'><Label class="h3 white">6</Label></View>
+			<View class="wsize hsize horz" top="20" id="keyinPin_2">
+				<View class="big_circle" onClick="keyinPin" left="20" number="4"></View>
+				<View class="big_circle" onClick="keyinPin" left="20" number="5"></View>
+				<View class="big_circle white"  onClick="keyinPin"left="20" right="20" number='5'></View>
 			</View>
-			<View class="wsize hsize horz" top="20">
-				<View class="big_circle"  onClick="keyinPin" left="20" number="7"><Label class="h3 white">7</Label></View>
-				<View class="big_circle"  onClick="keyinPin" left="20" number="8"><Label class="h3 white">8</Label></View>
-				<View class="big_circle"  onClick="keyinPin" left="20" right="20" number="9"><Label class="h3 white">9</Label></View>
+			<View class="wsize hsize horz" top="20" id="keyinPin_3">
+				<View class="big_circle"  onClick="keyinPin" left="20" number="7"></View>
+				<View class="big_circle"  onClick="keyinPin" left="20" number="8"></View>
+				<View class="big_circle"  onClick="keyinPin" left="20" right="20" number="9"></View>
 			</View>
-			<View class="wsize hsize horz" top="20">
-				<View class="big_circle" onClick="keyinPin" number="0"><Label class="h3 white">0</Label></View>
+			<View class="wsize hsize horz" top="20" id="keyinPin_4">
+				<View class="big_circle" onClick="keyinPin" number="0"></View>
 			</View>
 			<View class='wsize hsize'>
 				<Label left="160" onClick="remove_pin" top="20" id="cancel_pin" class="h4 white">Cancel</Label>
