@@ -30,6 +30,11 @@ overrode the settings with other TSS, XML, or JS settings:
 "Actionbar":{
 	backgroundColor: "#75d0cb",
 },
+".textfield":{
+	 backgroundColor: "#ffffff",
+	 borderWidth: 1,
+	 borderColor: "#cccccc"	
+},
 "TableViewRow[platform=android]":{
 	color: "#606060",
 	top:10,

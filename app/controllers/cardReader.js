@@ -61,7 +61,47 @@ function RunLayout(){
 function closeWindow(){
 	$.win.close();
 }
+function popDatePicker(e){
+	var source = parent({name: "master", value: "1"}, e.source);
+	var val_date = (typeof source.date != "undefined")?source.date:new Date();
+	var picker = $.UI.create("Picker", {
+	  type:Ti.UI.PICKER_TYPE_DATE,
+	  value: val_date,
+	  zIndex: 50,
+	});
+	var view_container = $.UI.create("View", {classes:['wfill', 'hfill'], zIndex: 30,});
+	var img_mask = $.UI.create("ImageView", {classes:['wfill','hfill'], image: "/images/warm-grey-bg.png"});
+	var ok_button = $.UI.create("Button", {classes:['button'], left: 10, right:10, title: "Done"});
+	var cancel_button = $.UI.create("Button", {classes:['button'], left: 10, right:10, title: "Cancel"});
+	var view_vert = $.UI.create("View", {classes:['wsize','hsize','vert']});
+	cancel_button.addEventListener("click", function(){ 
+		$.win.remove(view_container);
+	});
+	img_mask.addEventListener("click", function(){ 
+		$.win.remove(view_container);
+	});
+	ok_button.addEventListener("click", function(){
+		source.value = picker.value;
+		var dd = picker.value.getDate();
+		var mm = picker.value.getMonth()+1; 
+		var yyyy = picker.value.getFullYear();
+		console.log(yyyy+'-'+mm+'-'+dd);
+		source.value = yyyy+'-'+mm+'-'+dd;
+		source.date = picker.value;
+		source.children[0].text = yyyy+'-'+mm+'-'+dd;
+		source.children[0].color = "#404041";
+		$.win.remove(view_container);
+	});
+	
+	view_container.add(img_mask);
+	view_vert.add(picker);
+	view_vert.add(ok_button);
+	view_vert.add(cancel_button);
+	view_container.add(view_vert);
+	
+	$.win.add(view_container);
 
+}
 init();
 
 function refresh(){
