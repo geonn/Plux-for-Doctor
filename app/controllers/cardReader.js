@@ -8,12 +8,19 @@ var terminal_id;
 var clinic_name = "";
 var diagCategoryArr = [];
 var diagCategoryIdArr = [];
+var drugCategoryArr = [];
+var drugCategoryArr1 = [];
 var selectedDiag1;
 var selectedDiag2;
+var selectedDrug1;
 var cardno, action;// = "6000201000113580";
 var loading = Alloy.createController("loading");
 var status = "", check_pin="", pin_confirm="";
 var pin = [];
+var mctotalcharges=0;
+var totalcharges=0;
+var till;
+var from;
 
 function RunLayout(){
 	var pin_circle = $.pin_circle.getChildren();
@@ -58,11 +65,50 @@ function RunLayout(){
 	keyinPin_4[0].add($.UI.create("Label", {text: 0, classes: ['white'], font:{fontSize:fsize}}));
 }
 
+function addMedication(e){
+	
+	for(var i = 0;i < $.medication_mother.getChildren().length;i++){
+		var value = $.medication_mother.getChildren()[i]._children[1].value;
+		if(value == ""){
+			alert("Please select medication!!!");
+			return;
+		}		
+	}
+	var container = $.UI.create("View",{classes:['wfill','hsize','horz'],top:"10"});
+	var title = $.UI.create("Label",{classes:['form_lb_top'],width:"25%",text:"Medication"});
+	var tf = $.UI.create("TextField",{classes:['hsize','tf_spacing'],width:"57%",hintText:"Medication",value:"",did:"",dname:"",duom:""});
+	var bt = $.UI.create("Button",{classes:['button_delete','wsize'],right:"3",title:"Remove"});
+	var lb1 = $.UI.create("Label",{classes:['form_lb_top'], width:"25%", text:"Quantity"});
+	var lb2 = $.UI.create("Label",{classes:['form_lb_top'], width:"25%", text:"Cost"});	
+	var tf1 = $.UI.create("TextField",{classes:['hsize','tf_spacing'],width:"23%",keyboardType:Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD,hintText:"Qty"});
+	var tf2 = $.UI.create("TextField",{classes:['hsize','tf_spacing'],width:"23%",keyboardType:Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD,hintText:"Cost"});	
+	container.add(title);
+	container.add(tf);
+	container.add(bt);
+	container.add(lb1);
+	container.add(tf1);
+	container.add(lb2);
+	container.add(tf2);
+	$.medication_mother.add(container);
+	getMcTotalCharges({});	
+	getTotalCharges({});
+	bt.addEventListener("click",function(e){
+		$.medication_mother.remove(container);
+		getMcTotalCharges({});
+		getTotalCharges({});		
+	});
+	tf.addEventListener('touchend',function(e){
+		openDrugPicker(tf);
+	});
+}
+
 function closeWindow(){
 	$.win.close();
 }
 function popDatePicker(e){
+	hideSoftKeyboard({});
 	var source = parent({name: "master", value: "1"}, e.source);
+	var mcdate = parent({name: "mcdate", value: "mcfrom"},e.source);
 	var val_date = (typeof source.date != "undefined")?source.date:new Date();
 	var picker = $.UI.create("Picker", {
 	  type:Ti.UI.PICKER_TYPE_DATE,
@@ -88,9 +134,15 @@ function popDatePicker(e){
 		console.log(yyyy+'-'+mm+'-'+dd);
 		source.value = yyyy+'-'+mm+'-'+dd;
 		source.date = picker.value;
-		source.children[0].text = yyyy+'-'+mm+'-'+dd;
+		source.children[0].text = mm+'/'+dd+'/'+yyyy;
 		source.children[0].color = "#404041";
 		$.win.remove(view_container);
+		if(source.children[0].mcdate == "from"){
+			from = mm+"/"+dd+"/"+yyyy;
+		}
+		else{
+			till = mm+"/"+dd+"/"+yyyy;
+		}
 	});
 	
 	view_container.add(img_mask);
@@ -294,6 +346,7 @@ function init(){
 	$.masked.hide();
 	$.inner_pay.hide();
 	getDiagCategory();
+	getDrugList();	
 	if(!checkTerminateIdExist()){
 		
 	}
@@ -319,44 +372,128 @@ function inputOnfocus(){
 
 function claim_submit(){
 	loading.start();
-	var diag1 = $.diag1.value;
-	var tmp= diag1.split("-");
-	diag1 = tmp[0] || 0;
-	var diag2 = $.diag2.value;
-	var tmp2 = diag2.split("-");
-	diag2 = tmp2[0] || 0; 
-	var mc = $.mc.value || 0;
-	var consday = $.consday.value || 0;
-	var labtest = $.labtest.value || 0;
-	var consnight = $.consnight.value || 0;
-	var medication = $.medication.value || 0;
-	var injection = $.injection.value || 0;
-	var xray = $.xray.value || 0;
-	var surgical = $.surgical.value || 0;
-	var total = parseInt(consday) + parseInt(consnight) + parseInt(medication) + parseInt(injection) + parseInt(xray) + parseInt(surgical) + parseInt(labtest);
-	 
-	if(diag1 == "0"){
-		alert("Please select Diagnosis");
-		loading.finish();
-		return false;
+	getMcTotalCharges();
+	getTotalCharges({});
+	var tid = $.terminal_id.value || 0;
+	var cardno = $.cardno.value || 0;
+	var mcno = $.mc_no.value || "NV";
+	var diag="";
+	var medication = "";	
+	var mcfdate = from || "NV";
+	var mctdate = till || "NV";
+	console.log("date:"+mcfdate+" "+mctdate);
+	var dayamt = ($.day.name == "consday")?$.consday.value : 0;
+	var nightamt = ($.day.name == "consnight")?$.consday.value : 0;
+	var injection = $.injection_item.value || "NV";
+	var injectamt = $.injectamt.value || 0;
+	var xray = $.xray_item.value || "NV";
+	var xrayamt = $.xrayamt.value || 0;
+	var labtest = $.labtest_item.value || "NV";
+	var labamt = $.labtestamt.value || 0;
+	var labhfee = $.labtestfee.value || 0;
+	var surginal = $.surginal_item.value || "NV";
+	var suramt = $.surginalamt.value || 0;
+	var totalamt = $.totalamt.value || 0;
+	var bps = $.bps.value || 0;
+	var bpd = $.bpd.value || 0;
+	var medamt = $.mc_charges.value || 0;
+	var pulse = $.pulse.value || 0;
+	var acnote = $.acnote.value || "NV";
+	var chnote = $.chnote.value || "NV";
+	var appcode = "1234";
+	for(var i = 0; i < $.diagnosis_mother.getChildren().length; i++){
+		var value = $.diagnosis_mother.getChildren()[i]._children[1].name;
+		var count = i + 1;
+		console.log($.diagnosis_mother.getChildren()[i]._children[1]);
+		if(value == ""){
+			alert("Please select diagnosis!!!");
+			return;
+		}		
+		else{
+			diag+=value;
+			if(count<$.diagnosis_mother.getChildren().length){
+				diag+="*";			
+			}
+		}
 	}
-	//cardno = "6000201000113580";
-	API.callByGet({url:"terminalsub", params: "action=PAY&cardno="+cardno+"&labtest="+labtest+"&terminal="+terminal_id+"&diag1="+diag1+"&diag2="+diag2+"&mc="+mc+"&consday="+consday+"&consnight="+consnight+"&medication="+medication+"&injection="+injection+"&xray="+xray+"&surgical="+surgical+"&total="+total}, function(responseText){
+	if($.medication_mother.getChildren()[0]._children[1].did != ""){
+		var value_1 = "";	
+		var value_2 = "";
+		var value_3 = "";
+		var value_4 = "";
+		var value_5 = "";
+		var three = 3;
+		var five = 5;
+		console.log("medication_mother length:"+$.medication_mother.getChildren().length);
+		for(var i = 0;i < $.medication_mother.getChildren().length; i++){
+			var value1 = $.medication_mother.getChildren()[i]._children[1].did+"";
+			var value2 = $.medication_mother.getChildren()[i]._children[1].dname+"";
+			var value3 = $.medication_mother.getChildren()[i]._children[1].duom+"";
+			var value4 = $.medication_mother.getChildren()[i]._children[three].value+"" || 0;
+			var value5 = $.medication_mother.getChildren()[i]._children[five].value+"" || 0;
+			var count = i + 1;	
+			value_1+=value1;	
+			three = 4;
+			five = 6;			
+			if(count<$.medication_mother.getChildren().length){
+				value_1+="*";			
+			}	
+			value_2+=value2;				
+			if(count<$.medication_mother.getChildren().length){
+				value_2+="*";			
+			}	
+			value_3+=value3;				
+			if(count<$.medication_mother.getChildren().length){
+				value_3+="*";			
+			}	
+			value_4+=value4;				
+			if(count<$.medication_mother.getChildren().length){
+				value_4+="*";			
+			}	
+			value_5+=value5;				
+			if(count<$.medication_mother.getChildren().length){
+				value_5+="*";			
+			}													
+		}	
+		medication = value_1+"|"+value_2+"|"+value_3+"|"+value_4+"|"+value_5;
+	}
+	else{
+		medication = "NV";
+	}
+	API.callByGet({url:"terminalsub", params: "action=PAY&tid="+tid+"&cardno="+cardno+"&mcno="+mcno+"&medamt="+medamt+"&diagnosis="+diag+"&medication="+medication+"&mcfdate="+mcfdate+"&mctdate="+mctdate+"&dayamt="+dayamt+"&nightamt="
+									+nightamt+"&injection="+injection+"&injectamt="+injectamt+"&xray="+xray+"&xrayamt="+xrayamt+"&labtest="+labtest+"&labamt="+labamt+"&labhfee="+labhfee+"&surgical="+surginal+
+									"&suramt="+suramt+"&totalamt="+totalamt+"&bps="+bps+"&bpd="+bpd+"&pulse="+pulse+"&acnote="+acnote+"&chnote="+chnote+"&appcode="+appcode}, function(responseText){
 	  	//console.log(responseText);
  
 	  	var res = JSON.parse(responseText); 
-	  	$.diag1.value = "";
-	  	$.diag2.value = "";
-			$.consday.value ="";
-		 	$.consnight.value ="";
-		 	$.mc.value ="";
-		 	$.medication.value ="";
-		 	$.injection.value ="";
-		 	$.xray.value ="";
-		 	$.labtest.value ="";
-		 	$.surgical.value =""; 
+	  	console.log(res);
+		$.terminal_id.value ="";
+		$.cardno.value ="";
+		$.mc_no.value ="";
+		diag="";
+		medication = "";	
+		$.mc_from.value ="";
+		$.mc_till.value = "";
+		$.consday.value = "";
+		$.injection_item.value = "";
+		$.injection_item.value = "";
+		$.xray_item.value = "";
+		$.xrayamt.value= "";
+		$.labtest_item.value= "";
+		$.labtestamt.value= "";
+		$.labtestfee.value= "";
+		$.surginal_item.value= "";
+		$.surginalamt.value= "";
+		$.totalamt.value= "";
+		$.bps.value= "";
+		$.bpd.value= "";
+		$.pulse.value= "";
+		$.acnote.value= "";
+		$.chnote.value= "";
+		appcode = "";
 	  	var msg = res[0].message.split("\n          ________________________"); 
 	  	var signature = (_.isUndefined(msg[1]))?false:true;
+	  	console.log("signature:"+signature);
 		Alloy.Globals.Navigator.open("receipt", {displayHomeAsUp: true, message: msg[0], signature: signature, terminal_id: terminal_id, record: res[0], appcode: res[0].appcode});
 		$.masked.hide();
 		$.inner_pay.hide();
@@ -405,12 +542,12 @@ function hideKeyboard(e){
 }
 
 function getDiagCategory(){
-	API.callByPost({url:"getDiagList"}, function(responseText){ 
+	API.callByGet({url:"diagList"}, function(responseText){ 
 		res = JSON.parse(responseText); 
-		 
-		for (var i=0; i < res.data.length; i++) { 
-			diagCategoryIdArr.push(res.data[i].code);
-			diagCategoryArr.push( res.data[i].code+"-"+res.data[i].desc); 
+		console.log(JSON.stringify(res)); 
+		for (var i=0; i < res.length; i++) { 
+			diagCategoryIdArr.push(res[i].code);
+			diagCategoryArr.push( res[i].code+"-"+res[i].desc); 
 		}
 		
 	 	//if(OS_IOS){
@@ -418,6 +555,17 @@ function getDiagCategory(){
 		//}
 		 
 	}); 
+}
+function getDrugList(){
+	API.callByGet({url:"drugList",params:""},function(responceText){
+		var drugList = JSON.parse(responceText);
+		console.log("Drug list length:"+drugList.length);
+		for(var i = 0; i < drugList.length; i++){
+			drugCategoryArr.push(drugList[i].drugid+"-"+drugList[i].name+"-"+drugList[i].uom);
+			drugCategoryArr1.push(drugList[i]);
+		}
+		drugCategoryArr.push("Cancel");
+	});
 }
 
 function openDiagPicker(tf){ 
@@ -427,10 +575,14 @@ function openDiagPicker(tf){
     
 	var curSelection = "0";
 	var cancelBtn = diagCategoryArr.length -1;
-	if(tf.source.id == "diag1"){
-		curSelection = selectedDiag1;
+	if(typeof tf.source != "undefined"){
+		console.log("tf source");
+		if(tf.source.id == "diag1"){
+			curSelection = selectedDiag1;
+		}
 	}else{
-		curSelection = selectedDiag2;
+		console.log("tf position:"+tf.position);
+		curSelection = tf.position;
 	}
 	 
 	var dialog = Ti.UI.createOptionDialog({
@@ -443,18 +595,158 @@ function openDiagPicker(tf){
 	dialog.show(); 
 	dialog.addEventListener("click", function(e){   
 		if(cancelBtn != e.index){ 
-			//diag1 = diagCategoryIdArr[e.index];
-			if(tf.source.id == "diag1"){
-				selectedDiag1 = e.index;
-			}else{
-				selectedDiag2 = e.index;
+			if(typeof tf.source == "undefined"){
+				tf.value = diagCategoryArr[e.index];  
+				tf.name = diagCategoryIdArr[e.index];				
+				tf.color = "#000000";	
+				tf.position = e.index; 								
 			}
-			tf.source.value = diagCategoryArr[e.index];  
-			tf.source.color = "#000000";
+			else{
+				tf.source.value = diagCategoryArr[e.index];  
+				tf.source.name = diagCategoryIdArr[e.index];								
+				tf.source.color = "#000000";		
+				selectedDiag1 = e.index;		
+			}
 		}
 	});
 }
+function openDayPicker(lb){ 
+    
+	var daynight = ['Consultation Charges (Day)','Consultation Charges (Night)'];
+	var day = ['consday','consnight'];
+	var curSelection = "0";	 
+	var dialog = Ti.UI.createOptionDialog({
+	 options: daynight,
+	  selectedIndex: parseInt(curSelection),
+	  title: 'Choose Diag Type'
+	});
+		
+	dialog.show(); 
+	dialog.addEventListener("click", function(e){   
+		$.day.text = daynight[e.index];  
+		$.day.name = day[e.index];								
+		$.day.color = "#000000";	
+		$.consday.hintText = daynight[e.index];	
+		if($.day.text == ""){
+			$.day.text = "Consultation Charges (Day)";
+			$.day.name = "consday";								
+			$.day.color = "#000000";	
+			$.consday.hintText = "Consultation Charges (Day)";				
+		}	
+	});
+}
+function openDrugPicker(tf){
 
+	if(OS_ANDROID){
+		Ti.UI.Android.hideSoftKeyboard();
+	} 
+	var curSelection = "0";
+	var cancelBtn = drugCategoryArr.length -1;
+	if(typeof tf.source != "undefined"){
+		console.log("tf source");
+		if(tf.source.id == "drug1"){
+			curSelection = selectedDrug1;
+			console.log("CurSelection:"+curSelection);
+		}
+	}else{
+		console.log("tf position:"+tf.position);
+		curSelection = tf.position;
+	}	 
+	var dialog = Ti.UI.createOptionDialog({
+	 cancel: drugCategoryArr.length -1,
+	 options: drugCategoryArr,
+	  selectedIndex: parseInt(curSelection),
+	  title: 'Choose Drug Type'
+	});
+		
+	dialog.show(); 
+	dialog.addEventListener("click", function(e){   
+		if(cancelBtn != e.index){ 
+			if(typeof tf.source == "undefined"){
+				tf.position = e.index;
+				tf.value = drugCategoryArr[e.index]; 
+				tf.did = drugCategoryArr1[e.index].drugid;
+				tf.dname = drugCategoryArr1[e.index].name;
+				tf.duom = drugCategoryArr1[e.index].uom;				 
+				tf.color = "#000000";				
+			}
+			else{
+				selectedDrug1 = e.index;
+				tf.source.value = drugCategoryArr[e.index];  
+				tf.source.did = drugCategoryArr1[e.index].drugid;
+				tf.source.dname = drugCategoryArr1[e.index].name;
+				tf.source.duom = drugCategoryArr1[e.index].uom;					
+				tf.source.color = "#000000";				
+			}
+		}
+	});	
+}
+function hideSoftKeyboard(e){
+    if(OS_ANDROID){
+         Ti.UI.Android.hideSoftKeyboard();
+    } else {
+        $.myViewForm.name.blur();
+        $.myViewForm.telephone.blur();
+    }
+}
+function addDiagnosis(e){
+	
+	for(var i = 0; i < $.diagnosis_mother.getChildren().length; i++){
+		var value = $.diagnosis_mother.getChildren()[i]._children[1].value;
+		if(value == ""){
+			alert("Please select diagnosis!!!");
+			return;
+		}		
+	}
+	var container = $.UI.create("View",{classes:['wfill','hsize','horz'],top:"10"});
+	var title = $.UI.create("Label",{classes:['form_lb_top'], width:"25%", text:"Diagnosis"});
+	var tf = $.UI.create("TextField",{classes:['wfill','hsize','tf_spacing'],width:"57%", hintText:"Diagnosis",position:0,id:"diag2",name:""});
+	var bt = $.UI.create("Button",{classes:['button_delete','wsize'],right:"3",title:"Remove"});	
+	container.add(title);
+	container.add(tf);
+	container.add(bt);
+	bt.addEventListener("click",function(e){
+		$.diagnosis_mother.remove(container);
+	});	
+	tf.addEventListener("touchend",function(e){
+		openDiagPicker(tf);
+	});	
+	$.diagnosis_mother.add(container);
+}
+function getTotalCharges(e){
+	var mc_charges = parseFloat($.mc_charges.value) || 0;
+	var consday = parseFloat($.consday.value) || 0;
+	var injectamt = parseFloat($.injectamt.value) || 0;
+	var xrayamt = parseFloat($.xrayamt.value) || 0;
+	var labtestamt = parseFloat($.labtestamt.value) || 0;
+	var surginalamt = parseFloat($.surginalamt.value) || 0;
+	var labfee = parseFloat($.labtestfee.value)||0;
+	totalcharges = mc_charges+consday+injectamt+xrayamt+labtestamt+surginalamt+labfee;
+	$.totalamt.value = totalcharges;
+}
+function getMcTotalCharges(e){
+	var mc_charges = 0;
+	var open=false;
+	var three = 3;
+	var five = 5;
+	console.log("mc_mother length:"+$.medication_mother.getChildren().length);
+	for(var i = 0;i < $.medication_mother.getChildren().length;i++){
+		console.log($.medication_mother.getChildren()[i]._children);		
+		var qty = parseFloat($.medication_mother.getChildren()[i]._children[three].value || 0);
+		var cost = parseFloat($.medication_mother.getChildren()[i]._children[five].value || 0);
+		console.log("mc value:"+qty+" "+cost);
+		var res = cost * qty;
+		mc_charges += res;
+		open=true;
+		if(open){
+			three=4;
+			five=6;
+		}
+	}
+	$.mc_charges.value = mc_charges;
+	mctotalcharges = mc_charges;
+	console.log("mc_charges"+mc_charges);
+}
 Ti.App.addEventListener('getCardData', getCardData);
 Ti.App.addEventListener('cardReader:closeWindow', closeWindow);
 		 

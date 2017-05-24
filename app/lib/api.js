@@ -29,10 +29,12 @@ var updateDoctorDeviceTokenUrl  = "http://"+API_DOMAIN+"/api/updateDoctorDeviceT
 var uploadReceiptImageUrl		= "http://"+API_DOMAIN+"/api/uploadReceiptImageUrl?user="+USER+"&key="+KEY; 
 var getDiagList = "http://"+API_DOMAIN+"/api/getDiagList?user="+USER+"&key="+KEY;
 var panellogin = "http://appsapi.aspmedic.com/aida/panellogin.aspx";
-var terminalsub = "http://appsapi.aspmedic.com/aida/terminalsub.aspx";
+var terminalsub = "http://appsapi.aspmedic.com/aida/terminalsubfull.aspx";
+var diagList = "http://appsapi.aspmedic.com/aida/diagnosis.aspx";
 var dateNow = "http://plux.freejini.com.my/main/dateNow";
 var validateUserPin = "http://"+API_DOMAIN+"/api/validateUserPin?user="+USER+"&key="+KEY; 
 var addUserPin = "http://"+API_DOMAIN+"/api/addUserPin?user="+USER+"&key="+KEY; 
+var drugList = "http://appsapi.aspmedic.com/aida/drug.aspx";
 
 //API that call in sequence 
 var APILoadingList = [

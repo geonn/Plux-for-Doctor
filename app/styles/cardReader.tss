@@ -28,7 +28,8 @@
 	right:10,
 	bottom:10,
 	font:{
-		fontSize:30
+		fontSize:30,
+		fontWeight:"bold"
 	},
 	color:"#000"
 }
@@ -56,17 +57,54 @@
 	textAlign:"center",
 	color:"#000"
 }
+".form_lb":{
+	color: "#848484",
+	font:{
+		fontSize:14,
+		fontWeight:"bold"
+	},
+	textAlign:"center",
+	color:"#000"
+}
 ".tf_spacing":{
 	top:3,
 	bottom:3,
 	right:3,
 	left:0,
-	height:40
+	height:40,
+	backgroundColor:"#fff"
+}
+".ta_spacing":{
+	top:3,
+	bottom:3,
+	right:3,
+	left:3,
+	backgroundColor:"#fff"
 }
 ".button_add":{
 	backgroundColor:"#5cb85c",
 	color:"#fff",
 	borderRadius:10,
+	right:10,
+	font:{
+		fontWeight:"bold"
+	}
+}
+".button_get":{
+	backgroundColor:"#337ab7",
+	color:"#fff",
+	borderRadius:10,
+	height:"40",
+	right:10,
+	font:{
+		fontWeight:"bold"
+	}
+}
+".button_delete":{
+	backgroundColor:"#d9534f",
+	color:"#fff",
+	borderRadius:10,
+	height:"40",
 	right:10,
 	font:{
 		fontWeight:"bold"

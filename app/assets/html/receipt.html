@@ -95,13 +95,14 @@
 			</p>
 		</div>
 		<script>
-			var simpleBoard = new DrawingBoard.Board('simple-board', {
-				controls: false,
-				background: "#FFF68F",
-				enlargeYourContainer: false,
-				webStorage: false
-			});	
-			
+			setTimeout(function(){
+				var simpleBoard = new DrawingBoard.Board('simple-board', {
+					controls: false,
+					background: "#FFF68F",
+					enlargeYourContainer: false,
+					webStorage: false
+				});				
+			},1000);	
 			function resetBoard(){
 				$("#simple-board").empty();
 				var simpleBoard = new DrawingBoard.Board('simple-board', {
