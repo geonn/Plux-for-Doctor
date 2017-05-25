@@ -1,15 +1,6 @@
 <Alloy>
-	<Window navTintColor="#CE1D1C" id="win" title="eCard Reader"  navBarHidden="false">
-		<View top="10" class="wfill hsize vert"> 
-	    	<View class="horz wfill hsize">
-		    	<Button class="button" onClick="popInsertCardNo" action="doInquiry" height="80" top="10" left="1%" width="49%" title="Inquiry"></Button>
-		    	<Button class="button" onClick="popInsertCardNo" action="doPay" height="80" top="10" left="1%" width="49%" title="Pay"></Button>
-	    	</View>
-	    	<View class="gray-line" top="15" bottom="5" />
-	   	</View>
-	 	<ImageView class="wfill hfill" image="/images/transparent-bg.png" zIndex="9" id="masked"></ImageView>
-	 	
-		<!-- <ScrollView top="0" scrollType="vertical" zIndex="10" class="wfill hsize conthsize contwfill box" onScroll="closeKeyboard" backgroundColor="#d4d4d4" id="inner_pay">
+	<Window navTintColor="#CE1D1C" id="win" title="Claim Submission"  navBarHidden="false">		
+		<ScrollView top="0" scrollType="vertical" zIndex="10" class="wfill hsize conthsize contwfill box" backgroundColor="#d4d4d4" id="inner_pay">
 			<Label id="login_clinic"></Label>
 			<Label class="big_Label">Claim Submission</Label>
 			<Label width="10" height="10"> </Label> 				 
@@ -57,7 +48,7 @@
 					<View class="form_bg hsize vert" width="50%">						
 						<View class="wfill hsize horz">
 							<Label class="form_lb_top" width="25%">MC Charges</Label>
-							<TextField class="wfill hsize tf_spacing" editable="false" keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" id="mc_charges" hintText="Medication Charges"></TextField> 
+							<TextField onTouchend="hideSoftKeyboard" class="wfill hsize tf_spacing" editable="false" keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" id="mc_charges" hintText="Medication Charges"></TextField> 
 						</View>								
 					</View>
 					<Button class="button_get wsize" onClick="getMcTotalCharges">Get MC Charges</Button>						
@@ -146,12 +137,12 @@
 						<TextField class="wfill hsize tf_spacing" top="0" keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" id="surginalamt" hintText="Surginal Procedure Charges"></TextField>						
 					</View>							
 				</View>																		
-				<TextField class="wfill hsize padding" keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" height="40" id="medication" hintText="Medication Charges"></TextField> 
+				<!-- <TextField class="wfill hsize padding" keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" height="40" id="medication" hintText="Medication Charges"></TextField>  -->
 				<View class="wfill hsize horz" top="20">
 					<View class="form_bg hsize vert" width="50%">						
 						<View class="wfill hsize horz">
 							<Label class="form_lb_top" width="25%">Total Charges</Label>
-							<TextField class="wfill hsize tf_spacing" editable="false" keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" id="totalamt" hintText="Total Charges"></TextField> 
+							<TextField onTouchend="hideSoftKeyboard" class="wfill hsize tf_spacing" editable="false" keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" id="totalamt" hintText="Total Charges"></TextField> 
 						</View>								
 					</View>
 					<Button class="button_get wsize" onClick="getTotalCharges">Get Total Charges</Button>						
@@ -162,48 +153,10 @@
 	 				<TextArea hintText="OTHERS (CHRONIC) Description" class="wfill hsize ta_spacing" left="3" top="0" form_type="textarea" require="true" id="chnote"></TextArea>																			
 				</View>																				
 				<View class="wfill hsize">
-					<Button class="button1" top="10"  backgroundColor="#7B7B7B" onClick="cancel_submit" left="0" width="50%" title="Cancel"></Button>
+					<Button class="button1" top="10" onClick="closeWindow" backgroundColor="#7B7B7B" left="0" width="50%" title="Cancel"></Button>
 					<Button class="button1" top="10" onClick="claim_submit" right="0" width="50%" title="Submit"></Button>	
 				</View> 
 			</View>
-	</ScrollView>-->
-		<View id="cardnumber" class="wfill hsize padding vert" backgroundColor="#ffffff" top="50" zIndex="50">
-			<Label class="wfill hsize h5 padding">Please enter patient IC/member card number.</Label>
-			<TextField class="wfill padding" id="cardno_input" keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" hintText="Card Number"></TextField>
-			<View class="wfill hsize padding">
-				<Button class="button" height="40" top="10" onClick="hideCardNumber" left="0" width="40%" title="CANCEL"></Button>
-				<Button class="button" height="40" top="10" onClick="cardnoAssign" right="0" width="40%" title="SUBMIT"></Button>
-			</View>
-		</View>
-		<View class="wfill hsize padding vert" id="pin_panel" zIndex="100">
-			<Label class="h5 white" top="40" id="pin_title">Enter PIN</Label>
-			<View class="wsize hsize horz" top="20" id="pin_circle">
-				<View class="circle" left="20"></View>
-				<View class="circle" left="20"></View>
-				<View class="circle" left="20"></View>
-				<View class="circle" left="20" right="20"></View>
-			</View>
-			<View class="wsize hsize horz" top="40" id="keyinPin_1">
-				<View class="big_circle" onClick="keyinPin" left="20" number="1"></View>
-				<View class="big_circle" onClick="keyinPin" left="20" number="2"></View>
-				<View class="big_circle" onClick="keyinPin" left="20" right="20" number="3"></View>
-			</View>
-			<View class="wsize hsize horz" top="20" id="keyinPin_2">
-				<View class="big_circle" onClick="keyinPin" left="20" number="4"></View>
-				<View class="big_circle" onClick="keyinPin" left="20" number="5"></View>
-				<View class="big_circle white"  onClick="keyinPin"left="20" right="20" number='5'></View>
-			</View>
-			<View class="wsize hsize horz" top="20" id="keyinPin_3">
-				<View class="big_circle"  onClick="keyinPin" left="20" number="7"></View>
-				<View class="big_circle"  onClick="keyinPin" left="20" number="8"></View>
-				<View class="big_circle"  onClick="keyinPin" left="20" right="20" number="9"></View>
-			</View>
-			<View class="wsize hsize horz" top="20" id="keyinPin_4">
-				<View class="big_circle" onClick="keyinPin" number="0"></View>
-			</View>
-			<View class='wsize hsize'>
-				<Label left="160" onClick="remove_pin" top="20" id="cancel_pin" class="h4 white">Cancel</Label>
-			</View>
-		</View>
+		</ScrollView>
     </Window>
 </Alloy>
