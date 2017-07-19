@@ -44,16 +44,16 @@
 						<TextField class="hsize tf_spacing" width="23%" top="0" keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" id="m_cost" hintText="Cost"></TextField>																								
 					</View>											
 				</View>		
-				<View class="wfill hsize horz" top="20">
-					<View class="form_bg hsize vert" width="50%">						
+				<!-- <View class="wfill hsize horz" top="20">
+					<!-- <View class="form_bg hsize vert" width="50%">						
 						<View class="wfill hsize horz">
 							<Label class="form_lb_top" width="25%">MC Charges</Label>
 							<TextField onTouchend="hideSoftKeyboard" class="wfill hsize tf_spacing" editable="false" keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" id="mc_charges" hintText="Medication Charges"></TextField> 
 						</View>								
-					</View>
-					<Button class="button_get wsize" onClick="getMcTotalCharges">Get MC Charges</Button>						
-				</View>						
-				<Label class="medium_Label hsize">MC days</Label>					
+					</View> -->
+					<!-- <Button class="button_get wsize" onClick="getMcTotalCharges">Get MC Charges</Button>						 -->
+				<!-- </View>	 -->					 
+				<Label class="medium_Label hsize" top="10">MC days</Label>					
 				<View class="wfill hsize">
 					<View class="form_bg hsize horz" top="10" width="45%">
 						<Label class="form_lb_top" width="55%">MC days(From)</Label>
@@ -92,7 +92,13 @@
 						</View>
 						<TextField class="wfill hsize tf_spacing" keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" id="consday" hintText="Consultation Charges (Day)"></TextField>						
 					</View>							
-				</View>		
+				</View>	
+				<View class="form_bg wfill hsize vert" top="10">						
+					<View class="wfill hsize horz">
+						<Label class="form_lb_top" width="30%">MC Charges</Label>
+						<TextField class="wfill hsize tf_spacing" keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" id="mc_charges" hintText="Medication Charges"></TextField> 
+					</View>								
+				</View>					
 				<View class="form_bg wfill hsize vert" top="10">
 					<View class="wfill hsize horz">
 						<Label class="form_lb_top" width="30%">Injection</Label>
@@ -142,10 +148,10 @@
 					<View class="form_bg hsize vert" width="50%">						
 						<View class="wfill hsize horz">
 							<Label class="form_lb_top" width="25%">Total Charges</Label>
-							<TextField onTouchend="hideSoftKeyboard" class="wfill hsize tf_spacing" editable="false" keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" id="totalamt" hintText="Total Charges"></TextField> 
+							<TextField class="wfill hsize tf_spacing" keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" id="totalamt" hintText="Total Charges"></TextField> 
 						</View>								
 					</View>
-					<Button class="button_get wsize" onClick="getTotalCharges">Get Total Charges</Button>						
+					<!-- <Button class="button_get wsize" onClick="getTotalCharges">Get Total Charges</Button>						 --> 
 				</View>
 				<Label class="medium_Label hsize">Notes</Label>						
 				<View class="form_bg wfill hsize vert" top="10">

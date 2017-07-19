@@ -168,10 +168,10 @@ function init(){
 var submit = true;
 function claim_submit(){
 	if(submit){
-		submit=false
+		submit=false;
 		loading.start();
-		getMcTotalCharges();
-		getTotalCharges({});
+		// getMcTotalCharges();
+		// getTotalCharges({});
 		var tid = $.terminal_id.value || 0;
 		var cardno = $.cardno.value || 0;
 		var mcno = $.mc_no.value || "NV";
@@ -267,30 +267,6 @@ function claim_submit(){
 	 
 		  	var res = JSON.parse(responseText); 
 		  	console.log(res);
-			$.terminal_id.value ="";
-			$.cardno.value ="";
-			$.mc_no.value ="";
-			diag="";
-			medication = "";	
-			$.mc_from.value ="";
-			$.mc_till.value = "";
-			$.consday.value = "";
-			$.injection_item.value = "";
-			$.injection_item.value = "";
-			$.xray_item.value = "";
-			$.xrayamt.value= "";
-			$.labtest_item.value= "";
-			$.labtestamt.value= "";
-			$.labtestfee.value= "";
-			$.surginal_item.value= "";
-			$.surginalamt.value= "";
-			$.totalamt.value= "";
-			$.bps.value= "";
-			$.bpd.value= "";
-			$.pulse.value= "";
-			$.acnote.value= "";
-			$.chnote.value= "";
-			appcode = "";
 		  	var msg = res[0].message.split("\n          ________________________"); 
 		  	var signature = (_.isUndefined(msg[1]))?false:true;
 		  	console.log("signature:"+signature);

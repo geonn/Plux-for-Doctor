@@ -198,8 +198,20 @@ function submitPin(){
 				loading.finish();
 				$.pin_panel.hide();
 				$.masked.hide();
-				Alloy.Globals.Navigator.open("claim_submission", {displayHomeAsUp: true,t_id:t_id,c_no:c_no});		
-				eval(action+"()");
+				var options = ['Claim Submission With Itemization','Claim Submission','Cancel'];				
+				var opts = {cancel: 2,options:options,destructive: 0,title: 'Options'};	
+				var dialog = Ti.UI.createOptionDialog(opts);
+				dialog.addEventListener("click",function(e){
+					if(e.index == 0){
+						Alloy.Globals.Navigator.open("claim_submission", {displayHomeAsUp: true,t_id:t_id,c_no:c_no});		
+						eval(action+"()");						
+					}
+					if(e.index == 1){
+						Alloy.Globals.Navigator.open("claim_submission_basic", {displayHomeAsUp: true,t_id:t_id,c_no:c_no});		
+						eval(action+"()");							
+					}
+				});
+				dialog.show();									
 			}); 
 			pin_confirm = "";
 		}else{
@@ -211,8 +223,20 @@ function submitPin(){
 			$.masked.hide();
 			var t_id = Ti.App.Properties.getString("terminal_id");
 			var c_no =  cardno; // empno
-			Alloy.Globals.Navigator.open("claim_submission", {displayHomeAsUp: true,t_id:t_id,c_no:c_no});			
-			eval(action+"()");
+			var options = ['Claim Submission With Itemization','Claim Submission','Cancel'];				
+			var opts = {cancel: 2,options:options,destructive: 0,title: 'Options'};	
+			var dialog = Ti.UI.createOptionDialog(opts);
+			dialog.addEventListener("click",function(e){			
+				if(e.index == 0){
+					Alloy.Globals.Navigator.open("claim_submission", {displayHomeAsUp: true,t_id:t_id,c_no:c_no});		
+					eval(action+"()");						
+				}
+				if(e.index == 1){
+					Alloy.Globals.Navigator.open("claim_submission_basic", {displayHomeAsUp: true,t_id:t_id,c_no:c_no});		
+					eval(action+"()");							
+				}
+			});
+			dialog.show();					
 		}else{
 			alert("Incorrect PIN");
 		}
