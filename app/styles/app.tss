@@ -69,7 +69,7 @@ overrode the settings with other TSS, XML, or JS settings:
 },
 
 'TextField[platform=android]': {
-    height: 40,
+    height: 50,
 	borderColor: "#dfe0e4",
 	color: "#000000",
 	borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
