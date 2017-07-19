@@ -87,3 +87,7 @@ $.win.addEventListener("close", function(){
 	Ti.App.removeEventListener('app:screenshot', screenshot);
 	Ti.App.removeEventListener("web_receipt_loaded", web_receipt_loaded);
 });
+$.win.addEventListener("android:back", function(){ 
+	Ti.App.removeEventListener('app:screenshot', screenshot);
+	Ti.App.removeEventListener("web_receipt_loaded", web_receipt_loaded);
+});
