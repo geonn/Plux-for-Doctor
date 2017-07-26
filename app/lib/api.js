@@ -73,8 +73,7 @@ exports.callByPost = function(e, onload, onerror){
 exports.callByGet  = function(e, onload, onerror){
 	var url =  eval(e.url) + "?"+e.params;
 	console.log(url);
-	var _result = contactServerByGet(encodeURI(url));
-	console.log("result:"+JSON.stringify(_result));   
+	var _result = contactServerByGet(encodeURI(url));   
 	_result.onload = function(e) {   
 		onload && onload(this.responseText); 
 	};

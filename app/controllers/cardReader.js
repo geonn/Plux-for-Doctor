@@ -79,7 +79,7 @@ function doInquiry(){
 		return;
 	}
 	loading.start();
-	API.callByGet({url:"terminalsub1", params: "action=INQUIRY&cardno="+cardno+"&terminal="+terminal_id}, function(responseText){
+	API.callByGet({url:"terminalsub", params: "action=INQUIRY&cardno="+cardno+"&terminal="+terminal_id}, function(responseText){
 	  	var res = JSON.parse(responseText);
 	  	//console.log(res);
 	  	var msg = res[0].message.split("\n\n\n________________________");

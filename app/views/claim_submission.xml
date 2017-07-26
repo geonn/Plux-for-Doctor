@@ -87,7 +87,7 @@
 				<View class="form_bg wfill hsize vert">
 					<View class="wfill hsize horz">
 						<View class="form_lb_top" type="" width="40%" borderColor="#fff" onClick="openDayPicker">
-							<Label class="form_lb wsize hsize" name="consday" id="day" text="Consultation Charges (Day)"></Label>
+							<Label class="form_lb size hsize" name="consday" id="day" text="Consultation Charges (Day)"></Label>
 							<ImageView image="/images/btn-down.png" width="20" height="20" right="3"></ImageView>
 						</View>
 						<TextField class="wfill hsize tf_spacing" keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" id="consday" hintText="Consultation Charges (Day)"></TextField>						
@@ -95,7 +95,7 @@
 				</View>	
 				<View class="form_bg wfill hsize vert" top="10">						
 					<View class="wfill hsize horz">
-						<Label class="form_lb_top" width="40%">Medication Charges</Label>
+						<Label class="form_lb_top" width="30%">MC Charges</Label>
 						<TextField class="wfill hsize tf_spacing" keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" id="mc_charges" hintText="Medication Charges"></TextField> 
 					</View>								
 				</View>					
@@ -135,12 +135,12 @@
 				</View>						
 				<View class="form_bg wfill hsize vert" top="10">
 					<View class="wfill hsize horz">
-						<Label class="form_lb_top" width="30%">Surgical</Label>
-						<TextField class="wfill hsize tf_spacing" id="surginal_item" hintText="Surgical Procedure"></TextField>						
+						<Label class="form_lb_top" width="30%">Surginal</Label>
+						<TextField class="wfill hsize tf_spacing" id="surginal_item" hintText="Surginal Procedure"></TextField>						
 					</View>
 					<View class="wfill hsize horz">
-						<Label class="form_lb_top" width="30%" top="0">Surgical Charges</Label>															
-						<TextField class="wfill hsize tf_spacing" top="0" keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" id="surginalamt" hintText="Surgial Procedure Charges"></TextField>						
+						<Label class="form_lb_top" width="30%" top="0">Surginal Charges</Label>															
+						<TextField class="wfill hsize tf_spacing" top="0" keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" id="surginalamt" hintText="Surginal Procedure Charges"></TextField>						
 					</View>							
 				</View>																		
 				<!-- <TextField class="wfill hsize padding" keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" height="40" id="medication" hintText="Medication Charges"></TextField>  -->
