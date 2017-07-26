@@ -35,7 +35,9 @@ function clinic_login(){
 	var password	 = $.password.value;
 	API.callByGet({url:"panellogin", params: "LOGINID="+username+"&PASSWORD="+password}, function(responseText){
 	  	var res = JSON.parse(responseText);
+	  	console.log("return_data:"+JSON.stringify(res));
 		if(_.isUndefined(res[0].code)){
+			console.log("undef");
 			Ti.App.Properties.setString("terminal_id", res[0].terminalid);
 			Ti.App.Properties.setString('clinic_name', res[0].name);
 			Ti.App.Properties.setString('clinic_code', res[0].ccode);

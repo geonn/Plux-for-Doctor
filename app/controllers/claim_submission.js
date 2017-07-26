@@ -71,8 +71,8 @@ function addMedication(e){
 	container.add(lb2);
 	container.add(tf2);
 	$.medication_mother.add(container);
-	getMcTotalCharges({});	
-	getTotalCharges({});
+	// getMcTotalCharges({});	
+	// getTotalCharges({});
 	bt.addEventListener("click",function(e){
 		$.medication_mother.remove(container);
 		getMcTotalCharges({});
