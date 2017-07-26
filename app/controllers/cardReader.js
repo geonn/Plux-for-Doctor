@@ -4,7 +4,7 @@ Ti.App.Properties.setString('time1', '');
 var doctor_id = Ti.App.Properties.getString('doctor_id');
 var patient_recordsModel = Alloy.createCollection('patient_records'); 
 var id;
-var terminal_id;
+var terminal_id; 
 var clinic_name = "";
 var cardno, action;// = "6000201000113580";
 var loading = Alloy.createController("loading");
