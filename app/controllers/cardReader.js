@@ -86,6 +86,9 @@ function doInquiry(){
 	  	var signature = (_.isUndefined(msg[1]))?false:true;
 		Alloy.Globals.Navigator.open("receipt", {displayHomeAsUp: true, message: res[0].message, terminal_id: terminal_id, signature: signature, record: res[0]});
 		loading.finish();
+	},function(err){
+		loading.finish();		
+		alert("Please try again later.");
 	});
 }
 
@@ -101,7 +104,17 @@ function getDiag(picker){
 }
 
 function qrscan(){
-	SCANNER.openScanner("1");
+	if (Ti.Media.hasCameraPermissions()) {			
+		SCANNER.openScanner("1");
+	}else{
+		Ti.Media.requestCameraPermissions(function(e) {
+            if(e.success){
+                SCANNER.openScanner("1");
+            }else{
+                alert('You denied permission');
+            }	
+        });    			
+	}		
 }
 
 function popInsertCardNo(e){
@@ -146,6 +159,8 @@ function validateUserPinViaServer(cardno){
 		RunLayout();
 		$.pin_panel.show();
 		$.masked.show();
+	},function(err){
+		alert("Please try again later");
 	}); 
 }
 

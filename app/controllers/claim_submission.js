@@ -71,8 +71,8 @@ function addMedication(e){
 	container.add(lb2);
 	container.add(tf2);
 	$.medication_mother.add(container);
-	getMcTotalCharges({});	
-	getTotalCharges({});
+	// getMcTotalCharges({});	
+	// getTotalCharges({});
 	bt.addEventListener("click",function(e){
 		$.medication_mother.remove(container);
 		getMcTotalCharges({});
@@ -260,7 +260,7 @@ function claim_submit(){
 		else{
 			medication = "NV";
 		}
-		API.callByGet({url:"terminalsub", params: "action=PAY&tid="+tid+"&cardno="+cardno+"&mcno="+mcno+"&medamt="+medamt+"&diagnosis="+diag+"&medication="+medication+"&mcfdate="+mcfdate+"&mctdate="+mctdate+"&dayamt="+dayamt+"&nightamt="
+		API.callByGet({url:"terminalsubfull", params: "action=PAY&tid="+tid+"&cardno="+cardno+"&mcno="+mcno+"&medamt="+medamt+"&diagnosis="+diag+"&medication="+medication+"&mcfdate="+mcfdate+"&mctdate="+mctdate+"&dayamt="+dayamt+"&nightamt="
 										+nightamt+"&injection="+injection+"&injectamt="+injectamt+"&xray="+xray+"&xrayamt="+xrayamt+"&labtest="+labtest+"&labamt="+labamt+"&labhfee="+labhfee+"&surgical="+surginal+
 										"&suramt="+suramt+"&totalamt="+totalamt+"&bps="+bps+"&bpd="+bpd+"&pulse="+pulse+"&acnote="+acnote+"&chnote="+chnote+"&appcode="+appcode}, function(responseText){
 		  	//console.log(responseText);
@@ -273,6 +273,8 @@ function claim_submit(){
 		  	submit = true;
 			Alloy.Globals.Navigator.open("receipt", {displayHomeAsUp: true, message: msg[0], signature: signature, terminal_id: terminal_id, record: res[0], appcode: res[0].appcode});
 			loading.finish();
+		},function(err){
+			alert("Please try again later.");
 		});
 	}
 }	

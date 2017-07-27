@@ -9,7 +9,7 @@ scanditsdk.cameraFacingPreference = 0;
 // Sets up the scanner and starts it in a new window.
 exports.openScanner = function(scanType) {
 	// First set the app key and which direction the camera should face.
-
+	console.log("scanType"+scanType);
 	// Only after setting the app key instantiate the Scandit SDK Barcode Picker view
 	var picker = scanditsdk.createView({
 		width:"100%",

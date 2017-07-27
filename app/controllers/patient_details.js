@@ -17,7 +17,12 @@ function showList(){
 	$.lblName.text = param.name;
 	$.lblMemno.text = param.memno;
 	$.lblCorpName.text = param.corpname;
-	$.lblVisitDate.text = monthFormat(param.visitdate);
+	try{
+		$.lblVisitDate.text = monthFormat(param.visitdate);	
+	}catch(e){
+		$.lblVisitDate.text = param.visitdate;
+	}
+
 	
 	COMMON.hideLoading();
 }

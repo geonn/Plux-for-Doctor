@@ -98,19 +98,35 @@ function claim_submit(){
 		var mcday = $.mcday.value || 0;
 		var appcode = "1234";
 		var total = $.totalamt.value ||0;
-		API.callByGet({url:"terminalsub1", params: "action=PAY&terminal="+tid+"&cardno="+cardno+"&diag1="+diag1+"&diag2="+diag2+"&mc="+mc+"&consday="+dayamt1+"&consnight="+nightamt1+"&medication="+medamt+"&injection="+injectamt
+		API.callByGet({url:"terminalsub", params: "action=PAY&terminal="+tid+"&cardno="+cardno+"&diag1="+diag1+"&diag2="+diag2+"&mc="+mc+"&consday="+dayamt1+"&consnight="+nightamt1+"&medication="+medamt+"&injection="+injectamt
 		+"&xray="+xrayamt+"&labtest="+labamt+"&surgical="+suramt+"&total="+total+"&appcode="+appcode}, function(responseText){
 		  	//console.log(responseText);
-	 
 		  	var res = JSON.parse(responseText); 
 			console.log(res);
-			appcode = "";
+			var arr = [{
+				tid:tid,
+				cardno:cardno,
+				dayamt:dayamt,
+				nightamt:nightamt,
+				diag1:diag1,
+				diag2:diag2,
+				injectamt:injectamt,
+				xrayamt:xrayamt,
+				labamt:labamt,
+				suramt:suramt,
+				totalamt:totalamt,
+				medamt:medamt,
+				mcday:mcday,
+				appcode:res[0].appcode
+			}];
 		  	var msg = res[0].message.split("\n          ________________________"); 
 		  	var signature = (_.isUndefined(msg[1]))?false:true;
 		  	console.log("signature:"+signature);
 		  	submit = true;
-			Alloy.Globals.Navigator.open("receipt", {displayHomeAsUp: true, message: msg[0], signature: signature, terminal_id: terminal_id, record: res[0], appcode: res[0].appcode});
+			Alloy.Globals.Navigator.open("receipt", {displayHomeAsUp: true, message: msg[0], signature: signature, terminal_id: tid, record: res[0],arr:arr, appcode: res[0].appcode});
 			loading.finish();
+		},function(err){
+			alert("Please try again later.");
 		});
 	}
 }	

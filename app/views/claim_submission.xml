@@ -95,7 +95,7 @@
 				</View>	
 				<View class="form_bg wfill hsize vert" top="10">						
 					<View class="wfill hsize horz">
-						<Label class="form_lb_top" width="30%">MC Charges</Label>
+						<Label class="form_lb_top" width="40%">Medication Charges</Label>
 						<TextField class="wfill hsize tf_spacing" keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" id="mc_charges" hintText="Medication Charges"></TextField> 
 					</View>								
 				</View>					
@@ -135,11 +135,11 @@
 				</View>						
 				<View class="form_bg wfill hsize vert" top="10">
 					<View class="wfill hsize horz">
-						<Label class="form_lb_top" width="30%">Surginal</Label>
+						<Label class="form_lb_top" width="30%">Surgical</Label>
 						<TextField class="wfill hsize tf_spacing" id="surginal_item" hintText="Surginal Procedure"></TextField>						
 					</View>
 					<View class="wfill hsize horz">
-						<Label class="form_lb_top" width="30%" top="0">Surginal Charges</Label>															
+						<Label class="form_lb_top" width="30%" top="0">Surgical Charges</Label>															
 						<TextField class="wfill hsize tf_spacing" top="0" keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" id="surginalamt" hintText="Surginal Procedure Charges"></TextField>						
 					</View>							
 				</View>																		

@@ -6,7 +6,7 @@ exports.definition = {
 		    "name" : "TEXT",
 		    "corpcode" : "TEXT",
 		    "corpname" : "TEXT",
-		    "visitdate" : "TEXT",
+		    "visitdate" : "DATE",
 		    "terminal_id": "TEXT",
 		    "type": "TEXT",
 		    "receipt_url": "TEXT"
@@ -177,43 +177,13 @@ exports.definition = {
 			},
 		 
 			getPrincipleData : function(){
-				var collection = this; 
-                db = Ti.Database.open(collection.config.adapter.db_name);
-                var sql = "SELECT * FROM " + collection.config.adapter.collection_name + " WHERE relation='PRINCIPLE' and memno='"+Ti.App.Properties.getString('memno')+"'";
-               
-                var res = db.execute(sql);
-                var arr = []; 
-               
-                if (res.isValidRow()){
-					arr = {
-					    id: res.fieldByName('id'),
-					    asp_id: res.fieldByName('asp_id'),
-					    name: res.fieldByName('name'),
-					    memno: res.fieldByName('memno'),
-					    icno: res.fieldByName('icno'),
-					    relation: res.fieldByName('relation'), 
-					    empno: res.fieldByName('empno'),
-					    corpcode: res.fieldByName('corpcode'),
-					    corpname: res.fieldByName('corpname'),
-					    costcenter: res.fieldByName('costcenter'),
-					    dept: res.fieldByName('dept'),
-					    allergy: res.fieldByName('allergy'),
-					    isver: res.fieldByName('isver'),
-					    verno: res.fieldByName('verno'),
-					    remark: res.fieldByName('remark'),
-			 			visitdate: res.fieldByName('visitdate')
-					  };
-				}  
-				res.close();
-                db.close();
-                collection.trigger('sync');
-                return arr;
-			},
-			addUserData : function(arr) {
 				var collection = this;
 				var columns = collection.config.columns;
 				var names = [];
 				for (var k in columns) {
+					if(k=="id"){
+						continue;
+					}
 	                names.push(k);
 	            }
                 db = Ti.Database.open(collection.config.adapter.db_name);
@@ -231,7 +201,6 @@ exports.definition = {
 	                	if (entry.hasOwnProperty(k)){
 	                		_.find(names, function(name){
 	                			if(name == k){
-	                				console.log(name+" "+k);
 	                				keys.push(k);
 			                		questionmark.push("?");
 			                		eval_values.push("entry."+k);
@@ -242,13 +211,56 @@ exports.definition = {
                 	}
                 	var without_pk_list = _.rest(update_questionmark);
 	                var without_pk_value = _.rest(eval_values);
-	                var sql_query =  "INSERT OR REPLACE INTO "+collection.config.adapter.collection_name+" (visitdate, "+keys.join()+") VALUES ((DATETIME('now')), "+questionmark.join()+")";
+	                var sql_query =  "INSERT OR REPLACE INTO "+collection.config.adapter.collection_name+" ("+keys.join()+") VALUES ("+questionmark.join()+")";
 	                eval("db.execute(sql_query, "+eval_values.join()+")");
 				});
 				db.execute("COMMIT");
 				//console.log(db.getRowsAffected()+" affected row");
 	            db.close();
-	            collection.trigger('sync');
+	            collection.trigger('sync');		
+			},
+			addUserData : function(arr) {
+				var collection = this;
+				var columns = collection.config.columns;
+				var names = [];
+				for (var k in columns) {
+					if(k=="id"){
+						continue;
+					}
+	                names.push(k);
+	            }
+                db = Ti.Database.open(collection.config.adapter.db_name);
+                if(Ti.Platform.osname != "android"){
+                	db.file.setRemoteBackup(false);
+                }
+                db.execute("BEGIN");
+                arr.forEach(function(entry) {
+                	var keys = [];
+                	var questionmark = [];
+                	var eval_values = [];
+                	var update_questionmark = [];
+                	var update_value = [];
+                	for(var k in entry){
+	                	if (entry.hasOwnProperty(k)){
+	                		_.find(names, function(name){
+	                			if(name == k){
+	                				keys.push(k);
+			                		questionmark.push("?");
+			                		eval_values.push("entry."+k);
+			                		update_questionmark.push(k+"=?");
+	                			}
+	                		});
+	                	}
+                	}
+                	var without_pk_list = _.rest(update_questionmark);
+	                var without_pk_value = _.rest(eval_values);
+	                var sql_query =  "INSERT OR REPLACE INTO "+collection.config.adapter.collection_name+" ("+keys.join()+") VALUES ("+questionmark.join()+")";
+	                eval("db.execute(sql_query, "+eval_values.join()+")");
+				});
+				db.execute("COMMIT");
+				//console.log(db.getRowsAffected()+" affected row");
+	            db.close();
+	            collection.trigger('sync');		
             },
             updateTerminateId : function(terminal_id){
             	var collection = this; 

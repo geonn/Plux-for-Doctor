@@ -3,7 +3,7 @@ var message = args.message;
 var appcode = args.appcode;
 var screenShotBlob;
 var loading = Alloy.createController("loading");
-
+var arr = args.arr;
 function closeWindow(){
 	$.win.close();
 }
@@ -47,12 +47,22 @@ function submit_receipt(){
 		if(res.status == "success"){    
 			COMMON.createAlert("Success", "Receipt successfully submitted", function(){
 				var patient_recordsModel = Alloy.createCollection('patient_records'); 
+		 		var model = Alloy.createCollection("terminalsub");
+		 		model.saveArray(arr);					
 				var string_card_data = Ti.App.Properties.getString("card_data");
-				console.log("check here");
+				var datenow = COMMON.now();
 				console.log(args.record);
-				var patient_param = args.record;
-				_.extend(patient_param, {type: "paid", receipt_url: res.data.receipt_url, terminal_id: args.terminal_id});
-				console.log(patient_param);
+				var patient_param = {
+					memno:args.record.memno,
+					name:args.record.name,
+					corpcode:args.record.corpcode,
+					corpname:args.record.corpname,
+					visitdate:datenow
+				};
+				console.log(args.terminal_id);
+				console.log("patient:"+JSON.stringify(patient_param));
+				_.extend(patient_param, {terminal_id: args.terminal_id,type: "paid", receipt_url: res.data.receipt_url});
+				console.log("patient_param:"+JSON.stringify(patient_param));
 				patient_recordsModel.addUserData([patient_param]);
 				closeWindow();
 				Ti.App.fireEvent("cardReader:closeWindow");
