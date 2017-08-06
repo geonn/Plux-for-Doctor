@@ -106,7 +106,7 @@ function closeWindow(){
 
 function init(){
 	$.win.add(loading.getView());
-	render_date_bar();
+	//render_date_bar();
 	refresh();
 }
 

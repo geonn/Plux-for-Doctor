@@ -4,7 +4,8 @@ var library = Alloy.createCollection('panelList');
 var corp = "";
 var list;
 var aspClinicArr = [];
-
+var selectedClinicIndex = 0;
+var  selectedLocationIndex = 0;
 if(clinicType == "hours24"){
 	clinicType = "24 Hours";
 }
@@ -129,15 +130,20 @@ function listing(){
 		}
 		
 		_.debounce(navClinicDetail, 3000, true);
-		
+		$.clinicListTv.removeEventListener('click', navClinicDetail);
 		$.clinicListTv.addEventListener('click', navClinicDetail);
 }
 
 function navClinicDetail(e){
-	common.showLoading();
+	
 	console.log(e.rowData.source+" pandel_id");
-	Alloy.Globals.Navigator.open("clinic/clinicDetails", {panel_id:e.rowData.source, displayHomeAsUp: true});
-	common.hideLoading();
+	if(typeof e.rowData.source != "undefined"){
+		common.showLoading();
+		Alloy.Globals.Navigator.open("clinic/clinicDetails", {panel_id:e.rowData.source, displayHomeAsUp: true});
+		common.hideLoading();
+	}
+	
+	return false;
 }
 	/***SEARCH FUNCTION***/
 	function searchResult(){
@@ -145,10 +151,10 @@ function navClinicDetail(e){
 		common.showLoading();
 		var str = $.searchItem.getValue(); 
 		if(str != ""){
-			if(clinicType == "24 Hours"){  
+			if(Ti.App.Properties.getString('clinicTypeSelection') == "24 Hours"){  
 				list = library.getPanelBy24Hours(str, corp); 
 			}else{ 
-				list = library.getPanelByClinicType(clinicType, str, corp);     
+				list = library.getPanelByClinicType(Ti.App.Properties.getString('clinicTypeSelection'), str, corp);     
 			}
 			listing();
 		}else{
@@ -186,31 +192,32 @@ function showTypeSelection(){
 	var dialog = Ti.UI.createOptionDialog({
 		  cancel: clinicArr.length -1,
 		  options: clinicArr,
-		  selectedIndex: 0,
+		  selectedIndex: selectedClinicIndex,
 		  title: 'Choose Type'
 		});
-		
+	
 		dialog.show();
-		_.debounce(dialogClinicTypeSelect, 3000);
-		dialog.addEventListener("click", dialogClinicTypeSelect);
+		dialog.addEventListener("click", function(e){   
+			var cancelBtn = clinicArr.length -1;
+			if(cancelBtn != e.index){
+				selectedClinicIndex = e.index;
+				dialog.selectedIndex = e.index;
+				$.clinicTypeSelection.text = clinicArr[e.index]; 
+				Ti.App.Properties.setString('clinicTypeSelection', clinicArr[e.index]);  
+				if(clinicArr[e.index] == "24 Hours"){   
+					list = library.getPanelBy24Hours("", corp);   
+				}else{
+					list = library.getPanelByClinicType(clinicArr[e.index],"", corp);   
+				}
+				common.showLoading();
+				listing();
+			}
+		});
+	 
 }
-
-function dialogClinicTypeSelect(e){
-	if(cancelBtn != e.index){
-		dialog.selectedIndex = e.index;
-		$.clinicTypeSelection.text = clinicArr[e.index]; 
-		Ti.App.Properties.setString('clinicTypeSelection', clinicArr[e.index]);  
-		if(clinicArr[e.index] == "24 Hours"){   
-			list = library.getPanelBy24Hours("", corp);   
-		}else{
-			list = library.getPanelByClinicType(clinicArr[e.index],"", corp);   
-		}
-		common.showLoading();
-		listing();
-	}
-}
-
+ 
 function showLocationSelection(){ 
+	 
 	var stateList = library.getPanelListByState(); 
 	var clinicLocationArr = []; 
 	clinicLocationArr.push("All"); 
@@ -220,41 +227,42 @@ function showLocationSelection(){
 		} 
 	});
 	clinicLocationArr.push("Cancel"); 
-	var cancelBtn = clinicLocationArr.length -1;
+	
 	var dialog = Ti.UI.createOptionDialog({
 		  cancel: clinicLocationArr.length -1,
 		  options: clinicLocationArr,
-		  selectedIndex: 0,
+		  selectedIndex: selectedLocationIndex,
 		  title: 'Choose Location'
 	});
-		
+	
 	dialog.show();
-	_.debounce(dialogChoiceLocation, 3000);	
-	dialog.addEventListener("click", dialogChoiceLocation);
-}
-
-function dialogChoiceLocation(e){
-	if(cancelBtn != e.index){
-		dialog.selectedIndex = e.index;
-		$.clinicLocationSelection.text = clinicLocationArr[e.index];
-		
-		if(e.index == "0"){
-			Ti.App.Properties.setString('clinicLocationSelection', null); 
-		}else{
-			Ti.App.Properties.setString('clinicLocationSelection', clinicLocationArr[e.index]);  
-		}
-		
+	dialog.addEventListener("click", function(e){   
+		var cancelBtn = clinicLocationArr.length -1;
+		if(cancelBtn != e.index){
+			selectedLocationIndex  = e.index;
+			dialog.selectedIndex = e.index;
+			$.clinicLocationSelection.text = clinicLocationArr[e.index];
 			
-		//list = library.getPanelByClinicType(Ti.App.Properties.getString('clinicTypeSelection'),"", corp); 
-		if(Ti.App.Properties.getString('clinicTypeSelection') == "24 Hours"){   
-			list = library.getPanelBy24Hours("", corp);   
-		}else{
-			list = library.getPanelByClinicType(Ti.App.Properties.getString('clinicTypeSelection'),"", corp);   
+			if(e.index == "0"){
+				Ti.App.Properties.setString('clinicLocationSelection', null); 
+			}else{
+				Ti.App.Properties.setString('clinicLocationSelection', clinicLocationArr[e.index]);  
+			}
+			
+				
+			//list = library.getPanelByClinicType(Ti.App.Properties.getString('clinicTypeSelection'),"", corp); 
+			if(Ti.App.Properties.getString('clinicTypeSelection') == "24 Hours"){   
+				list = library.getPanelBy24Hours("", corp);   
+			}else{
+				list = library.getPanelByClinicType(Ti.App.Properties.getString('clinicTypeSelection'),"", corp);   
+			}
+			common.showLoading();
+			listing();    
 		}
-		common.showLoading();
-		listing();    
-	}
+	});
+	 
 }
+ 
 
 function loadData(corp){
 	if(clinicType == "24 Hours"){ 
@@ -266,13 +274,13 @@ function loadData(corp){
 	listing();
 }
 
-if(OS_IOS){
+ if(OS_IOS){
 	_.debounce(btnSearch, 3000);
 	_.debounce(navClinicLcator, 3000);
 	$.btnSearch.addEventListener('click', btnSearch);
 	$.btnMap.addEventListener('click', navClinicLcator);
-	
-	function btnSearch(e){
+ }
+	function btnSearch(e){ 
 		var isVis=  $.searchItem.getVisible(); 
 		if(isVis === true){ 
 			$.searchItem.visible = false;
@@ -285,6 +293,13 @@ if(OS_IOS){
 	}
 	
 	function navClinicLcator(e){
+		console.log("clinicTypeSelection:"+Ti.App.Properties.getString('clinicTypeSelection'));
+		console.log("clinicLocationSelection:"+Ti.App.Properties.getString('clinicLocationSelection'));
 		Alloy.Globals.Navigator.open("clinic/clinicLocator", { clinicType: Ti.App.Properties.getString('clinicTypeSelection'), location: Ti.App.Properties.getString('clinicLocationSelection'), displayHomeAsUp: true });
 	}
-}
+
+$.win.addEventListener("close", function(){
+	$.destroy(); 
+    
+});
+

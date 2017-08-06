@@ -5,7 +5,7 @@
 		    <ActivityIndicator  id="activityIndicator" />
 			<Label top="5" text="Loading" color="#ffffff" />
 		</View>
-		<View class="vert wfill hsize">
+		<View class="vert wfill hfill">
 		 
 		 	<View width="Ti.UI.FILL" height="1" backgroundColor="#9E9E9E" />
 		  	

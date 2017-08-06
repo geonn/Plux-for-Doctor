@@ -1,10 +1,12 @@
 <Alloy>
 	<Window navTintColor="#CE1D1C" id="win" title="Working Hours"  navBarHidden="false">
 		<View class="vert wfill hfill">
-			<ScrollView class="wfill horz" height="80" showVerticalScrollIndicator="false" scrollType="horizontal" contentWidth="auto" contentHeight="Ti.UI.FILL" backgroundColor="#d7d7d7" id="date_bar">
+			<!--<ScrollView class="wfill horz" height="80" showVerticalScrollIndicator="false" scrollType="horizontal" contentWidth="auto" contentHeight="Ti.UI.FILL" backgroundColor="#d7d7d7" id="date_bar">
 	
-			</ScrollView>
+		</ScrollView> 
 			<Label class="h5 wfill hsize padding" left="30" right="30" bottom="20">Switch on or off for the specific date by above calander.</Label>
+			-->
+			
 	 		<ScrollView id="working_list" class="wfill hfill vert conthsize contwfill" contentHeight="Ti.UI.SIZE" contentWidth="Ti.UI.FILL">
  			
  			</ScrollView>

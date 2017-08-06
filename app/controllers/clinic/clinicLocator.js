@@ -95,7 +95,7 @@ function init(e){
 	}
 	common.hideLoading();
 	//mapview.addAnnotation(mountainView);
-	$.win_map.add(mapview);
+	$.clinicLocator.add(mapview);
 	// Handle click events on any annotations on this map.
 	if(Ti.Platform.osname == "android"){
 		mapview.addEventListener('click', navToclinicDetails);
@@ -115,13 +115,7 @@ function setCurLoc(e){
 }
 _.debounce(navToclinicNearby, 3000);
 $.btnList.addEventListener('click', navToclinicNearby); 
-
-if(Ti.Platform.osname == "android"){
-	$.btnBack.addEventListener('click', function(){ 
-		$.clinicLocator.close(); 
-	}); 
-}
-
+ 
 function navToclinicNearby(e){
 	Alloy.Globals.Navigator.open("clinic/clinicNearby", {longitude:longitude, latitude:latitude, clinicType: clinicType, displayHomeAsUp: true });
 }
