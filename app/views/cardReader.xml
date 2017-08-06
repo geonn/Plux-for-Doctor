@@ -3,7 +3,7 @@
 		<View top="10" class="wfill hsize vert"> 
 	    	<View class="horz wfill hsize">
 		    	<Button class="button" onClick="popInsertCardNo" action="doInquiry" height="80" top="10" left="1%" width="49%" title="Inquiry"></Button>
-		    	<Button class="button" onClick="popInsertCardNo" action="doPay" height="80" top="10" left="1%" width="49%" title="Pay"></Button>
+		    	<Button class="button" onClick="popInsertCardNo" action="show_itemise_submittion" height="80" top="10" left="1%" width="49%" title="Pay"></Button>
 	    	</View>
 	    	<View class="gray-line" top="15" bottom="5" />
 	   	</View>

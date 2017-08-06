@@ -75,8 +75,8 @@ function addMedication(e){
 	// getTotalCharges({});
 	bt.addEventListener("click",function(e){
 		$.medication_mother.remove(container);
-		getMcTotalCharges({});
-		getTotalCharges({});		
+		//getMcTotalCharges({});
+		//getTotalCharges({});		
 	});
 	tf.addEventListener('touchend',function(e){
 		openDrugPicker(tf);
@@ -169,6 +169,7 @@ var submit = true;
 function claim_submit(){
 	if(submit){
 		submit=false;
+		console.log("loading start");
 		loading.start();
 		// getMcTotalCharges();
 		// getTotalCharges({});
@@ -271,7 +272,7 @@ function claim_submit(){
 		  	var signature = (_.isUndefined(msg[1]))?false:true;
 		  	console.log("signature:"+signature);
 		  	submit = true;
-			Alloy.Globals.Navigator.open("receipt", {displayHomeAsUp: true, message: msg[0], signature: signature, terminal_id: terminal_id, record: res[0], appcode: res[0].appcode});
+			Alloy.Globals.Navigator.open("receipt", {displayHomeAsUp: true, message: msg[0], signature: signature, terminal_id: tid, record: res[0], appcode: res[0].appcode});
 			loading.finish();
 		},function(err){
 			alert("Please try again later.");
@@ -339,8 +340,7 @@ function openDiagPicker(tf){
 				tf.name = diagCategoryIdArr[e.index];				
 				tf.color = "#000000";	
 				tf.position = e.index; 								
-			}
-			else{
+			}else{
 				tf.source.value = diagCategoryArr[e.index];  
 				tf.source.name = diagCategoryIdArr[e.index];								
 				tf.source.color = "#000000";		

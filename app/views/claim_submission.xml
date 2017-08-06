@@ -1,6 +1,6 @@
 <Alloy>
-	<Window navTintColor="#CE1D1C" id="win" title="Claim Submission"  navBarHidden="false">		
-		<ScrollView top="0" scrollType="vertical" zIndex="10" class="wfill hsize conthsize contwfill box" backgroundColor="#d4d4d4" id="inner_pay">
+	<Window navTintColor="#CE1D1C" id="win" title="Claim Submission" fullscreen="true"  navBarHidden="false">		
+		<ScrollView top="0" onClick="hideSoftKeyboard" scrollType="vertical" zIndex="10" class="wfill hfill conthsize contwfill box" backgroundColor="#d4d4d4" id="inner_pay">
 			<Label id="login_clinic"></Label>
 			<Label class="big_Label">Claim Submission</Label>
 			<Label width="10" height="10"> </Label> 				 
@@ -16,7 +16,7 @@
 						<TextField class="wfill hsize tf_spacing" top="0" editable="false" id="cardno" hintText="Card Number"></TextField>								
 					</View>	
 					<View class="wfill hsize horz">
-						<Label class="form_lb_top" width="25%" top="0">MC NO.</Label>
+						<Label class="form_lb_top" width="25%" top="0">Medical Certificate NO.</Label>
 						<TextField class="wfill hsize tf_spacing" top="0" id="mc_no" hintText="Medical Certificate No."></TextField>
 					</View>							
 				</View>
@@ -136,11 +136,11 @@
 				<View class="form_bg wfill hsize vert" top="10">
 					<View class="wfill hsize horz">
 						<Label class="form_lb_top" width="30%">Surgical</Label>
-						<TextField class="wfill hsize tf_spacing" id="surginal_item" hintText="Surginal Procedure"></TextField>						
+						<TextField class="wfill hsize tf_spacing" id="surginal_item" hintText="Surgical Procedure"></TextField>						
 					</View>
 					<View class="wfill hsize horz">
 						<Label class="form_lb_top" width="30%" top="0">Surgical Charges</Label>															
-						<TextField class="wfill hsize tf_spacing" top="0" keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" id="surginalamt" hintText="Surginal Procedure Charges"></TextField>						
+						<TextField class="wfill hsize tf_spacing" top="0" keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" id="surginalamt" hintText="Surgical Procedure Charges"></TextField>						
 					</View>							
 				</View>																		
 				<!-- <TextField class="wfill hsize padding" keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" height="40" id="medication" hintText="Medication Charges"></TextField>  -->

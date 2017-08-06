@@ -5,7 +5,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<title>Claim submission receipt</title>
 		<meta name="description" content="">
-		<meta name="viewport" content="width=device-width">
+		<meta name="viewport" content="width=480">
 		<link rel="stylesheet" href="drawingboard.css">
 		<link href='https://fonts.googleapis.com/css?family=Roboto:400,400italic,700' rel='stylesheet' type='text/css'>
 		<script src="jquery.js"></script>
@@ -16,32 +16,21 @@
 				font-family: 'Roboto', sans-serif;
 				font-size:12px;
 				background-color:#ffffff;
+				width: 480px;
 			}
 		</style>
 		<script>
 			$( document ).ready(function(){
-				$("#signatureboard").hide();
-				function maskRemove(){
-					$("#mask").remove();
-				}
+				$("#simple-board").hide();
 			});
 			
 			Ti.App.addEventListener("web:render_message", function(e) {
 				if(!e.signature){
-					$("#signatureboard").hide();
+					$("#simple-board").hide();
 				}else{
-					$("#signatureboard").show();
+					$("#simple-board").show();
 				}
                 $("#message_box").html(nl2br(e.message));
-            });
-            
-            Ti.App.addEventListener("web:screenshot", function(e) {
-				html2canvas(document.body, {
-				  onrendered: function(canvas) {
-				    var dataURL = canvas.toDataURL("image/png");
-				    Ti.App.fireEvent("app:screenshot",{blob: dataURL } );
-				  }
-				});
             });
             
             Ti.App.addEventListener("web:resetSignature", function(e){
@@ -55,10 +44,9 @@
 		</script>
 	</head>
 	<body>
-		<p id="message_box">
+		<p id="message_box" style="padding: 0; margin:0">
 		</p>
 			<!--
-			<p>	
 			ASP MEDICAL CLINIC SDN BHD<br/><br/>
 			1000001<br/>
 			KLINIK ABC<br/>
@@ -81,11 +69,8 @@
 			App. Amt : 0.00<br/>
 			Patient to Pay : 50.00<br/><br/>
 			
-			New Balance : 0.00
-		</p>
-		-->
-		<div id="signatureboard">
-			<div style="width: 100%; height: 200px; display: absolute;" id="simple-board">
+			New Balance : 0.00 -->
+			<div style="width: 320px; height: 200px; left:0; display: absolute;" id="simple-board">
 				
 			</div>
 			
@@ -93,25 +78,38 @@
 			<p>I hereby agreed to disclose the medical<br/>
 			treatment to the TPA.
 			</p>
-		</div>
 		<script>
-			setTimeout(function(){
-				var simpleBoard = new DrawingBoard.Board('simple-board', {
-					controls: false,
-					background: "#FFF68F",
-					enlargeYourContainer: false,
-					webStorage: false
-				});				
-			},1000);	
-			function resetBoard(){
-				$("#simple-board").empty();
-				var simpleBoard = new DrawingBoard.Board('simple-board', {
-					controls: false,
-					background: "#feffac",
-					enlargeYourContainer: false,
-					webStorage: false
-				});	
-			}
+		var simpleBoard = new DrawingBoard.Board('simple-board', {
+			controls: false,
+			background: "#feffac",
+			enlargeYourContainer: false,
+			webStorage: false
+		});		
+		function resetBoard(){
+			$("#simple-board").empty();
+			simpleBoard = new DrawingBoard.Board('simple-board', {
+				controls: false,
+				background: "#feffac",
+				enlargeYourContainer: false,
+				webStorage: false
+			});	
+		}
+		Ti.App.addEventListener("web:screenshot", function(e) {
+    	var img_path = simpleBoard.getImg();
+    	$("#simple-board").empty();
+    	var img = document.createElement("img");
+		img.src = img_path;
+		//$("#simple-board").add(img);
+		$('<img/>')
+		.attr('src', img_path)
+		.appendTo('#simple-board');
+		html2canvas(document.body, {
+		  onrendered: function(canvas) {
+		    var dataURL = canvas.toDataURL("image/png");
+		   	Ti.App.fireEvent("app:screenshot",{blob: dataURL } );
+		  }
+		});
+    });
 			
 		</script>
 	</body>

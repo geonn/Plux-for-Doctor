@@ -1,10 +1,8 @@
 <Alloy>
-	<Window navTintColor="#CE1D1C" id="win" title="Claim Submission"  navBarHidden="false">		
-		<ScrollView top="0" scrollType="vertical" zIndex="10" class="wfill hsize conthsize contwfill box" backgroundColor="#d4d4d4" id="inner_pay">
-			<Label id="login_clinic"></Label>
-			<Label class="big_Label">Claim Submission</Label>
-			<Label width="10" height="10"> </Label> 				 
-			<View class="wfill hsize vert" backgroundColor="#FFF">
+	<Window navTintColor="#CE1D1C" id="win" title="Claim Submission" fullscreen="true"  navBarHidden="false">		
+		<ScrollView onClick="hideSoftKeyboard" top="0" scrollType="vertical" zIndex="10" class="wfill hfill conthsize contwfill box" backgroundColor="#d4d4d4" id="inner_pay">
+							 
+			<View class="wfill hsize vert" backgroundColor="#FFF" top="0">
 				<Label class="medium_Label hsize">Identity Document</Label>
 				<View class="form_bg wfill hsize vert">
 					<View class="wfill hsize horz">
@@ -66,7 +64,7 @@
 				<View class="form_bg wfill hsize vert" top="10">
 					<View class="wfill hsize horz">
 						<Label class="form_lb_top" width="30%" top="0">Surgical Charges</Label>															
-						<TextField class="wfill hsize tf_spacing" top="0" keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" id="surginalamt" hintText="Surginal Procedure Charges"></TextField>						
+						<TextField class="wfill hsize tf_spacing" top="0" keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" id="surginalamt" hintText="Surgical Procedure Charges"></TextField>						
 					</View>							
 				</View>																		
 				<View class="wfill hsize vert" top="20">

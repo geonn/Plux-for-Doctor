@@ -51,6 +51,7 @@ overrode the settings with other TSS, XML, or JS settings:
 'Window[platform=android]': {
     modal: false, // make android windows all heavyweight
     navBarHidden: true,
+    windowSoftInputMode: Titanium.UI.Android.SOFT_INPUT_ADJUST_PAN,
     fullscreen: true,
     width: Ti.UI.FILL,
 },

@@ -258,7 +258,7 @@ exports.definition = {
 	                eval("db.execute(sql_query, "+eval_values.join()+")");
 				});
 				db.execute("COMMIT");
-				//console.log(db.getRowsAffected()+" affected row");
+				console.log(db.getRowsAffected()+" affected row");
 	            db.close();
 	            collection.trigger('sync');		
             },

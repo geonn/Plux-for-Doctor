@@ -1,6 +1,7 @@
 <Alloy>
 	<Window navTintColor="#CE1D1C" class="wfill" id="win" title="Receipt" navBarHidden="false" >
 		<WebView id="receiptView" class="wfill hfill" bottom="50" enableZoomControls="false" disableBounce="true"></WebView>
+    	<ImageView id="sample" class="wfill hsize"></ImageView>
     	<View class="horz wfill hsize" bottom="5" id="button_panel" >
 			<Button class="button" height="40" left="5%" onClick="convertViewToBlob" width="42%" title="Submit"></Button>
 			<Button class="button" height="40" left="5%" onClick="resetSignature" width="42%" title="Reset"></Button>
