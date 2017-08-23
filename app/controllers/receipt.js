@@ -35,8 +35,8 @@ function submit_receipt(){
 	loading.start();
 	//submit to server
 	var param = { 
-		"u_id"	  :  Ti.App.Properties.getString('u_id'),   
-		"item_id"	  :  appcode
+		u_id	  :  Ti.App.Properties.getString('terminal_id')||0,   
+		item_id	  :  appcode
 	};
 	var img_param = {  
 		"photo" : screenShotBlob, 
@@ -45,6 +45,7 @@ function submit_receipt(){
 	API.callByPostImage({url:"uploadReceiptImageUrl", params: param, img: img_param}, function(responseText){ 
 		var res = JSON.parse(responseText); 
 		console.log(res);   
+		console.log("asdf:"+img_param);
 		if(res.status == "success"){    
 			COMMON.createAlert("Success", "Receipt successfully submitted", function(){
 				var patient_recordsModel = Alloy.createCollection('patient_records'); 

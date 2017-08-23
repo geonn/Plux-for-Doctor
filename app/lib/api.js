@@ -151,7 +151,8 @@ exports.callByPostImage = function(e, onload, onerror) {
 	
 	_result.onerror = function(ex) { 
 		console.log("onerror");
-		API.callByPostImage(e, onload);
+		console.log(ex);
+	//	API.callByPostImage(ex, onload);
 		//onerror && onerror();
 	};
 };
@@ -315,7 +316,7 @@ function contactServerByPostWithJson(url,records) {
 function contactServerByPostImage(url, img) { 
  
 	var client = Ti.Network.createHTTPClient({
-		timeout : 50000
+		timeout : 500000
 	});
 	 
 	//client.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');  

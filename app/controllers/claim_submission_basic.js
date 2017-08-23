@@ -98,7 +98,7 @@ function claim_submit(){
 		var mcday = $.mcday.value || 0;
 		var appcode = "1234";
 		var total = $.totalamt.value ||0;
-		API.callByGet({url:"terminalsub", params: "action=PAY&terminal="+tid+"&cardno="+cardno+"&diag1="+diag1+"&diag2="+diag2+"&mc="+mc+"&consday="+dayamt1+"&consnight="+nightamt1+"&medication="+medamt+"&injection="+injectamt
+		API.callByGet({url:"terminalsub", params: "action=PAY&terminal="+tid+"&cardno="+cardno+"&diag1="+diag1+"&diag2="+diag2+"&mc="+mcday+"&consday="+dayamt1+"&consnight="+nightamt1+"&medication="+medamt+"&injection="+injectamt
 		+"&xray="+xrayamt+"&labtest="+labamt+"&surgical="+suramt+"&total="+total+"&appcode="+appcode}, function(responseText){
 		  	//console.log(responseText);
 		  	var res = JSON.parse(responseText); 
