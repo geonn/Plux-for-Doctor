@@ -19,7 +19,6 @@ var cardno, action;// = "6000201000113580";
 var loading = Alloy.createController("loading");
 var status = "", check_pin="", pin_confirm="";
 var pin = [];
-var mctotalcharges=0;
 var totalcharges=0;
 var till;
 var from;
@@ -57,7 +56,7 @@ function addMedication(e){
 	}
 	var container = $.UI.create("View",{classes:['wfill','hsize','horz'],top:"10"});
 	var title = $.UI.create("Label",{classes:['form_lb_top'],width:"25%",text:"Medication"});
-	var tf = $.UI.create("TextField",{classes:['hsize','tf_spacing'],width:"57%",hintText:"Medication",value:"",did:"",dname:"",duom:""});
+	var tf = $.UI.create("TextField",{classes:['hsize','tf_spacing'],width:"57%",hintText:"Medication",value:"",dname:"",duom:""});
 	var bt = $.UI.create("Button",{classes:['button_delete','wsize'],right:"3",title:"Remove"});
 	var lb1 = $.UI.create("Label",{classes:['form_lb_top'], width:"25%", text:"Quantity"});
 	var lb2 = $.UI.create("Label",{classes:['form_lb_top'], width:"25%", text:"Cost"});	
@@ -168,7 +167,6 @@ function init(){
 var submit = true;
 function claim_submit(){
 	if(submit){
-		submit=false;
 		console.log("loading start");
 		loading.start();
 		// getMcTotalCharges();
@@ -208,6 +206,7 @@ function claim_submit(){
 			console.log($.diagnosis_mother.getChildren()[i]._children[1]);
 			if(value == ""){
 				alert("Please select diagnosis!!!");
+				loading.finish();				
 				return;
 			}		
 			else{
@@ -227,7 +226,7 @@ function claim_submit(){
 			var five = 5;
 			console.log("medication_mother length:"+$.medication_mother.getChildren().length);
 			for(var i = 0;i < $.medication_mother.getChildren().length; i++){
-				var value1 = $.medication_mother.getChildren()[i]._children[1].did+"" || "NV";
+				var value1 = $.medication_mother.getChildren()[i]._children[1].did || "NV";
 				var value2 = $.medication_mother.getChildren()[i]._children[1].dname+"" || "NV";
 				var value3 = $.medication_mother.getChildren()[i]._children[1].duom+"" || "NV";
 				var value4 = $.medication_mother.getChildren()[i]._children[three].value+"" || 0;
@@ -236,6 +235,11 @@ function claim_submit(){
 				value_1+=value1;	
 				three = 4;
 				five = 6;			
+				if(value1 == "NV" && medamt>0){
+					alert("You have not itemize medication yet!");
+					loading.finish();
+					return;					
+				}
 				if(count<$.medication_mother.getChildren().length){
 					value_1+="*";			
 				}	
@@ -260,6 +264,40 @@ function claim_submit(){
 		}
 		else{
 			medication = "NV";
+		}
+		var mctotal1 = getMcTotalCharges();
+		console.log("mc:"+mctotal1+"	"+medamt);
+		if(mctotal1 != medamt){
+			alert("Medication charges is not match.");
+			loading.finish();							
+			return;
+		}
+		var total1 = parseFloat(mctotal1)+parseFloat(dayamt)+parseFloat(nightamt)+parseFloat(injectamt)+parseFloat(xrayamt)+parseFloat(labamt)+parseFloat(labhfee)+parseFloat(suramt);
+		console.log("total:"+total1+"	"+totalamt);
+		if(total1 != totalamt){
+			alert("Total charges is not match");
+			loading.finish();
+			return;
+		}
+		if(injection == "NV" && injectamt >0){
+			alert("You have not itemize injection yet.");
+			loading.finish();
+			return;			
+		}
+		if(xray == "NV" && xrayamt >0){
+			alert("You have not itemize x-ray yet.");
+			loading.finish();
+			return;			
+		}
+		if(labtest == "NV" && (labamt >0 || labhfee >0)){
+			alert("You have not itemize labtest yet.");
+			loading.finish();
+			return;
+		}
+		if(surginal == "NV" && suramt >0){
+			alert("You have not itemize surgical yet.");
+			loading.finish();
+			return;
 		}
 		API.callByGet({url:"terminalsubfull", params: "action=PAY&tid="+tid+"&cardno="+cardno+"&mcno="+mcno+"&medamt="+medamt+"&diagnosis="+diag+"&medication="+medication+"&mcfdate="+mcfdate+"&mctdate="+mctdate+"&dayamt="+dayamt+"&nightamt="
 										+nightamt+"&injection="+injection+"&injectamt="+injectamt+"&xray="+xray+"&xrayamt="+xrayamt+"&labtest="+labtest+"&labamt="+labamt+"&labhfee="+labhfee+"&surgical="+surginal+
@@ -458,7 +496,7 @@ function getTotalCharges(e){
 	totalcharges = mc_charges+consday+injectamt+xrayamt+labtestamt+surginalamt+labfee;
 	$.totalamt.value = totalcharges;
 }
-function getMcTotalCharges(e){
+function getMcTotalCharges(){
 	var mc_charges = 0;
 	var open=false;
 	var three = 3;
@@ -477,13 +515,16 @@ function getMcTotalCharges(e){
 			five=6;
 		}
 	}
-	$.mc_charges.value = mc_charges;
-	mctotalcharges = mc_charges;
-	console.log("mc_charges"+mc_charges);
+	return mc_charges;
 }
 Ti.App.addEventListener('cardReader:closeWindow', closeWindow);
 		 
 $.win.addEventListener("close", function(){ 
 	Ti.App.Properties.setString("card_data","");
 	Ti.App.removeEventListener('cardReader:closeWindow', closeWindow);
+});
+$.win.addEventListener("android:back",function(){
+	COMMON.createAlert("Warning","Are you sure you want to leave this page",function(){
+		$.win.close();
+	});
 });

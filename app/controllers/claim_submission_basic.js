@@ -52,7 +52,7 @@ function closeWindow(){
 }
 init();
 
-
+ 
 function getDiag(picker){
 	API.callByPost({url:"getDiagList"}, function(responseText){
 	  	var res = JSON.parse(responseText);
@@ -78,7 +78,7 @@ function init(){
 var submit = true;
 function claim_submit(){
 	if(submit){
-		submit=false;
+		submit=true;
 		loading.start();
 		var tid = $.terminal_id.value || 0;
 		var cardno = $.cardno.value || 0;	
@@ -88,7 +88,6 @@ function claim_submit(){
 		var nightamt = nightamt1 || 0;
 		var diag1 = $.diag1.name || 0;
 		var diag2 = $.diag2.name || 0; 
-		var mc = $.mc_charges.value || 0;
 		var injectamt = $.injectamt.value || 0;
 		var xrayamt = $.xrayamt.value || 0;
 		var labamt = $.labtestamt.value || 0;
@@ -98,7 +97,24 @@ function claim_submit(){
 		var mcday = $.mcday.value || 0;
 		var appcode = "1234";
 		var total = $.totalamt.value ||0;
-		API.callByGet({url:"terminalsub", params: "action=PAY&terminal="+tid+"&cardno="+cardno+"&diag1="+diag1+"&diag2="+diag2+"&mc="+mcday+"&consday="+dayamt1+"&consnight="+nightamt1+"&medication="+medamt+"&injection="+injectamt
+		var total1 = parseFloat(dayamt)+parseFloat(nightamt)+parseFloat(medamt)+parseFloat(injectamt)+parseFloat(xrayamt)+parseFloat(labamt)+parseFloat(suramt);
+		if(diag1 == 0){
+			alert("Please select diagnosis 1.");
+			loading.finish();			
+			return;
+		}
+		if(diag2 == 0){
+			alert("Please select diagnosis 2.");
+			loading.finish();			
+			return;
+		}
+		console.log("total :"+total+"	"+total1);
+		if(total != total1){
+			alert("Total amount is not match.");
+			loading.finish();			
+			return;
+		}
+		API.callByGet({url:"terminalsub", params: "action=PAY&terminal="+tid+"&cardno="+cardno+"&diag1="+diag1+"&diag2="+diag2+"&mc="+mcday+"&consday="+dayamt+"&consnight="+nightamt+"&medication="+medamt+"&injection="+injectamt
 		+"&xray="+xrayamt+"&labtest="+labamt+"&surgical="+suramt+"&total="+total+"&appcode="+appcode}, function(responseText){
 		  	//console.log(responseText);
 		  	var res = JSON.parse(responseText); 

@@ -37,7 +37,7 @@
 				<View class="form_bg wfill hsize vert" id="medication_mother">
 					<View class="wfill hsize horz">
 						<Label class="form_lb_top" width="25%">Medication</Label>
-						<TextField onTouchend="openDrugPicker" class="wfill hsize tf_spacing" id="drug1" did="" dname="" duom="" hintText="Medication" value=""></TextField>	
+						<TextField onTouchend="openDrugPicker" class="wfill hsize tf_spacing" id="drug1" dname="" duom="" hintText="Medication" value=""></TextField>	
 						<Label class="form_lb_top" width="25%" top="0">Quantity</Label>
 						<TextField class="hsize tf_spacing" top="0" width="23%" keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" id="m_qty" hintText="Qty"></TextField>			
 						<Label class="form_lb_top" width="25%" top="0">Cost</Label>
