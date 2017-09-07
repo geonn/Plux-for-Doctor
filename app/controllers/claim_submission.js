@@ -507,7 +507,7 @@ function getMcTotalCharges(){
 		var qty = parseFloat($.medication_mother.getChildren()[i]._children[three].value || 0);
 		var cost = parseFloat($.medication_mother.getChildren()[i]._children[five].value || 0);
 		console.log("mc value:"+qty+" "+cost);
-		var res = cost * qty;
+		var res = cost;
 		mc_charges += res;
 		open=true;
 		if(open){
