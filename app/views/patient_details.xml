@@ -9,14 +9,7 @@
 			<Label class="h4 wfill hsize  padding bold" id="label_ida">Patient Records</Label>
 	 	</View> 
 	 	 <ScrollView class="vert hfill wfill" contentWidth="Ti.UI.FILL" contentHeight="Ti.UI.SIZE" top="35">
-	 	 	<View id="tvrVisitId"  height="Ti.UI.SIZE" layout="vertical" selectedBackgroundColor="#ffffff" >
-					<View class="horz hsize wfill"  textAlign="right" >
-						<Label text="Visit ID" top="12" width="35%" class="h5 padding-left themeColor"  /> 
-						<View width="auto"  class="right-align hsize" >
-							<Label id="lblVisitId" text="" class="wfill padding padding-right h6 right-align" top="12"  color="#000000"  />  
-						</View> 
-					</View>
-				</View> 
+	 	 	
 				<View class="gray-line" /> 
 				
 	    		<View id="tvrName"  height="Ti.UI.SIZE" layout="vertical" selectedBackgroundColor="#ffffff" >
@@ -29,21 +22,12 @@
 				</View> 
 				<View class="gray-line" /> 
 				
-				 <View id="tvruserIc"  height="Ti.UI.SIZE" layout="vertical" selectedBackgroundColor="#ffffff" >
-					<View class="horz hsize wfill "  textAlign="right" >
-						<Label text="Patient I/C" top="12" width="35%" class="h5 padding-left themeColor"  /> 
-						<View width="auto"  class="right-align hsize" >
-							<Label id="lblIc" text="" class="wfill padding padding-right h6 right-align" top="12"   color="#000000"   />  
-						</View> 
-					</View>
-				</View> 
-				<View class="gray-line" /> 
 				
 				<View id="tvrEmp"  height="Ti.UI.SIZE" layout="vertical" selectedBackgroundColor="#ffffff" >
 					<View class="horz hsize wfill "  textAlign="right" >
-						<Label text="Emp. No." top="12" width="35%" class="h5 padding-left themeColor"  /> 
+						<Label text="Member No." top="12" width="35%" class="h5 padding-left themeColor"  /> 
 						<View width="auto"  class="right-align hsize" >
-							<Label id="lblEmp" text=""  class="wfill padding padding-right h6 right-align" top="12" color="#000000"   />  
+							<Label id="lblMemno" text=""  class="wfill padding padding-right h6 right-align" top="12" color="#000000"   />  
 						</View> 
 					</View>
 				</View> 
@@ -58,15 +42,7 @@
 					</View>
 				</View> 
 				<View class="gray-line" /> 
-				 <View id="tvrAllergy"  height="Ti.UI.SIZE" layout="vertical" selectedBackgroundColor="#ffffff" >
-					<View class="horz hsize wfill "  textAlign="right" >
-						<Label text="Allergy" top="12" width="35%" class="h5 padding-left themeColor"  /> 
-						<View width="auto"  class="right-align hsize" >
-							<Label id="lblAllergy" text="" class="wfill padding padding-right h6 right-align" top="12"   color="#000000"   />  
-						</View> 
-					</View>
-				</View> 
-				<View class="gray-line" /> 
+				
 				
 				 <View id="tvrVisitDate"  height="Ti.UI.SIZE" layout="vertical" selectedBackgroundColor="#ffffff" >
 					<View class="horz hsize wfill "  textAlign="right" >
@@ -82,27 +58,7 @@
 						<Label text="Receipt" top="12" width="35%" class="h5 padding-left themeColor"  />
 					</View>
 					<ImageView id="receipt_url" class="wfill hsize"></ImageView>
-				</View> 
-				<View class="gray-line" /> 
-				<View id="tvrCorpName"  height="Ti.UI.SIZE" layout="vertical" selectedBackgroundColor="#ffffff" >
-					<View class="horz hsize wfill "  textAlign="right" >
-						<Label text="Visit Remark" top="12"  class="h5 wfill padding-left themeColor"  /> 
-						<View width="auto"  class="right-align hsize padding" >
-							<TextArea  horizontalWrap="true" id="remark" class="padding left-align h5 font_dark_grey wfill"   hintText="Please fill in visit remark" value="" top="0"  borderColor="#ffffff" backgroundColor="#ffffff"  height="150"  suppressReturn="false" >
-								<KeyboardToolbar platform="ios">
-									<Toolbar>
-										<Items> 
-											<FlexSpace/>
-											<Button onClick="hideKeyboard" backgroundImage="/images/btn-down.png" textAlign="right" right="5" width="20" height="20"  />
-										</Items>
-									</Toolbar>
-								</KeyboardToolbar>
-							</TextArea>
-						</View> 
-					</View>
-				</View> 
-				<Button  id="saveBtn" class="button" title="Save" top="10"></Button> 
-				
+				</View>
 	    	</ScrollView>
 	    <!--<ScrollView id="contentView" class="wfill hfill vert"  top="40"  contentHeight="Ti.UI.SIZE" contentWidth="Ti.UI.FILL" />  
     	-->

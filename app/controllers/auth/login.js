@@ -18,6 +18,7 @@ function onload(responseText){
 			var arr = result.data; 
 			//Ti.App.Properties.setString('clinic_id', arr.clinic_id);
 			//Ti.App.Properties.setString('specialty', arr.specialty);
+			console.log("asdf:"+arr.doctor_id);
 	   		Ti.App.Properties.setString('u_id', arr.doctor_id);
 	   		Ti.App.Properties.setString('doctor_id', arr.doctor_id);
 	   		Ti.App.Properties.setString('name', arr.name);
@@ -28,6 +29,23 @@ function onload(responseText){
 		},2000);
 			
 	}
+}
+
+function clinic_login(){
+	var username     = $.username.value;
+	var password	 = $.password.value;
+	API.callByGet({url:"panellogin", params: "LOGINID="+username+"&PASSWORD="+password}, function(responseText){
+	  	var res = JSON.parse(responseText);
+		if(_.isUndefined(res[0].code)){
+			Ti.App.Properties.setString("terminal_id", res[0].terminalid);
+			Ti.App.Properties.setString('clinic_name', res[0].name);
+			Ti.App.Properties.setString('clinic_code', res[0].ccode);
+			callback && callback();
+			$.win.close();
+		}else{
+			alert(res[0].message);
+		}
+	});
 }
 
 function do_login(){
@@ -59,7 +77,7 @@ function init(){
 }
 
 $.checkAuth = function(cb){
-	var u_id = Ti.App.Properties.getString('u_id') || 0;  
+	var u_id = Ti.App.Properties.getString('terminal_id') || 0;  
 	if(u_id > 0){
 		cb && cb();
     }else{ 

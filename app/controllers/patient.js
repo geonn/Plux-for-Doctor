@@ -5,7 +5,10 @@ COMMON.construct($);
 init(); 
 
 function init(){  
-	details = patient_recordsModel.getHistoryList(""); 
+	var terminal_id = Ti.App.Properties.getString("terminal_id");
+	//patient_recordsModel.updateTerminateId(terminal_id);
+	details = patient_recordsModel.getHistoryList("", terminal_id); 
+	console.log(details);
  	showList();
 }
 
@@ -14,13 +17,12 @@ function showList(){
 	var data=[]; 
 	$.recordTable.setData(data);
 	var counter = 0; 
- 
 	if(details.length < 1){
 		COMMON.hideLoading(); 
 		$.recordTable.setData(COMMON.noRecord());
 	}else{
-		details.forEach(function(entry) {
-			 
+
+		details.forEach(function(entry) {	 
 			var row = Titanium.UI.createTableViewRow({
 			    touchEnabled: true,
 			    height: Ti.UI.SIZE,
@@ -48,8 +50,7 @@ function showList(){
 				height:Ti.UI.SIZE
 			}); 
 			contentView.add(clinicLbl);
-			
-			 var msgLbl =  $.UI.create('Label',{ 
+			var msgLbl =  $.UI.create('Label',{ 
 				classes: ['h6', 'hsize'],
 				text:  entry.corpname,
 				source: entry.id,   
@@ -59,27 +60,35 @@ function showList(){
 			}); 
 			 
 			contentView.add(msgLbl);
+
 			
 			var visitdate = entry.visitdate;
-			visitdate = visitdate.replace("  "," ");
+			//visitdate = visitdate.replace("  "," ");
+			try{
+				visitdate = monthFormat(visitdate);				
+			}catch(err){
+				visitdate = visitdate;
+			}			
+			console.log("asdf4");				
 			var appLbl =  $.UI.create('Label',{ 
 				classes: ['h6'],
-				text:  "Visit Updated : "+monthFormat(visitdate), 
 				source: entry.id,  
+				text:visitdate,
 				textAlign:'left', 
 				left:15, 
 				width: "85%",
 				height:Ti.UI.SIZE
 			}); 
+
 			contentView.add(appLbl);
-			
+			console.log("asdf5");
 			var rightForwardBtn =  Titanium.UI.createImageView({
 				image:"/images/btn-forward.png",
 				source: entry.id,  
 				width:15,
 				right:20 
 			});
-		 
+		 	console.log("asdf2");
 			row.add(contentView);
 			row.add(rightForwardBtn); 
 			if(entry.url != ""){

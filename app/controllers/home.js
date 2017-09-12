@@ -7,20 +7,19 @@ var doctor_id = Ti.App.Properties.getString('doctor_id');
 var menu_info = [
 	{mod: "cardReader", image: "/images/btn/e-card-reader.png"},
 	{mod: "patient", image: "/images/btn/patient-record.png"}, 
-	{mod: "appointment", image: "/images/btn/appointment.png"},
-	{mod: "clinic/listing", image: "/images/btn/clinic-locator.png"},
-	{mod: "ida", image: "/images/btn/ida.png"},
-	{mod: "hra", image: "/images/btn/health-rish-assessment.png"},
-	{mod: "settings", image: "/images/btn/settings.png"},
+	//{mod: "appointment", image: "/images/btn/appointment.png"},
+	//{mod: "clinic/listing", image: "/images/btn/clinic-locator.png"},
+	//{mod: "ida", image: "/images/btn/ida.png"},
+	//{mod: "hra", image: "/images/btn/health-rish-assessment.png"},
+	//{mod: "settings", image: "/images/btn/settings.png"},
 	//{mod: "receipt", image: "/images/btn/settings.png"},
 	//{mod: "askDoctor", image: "/images/btn/settings.png"},
 ];
 
 function doLogout(){
-	Ti.App.Properties.removeProperty('u_id');
-	Ti.App.Properties.removeProperty('name');
-	Ti.App.Properties.removeProperty('clinic_id');
-	Ti.App.Properties.removeProperty('doctor_panel_id');
+	Ti.App.Properties.removeProperty("terminal_id");
+	Ti.App.Properties.removeProperty('clinic_name');
+	Ti.App.Properties.removeProperty('clinic_code');
 	var win = Alloy.createController("index").getView();
 	win.open();
 	$.win.close();
@@ -116,7 +115,7 @@ function render_menu_list(){
  * */
 
 function render_header_info(){
-	var name = Ti.App.Properties.getString('name');
+	var name = Ti.App.Properties.getString('clinic_name');
 	
 	var logoutBtn = Ti.UI.createButton({
 		backgroundImage : "/images/btn/logout.png",
@@ -158,6 +157,7 @@ function render_header_info(){
 	$.myInfo.add(title_view);
 	
 	//geo: hijack clinic panel select checking
+	/* onn: panel select removed
 	var clinic_id = Ti.App.Properties.getString('clinic_id') || ""; 
 	var dp = Ti.App.Properties.getString('doctor_panel_id') || ""; 
 	console.log("clinic_id:"+clinic_id);
@@ -170,7 +170,7 @@ function render_header_info(){
 		}else{
 			alert("No panel found, please create your clinic panel.");
 		}
-	} 
+	} */
 }
 
  

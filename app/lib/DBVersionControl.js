@@ -7,27 +7,17 @@
 
 // update user device token
 exports.checkAndUpdate = function(e){
-	var dbVersion = Ti.App.Properties.getString("dbVersion") || "1.0";
-	
-	if (dbVersion == '1.0') {
+	var dbVersion = Ti.App.Properties.getString("dbVersion") || "1.3";
+	dbVersion="1.2";
+	if (dbVersion == '1.2') {
 	  /*
 	   version 1.1 upgrade
 	   * */
-	  var appointment_model = Alloy.createCollection('appointment'); 
-	  appointment_model.addColumn("patient_name", "TEXT");
-	  dbVersion = '1.1';
+	  var model = Alloy.createCollection('patient_records'); 
+	  model.addColumn("terminal_id", "TEXT");
+	  dbVersion = '1.3';
 	}
 	
-	if (dbVersion == '1.1') {
-	  /*
-	   version 1.1 upgrade
-	   * */
-	  var pr = Alloy.createCollection('patient_records'); 
-	  pr.addColumn("type", "TEXT");
-	  pr.addColumn("receipt_url", "TEXT");
-	  
-	  dbVersion = '1.2';
-	}
 	Ti.App.Properties.setString("dbVersion", dbVersion);
 };
 

@@ -30,6 +30,11 @@ overrode the settings with other TSS, XML, or JS settings:
 "Actionbar":{
 	backgroundColor: "#75d0cb",
 },
+".textfield":{
+	 backgroundColor: "#ffffff",
+	 borderWidth: 1,
+	 borderColor: "#cccccc"	
+},
 "TableViewRow[platform=android]":{
 	color: "#606060",
 	top:10,
@@ -46,6 +51,7 @@ overrode the settings with other TSS, XML, or JS settings:
 'Window[platform=android]': {
     modal: false, // make android windows all heavyweight
     navBarHidden: true,
+    windowSoftInputMode: Titanium.UI.Android.SOFT_INPUT_ADJUST_PAN,
     fullscreen: true,
     width: Ti.UI.FILL,
 },
@@ -64,7 +70,7 @@ overrode the settings with other TSS, XML, or JS settings:
 },
 
 'TextField[platform=android]': {
-    height: 40,
+    height: 50,
 	borderColor: "#dfe0e4",
 	color: "#000000",
 	borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
@@ -333,7 +339,7 @@ overrode the settings with other TSS, XML, or JS settings:
 ".shadow":{
 	backgroundImage: "/images/shadow.png",
 },
-'.whiteColor' : {
+'.white' : {
 	color: "#ffffff"
 }
 '.themeColor' : {
