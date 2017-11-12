@@ -238,13 +238,17 @@ function submitPin(){
 function show_itemise_submittion(){
 	var t_id = Ti.App.Properties.getString("terminal_id");
 	var c_no =  cardno; // empno
-	var options = ['Claim Submission With Itemization','Claim Submission','Cancel'];				
-	var opts = {cancel: 2,options:options,destructive: 0,title: 'Options'};	
+	//var options = ['Claim Submission With Itemization','Claim Submission','Cancel'];		
+	var options = ['Claim Submission','Cancel'];				
+	var opts = {cancel: 1,options:options,destructive: 0,title: 'Options'};	
 	var dialog = Ti.UI.createOptionDialog(opts);
 	dialog.addEventListener("click",function(e){
-		if(e.index == 0){
+		/*if(e.index == 0){
 			Alloy.Globals.Navigator.open("claim_submission", {displayHomeAsUp: true,t_id:t_id,c_no:c_no});						
 		}else if(e.index == 1){
+			Alloy.Globals.Navigator.open("claim_submission_basic", {displayHomeAsUp: true,t_id:t_id,c_no:c_no});
+		}*/
+		if(e.index == 0){
 			Alloy.Globals.Navigator.open("claim_submission_basic", {displayHomeAsUp: true,t_id:t_id,c_no:c_no});
 		}
 	});

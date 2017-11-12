@@ -103,14 +103,14 @@ function claim_submit(){
 			loading.finish();			
 			return;
 		}
-		if(diag2 == 0){
-			alert("Please select diagnosis 2.");
-			loading.finish();			
-			return;
-		}
 		console.log("total :"+total+"	"+total1);
 		if(total != total1){
 			alert("Total amount is not match.");
+			loading.finish();			
+			return;
+		}
+		if(total <= 0){
+			alert("Total amount cannot be 0");
 			loading.finish();			
 			return;
 		}
@@ -149,6 +149,7 @@ function claim_submit(){
 		
 
 function getDiagCategory(){
+	loading.start();
 	API.callByPost({url:"getDiagList"}, function(responseText){ 
 		res = JSON.parse(responseText); 
 		console.log(JSON.stringify(res)); 
@@ -158,14 +159,51 @@ function getDiagCategory(){
 		}
 		
 	 	//if(OS_IOS){
-			diagCategoryArr.push("Cancel"); 
+		//diagCategoryArr.push("Cancel"); 
 		//}
-		 
+		loading.finish(); 
 	}); 
 }
 
+function openDiagListView(tf){
+	if(Ti.Platform.osname === 'android'){
+         Ti.UI.Android.hideSoftKeyboard();
+    }
+ 	var search_bar = Ti.UI.Android.createSearchView({
+	    hintText: "Table Search"
+	});
+ 	var items = [];
+ 	for (var i=0; i < diagCategoryArr.length; i++) {
+		items.push(Ti.UI.createTableViewRow({title: diagCategoryArr[i], top:10, left:10, right:10, bottom:10}));
+	};
+	var tableview = Titanium.UI.createTableView({
+	    data: items,
+	    search: search_bar,
+	    backgroundColor: "#ffffff",
+	    searchAsChild: true,
+	    zIndex:100
+	});
+	
+	tableview.addEventListener("click", function(e){   
+		if(typeof tf.source == "undefined"){
+			tf.value = diagCategoryArr[e.index];  
+			tf.name = diagCategoryIdArr[e.index];				
+			tf.color = "#000000";	
+			tf.position = e.index; 								
+		}else{
+			tf.source.value = diagCategoryArr[e.index];  
+			tf.source.name = diagCategoryIdArr[e.index];								
+			tf.source.color = "#000000";		
+			selectedDiag1 = e.index;		
+		}
+		$.win.remove(tableview);
+	});
+	
+	$.win.add(tableview);
+}
+
 function openDiagPicker(tf){ 
-	 if(Ti.Platform.osname === 'android'){
+	if(Ti.Platform.osname === 'android'){
          Ti.UI.Android.hideSoftKeyboard();
     }
     
