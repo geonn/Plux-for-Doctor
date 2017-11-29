@@ -367,10 +367,14 @@ function openDiagPicker(tf){
 	});
  	var items = [];
  	for (var i=0; i < diagCategoryArr.length; i++) {
- 		var row = $.UI.create("TableViewRow", {title: diagCategoryArr[i]});
- 		var view = $.UI.create("View", {classes:['wfill','hsize','padding'], height: 20});
- 		row.add(view);
-		items.push(row);
+ 		if(OS_IOS){
+	 		var row = $.UI.create("TableViewRow", {title: diagCategoryArr[i]});
+	 		var view = $.UI.create("View", {classes:['wfill','hsize','padding'], height: 20});
+	 		row.add(view);
+			items.push(row);
+		}else{
+			items.push({title: diagCategoryArr[i], color: "#000000"});
+		}
 	};
 	console.log("openDiagListView");
 	var tableview = Titanium.UI.createTableView({
@@ -433,10 +437,14 @@ function openDrugPicker(tf){
 	});
  	var items = [];
  	for (var i=0; i < drugCategoryArr.length; i++) {
- 		var row = $.UI.create("TableViewRow", {title: drugCategoryArr[i]});
- 		var view = $.UI.create("View", {classes:['wfill','hsize','padding'], height: 20});
- 		row.add(view);
-		items.push(row);
+		if(OS_IOS){
+	 		var row = $.UI.create("TableViewRow", {title: drugCategoryArr[i]});
+	 		var view = $.UI.create("View", {classes:['wfill','hsize','padding'], height: 20});
+	 		row.add(view);
+			items.push(row);
+		}else{
+			items.push({title: drugCategoryArr[i], color: "#000000"});
+		}
 	};
 	var tableview = Titanium.UI.createTableView({
 	    data: items,
