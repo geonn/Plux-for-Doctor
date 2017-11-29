@@ -20,11 +20,11 @@
 				<View class="form_bg wfill hsize vert" id="diagnosis_mother">
 					<View class="wfill hsize horz">
 						<Label class="form_lb_top" width="25%">Diagnosis 1</Label>
-						<Label onClick="openDiagListView" class="wfill hsize tf_spacing" name="" position id="diag1" hintText="Diagnosis" value=""></Label>
+						<Label onClick="openDiagListView" class="wfill hsize tf_spacing" name="" position id="diag1" hintText="Diagnosis" value="" color="#000000"></Label>
 					</View>
 					<View class="wfill hsize horz">
 						<Label class="form_lb_top" width="25%">Diagnosis 2</Label>
-						<Label onClick="openDiagListView" class="wfill hsize tf_spacing" name="" position id="diag2" hintText="Diagnosis" value=""></Label>
+						<Label onClick="openDiagListView" class="wfill hsize tf_spacing" name="" position id="diag2" hintText="Diagnosis" value=""  color="#000000"></Label>
 					</View>					
 				</View>										 					
 				<Label class="medium_Label hsize">Charges</Label>	

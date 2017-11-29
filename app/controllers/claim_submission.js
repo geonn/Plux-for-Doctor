@@ -381,7 +381,7 @@ function openDiagPicker(tf){
 	    data: items,
 	    layout: "vertiacl",
 	    search: search_bar,
-	    backgroundColor: "#ffffff",
+	    backgroundColor: "#000000",
 	    searchAsChild: true,
 	    zIndex:100
 	});

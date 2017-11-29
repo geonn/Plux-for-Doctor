@@ -27,7 +27,7 @@
 				<View class="form_bg wfill hsize vert" id="diagnosis_mother">
 					<View class="wfill hsize horz">
 						<Label class="form_lb_top" width="25%">Diagnosis</Label>
-						<Label onTouchend="openDiagPicker" class="wfill hsize tf_spacing" name="" id="diag1" hintText="Diagnosis" value=""></Label>
+						<Label onTouchend="openDiagPicker" class="wfill hsize tf_spacing" name="" id="diag1" hintText="Diagnosis" value=""  color="#000000"></Label>
 					</View>
 				</View>					
 				<View class="wfill hsize">
