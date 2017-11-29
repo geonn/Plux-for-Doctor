@@ -27,7 +27,7 @@
 				<View class="form_bg wfill hsize vert" id="diagnosis_mother">
 					<View class="wfill hsize horz">
 						<Label class="form_lb_top" width="25%">Diagnosis</Label>
-						<TextField onTouchend="openDiagPicker" class="wfill hsize tf_spacing" name="" id="diag1" hintText="Diagnosis" value=""></TextField>
+						<Label onTouchend="openDiagPicker" class="wfill hsize tf_spacing" name="" id="diag1" hintText="Diagnosis" value=""></Label>
 					</View>
 				</View>					
 				<View class="wfill hsize">
@@ -35,13 +35,17 @@
 					<Button class="button_add wsize" right="10" height="40" onClick="addMedication">Add</Button>
 				</View>	
 				<View class="form_bg wfill hsize vert" id="medication_mother">
-					<View class="wfill hsize horz">
-						<Label class="form_lb_top" width="25%">Medication</Label>
-						<TextField onTouchend="openDrugPicker" class="wfill hsize tf_spacing" id="drug1" dname="" duom="" hintText="Medication" value=""></TextField>	
-						<Label class="form_lb_top" width="25%" top="0">Quantity</Label>
-						<TextField class="hsize tf_spacing" top="0" width="23%" keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" id="m_qty" hintText="Qty"></TextField>			
-						<Label class="form_lb_top" width="25%" top="0">Cost</Label>
-						<TextField class="hsize tf_spacing" width="23%" top="0" keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" id="m_cost" hintText="Cost"></TextField>																								
+					<View class="wfill hsize vert">
+						<View class="wfill hsize">
+							<Label class="form_lb_top" left="3" width="27%" textAlign="left">Medication</Label>
+							<Label onTouchend="openDrugPicker" width="72%" left="29%" right="3" class="wfill hsize tf_spacing" id="drug1" dname="" duom="" hintText="Medication" value="" maxuprice="0"></Label>	
+						</View>
+						<View class="wfill hsize">
+							<Label class="form_lb_top" left='3' width="25%" top="0">Quantity</Label>
+							<TextField class="hsize tf_spacing" top="0" left="26%" width="23%" keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" id="m_qty" onChange="checkUnitPrice" hintText="Qty"></TextField>			
+							<Label class="form_lb_top" width="25%" left="50%" top="0">Price</Label>
+							<TextField class="hsize tf_spacing" left="76%" onChange="checkUnitPrice" width="23%" top="0" keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" id="m_cost" hintText="Cost"></TextField>
+						</View>
 					</View>											
 				</View>		
 				<!-- <View class="wfill hsize horz" top="20">
@@ -159,8 +163,8 @@
 	 				<TextArea hintText="OTHERS (CHRONIC) Description" class="wfill hsize ta_spacing" left="3" top="0" form_type="textarea" require="true" id="chnote"></TextArea>																			
 				</View>																				
 				<View class="wfill hsize">
-					<Button class="button1" top="10" onClick="closeWindow" backgroundColor="#7B7B7B" left="0" width="50%" title="Cancel"></Button>
-					<Button class="button1" top="10" onClick="claim_submit" right="0" width="50%" title="Submit"></Button>	
+					<Button class="button" top="10" onClick="closeWindow" left="0" width="50%" title="Cancel"></Button>
+					<Button class="button" top="10" onClick="claim_submit" right="0" width="50%" title="Submit"></Button>	
 				</View> 
 			</View>
 		</ScrollView>

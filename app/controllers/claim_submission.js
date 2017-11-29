@@ -46,29 +46,35 @@ function checkingID(t_id1,c_no1){
 }
 
 function addMedication(e){
-	
+
 	for(var i = 0;i < $.medication_mother.getChildren().length;i++){
-		var value = $.medication_mother.getChildren()[i]._children[1].value;
+		var value = $.medication_mother.children[i].children[0].children[1].value;
 		if(value == ""){
 			alert("Please select medication!!!");
 			return;
 		}		
 	}
-	var container = $.UI.create("View",{classes:['wfill','hsize','horz'],top:"10"});
-	var title = $.UI.create("Label",{classes:['form_lb_top'],width:"25%",text:"Medication"});
-	var tf = $.UI.create("TextField",{classes:['hsize','tf_spacing'],width:"57%",hintText:"Medication",value:"",dname:"",duom:""});
+	var container = $.UI.create("View",{classes:['wfill','hsize','vert']});
+	var medication_title_view = $.UI.create("View", {classes: ["wfill", "hsize"]});
+	var title = $.UI.create("Label",{classes:['form_lb_top'], left: 3, width:"27%", textAlign: "left", text:"Medication"});
+	var tf = $.UI.create("Label",{classes:['hsize','tf_spacing'],width:"72%", left: "29%", right: 3, hintText:"Medication", maxuprice: 0, value:"",dname:"",duom:""});
+	var cost_quantity_view = $.UI.create("View", {classes: ["wfill", "hsize"]});
 	var bt = $.UI.create("Button",{classes:['button_delete','wsize'],right:"3",title:"Remove"});
-	var lb1 = $.UI.create("Label",{classes:['form_lb_top'], width:"25%", text:"Quantity"});
-	var lb2 = $.UI.create("Label",{classes:['form_lb_top'], width:"25%", text:"Cost"});	
-	var tf1 = $.UI.create("TextField",{classes:['hsize','tf_spacing'],width:"23%",keyboardType:Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD,hintText:"Qty"});
-	var tf2 = $.UI.create("TextField",{classes:['hsize','tf_spacing'],width:"23%",keyboardType:Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD,hintText:"Cost"});	
-	container.add(title);
-	container.add(tf);
+	var lb1 = $.UI.create("Label",{classes:['form_lb_top'], left: 3, width:"25%", top:0, text:"Quantity"});
+	var lb2 = $.UI.create("Label",{classes:['form_lb_top'], left: "50%", top:0, width:"25%", text:"Price"});	
+	var tf1 = $.UI.create("TextField",{classes:['hsize','tf_spacing'], top: 0, left: "26%", width:"23%",keyboardType:Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD,hintText:"Qty"});
+	var tf2 = $.UI.create("TextField",{classes:['hsize','tf_spacing'], left: "76%", top:0, width:"23%",keyboardType:Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD,hintText:"Cost"});	
+	medication_title_view.add(title);
+	medication_title_view.add(tf);
+	
+	cost_quantity_view.add(lb1);
+	cost_quantity_view.add(tf1);
+	cost_quantity_view.add(lb2);
+	cost_quantity_view.add(tf2);
+	
+	container.add(medication_title_view);
+	container.add(cost_quantity_view);
 	container.add(bt);
-	container.add(lb1);
-	container.add(tf1);
-	container.add(lb2);
-	container.add(tf2);
 	$.medication_mother.add(container);
 	// getMcTotalCharges({});	
 	// getTotalCharges({});
@@ -77,17 +83,15 @@ function addMedication(e){
 		//getMcTotalCharges({});
 		//getTotalCharges({});		
 	});
+	tf1.addEventListener("change", checkUnitPrice);
+	tf2.addEventListener("change", checkUnitPrice);
 	tf.addEventListener('touchend',function(e){
 		openDrugPicker(tf);
 	});
 }
 
 function closeWindow(){
-	COMMON.openWindow(Alloy.createController("cardReader").getView());
-	setTimeout(function(){
-		$.win.close();
-		$.destroy();	
-	},1000);
+	$.win.close();
 }
 function popDatePicker(e){
 	hideSoftKeyboard({});
@@ -101,9 +105,10 @@ function popDatePicker(e){
 	});
 	var view_container = $.UI.create("View", {classes:['wfill', 'hfill'], zIndex: 30,});
 	var img_mask = $.UI.create("ImageView", {classes:['wfill','hfill'], image: "/images/warm-grey-bg.png"});
-	var ok_button = $.UI.create("Button", {classes:['button'], left: 10, right:10, title: "Done"});
-	var cancel_button = $.UI.create("Button", {classes:['button'], left: 10, right:10, title: "Cancel"});
+	var ok_button = $.UI.create("Button", {classes:['button'], width: "100",  left: 10, title: "Done"});
+	var cancel_button = $.UI.create("Button", {classes:['button'], width: "100", left: 120, right:10, title: "Cancel"});
 	var view_vert = $.UI.create("View", {classes:['wsize','hsize','vert']});
+	var view_button_horz = $.UI.create("View", {classes:['hsize'], width: 230});
 	cancel_button.addEventListener("click", function(){ 
 		$.win.remove(view_container);
 	});
@@ -131,8 +136,9 @@ function popDatePicker(e){
 	
 	view_container.add(img_mask);
 	view_vert.add(picker);
-	view_vert.add(ok_button);
-	view_vert.add(cancel_button);
+	view_button_horz.add(ok_button);
+	view_button_horz.add(cancel_button);
+	view_vert.add(view_button_horz);
 	view_container.add(view_vert);
 	
 	$.win.add(view_container);
@@ -201,9 +207,9 @@ function claim_submit(){
 		var chnote = $.chnote.value || "NV";
 		var appcode = "1234";
 		for(var i = 0; i < $.diagnosis_mother.getChildren().length; i++){
-			var value = $.diagnosis_mother.getChildren()[i]._children[1].name;
+			var value = $.diagnosis_mother.children[i].children[1].name;
 			var count = i + 1;
-			console.log($.diagnosis_mother.getChildren()[i]._children[1]);
+			console.log($.diagnosis_mother.children[i].children[1]);
 			if(value == ""){
 				alert("Please select diagnosis!!!");
 				loading.finish();				
@@ -216,21 +222,24 @@ function claim_submit(){
 				}
 			}
 		}
-		if($.medication_mother.getChildren()[0]._children[1].did != ""){
+		if($.medication_mother.getChildren()[0].children[0].children[1].did != ""){
 			var value_1 = "";	
 			var value_2 = "";
 			var value_3 = "";
 			var value_4 = "";
 			var value_5 = "";
-			var three = 3;
-			var five = 5;
+			var three = 1;
+			var five = 3;
 			console.log("medication_mother length:"+$.medication_mother.getChildren().length);
 			for(var i = 0;i < $.medication_mother.getChildren().length; i++){
-				var value1 = $.medication_mother.getChildren()[i]._children[1].did || "NV";
-				var value2 = $.medication_mother.getChildren()[i]._children[1].dname+"" || "NV";
-				var value3 = $.medication_mother.getChildren()[i]._children[1].duom+"" || "NV";
-				var value4 = $.medication_mother.getChildren()[i]._children[three].value+"" || 0;
-				var value5 = $.medication_mother.getChildren()[i]._children[five].value+"" || 0;
+				console.log($.medication_mother.children[i].children[1]);
+				console.log($.medication_mother.children[i].children[0].children[1]);
+				console.log($.medication_mother.children[i].children[0].children[1].did);
+				var value1 = $.medication_mother.children[i].children[0].children[1].did || "NV";
+				var value2 = $.medication_mother.children[i].children[0].children[1].dname+"" || "NV";
+				var value3 = $.medication_mother.children[i].children[0].children[1].duom+"" || "NV";
+				var value4 = $.medication_mother.children[i].children[1].children[1].value+"" || 0;
+				var value5 = $.medication_mother.children[i].children[1].children[3].value+"" || 0;
 				var count = i + 1;	
 				value_1+=value1;	
 				three = 4;
@@ -265,9 +274,9 @@ function claim_submit(){
 		else{
 			medication = "NV";
 		}
-		var mctotal1 = getMcTotalCharges();
-		console.log("mc:"+mctotal1+"	"+medamt);
-		if(mctotal1 != medamt){
+		//var mctotal1 = getMcTotalCharges();
+		//console.log("mc:"+mctotal1+"	"+medamt);
+		/*if(mctotal1 != medamt){
 			alert("Medication charges is not match.");
 			loading.finish();							
 			return;
@@ -278,7 +287,7 @@ function claim_submit(){
 			alert("Total charges is not match");
 			loading.finish();
 			return;
-		}
+		}*/
 		if(injection == "NV" && injectamt >0){
 			alert("You have not itemize injection yet.");
 			loading.finish();
@@ -346,46 +355,50 @@ function getDrugList(){
 	});
 }
 
-function openDiagPicker(tf){ 
-	 if(Ti.Platform.osname === 'android'){
+function openDiagPicker(tf){
+	if(Ti.Platform.osname === 'android'){
          Ti.UI.Android.hideSoftKeyboard();
     }
-    
-	var curSelection = "0";
-	var cancelBtn = diagCategoryArr.length -1;
-	if(typeof tf.source != "undefined"){
-		console.log("tf source");
-		if(tf.source.id == "diag1"){
-			curSelection = selectedDiag1;
-		}
-	}else{
-		console.log("tf position:"+tf.position);
-		curSelection = tf.position;
-	}
-	 
-	var dialog = Ti.UI.createOptionDialog({
-	 cancel: diagCategoryArr.length -1,
-	 options: diagCategoryArr,
-	  selectedIndex: parseInt(curSelection),
-	  title: 'Choose Diag Type'
+    console.log("openDiagListView");
+ 	var search_bar = (OS_IOS)?Titanium.UI.createSearchBar({
+ 		hintText: "Table Search"
+ 	}):Ti.UI.Android.createSearchView({
+	    hintText: "Table Search"
 	});
-		
-	dialog.show(); 
-	dialog.addEventListener("click", function(e){   
-		if(cancelBtn != e.index){ 
-			if(typeof tf.source == "undefined"){
-				tf.value = diagCategoryArr[e.index];  
-				tf.name = diagCategoryIdArr[e.index];				
-				tf.color = "#000000";	
-				tf.position = e.index; 								
-			}else{
-				tf.source.value = diagCategoryArr[e.index];  
-				tf.source.name = diagCategoryIdArr[e.index];								
-				tf.source.color = "#000000";		
-				selectedDiag1 = e.index;		
-			}
-		}
+ 	var items = [];
+ 	for (var i=0; i < diagCategoryArr.length; i++) {
+ 		var row = $.UI.create("TableViewRow", {title: diagCategoryArr[i]});
+ 		var view = $.UI.create("View", {classes:['wfill','hsize','padding'], height: 20});
+ 		row.add(view);
+		items.push(row);
+	};
+	console.log("openDiagListView");
+	var tableview = Titanium.UI.createTableView({
+	    data: items,
+	    layout: "vertiacl",
+	    search: search_bar,
+	    backgroundColor: "#ffffff",
+	    searchAsChild: true,
+	    zIndex:100
 	});
+	
+	tableview.addEventListener("click", function(e){   
+		if(typeof tf.source == "undefined"){
+			tf.value = diagCategoryArr[e.index];  
+			tf.text = diagCategoryArr[e.index]; 
+			tf.name = diagCategoryIdArr[e.index];				
+			tf.color = "#000000";	
+			tf.position = e.index; 								
+		}else{
+			tf.source.value = diagCategoryArr[e.index];  
+			tf.source.text = diagCategoryArr[e.index]; 
+			tf.source.name = diagCategoryIdArr[e.index];								
+			tf.source.color = "#000000";		
+			selectedDiag1 = e.index;		
+		}
+		$.win.remove(tableview);
+	});
+	$.win.add(tableview);
 }
 function openDayPicker(lb){ 
     
@@ -409,50 +422,57 @@ function openDayPicker(lb){
 	});
 }
 function openDrugPicker(tf){
-
-	if(OS_ANDROID){
-		Ti.UI.Android.hideSoftKeyboard();
-	} 
-	var curSelection = "0";
-	var cancelBtn = drugCategoryArr.length -1;
-	if(typeof tf.source != "undefined"){
-		console.log("tf source");
-		if(tf.source.id == "drug1"){
-			curSelection = selectedDrug1;
-			console.log("CurSelection:"+curSelection);
-		}
-	}else{
-		console.log("tf position:"+tf.position);
-		curSelection = tf.position;
-	}	 
-	var dialog = Ti.UI.createOptionDialog({
-	 cancel: drugCategoryArr.length -1,
-	 options: drugCategoryArr,
-	  selectedIndex: parseInt(curSelection),
-	  title: 'Choose Drug Type'
+	if(Ti.Platform.osname === 'android'){
+         Ti.UI.Android.hideSoftKeyboard();
+    }
+    console.log("openDrugPicker");
+ 	var search_bar = (OS_IOS)?Titanium.UI.createSearchBar({
+ 		hintText: "Table Search"
+ 	}):Ti.UI.Android.createSearchView({
+	    hintText: "Table Search"
+	});
+ 	var items = [];
+ 	for (var i=0; i < drugCategoryArr.length; i++) {
+ 		var row = $.UI.create("TableViewRow", {title: drugCategoryArr[i]});
+ 		var view = $.UI.create("View", {classes:['wfill','hsize','padding'], height: 20});
+ 		row.add(view);
+		items.push(row);
+	};
+	var tableview = Titanium.UI.createTableView({
+	    data: items,
+	    layout: "vertiacl",
+	    search: search_bar,
+	    backgroundColor: "#ffffff",
+	    searchAsChild: true,
+	    zIndex:100
 	});
 		
-	dialog.show(); 
-	dialog.addEventListener("click", function(e){   
-		if(cancelBtn != e.index){ 
-			if(typeof tf.source == "undefined"){
-				tf.position = e.index;
-				tf.value = drugCategoryArr[e.index]; 
-				tf.did = drugCategoryArr1[e.index].drugid;
-				tf.dname = drugCategoryArr1[e.index].name;
-				tf.duom = drugCategoryArr1[e.index].uom;				 
-				tf.color = "#000000";				
-			}
-			else{
-				selectedDrug1 = e.index;
-				tf.source.value = drugCategoryArr[e.index];  
-				tf.source.did = drugCategoryArr1[e.index].drugid;
-				tf.source.dname = drugCategoryArr1[e.index].name;
-				tf.source.duom = drugCategoryArr1[e.index].uom;					
-				tf.source.color = "#000000";				
-			}
+	tableview.addEventListener("click", function(e){   
+		console.log(drugCategoryArr1[e.index].drugid+" drugCategoryArr1[e.index].drugid");
+		if(typeof tf.source == "undefined"){
+			tf.position = e.index;
+			tf.value = drugCategoryArr[e.index]; 
+			tf.did = drugCategoryArr1[e.index].drugid;
+			console.log(tf.did+" tf.did");
+			tf.maxuprice = drugCategoryArr1[e.index].maxuprice;
+			tf.text = drugCategoryArr[e.index]; 
+			tf.dname = drugCategoryArr1[e.index].name;
+			tf.duom = drugCategoryArr1[e.index].uom;				 
+			tf.color = "#000000";				
+		}else{
+			selectedDrug1 = e.index;
+			tf.source.value = drugCategoryArr[e.index];  
+			tf.source.text = drugCategoryArr[e.index]; 
+			tf.source.maxuprice = drugCategoryArr1[e.index].maxuprice;
+			tf.source.did = drugCategoryArr1[e.index].drugid;
+			console.log(tf.source.did+" tf.source.did");
+			tf.source.dname = drugCategoryArr1[e.index].name;
+			tf.source.duom = drugCategoryArr1[e.index].uom;					
+			tf.source.color = "#000000";				
 		}
-	});	
+		$.win.remove(tableview);
+	});
+	$.win.add(tableview);
 }
 function hideSoftKeyboard(e){
     if(OS_ANDROID){
@@ -461,10 +481,33 @@ function hideSoftKeyboard(e){
         $.mc_charges.blur();
     }
 }
+
+function checkUnitPrice(e){
+	if(e.source.parent.children[1].value != "" && e.source.parent.children[3].value != ""){
+		var maxuprice = e.source.parent.parent.children[0].children[1].maxuprice;
+		var dname = e.source.parent.parent.children[0].children[1].dname;
+		var unit = e.source.parent.children[1].value;
+		var cost = e.source.parent.children[3].value;
+		var unitPrice = cost/unit;
+		console.log(unitPrice+" "+maxuprice);
+		if(unitPrice > maxuprice){
+			if(typeof e.source.parent.parent.children[2] == "undefined"){
+				e.source.parent.parent.add($.UI.create("Label", {classes:['wfill','hsize','h6','small-padding'], text: "Pleaset take note, charges of "+dname+" is above market average!"}));
+			}else{
+				e.source.parent.parent.children[2].text = "Pleaset take note, charges of "+dname+" is above market average!";
+			}
+		}else{
+			if(typeof e.source.parent.parent.children[2] != "undefined"){
+				e.source.parent.parent.remove(e.source.parent.parent.children[2]);
+			}
+		}
+	}
+}
+
 function addDiagnosis(e){
 	
 	for(var i = 0; i < $.diagnosis_mother.getChildren().length; i++){
-		var value = $.diagnosis_mother.getChildren()[i]._children[1].value;
+		var value = $.diagnosis_mother.children[i].children[1].value;
 		if(value == ""){
 			alert("Please select diagnosis!!!");
 			return;
@@ -472,7 +515,7 @@ function addDiagnosis(e){
 	}
 	var container = $.UI.create("View",{classes:['wfill','hsize','horz'],top:"10"});
 	var title = $.UI.create("Label",{classes:['form_lb_top'], width:"25%", text:"Diagnosis"});
-	var tf = $.UI.create("TextField",{classes:['wfill','hsize','tf_spacing'],width:"57%", hintText:"Diagnosis",position:0,id:"diag2",name:""});
+	var tf = $.UI.create("Label",{classes:['wfill','hsize','tf_spacing'],width:"57%", hintText:"Diagnosis",position:0,id:"diag2",name:""});
 	var bt = $.UI.create("Button",{classes:['button_delete','wsize'],right:"3",title:"Remove"});	
 	container.add(title);
 	container.add(tf);
@@ -503,21 +546,16 @@ function getMcTotalCharges(){
 	var five = 5;
 	console.log("mc_mother length:"+$.medication_mother.getChildren().length);
 	for(var i = 0;i < $.medication_mother.getChildren().length;i++){
-		console.log($.medication_mother.getChildren()[i]._children);		
-		var qty = parseFloat($.medication_mother.getChildren()[i]._children[three].value || 0);
-		var cost = parseFloat($.medication_mother.getChildren()[i]._children[five].value || 0);
+			
+		var qty = parseFloat($.medication_mother.children[i].children[1].children[1].value || 0);
+		var cost = parseFloat($.medication_mother.children[i].children[1].children[3].value || 0);
 		console.log("mc value:"+qty+" "+cost);
 		var res = cost;
 		mc_charges += res;
-		open=true;
-		if(open){
-			three=4;
-			five=6;
-		}
 	}
 	return mc_charges;
 }
-Ti.App.addEventListener('cardReader:closeWindow', closeWindow);
+Ti.App.addEventListener('claim_submit:closeWindow', closeWindow);
 		 
 $.win.addEventListener("close", function(){ 
 	Ti.App.Properties.setString("card_data","");

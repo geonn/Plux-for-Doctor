@@ -17,14 +17,15 @@ function RunLayout(){
 	var keyinPin_2 = $.keyinPin_2.getChildren();
 	var keyinPin_3 = $.keyinPin_3.getChildren();
 	var keyinPin_4 = $.keyinPin_4.getChildren();
-	var dp = Ti.Platform.displayCaps.platformWidth / (Titanium.Platform.displayCaps.dpi / 160);
+	var dp = (OS_IOS)?Ti.Platform.displayCaps.platformWidth:Ti.Platform.displayCaps.platformWidth / (Titanium.Platform.displayCaps.dpi / 160);
 	var pin_dp = dp * 3 / 100;
-	var pin_radius = pin_dp * 2;
+	var pin_radius = pin_dp / 2;
 	var keyinPin_dp = dp * 18 / 100;
-	var keyinPin_radius = keyinPin_dp * 2;
+	var keyinPin_radius = keyinPin_dp / 2;
 	var fsize = keyinPin_dp * 40 / 100;
 	var i1 = 1, i2 = 4, i3 = 7;
-
+	console.log(pin_dp+" "+keyinPin_dp+" "+keyinPin_radius+" "+pin_radius);
+	
 	for(var i = 0; i < pin_circle.length; i++) {
 		pin_circle[i].width = pin_dp;
 		pin_circle[i].height = pin_dp;
@@ -56,7 +57,7 @@ function RunLayout(){
 
 
 function closeWindow(){
-	$.destroy();
+	console.log("card reader close");
 	$.win.close();
 }
 init();
@@ -239,8 +240,8 @@ function show_itemise_submittion(){
 	var t_id = Ti.App.Properties.getString("terminal_id");
 	var c_no =  cardno; // empno
 	//var options = ['Claim Submission With Itemization','Claim Submission','Cancel'];		
-	var options = ['Claim Submission','Cancel'];				
-	var opts = {cancel: 1,options:options,destructive: 0,title: 'Options'};	
+	var options = ['Claim Submission','Claim Submission With Itemization','Cancel'];				
+	var opts = {cancel: 2,options:options, title: 'Claim Submission'};	
 	var dialog = Ti.UI.createOptionDialog(opts);
 	dialog.addEventListener("click",function(e){
 		/*if(e.index == 0){
@@ -250,6 +251,8 @@ function show_itemise_submittion(){
 		}*/
 		if(e.index == 0){
 			Alloy.Globals.Navigator.open("claim_submission_basic", {displayHomeAsUp: true,t_id:t_id,c_no:c_no});
+		}else if(e.index == 1){
+			Alloy.Globals.Navigator.open("claim_submission", {displayHomeAsUp: true,t_id:t_id,c_no:c_no});
 		}
 	});
 	console.log("show two times?");

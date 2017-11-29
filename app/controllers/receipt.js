@@ -5,6 +5,7 @@ var screenShotBlob;
 var loading = Alloy.createController("loading");
 var arr = args.arr;
 function closeWindow(){
+	console.log("window close!");
 	$.win.close();
 }
 
@@ -21,9 +22,22 @@ function convertViewToBlob(){
 function screenshot(e){
 	$.receiptView.hide();
 	var blob = e.blob; 
+	
+	
 	var index = blob.indexOf('base64,');
-	blob = blob.substring(index + 'base64,'.length); 
+	blob = blob.substring(index + 'base64,'.length);
 	screenShotBlob = Ti.Utils.base64decode(blob);
+	if(screenShotBlob.width > screenShotBlob.height){
+		var newWidth = 640;
+		var ratio =   640 / screenShotBlob.width;
+		var newHeight = screenShotBlob.height * ratio;
+	}else{
+		var newHeight = 640;
+		var ratio =   640 / screenShotBlob.height;
+		var newWidth = screenShotBlob.width * ratio;
+	} 
+	
+	screenShotBlob = screenShotBlob.imageAsResized(newWidth, newHeight);
 	submit_receipt();
 }
 
@@ -67,7 +81,7 @@ function submit_receipt(){
 				console.log("patient_param:"+JSON.stringify(patient_param));
 				patient_recordsModel.addUserData([patient_param]);
 				closeWindow();
-				Ti.App.fireEvent("cardReader:closeWindow");
+				Ti.App.fireEvent("claim_submit:closeWindow");
 			});
 		}else{
 			COMMON.createAlert("Error", res.data);
@@ -79,6 +93,7 @@ function submit_receipt(){
 
 function web_receipt_loaded(){
 	console.log(args.signature+" signature");
+	console.log(message);
 	Ti.App.fireEvent("web:render_message", {message: message, signature: args.signature});
 	loading.finish();
 }

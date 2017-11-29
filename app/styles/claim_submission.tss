@@ -51,8 +51,6 @@
 	},
 	top:3,
 	bottom:3,
-	left:3,
-	right:3,
 	height:40,
 	textAlign:"center",
 	color:"#000"
@@ -67,10 +65,9 @@
 	color:"#000"
 }
 ".tf_spacing":{
-	top:3,
 	bottom:3,
 	right:3,
-	left:0,
+	left:3,
 	height:40,
 	backgroundColor:"#fff"
 }

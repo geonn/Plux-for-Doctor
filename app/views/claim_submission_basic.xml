@@ -20,26 +20,26 @@
 				<View class="form_bg wfill hsize vert" id="diagnosis_mother">
 					<View class="wfill hsize horz">
 						<Label class="form_lb_top" width="25%">Diagnosis 1</Label>
-						<TextField onTouchend="openDiagListView" class="wfill hsize tf_spacing" name="" position id="diag1" hintText="Diagnosis" value=""></TextField>
+						<Label onClick="openDiagListView" class="wfill hsize tf_spacing" name="" position id="diag1" hintText="Diagnosis" value=""></Label>
 					</View>
 					<View class="wfill hsize horz">
 						<Label class="form_lb_top" width="25%">Diagnosis 2</Label>
-						<TextField onTouchend="openDiagListView" class="wfill hsize tf_spacing" name="" position id="diag2" hintText="Diagnosis" value=""></TextField>
+						<Label onClick="openDiagListView" class="wfill hsize tf_spacing" name="" position id="diag2" hintText="Diagnosis" value=""></Label>
 					</View>					
 				</View>										 					
 				<Label class="medium_Label hsize">Charges</Label>	
 				<View class="form_bg wfill hsize vert">
 					<View class="wfill hsize horz">
-						<View class="form_lb_top" type="" width="40%" borderColor="#fff" onClick="openDayPicker">
-							<Label class="form_lb wsize hsize" name="consday" id="day" text="Consultation Charges (Day)"></Label>
+						<View class="form_lb_top wfill" type="" borderColor="#fff" onClick="openDayPicker">
+							<Label class="form_lb wsize hsize" left="10" name="consday" id="day" text="Consultation Charges (Day)"></Label>
 							<ImageView image="/images/btn-down.png" width="20" height="20" right="3"></ImageView>
 						</View>
-						<TextField class="wfill hsize tf_spacing" keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" id="consday" hintText="Consultation Charges (Day)"></TextField>						
+						<TextField class="hsize tf_spacing wfill" keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" id="consday" hintText="Consultation Charges (Day)"></TextField>						
 					</View>							
 				</View>	
 				<View class="form_bg wfill hsize vert" top="10">						
 					<View class="wfill hsize horz">
-						<Label class="form_lb_top" width="40%">Medication Charges</Label>
+						<Label class="form_lb_top wfill" textAlign="left" left="10">Medication Charges</Label>
 						<TextField class="wfill hsize tf_spacing" keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" id="mc_charges" hintText="Medication Charges"></TextField> 
 					</View>								
 				</View>					
@@ -82,8 +82,8 @@
 					</View>					
 				</View>																								
 				<View class="wfill hsize">
-					<Button class="button1" top="10" onClick="closeWindow" backgroundColor="#7B7B7B" left="0" width="50%" title="Cancel"></Button>
-					<Button class="button1" top="10" onClick="claim_submit" right="0" width="50%" title="Submit"></Button>	
+					<Button class="button" top="10" onClick="closeWindow" left="0" width="50%" title="Cancel"></Button>
+					<Button class="button" top="10" onClick="claim_submit" right="0" width="50%" title="Submit"></Button>	
 				</View> 
 			</View>
 		</ScrollView>

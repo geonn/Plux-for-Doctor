@@ -184,7 +184,7 @@
 				<View class="circle" left="20" right="20"></View>
 			</View>
 			<View class="wsize hsize horz" top="40" id="keyinPin_1">
-				<View class="big_circle" onClick="keyinPin" left="20" number="1"></View>
+				<View class="big_circle" onClick="keyinPin" left="20" number="1"><Label class="wsize hsize">1</Label></View>
 				<View class="big_circle" onClick="keyinPin" left="20" number="2"></View>
 				<View class="big_circle" onClick="keyinPin" left="20" right="20" number="3"></View>
 			</View>

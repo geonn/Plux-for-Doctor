@@ -44,11 +44,11 @@ function checkingID(t_id1,c_no1){
 }
 
 function closeWindow(){
-	COMMON.openWindow(Alloy.createController("cardReader").getView());
-	setTimeout(function(){
-		$.win.close();
-		$.destroy();	
-	},1000);
+	//Alloy.Globals.Navigator.open("cardReader", {displayHomeAsUp: true});
+	//COMMON.openWindow(Alloy.createController("cardReader").getView());
+	console.log("claim_submittion_basic close");
+	
+	$.win.close();
 }
 init();
 
@@ -169,36 +169,45 @@ function openDiagListView(tf){
 	if(Ti.Platform.osname === 'android'){
          Ti.UI.Android.hideSoftKeyboard();
     }
- 	var search_bar = Ti.UI.Android.createSearchView({
+    console.log("openDiagListView");
+ 	var search_bar = (OS_IOS)?Titanium.UI.createSearchBar({
+ 		hintText: "Table Search"
+ 	}):Ti.UI.Android.createSearchView({
 	    hintText: "Table Search"
 	});
  	var items = [];
  	for (var i=0; i < diagCategoryArr.length; i++) {
-		items.push(Ti.UI.createTableViewRow({title: diagCategoryArr[i], top:10, left:10, right:10, bottom:10}));
+ 		var row = $.UI.create("TableViewRow", {title: diagCategoryArr[i]});
+ 		var view = $.UI.create("View", {classes:['wfill','hsize','padding'], height: 20});
+ 		row.add(view);
+		items.push(row);
 	};
+	 console.log("openDiagListView");
 	var tableview = Titanium.UI.createTableView({
 	    data: items,
+	    layout: "vertiacl",
 	    search: search_bar,
 	    backgroundColor: "#ffffff",
 	    searchAsChild: true,
 	    zIndex:100
 	});
-	
+	 console.log("openDiagListView");
 	tableview.addEventListener("click", function(e){   
 		if(typeof tf.source == "undefined"){
-			tf.value = diagCategoryArr[e.index];  
+			tf.value = diagCategoryArr[e.index]; 
+			tf.text = diagCategoryArr[e.index]; 
 			tf.name = diagCategoryIdArr[e.index];				
 			tf.color = "#000000";	
 			tf.position = e.index; 								
 		}else{
 			tf.source.value = diagCategoryArr[e.index];  
+			tf.source.text = diagCategoryArr[e.index]; 
 			tf.source.name = diagCategoryIdArr[e.index];								
 			tf.source.color = "#000000";		
 			selectedDiag1 = e.index;		
 		}
 		$.win.remove(tableview);
 	});
-	
 	$.win.add(tableview);
 }
 
@@ -272,9 +281,9 @@ function openDayPicker(lb){
 		}	
 	});
 }
-Ti.App.addEventListener('cardReader:closeWindow', closeWindow);
+Ti.App.addEventListener('claim_submit:closeWindow', closeWindow);
 		 
 $.win.addEventListener("close", function(){ 
 	Ti.App.Properties.setString("card_data","");
-	Ti.App.removeEventListener('cardReader:closeWindow', closeWindow);
+	Ti.App.removeEventListener('claim_submit:closeWindow', closeWindow);
 });
