@@ -1,9 +1,9 @@
 <Alloy>
 	<Window navTintColor="#CE1D1C" id="win" title="eCard Reader"  navBarHidden="false">
 		<View top="10" class="wfill hsize vert"> 
-	    	<View class="horz wfill hsize">
+	    	<View class="wfill hsize">
 		    	<Button class="button" onClick="popInsertCardNo" action="doInquiry" height="80" top="10" left="1%" width="49%" title="Inquiry"></Button>
-		    	<Button class="button" onClick="popInsertCardNo" action="show_itemise_submittion" height="80" top="10" left="1%" width="49%" title="Pay"></Button>
+		    	<Button class="button" onClick="popInsertCardNo" action="show_itemise_submittion" height="80" top="10" left="51%" width="49%" title="Pay"></Button>
 	    	</View>
 	    	<View class="gray-line" top="15" bottom="5" />
 	   	</View>
@@ -184,7 +184,7 @@
 				<View class="circle" left="20" right="20"></View>
 			</View>
 			<View class="wsize hsize horz" top="40" id="keyinPin_1">
-				<View class="big_circle" onClick="keyinPin" left="20" number="1"><Label class="wsize hsize">1</Label></View>
+				<View class="big_circle" onClick="keyinPin" left="20" number="1"><Label touchEnabled="false" class="wsize hsize">1</Label></View>
 				<View class="big_circle" onClick="keyinPin" left="20" number="2"></View>
 				<View class="big_circle" onClick="keyinPin" left="20" right="20" number="3"></View>
 			</View>

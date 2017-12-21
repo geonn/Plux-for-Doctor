@@ -95,8 +95,8 @@ function closeWindow(){
 }
 function popDatePicker(e){
 	hideSoftKeyboard({});
-	var source = parent({name: "master", value: "1"}, e.source);
-	var mcdate = parent({name: "mcdate", value: "mcfrom"},e.source);
+	var source = e.source;
+	var mcdate = e.source.children[0];
 	var val_date = (typeof source.date != "undefined")?source.date:new Date();
 	var picker = $.UI.create("Picker", {
 	  type:Ti.UI.PICKER_TYPE_DATE,
@@ -381,7 +381,7 @@ function openDiagPicker(tf){
 	    data: items,
 	    layout: "vertiacl",
 	    search: search_bar,
-	    backgroundColor: "#000000",
+	    backgroundColor: "#ffffff",
 	    searchAsChild: true,
 	    zIndex:100
 	});

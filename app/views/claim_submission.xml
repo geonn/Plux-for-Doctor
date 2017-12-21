@@ -62,13 +62,13 @@
 					<View class="form_bg hsize horz" top="10" width="45%">
 						<Label class="form_lb_top" width="55%">MC days(From)</Label>
 				 		<View class="textfield tf_spacing wfill hsize" hintText="Sales Start Date" master="1" form_type="date_picker" require="true" id="mc_from" onClick="popDatePicker">
-				 			<Label class="wsize hsize padding" color="#cccccc" mcdate="from">Date Picker</Label>
+				 			<Label class="wsize hsize padding" touchEnabled="false" color="#cccccc" mcdate="from">Date Picker</Label>
 				 		</View>														
 					</View>
 					<View class="form_bg1 hsize horz"top="10" width="45%">
 						<Label class="form_lb_top" width="55%">MC days(To)</Label>
 				 		<View class="textfield tf_spacing wfill hsize" hintText="Sales Start Date" master="1" form_type="date_picker" require="true" id="mc_till" onClick="popDatePicker">
-				 			<Label class="wsize hsize padding" color="#cccccc">Date Picker</Label>
+				 			<Label class="wsize hsize padding" touchEnabled="false" color="#cccccc">Date Picker</Label>
 				 		</View>														
 					</View>						
 				</View>	
@@ -144,12 +144,12 @@
 					</View>
 					<View class="wfill hsize horz">
 						<Label class="form_lb_top" width="30%" top="0">Surgical Charges</Label>															
-						<TextField class="wfill hsize tf_spacing" top="0" keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" id="surginalamt" hintText="Surgical Procedure Charges"></TextField>						
+						<TextField class="wfill hsize tf_spacing" top="0" keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" id="surginalamt" hintText="Surgical Charges"></TextField>						
 					</View>							
 				</View>																		
 				<!-- <TextField class="wfill hsize padding" keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" height="40" id="medication" hintText="Medication Charges"></TextField>  -->
-				<View class="wfill hsize horz" top="20">
-					<View class="form_bg hsize vert" width="50%">						
+				<View class="wfill hsize" top="20">
+					<View class="form_bg hsize vert wfill">						
 						<View class="wfill hsize horz">
 							<Label class="form_lb_top" width="25%">Total Charges</Label>
 							<TextField class="wfill hsize tf_spacing" keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" id="totalamt" hintText="Total Charges"></TextField> 

@@ -122,7 +122,6 @@ function render_header_info(){
 		width: 40,
 		height: 40,
 		left: 5,
-		right: 5,
 		zIndex: 20,
 	});
 	logoutBtn.addEventListener('click', function(){
@@ -144,8 +143,8 @@ function render_header_info(){
 	});
 	 
 	var title_view = $.UI.create("View", {
-		width: "auto",
-		height: Ti.UI.FILL,
+		classes:['wfill','hfill'],
+		left:50
 	});
 	var welcomeTitle = $.UI.create('Label',{
 		text: "Welcome, "+name,

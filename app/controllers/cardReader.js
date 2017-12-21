@@ -42,11 +42,11 @@ function RunLayout(){
 		keyinPin_3[i].width = keyinPin_dp;
 		keyinPin_3[i].height = keyinPin_dp;
 		keyinPin_3[i].borderRadius = keyinPin_radius;
-		keyinPin_1[i].add($.UI.create("Label", {text: i1, classes: ['white'], font:{fontSize:fsize}}));
+		keyinPin_1[i].add($.UI.create("Label", {text: i1, touchEnabled:false, classes: ['white'], font:{fontSize:fsize}}));
 		i1++;
-		keyinPin_2[i].add($.UI.create("Label", {text: i2, classes: ['white'], font:{fontSize:fsize}}));
+		keyinPin_2[i].add($.UI.create("Label", {text: i2, touchEnabled:false, classes: ['white'], font:{fontSize:fsize}}));
 		i2++;
-		keyinPin_3[i].add($.UI.create("Label", {text: i3, classes: ['white'], font:{fontSize:fsize}}));
+		keyinPin_3[i].add($.UI.create("Label", {text: i3, touchEnabled:false,  classes: ['white'], font:{fontSize:fsize}}));
 		i3++;
 	}
 	keyinPin_4[0].width = keyinPin_dp;
@@ -119,7 +119,8 @@ function qrscan(){
 }
 
 function popInsertCardNo(e){
-	action = parent({name: "action"}, e.source);
+	console.log(e);
+	action = e.source.action;
 	var dialog = Ti.UI.createOptionDialog({
 	  cancel: 2,
 	  options: ['QR Scanner','Card Number','Cancel'],
@@ -180,7 +181,7 @@ function cardnoAssign(){
 
 function keyinPin(e){
 	console.log(e.source);
-	var number = parent({name: "number"}, e.source);
+	var number = e.source.number;
 	console.log(number);
 	pin.push(number);
 	render_pin_circle();
@@ -199,7 +200,7 @@ function remove_pin(){
 
 function submitPin(){
 	var p = pin.join("");
-	console.log(status+" status");
+	console.log(status+" status "+p);
 	if(status == "new"){
 		pin_confirm = p;
 		status = "confirm";

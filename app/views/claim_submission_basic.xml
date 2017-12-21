@@ -64,17 +64,17 @@
 				<View class="form_bg wfill hsize vert" top="10">
 					<View class="wfill hsize horz">
 						<Label class="form_lb_top" width="30%" top="0">Surgical Charges</Label>															
-						<TextField class="wfill hsize tf_spacing" top="0" keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" id="surginalamt" hintText="Surgical Procedure Charges"></TextField>						
+						<TextField class="wfill hsize tf_spacing" top="0" keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" id="surginalamt" hintText="Surgical Charges"></TextField>						
 					</View>							
 				</View>																		
 				<View class="wfill hsize vert" top="20">
-					<View class="form_bg hsize vert" left="10" width="48%">						
+					<View class="form_bg hsize vert wfill" left="10">						
 						<View class="wfill hsize horz">
 							<Label class="form_lb_top" width="25%">Total Charges</Label>
 							<TextField class="wfill hsize tf_spacing" keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" id="totalamt" hintText="Total Charges"></TextField> 
 						</View>								
 					</View>
-					<View class="form_bg hsize vert" right="10" width="48%">						
+					<View class="form_bg hsize vert wfill" right="10">						
 						<View class="wfill hsize horz">
 							<Label class="form_lb_top" width="25%">MC Day</Label>
 							<TextField class="wfill hsize tf_spacing" keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" id="mcday" hintText="MC Day"></TextField> 
