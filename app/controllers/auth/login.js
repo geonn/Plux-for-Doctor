@@ -78,6 +78,7 @@ function init(){
 
 $.checkAuth = function(cb){
 	var u_id = Ti.App.Properties.getString('terminal_id') || 0;  
+	console.log(u_id+" terminal_id");
 	if(u_id > 0){
 		cb && cb();
     }else{ 

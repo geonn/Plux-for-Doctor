@@ -6,22 +6,26 @@ function navToLoading(){
 	loader.open();
 }
 
+function navToIndexHome(){
+	var index_home = Alloy.createController("index_home");
+}
+
 function init(){
-	var doctorModel = Alloy.createCollection('doctor'); 
-	doctorModel.addColumn("img_path", "TEXT"); 
-	var login = Alloy.createController("auth/login");  
-	login.checkAuth(navToLoading);
+	//var doctorModel = Alloy.createCollection('doctor');
+	//doctorModel.addColumn("img_path", "TEXT");
+	var login = Alloy.createController("auth/login");
+	login.checkAuth(navToIndexHome);
 	console.log("index init");
 	setTimeout(function(e){$.win.close();}, 500);
 }
 
 API.callByPost({url: "dateNow"}, function(responseText){
 	var res = JSON.parse(responseText);
-	
+
 	if(res.status != "error"){
 		common.sync_time(res.data);
 	}
-	
+
 });
 
 init();

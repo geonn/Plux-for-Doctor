@@ -58,7 +58,8 @@ function submit_receipt(){
  	console.log(param);
 	API.callByPostImage({url:"uploadReceiptImageUrl", params: param, img: img_param}, function(responseText){ 
 		var res = JSON.parse(responseText); 
-		console.log(res);   
+		console.log(res); 
+		console.log(res.status);  
 		console.log("asdf:"+img_param);
 		if(res.status == "success"){    
 			COMMON.createAlert("Success", "Receipt successfully submitted", function(){

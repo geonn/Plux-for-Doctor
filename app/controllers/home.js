@@ -1,12 +1,9 @@
 var args = arguments[0] || {};
 //var loading = Alloy.createController("loading");
-var myClinic = Ti.App.Properties.getString('clinic_id');
-var panelListModel = Alloy.createCollection('panelList'); 
-var doctor_id = Ti.App.Properties.getString('doctor_id');
 
 var menu_info = [
 	{mod: "cardReader", image: "/images/btn/e-card-reader.png"},
-	{mod: "patient", image: "/images/btn/patient-record.png"}, 
+	{mod: "patient", image: "/images/btn/patient-record.png"},
 	//{mod: "appointment", image: "/images/btn/appointment.png"},
 	//{mod: "clinic/listing", image: "/images/btn/clinic-locator.png"},
 	//{mod: "ida", image: "/images/btn/ida.png"},
@@ -32,15 +29,15 @@ function navToMod(e){
 	Alloy.Globals.Navigator.open(e.source.mod, {displayHomeAsUp: true});
 }
 
-/*	
- 	Render background image	
+/*
+ 	Render background image
  * */
 function render_background(){
 	var home_background = Alloy.createCollection('background');
 	var today = new Date();
 	var hours = today.getHours();
 	if(typeof (bg[0].img_path) != "undefined"){
-		var bg = home_background.getData({time: hours}); 
+		var bg = home_background.getData({time: hours});
 	}
 	//$.background.setBackgroundImage(bg[0].img_path);
 }
@@ -60,7 +57,7 @@ function render_menu_list(){
 		button_width = Math.floor((pWidth - 30) / 4);
 		$.menu_scrollview.width = "80%";
 	};
-	
+
 	for (var i=0; i < menu_info.length; i++) {
 		var topR =10;
 		if(i == 0 || i == 1){
@@ -73,10 +70,10 @@ function render_menu_list(){
 				top: topR,
 				image: menu_info[i].image,
 			});
-			
+
 		if(menu_info[i].mod == "appointment"){
-			var appointmentModel = Alloy.createCollection('appointment'); 
-			 
+			var appointmentModel = Alloy.createCollection('appointment');
+
 			var container = $.UI.create("View", {
 				classes: ['wsize','hsize']
 			});
@@ -88,35 +85,26 @@ function render_menu_list(){
 				top: 20,
 				right: 15
 			});
-				
+
 			container.add(imageView_menu);
-				
-			setTimeout(function(){
-				var gotNotification = appointmentModel.getNumberOfPending(doctor_id);
-				var label = $.UI.create("Label", {color: "#ffffff", text: gotNotification});
-				notification_view.add(label);
-				if(gotNotification != "0"){
-					container.add(notification_view);
-				}
-			},500);
 			imageView_menu.addEventListener("click", navToMod);
 			$.menu_scrollview.add(container);
-			 
+
 		}else{
 			imageView_menu.addEventListener("click", navToMod);
 			$.menu_scrollview.add(imageView_menu);
 		}
-		
+		console.log("render_menu_list");
 	};
 }
 
 /*
- * render header user information 
+ * render header user information
  * */
 
 function render_header_info(){
 	var name = Ti.App.Properties.getString('clinic_name');
-	
+
 	var logoutBtn = Ti.UI.createButton({
 		backgroundImage : "/images/btn/logout.png",
 		width: 40,
@@ -138,10 +126,10 @@ function render_header_info(){
 			if (e.index === 1){
 				doLogout();
 			}
-		}); 
-		dialog.show(); 
+		});
+		dialog.show();
 	});
-	 
+
 	var title_view = $.UI.create("View", {
 		classes:['wfill','hfill'],
 		left:50
@@ -150,111 +138,15 @@ function render_header_info(){
 		text: "Welcome, "+name,
 		classes :['welcome_text']
 	});
-	
+
 	title_view.add(welcomeTitle);
+	console.log("render_header_info");
 	$.myInfo.add(logoutBtn);
 	$.myInfo.add(title_view);
-	
-	//geo: hijack clinic panel select checking
-	/* onn: panel select removed
-	var clinic_id = Ti.App.Properties.getString('clinic_id') || ""; 
-	var dp = Ti.App.Properties.getString('doctor_panel_id') || ""; 
-	console.log("clinic_id:"+clinic_id);
-	if(clinic_id =="" || dp == ""){  
-		//load clinic 
-		var doctor_panel = Alloy.createCollection('doctor_panel'); 
-		var myPanel = doctor_panel.getData(doctor_id);
-		if(myPanel.length > 1){ 
-			setTimeout(function(e){selectPanel(myPanel);}, 500);
-		}else{
-			alert("No panel found, please create your clinic panel.");
-		}
-	} */
+
 }
 
- 
-function selectPanel(myPanel){
-	var containerView = Ti.UI.createView({ 
-		height:"100%",
-		width:"100%",
-		backgroundColor: "#FFFFFF"
-	}); 
-
-	var confirmView = Ti.UI.createView({
-		layout: "vertical",
-		height:"100%",
-		width:"100%"
-	});
-	  
-	var contentView = Ti.UI.createScrollView({
-		layout: "vertical",
-		height:Ti.UI.FILL,
-		backgroundColor:"#FFFFFF", 
-	});
-	
-	var contentLabel = $.UI.create('Label',{
-		classes :['description','padding'],
-		top:25, 
-		bottom:10,
-		text : 	"Please select your panel ",  
-	});
-	
-	if(myPanel.length > 0){
-		var curTable = $.UI.create('TableView',{
-			classes : ['wfill','hsize' ], 
-			backgroundColor: "#ffffff",
-			bottom:5,
-			top:0 
-		}); 
-		var data = []; 	
-		for(var i=0; i< myPanel.length; i++){
-			var panelDetails = panelListModel.getDataByID(myPanel[i].clinic_id);
-			 
-			var tblRowView = $.UI.create('TableViewRow',{ 
-				height: 30,
-				color: "#000000",
-				classes: ['h6'],
-				left: 10,
-				title: panelDetails.clinicName,
-				id: panelDetails.id, 
-			}); 
-			data.push(tblRowView);
-			//tblRowView.addEventListener('click',selectedPanel);  
-		}
-		curTable.setData(data); 
-	} 
-	
-	contentView.add(contentLabel);
- 	contentView.add(curTable);
-	confirmView.add(contentView); 
-	containerView.add(confirmView);
-	
-	var config = [];
-	config.width = "70%";
-	config.height = "40%"; 
-	pop = COMMON.popup(containerView,config, 1); 
-	pop.open({fullscreen:true, navBarHidden: true});  
-	selectedPanelEvent(curTable,pop); 
-	
-}
-
-function selectedPanelEvent(ctable,pop){
-	ctable.addEventListener('click',function(e){
-		var elbl = JSON.stringify(e.source); 
-		var res = JSON.parse(elbl);     
-		Ti.App.Properties.setString('clinic_id', res.id);
-		
-		var model = Alloy.createCollection('doctor_panel');  
-		var doctor_panel = model.getDoctorPanelId(doctor_id ,res.id);
-		 
-		Ti.App.Properties.setString('doctor_panel_id', doctor_panel.id);
-		
-		pop.close(); 
-	}); 
-}
-
-
-function refresh(){ 
+function refresh(){
 	//loading.start();
 	render_header_info();
 	render_menu_list();
@@ -265,14 +157,14 @@ function refresh(){
 function init(){
 	var AppVersionControl = require('AppVersionControl');
 	AppVersionControl.checkAndUpdate();
-	
-	var deviceToken = Ti.App.Properties.getString('deviceToken');  
+
+	var deviceToken = Ti.App.Properties.getString('deviceToken');
 	var u_id = Ti.App.Properties.getString('u_id') || "";
 	console.log(u_id +" => " + deviceToken);
 	console.log( "doctor_panel_id => " + Ti.App.Properties.getString('doctor_panel_id'));
-	 
-	if(deviceToken != "" && u_id != ""){ 
-		API.callByPost({url: "updateDoctorDeviceTokenUrl", params:{u_id: u_id,device_id:deviceToken }}, function(responseText){ 
+
+	if(deviceToken != "" && u_id != ""){
+		API.callByPost({url: "updateDoctorDeviceTokenUrl", params:{u_id: u_id,device_id:deviceToken }}, function(responseText){
 	      console.log("OK DEVICE TOKEN");
 	    });
 	}
@@ -280,7 +172,7 @@ function init(){
 	refresh();
 }
 init();
-
+$.win.open();
 Ti.App.addEventListener('home:refresh',refresh);
 
 $.win.addEventListener("close", function(){

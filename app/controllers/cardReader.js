@@ -174,7 +174,11 @@ function cardnoAssign(){
 	if(action == "show_itemise_submittion"){
 		validateUserPinViaServer(cardno);
 	}else{
-		eval(action+"()");
+		if(action == "doInquiry"){
+			doInquiry();
+		}else if(action == "show_itemise_submittion"){
+			show_itemise_submittion();
+		}
 	}
 	$.cardno_input.value = "";
 }
@@ -329,10 +333,16 @@ function doPay(){
 }
 
 function getCardData(e){ 
-	var param =e.data;
-	cardno = param.cardno;
+	cardno = e.cardno;
 	console.log("getCardData");
-	setTimeout(function(e){eval(action+"()");}, 1000);
+	console.log(action);
+	setTimeout(function(){
+		if(action == "doInquiry"){
+			doInquiry();
+		}else if(action == "show_itemise_submittion"){
+			show_itemise_submittion();
+		}
+	}, 1000);
 	//validateUserPinViaServer(cardno);
 }	
 		

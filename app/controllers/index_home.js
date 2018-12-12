@@ -15,7 +15,7 @@ Alloy.Globals.Navigator = {
 function navTo(controller, payload){
 	console.log(controller);
 	var win = Alloy.createController(controller, payload || {}).getView();
-	
+
 	if(OS_IOS){
 		Alloy.Globals.Navigator.navGroup.openWindow(win);
 	}else if(OS_MOBILEWEB){
@@ -31,7 +31,7 @@ function navTo(controller, payload){
 					evt.source.close();
 				};
 			});
-		} 
+		}
 		win.open();
 	}
 }

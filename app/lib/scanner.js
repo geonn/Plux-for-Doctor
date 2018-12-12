@@ -38,32 +38,39 @@ exports.openScanner = function(scanType) {
 		var time2 = Ti.App.Properties.getString('time2') || ""; 
 		var barcode = e.barcode;
 		var barRes = barcode.split('||');
-
+console.log(barcode);
+        if(typeof barRes[13] == "undefined"){
+            var CryptoJS = require('sha256').CryptoJS;
+            var AES = require('aes').CryptoJS;
+        //generate private key
+            var privateKey =  CryptoJS.SHA256("miku").toString();
+            console.log(privateKey);
+            var text = e.barcode;
+            console.log(text);
+            var encryptedData = AES.AES.decrypt(text.toString(), privateKey);
+            var tmp = encryptedData.toString(CryptoJS.enc.Utf8);
+            var barRes2 = JSON.parse(tmp).split("||");
+            console.log(encryptedData.toString(CryptoJS.enc.Utf8)+" check here");
+        }
 		if(time1 == ""){
-			Ti.App.Properties.setString('time1',barRes[13] ); 
+		    if(typeof barRes[13] != "undefined"){
+		        Ti.App.Properties.setString('time1', barRes[13]); 
+		    }else if(typeof barRes2[0] != "undefined"){
+		        Ti.App.Properties.setString('time1', barRes2[1]); 
+		    }
 		}else{
-			if(time1 == barRes[13]){
+		    console.log(time1 == barRes[13]+" "+time1 == barRes2[1]);
+		    console.log(time1+" + "+barRes2[1]);
+			if(time1 == barRes[13] || time1 == barRes2[1]){
 				console.log("Invalid scan. Please scan again with PLUX Health app");
 			}else{
-				var param = {
-					name : barRes[0],
-					id : barRes[1],
-					icno : barRes[2],
-					memno : barRes[3],
-					empno : barRes[4],
-					relation : barRes[5],
-					corpcode : barRes[6],
-					corpname : barRes[7],
-					costcenter : barRes[8],
-					dept : barRes[9],
-					allergy : barRes[10],
-					isver : barRes[11],
-					verno : barRes[12],
-					cardno : barRes[14],
-				}; 
-			
-				Ti.App.Properties.setString('time1', '');  
-				Ti.App.fireEvent('getCardData', {data : param});
+			    if(typeof barRes[13] != "undefined"){
+                    Ti.App.fireEvent('getCardData', {cardno: barRes[14]});
+                }else if(typeof barRes2[1] != "undefined"){
+                    console.log(barRes2[0]+" barRes2[0]");
+                    Ti.App.fireEvent('getCardData', {cardno: barRes2[0]});
+                }
+				Ti.App.Properties.setString('time1', '');
 				setTimeout(function() {
 					window.close();
 					window.remove(picker);

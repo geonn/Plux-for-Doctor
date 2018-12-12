@@ -12,9 +12,8 @@
 
 var _ = require('underscore')._;
 var API = require('api');
-var CAL = require('calendar');
-var PUSH = require('push');  
-var Common = COMMON = common = require('common'); 
+//var PUSH = require('push');
+var Common = COMMON = common = require('common');
 var DBVersionControl = require('DBVersionControl');
 
 DBVersionControl.checkAndUpdate();
@@ -25,7 +24,7 @@ function parent(key, e){
 		if(eval("e."+key.name+"") != key.value){
 			if(eval("e.parent."+key.name+"") != key.value){
 				if(eval("e.parent.parent."+key.name+"") != key.value){
-	    			 
+
 	    		}else{
 	    			return e.parent.parent;
 	    		}
@@ -40,7 +39,7 @@ function parent(key, e){
 		if(eval("typeof e."+key.name) == "undefined"){
 			if(eval("typeof e.parent."+key.name+"") == "undefined"){
 				if(eval("typeof e.parent.parent."+key.name+"") == "undefined"){
-	    			 
+
 	    			return false;
 	    		}else{
 	    			return eval("e.parent.parent."+key.name);
@@ -55,10 +54,10 @@ function parent(key, e){
 }
 
 function convertToDBDateFormat(datetime){
-	var timeStamp = datetime.split(" ");  
+	var timeStamp = datetime.split(" ");
 	var newFormat;
-	 
-	var date = timeStamp[0].split("/");  
+
+	var date = timeStamp[0].split("/");
 	if(timeStamp.length == 1){
 		newFormat = date[2]+"-"+date[1]+"-"+date[0] ;
 	}else{
@@ -66,14 +65,14 @@ function convertToDBDateFormat(datetime){
 		var hour = (timeStamp[2] == "pm")?12 + parseInt(time[0]):time[0];
 		var min = time[1] || "00";
 		var sec = time[2] || "00";
-		
+
 		newFormat = date[2]+"-"+date[1]+"-"+date[0] + " "+hour+":"+min+":"+sec;
 	}
-	
+
 	return newFormat;
 }
 
-function ucwords(str) { 
+function ucwords(str) {
   	str = str.toLowerCase();
 	return str.replace(/(^([a-zA-Z\p{M}]))|([ -][a-zA-Z\p{M}])/g,
         function($1){
@@ -106,89 +105,89 @@ function children(key, e){
 
 
 function monthFormat(datetime){
-	
+
 	var monthNames = [
         "Jan", "Feb", "Mar",
         "April", "May", "June", "Jul",
         "Aug", "Sep", "Oct",
         "Nov", "Dec"
     ];
-    
-	var timeStamp = datetime.split(" ");  
+
+	var timeStamp = datetime.split(" ");
 	var newFormat;
 	var ampm = "am";
-	var date = timeStamp[0].split("-");   
+	var date = timeStamp[0].split("-");
     if(date[1] == "08"){
 		date[1] = "8";
 	}
 	if(date[1] == "09"){
 		date[1] = "9";
 	}
-    month = parseInt(date[1]) -1; 
+    month = parseInt(date[1]) -1;
 	if(timeStamp.length == 1){
 		newFormat =  date[2]+" "+ monthNames[month]+" "+ date[0];
 	}else{
-		var time = timeStamp[1].split(":");  
+		var time = timeStamp[1].split(":");
 		if(time[0] > 12){
 			ampm = "pm";
 			time[0] = time[0] - 12;
 		}
-		
+
 		newFormat = date[2]+" "+ monthNames[month]+" "+ date[0] + ", "+ time[0]+":"+time[1]+ " "+ ampm;
 	}
-	
+
 	return newFormat;
 }
 
 function timeFormat(datetime){
-	var timeStamp = datetime.split(" ");  
+	var timeStamp = datetime.split(" ");
 	var newFormat;
 	var ampm = "am";
-	var date = timeStamp[0].split("-");  
+	var date = timeStamp[0].split("-");
 	if(timeStamp.length == 1){
 		newFormat = date[2]+"/"+date[1]+"/"+date[0] ;
 	}else{
-		var time = timeStamp[1].split(":");  
+		var time = timeStamp[1].split(":");
 		if(time[0] > 12){
 			ampm = "pm";
 			time[0] = time[0] - 12;
 		}
-		
+
 		newFormat = date[2]+"/"+date[1]+"/"+date[0] + " "+ time[0]+":"+time[1]+ " "+ ampm;
 	}
-	
+
 	return newFormat;
 }
 
 function currentDateTime(){
 	var today = new Date();
 	var dd = today.getDate();
-	var mm = today.getMonth()+1; 
+	var mm = today.getMonth()+1;
 	var yyyy = today.getFullYear();
-	
+
 	var hours = today.getHours();
 	var minutes = today.getMinutes();
 	var sec = today.getSeconds();
 	if (minutes < 10){
 		minutes = "0" + minutes;
-	} 
+	}
 	if (sec < 10){
 		sec = "0" + sec;
-	} 
+	}
 	if(dd<10) {
 	    dd='0'+dd;
-	} 
-	
+	}
+
 	if(mm<10) {
 	    mm='0'+mm;
-	} 
-	
+	}
+
 	datetime = yyyy+'-'+mm+'-'+dd + " "+ hours+":"+minutes+":"+sec;
 	return datetime ;
-} 
+}
 
 function pixelToDp(px) {
     return ( parseInt(px) / (Titanium.Platform.displayCaps.dpi / 160));
 }
 
-PUSH.registerPush();
+//PUSH.registerPush();
