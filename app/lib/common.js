@@ -87,9 +87,7 @@ function createAlert(tt,msg, callback){
 	});
 	box.show();
 	box.addEventListener('click', function(e){
-		console.log(e.index+" "+e.source.ok);
 	    if (e.index == 0){
-	    	console.log(typeof callback);
 	    	if(typeof callback == "function"){
 	    		callback && callback();
 	    	}

@@ -63,8 +63,7 @@ exports.callByPost = function(e, onload, onerror){
 			onload && onload(this.responseText); 
 		};
 		
-		_result.onerror = function(ex) { 
-			console.log(ex);
+		_result.onerror = function(ex) {
 			//API.callByPost(e, onload, onerror); 
 		};
 	}
@@ -116,14 +115,11 @@ exports.callByPostWithJson = function(e, onload, onerror){
 		console.log(url);
 		var _result = contactServerByPostWithJson(url, e.params || {});   
 		_result.onload = function(ex) { 
-			console.log('success callByPost');
-			console.log(this.responseText);
 			onload && onload(this.responseText); 
 		};
 		
 		_result.onerror = function(ex) {
 			console.log('failure callByPost');
-			console.log(ex);
 			//API.callByPost(e, onload, onerror); 
 		};
 	}
@@ -151,7 +147,6 @@ exports.callByPostImage = function(e, onload, onerror) {
 	
 	_result.onerror = function(ex) { 
 		console.log("onerror");
-		console.log(ex);
 	//	API.callByPostImage(ex, onload);
 		//onerror && onerror();
 	};
@@ -188,11 +183,9 @@ exports.sendNotification = function(e){
 	var url = sendNotificationUrl+"?message="+e.message+"&to_id="+e.to_id+"&u_id="+u_id+"&target="+e.target;
 	var _result = contactServerByGet(url);   
 	_result.onload = function(ex) {
-		console.log(ex);
 	};
 	
-	_result.onerror = function(ex) { 
-		console.log(ex);
+	_result.onerror = function(ex) {
 	};
 };
 
@@ -241,7 +234,6 @@ exports.loadAPIBySequence = function (ex, counter){
 	     // function called when the response data is available
 	     onload : function(e) {
 	       console.log('apisequence');
-	       console.log(this.responseText);
 	       var res = JSON.parse(this.responseText);
 	       if(res.status == "Success" || res.status == "success"){
 			/**load new set of category from API**/
@@ -280,7 +272,7 @@ exports.loadAPIBySequence = function (ex, counter){
  *********************/
 function contactServerByGet(url) { 
 	var client = Ti.Network.createHTTPClient({
-		timeout : 15000
+		timeout : 30000
 	});
 	client.open("GET", url);
 	client.send(); 
@@ -294,7 +286,6 @@ function contactServerByPost(url,records) {
 	if(OS_ANDROID){
 	 	client.setRequestHeader('ContentType', 'application/x-www-form-urlencoded'); 
 	 }
-	console.log(records);
 	client.open("POST", url);
 	client.send(records);
 	return client;
@@ -307,7 +298,6 @@ function contactServerByPostWithJson(url,records) {
 	
 	client.setRequestHeader('ContentType', 'application/json');
 	//client.setRequestHeader('processData', false);
-	console.log(records);
 	client.open("POST", url);
 	client.send(records);
 	return client;

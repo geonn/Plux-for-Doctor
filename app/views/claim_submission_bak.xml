@@ -1,0 +1,172 @@
+<Alloy>
+	<Window navTintColor="#CE1D1C" id="win" title="Claim Submission" fullscreen="true"  navBarHidden="false">		
+		<ScrollView top="0" onClick="hideSoftKeyboard" scrollType="vertical" zIndex="10" class="wfill hfill conthsize contwfill box" backgroundColor="#d4d4d4" id="inner_pay">
+			<Label id="login_clinic"></Label>
+			<Label class="big_Label">Claim Submission</Label>
+			<Label width="10" height="10"> </Label> 				 
+			<View class="wfill hsize vert" backgroundColor="#FFF">
+				<Label class="medium_Label hsize">Identity Document</Label>
+				<View class="form_bg wfill hsize vert">
+					<View class="wfill hsize horz">
+						<Label class="form_lb_top" width="25%">Terminal ID</Label>
+						<TextField class="wfill hsize tf_spacing" editable="false" id="terminal_id" hintText="Terminal ID"></TextField>	
+					</View>
+					<View class="wfill hsize horz">
+						<Label class="form_lb_top" width="25%" top="0">Card Number</Label>	
+						<TextField class="wfill hsize tf_spacing" top="0" editable="false" id="cardno" hintText="Card Number"></TextField>								
+					</View>	
+					<View class="wfill hsize horz">
+						<Label class="form_lb_top" width="25%" top="0">Medical Certificate NO.</Label>
+						<TextField class="wfill hsize tf_spacing" top="0" id="mc_no" hintText="Medical Certificate No."></TextField>
+					</View>							
+				</View>
+				<View class="wfill hsize">
+					<Label class="medium_Label hsize">Diagnosis</Label>
+					<Button class="button_add wsize" right="10" height="40" onClick="addDiagnosis">Add</Button>
+				</View>	
+				<View class="form_bg wfill hsize vert" id="diagnosis_mother">
+					<View class="wfill hsize horz">
+						<Label class="form_lb_top" width="25%">Diagnosis</Label>
+						<Label onTouchend="openDiagPicker" class="wfill hsize tf_spacing" name="" id="diag1" hintText="Diagnosis" value=""  color="#000000"></Label>
+					</View>
+				</View>					
+				<View class="wfill hsize">
+					<Label class="medium_Label hsize">Medication</Label>
+					<Button class="button_add wsize" right="10" height="40" onClick="addMedication">Add</Button>
+				</View>	
+				<View class="form_bg wfill hsize vert" id="medication_mother">
+					<View class="wfill hsize vert">
+						<View class="wfill hsize">
+							<Label class="form_lb_top" left="3" width="27%" textAlign="left">Medication</Label>
+							<Label onTouchend="openDrugPicker" width="72%" left="29%" right="3" class="wfill hsize tf_spacing" id="drug1" dname="" duom="" hintText="Medication" value="" maxuprice="0"></Label>	
+						</View>
+						<View class="wfill hsize">
+							<Label class="form_lb_top" left='3' width="25%" top="0">Quantity</Label>
+							<TextField class="hsize tf_spacing" top="0" left="26%" width="23%" keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" id="m_qty" onChange="checkUnitPrice" hintText="Qty"></TextField>			
+							<Label class="form_lb_top" width="25%" left="50%" top="0">Price</Label>
+							<TextField class="hsize tf_spacing" left="76%" onChange="checkUnitPrice" width="23%" top="0" keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" id="m_cost" hintText="Cost"></TextField>
+						</View>
+					</View>											
+				</View>		
+				<!-- <View class="wfill hsize horz" top="20">
+					<!-- <View class="form_bg hsize vert" width="50%">						
+						<View class="wfill hsize horz">
+							<Label class="form_lb_top" width="25%">MC Charges</Label>
+							<TextField onTouchend="hideSoftKeyboard" class="wfill hsize tf_spacing" editable="false" keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" id="mc_charges" hintText="Medication Charges"></TextField> 
+						</View>								
+					</View> -->
+					<!-- <Button class="button_get wsize" onClick="getMcTotalCharges">Get MC Charges</Button>						 -->
+				<!-- </View>	 -->					 
+				<Label class="medium_Label hsize" top="10">MC days</Label>					
+				<View class="wfill hsize">
+					<View class="form_bg hsize horz" top="10" width="45%">
+						<Label class="form_lb_top" width="55%">MC days(From)</Label>
+				 		<View class="textfield tf_spacing wfill hsize" hintText="Sales Start Date" master="1" form_type="date_picker" require="true" id="mc_from" onClick="popDatePicker">
+				 			<Label class="wsize hsize padding" touchEnabled="false" color="#cccccc" mcdate="from">Date Picker</Label>
+				 		</View>														
+					</View>
+					<View class="form_bg1 hsize horz"top="10" width="45%">
+						<Label class="form_lb_top" width="55%">MC days(To)</Label>
+				 		<View class="textfield tf_spacing wfill hsize" hintText="Sales Start Date" master="1" form_type="date_picker" require="true" id="mc_till" onClick="popDatePicker">
+				 			<Label class="wsize hsize padding" touchEnabled="false" color="#cccccc">Date Picker</Label>
+				 		</View>														
+					</View>						
+				</View>	
+				<Label class="medium_Label hsize">Blood Pressure</Label>
+				<View class="form_bg wfill hsize vert">
+					<View class="wfill hsize horz">
+						<Label class="form_lb_top" width="25%">BPS</Label>
+						<TextField class="wfill hsize tf_spacing" keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" id="bps" hintText="Blood Pressure (Systolic) mm Hg"></TextField>	
+					</View>
+					<View class="wfill hsize horz">
+						<Label class="form_lb_top" width="25%" top="0">BPD</Label>	
+						<TextField class="wfill hsize tf_spacing" keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" top="0" id="bpd" hintText="Blood Pressure (Diastolic) mm Hg"></TextField>								
+					</View>			
+					<View class="wfill hsize horz">
+						<Label class="form_lb_top" width="25%" top="0">Pulse</Label>	
+						<TextField class="wfill hsize tf_spacing" keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" top="0" id="pulse" hintText="Pulse Rate"></TextField>								
+					</View>											
+				</View>						
+				<Label class="medium_Label hsize">Charges</Label>	
+				<View class="form_bg wfill hsize vert">
+					<View class="wfill hsize horz">
+						<View class="form_lb_top" type="" width="40%" borderColor="#fff" onClick="openDayPicker">
+							<Label class="form_lb size hsize" name="consday" id="day" text="Consultation Charges (Day)"></Label>
+							<ImageView image="/images/btn-down.png" width="20" height="20" right="3"></ImageView>
+						</View>
+						<TextField class="wfill hsize tf_spacing" keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" id="consday" hintText="Consultation Charges (Day)"></TextField>						
+					</View>							
+				</View>	
+				<View class="form_bg wfill hsize vert" top="10">						
+					<View class="wfill hsize horz">
+						<Label class="form_lb_top" width="40%">Medication Charges</Label>
+						<TextField class="wfill hsize tf_spacing" keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" id="mc_charges" hintText="Medication Charges"></TextField> 
+					</View>								
+				</View>					
+				<View class="form_bg wfill hsize vert" top="10">
+					<View class="wfill hsize horz">
+						<Label class="form_lb_top" width="30%">Injection</Label>
+						<TextField class="wfill hsize tf_spacing" id="injection_item" hintText="Injection Itemization"></TextField>						
+					</View>
+					<View class="wfill hsize horz">
+						<Label class="form_lb_top" width="30%" top="0">Injection Charges</Label>															
+						<TextField class="wfill hsize tf_spacing" top="0" keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" id="injectamt" hintText="Injection Charges"></TextField>						
+					</View>							
+				</View>		
+				<View class="form_bg wfill hsize vert" top="10">
+					<View class="wfill hsize horz">
+						<Label class="form_lb_top" width="30%">X-Ray</Label>
+						<TextField class="wfill hsize tf_spacing" id="xray_item" hintText="X-Ray Itemization"></TextField>						
+					</View>
+					<View class="wfill hsize horz">
+						<Label class="form_lb_top" width="30%" top="0">X-Ray Charges</Label>															
+						<TextField class="wfill hsize tf_spacing" top="0" keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" id="xrayamt" hintText="X-Ray Charges"></TextField>						
+					</View>							
+				</View>
+				<View class="form_bg wfill hsize vert" top="10">
+					<View class="wfill hsize horz">
+						<Label class="form_lb_top" width="30%">Lab Test</Label>
+						<TextField class="wfill hsize tf_spacing" id="labtest_item" hintText="Lab Test Itemization"></TextField>						
+					</View>
+					<View class="wfill hsize horz">
+						<Label class="form_lb_top" width="30%" top="0">Lab Test Charges</Label>															
+						<TextField class="wfill hsize tf_spacing" top="0" keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" id="labtestamt" hintText="Lab Test Charges"></TextField>						
+					</View>	
+					<View class="wfill hsize horz">
+						<Label class="form_lb_top" width="30%" top="0">Lab Handling Fee</Label>															
+						<TextField class="wfill hsize tf_spacing" top="0" keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" id="labtestfee" hintText="Lab Handling Fee"></TextField>						
+					</View>													
+				</View>						
+				<View class="form_bg wfill hsize vert" top="10">
+					<View class="wfill hsize horz">
+						<Label class="form_lb_top" width="30%">Surgical</Label>
+						<TextField class="wfill hsize tf_spacing" id="surginal_item" hintText="Surgical Procedure"></TextField>						
+					</View>
+					<View class="wfill hsize horz">
+						<Label class="form_lb_top" width="30%" top="0">Surgical Charges</Label>															
+						<TextField class="wfill hsize tf_spacing" top="0" keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" id="surginalamt" hintText="Surgical Charges"></TextField>						
+					</View>							
+				</View>																		
+				<!-- <TextField class="wfill hsize padding" keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" height="40" id="medication" hintText="Medication Charges"></TextField>  -->
+				<View class="wfill hsize" top="20">
+					<View class="form_bg hsize vert wfill">						
+						<View class="wfill hsize horz">
+							<Label class="form_lb_top" width="25%">Total Charges</Label>
+							<TextField class="wfill hsize tf_spacing" keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" id="totalamt" hintText="Total Charges"></TextField> 
+						</View>								
+					</View>
+					<!-- <Button class="button_get wsize" onClick="getTotalCharges">Get Total Charges</Button>						 --> 
+				</View>
+				<Label class="medium_Label hsize">Notes</Label>						
+				<View class="form_bg wfill hsize vert" top="10">
+	 				<TextArea hintText="OTHERS (ACUTE) Description" class="wfill hsize ta_spacing" left="3" form_type="textarea" require="true" id="acnote"></TextArea>																									
+	 				<TextArea hintText="OTHERS (CHRONIC) Description" class="wfill hsize ta_spacing" left="3" top="0" form_type="textarea" require="true" id="chnote"></TextArea>																			
+				</View>																				
+				<View class="wfill hsize">
+					<Button class="button" top="10" onClick="closeWindow" left="0" width="50%" title="Cancel"></Button>
+					<Button class="button" top="10" onClick="claim_submit" right="0" width="50%" title="Submit"></Button>	
+				</View> 
+			</View>
+		</ScrollView>
+    </Window>
+</Alloy>

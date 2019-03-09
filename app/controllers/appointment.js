@@ -36,7 +36,6 @@ $.masked2.hide();
 function render_appointment_list(){ 
 	$.appointment_list.removeAllChildren();
 	appointmentList = appointment.getAppointmentListByDoctorId({doctor_id: doctor_id}); 
-	//console.log(appointmentList);
 	var data=[];
 	var counter = 0;  
 	if(appointmentList.length < 1){
@@ -175,8 +174,6 @@ function multiple_select(e){
 	var duration = parent({name: "duration"}, e.source);
 	
 	var exist = _.where(selected_time, {start_date : start_date});
-	console.log(exist);
-	console.log(exist.length);
 	
 	if(exist.length == 0){
 		var param = { 
@@ -190,7 +187,6 @@ function multiple_select(e){
 			updated : currentDateTime(),
 			isDoctor: 1
 		};
-		console.log("added");
 		selected_time.push(param);
 	}
 	_suggested_time.set_selected_time(selected_time);
@@ -259,8 +255,6 @@ function refresh(e){
 		var model = Alloy.createCollection("appointment");
 		var res = JSON.parse(responseText);
 		var arr = res.data || null;
-		console.log("getAppointmentByDoctor save arr");
-		console.log(arr);
 		model.saveArray(arr);
 		checker.updateModule(4,"getAppointmentByDoctor", Common.now(), doctor_id);
 		render_appointment_list();
@@ -307,13 +301,10 @@ function onOk(){
 		return ;
 	}
 	var save_counter = 0;
-	console.log(selected_time.length+" how many");
 	for (var i=0; i < selected_time.length; i++) {
-		console.log(selected_time[i]);
 	  API.callByPost({url:"addAppointmentUrl", params: selected_time[i]}, function(responseText){
 	  	var res = JSON.parse(responseText);
 		var arr = res.data || null;
-		console.log(arr);	
 	  	appointment.saveArray(res.data);
 	  	save_counter++;
 	  });
@@ -334,16 +325,10 @@ function onCancel(){
 }
 
 function updateAppointmentStatus(param, _callback){
-	loading.start(); 
-	console.log("updateAppointmentStatus + addAppointmentUrl");
-	console.log(param);
-	console.log("why double, fuck");
+	loading.start();
 	API.callByPost({url:"addAppointmentUrl", params: param}, function(responseText){ 
-		console.log('wtf');
-		console.log(responseText);
 		var res = JSON.parse(responseText);
 		if(res.status == "success"){
-			console.log('holyshit');
 			appointment.updateAppointmentStatus(param.id, param.status);
 			loading.finish();
 			refresh();
@@ -389,8 +374,6 @@ function init(){
 		}; 
 	}
 	
-	
-	console.log("doctor_panel_id: "+doctor_panel_id);
 	if(doctor_panel_id == "" || doctor_panel_id == "0"){
 		var dialog = Ti.UI.createAlertDialog({
 			cancel: 1,

@@ -44,7 +44,6 @@ function receivePush(e) {
 		doctor_panel_id = e.doctor_panel_id;
 	}  
 	 
-	console.log(target+" and redirect "+redirect); 
 	if(target =="appointment"){
 		Ti.App.Properties.setString('doctor_panel_id', doctor_panel_id);
 		
@@ -122,9 +121,6 @@ function deviceTokenSuccess(ev) {
 					    	registerPush();
 					    }
 					});
-
-			        console.log('Error:\n' +
-			            ((ey.error && ey.message) || JSON.stringify(ey)));
 			    }
 			});
 
@@ -189,17 +185,6 @@ function registerPush(){
 function getNotificationNumber(payload){ 
 	 
 }
-/*
-Ti.App.addEventListener("pause", function(e){
-	console.log('sleep');
-	redirect = false;
-});
-
-Ti.App.addEventListener("resumed", function(e){
-	console.log('resume');
-	redirect = false;
-});
-*/
 exports.setInApp = function(){
 	console.log('In App');
 	Titanium.UI.iPhone.setAppBadge("0"); 

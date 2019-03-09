@@ -1,10 +1,10 @@
 var args = arguments[0] || {};
-var SCANNER = require("scanner"); 
-Ti.App.Properties.setString('time1', '');  
+var SCANNER = require("scanner");
+Ti.App.Properties.setString('time1', '');
 var doctor_id = Ti.App.Properties.getString('doctor_id');
-var patient_recordsModel = Alloy.createCollection('patient_records'); 
+var patient_recordsModel = Alloy.createCollection('patient_records');
 var id;
-var terminal_id; 
+var terminal_id;
 var clinic_name = "";
 var cardno, action;// = "6000201000113580";
 var loading = Alloy.createController("loading");
@@ -24,14 +24,13 @@ function RunLayout(){
 	var keyinPin_radius = keyinPin_dp / 2;
 	var fsize = keyinPin_dp * 40 / 100;
 	var i1 = 1, i2 = 4, i3 = 7;
-	console.log(pin_dp+" "+keyinPin_dp+" "+keyinPin_radius+" "+pin_radius);
-	
+
 	for(var i = 0; i < pin_circle.length; i++) {
 		pin_circle[i].width = pin_dp;
 		pin_circle[i].height = pin_dp;
 		pin_circle[i].borderRadius = pin_radius;
 	}
-	
+
 	for(var i = 0; i < keyinPin_1.length; i++) {
 		keyinPin_1[i].width = keyinPin_dp;
 		keyinPin_1[i].height = keyinPin_dp;
@@ -52,22 +51,21 @@ function RunLayout(){
 	keyinPin_4[0].width = keyinPin_dp;
 	keyinPin_4[0].height = keyinPin_dp;
 	keyinPin_4[0].borderRadius = keyinPin_radius;
-	keyinPin_4[0].add($.UI.create("Label", {text: 0, classes: ['white'], font:{fontSize:fsize}}));
+	keyinPin_4[0].add($.UI.create("Label", {text: 0, touchEnabled:false, classes: ['white'], font:{fontSize:fsize}}));
 }
 
 
 function closeWindow(){
-	console.log("card reader close");
 	$.win.close();
 }
 init();
 
 function checkTerminateIdExist(){
 	terminal_id = Ti.App.Properties.getString("terminal_id");
-	 
-	if(terminal_id != null){ 
+
+	if(terminal_id != null){
 		return true;
-	}else{ 
+	}else{
 		return false;
 	}
 }
@@ -75,20 +73,19 @@ function checkTerminateIdExist(){
 function doInquiry(){
 	if(!cardno){
 		COMMON.createAlert("Warning", "Card No not found, please scan the patient card.", function(){
-			
+
 		});
 		return;
 	}
 	loading.start();
 	API.callByGet({url:"terminalsub", params: "action=INQUIRY&cardno="+cardno+"&terminal="+terminal_id}, function(responseText){
 	  	var res = JSON.parse(responseText);
-	  	//console.log(res);
 	  	var msg = res[0].message.split("\n\n\n________________________");
 	  	var signature = (_.isUndefined(msg[1]))?false:true;
 		Alloy.Globals.Navigator.open("receipt", {displayHomeAsUp: true, message: res[0].message, terminal_id: terminal_id, signature: false, record: res[0]});
 		loading.finish();
 	},function(err){
-		loading.finish();		
+		loading.finish();
 		alert("Please try again later.");
 	});
 }
@@ -105,7 +102,7 @@ function getDiag(picker){
 }
 
 function qrscan(){
-	if (Ti.Media.hasCameraPermissions()) {			
+	if (Ti.Media.hasCameraPermissions()) {
 		SCANNER.openScanner("1");
 	}else{
 		Ti.Media.requestCameraPermissions(function(e) {
@@ -113,29 +110,27 @@ function qrscan(){
                 SCANNER.openScanner("1");
             }else{
                 alert('You denied permission');
-            }	
-        });    			
-	}		
+            }
+        });
+	}
 }
 
 function popInsertCardNo(e){
-	console.log(e);
 	action = e.source.action;
 	var dialog = Ti.UI.createOptionDialog({
 	  cancel: 2,
 	  options: ['QR Scanner','Card Number','Cancel'],
 	  title: 'Insert Patient CardNo'
 	});
-		
-	dialog.show(); 
-	dialog.addEventListener("click", function(e){   
+	dialog.show();
+	dialog.addEventListener("click", function(e){
 		if(e.index == 0){
 			qrscan();
 		}else if(e.index == 1){
 			$.masked.show();
 			$.cardnumber.show();
 		}else if(e.index == 2){
-			
+
 		}
 	});
 }
@@ -147,9 +142,8 @@ function hideCardNumber(){
 
 function validateUserPinViaServer(cardno){
 	loading.start();
-	API.callByPost({url:"validateUserPin", new:true, params:{mem_no: cardno}}, function(responseText){ 
-		res = JSON.parse(responseText); 
-		console.log(res);
+	API.callByPost({url:"validateUserPin", new:true, params:{mem_no: cardno}}, function(responseText){
+		res = JSON.parse(responseText);
 		loading.finish();
 		status = res.status;
 		check_pin = res.data;
@@ -163,7 +157,7 @@ function validateUserPinViaServer(cardno){
 		$.masked.show();
 	},function(err){
 		alert("Please try again later");
-	}); 
+	});
 }
 
 function cardnoAssign(){
@@ -184,10 +178,9 @@ function cardnoAssign(){
 }
 
 function keyinPin(e){
-	console.log(e.source);
 	var number = e.source.number;
-	console.log(number);
 	pin.push(number);
+	console.log(pin);
 	render_pin_circle();
 }
 
@@ -204,32 +197,33 @@ function remove_pin(){
 
 function submitPin(){
 	var p = pin.join("");
-	console.log(status+" status "+p);
+	console.log(p);
+	console.log(pin);
 	if(status == "new"){
 		pin_confirm = p;
 		status = "confirm";
 		$.pin_title.text = "Confirm PIN";
-		
+
 	}else if(status == "confirm"){
 		if(pin_confirm == p){
 			loading.start();
-			API.callByPost({url:"addUserPin", new:true, params:{mem_no: cardno, pin: pin_confirm}}, function(responseText){ 
-				res = JSON.parse(responseText); 
-				console.log(res);
+			API.callByPost({url:"addUserPin", new:true, params:{mem_no: cardno, pin: pin_confirm}}, function(responseText){
+				res = JSON.parse(responseText);
 				loading.finish();
 				$.pin_panel.hide();
 				$.masked.hide();
-				show_itemise_submittion();								
-			}); 
+				show_itemise_submittion();
+			});
 			pin_confirm = "";
 		}else{
 			alert("Confirm PIN is not match.");
 		}
 	}else if(status == "success"){
+	    console.log(check_pin+" "+p);
 		if(check_pin == p){
 			$.pin_panel.hide();
 			$.masked.hide();
-			show_itemise_submittion();				
+			show_itemise_submittion();
 		}else{
 			alert("Incorrect PIN");
 		}
@@ -244,29 +238,27 @@ function submitPin(){
 function show_itemise_submittion(){
 	var t_id = Ti.App.Properties.getString("terminal_id");
 	var c_no =  cardno; // empno
-	//var options = ['Claim Submission With Itemization','Claim Submission','Cancel'];		
-	var options = ['Claim Submission','Claim Submission With Itemization','Cancel'];				
-	var opts = {cancel: 2,options:options, title: 'Claim Submission'};	
+	//var options = ['Claim Submission With Itemization','Claim Submission','Cancel'];
+	var options = ['Claim Submission','Claim Submission With Itemization','Cancel'];
+	var opts = {cancel: 2,options:options, title: 'Claim Submission'};
 	var dialog = Ti.UI.createOptionDialog(opts);
 	dialog.addEventListener("click",function(e){
 		/*if(e.index == 0){
-			Alloy.Globals.Navigator.open("claim_submission", {displayHomeAsUp: true,t_id:t_id,c_no:c_no});						
+			Alloy.Globals.Navigator.open("claim_submission", {displayHomeAsUp: true,t_id:t_id,c_no:c_no});
 		}else if(e.index == 1){
 			Alloy.Globals.Navigator.open("claim_submission_basic", {displayHomeAsUp: true,t_id:t_id,c_no:c_no});
 		}*/
 		if(e.index == 0){
-			Alloy.Globals.Navigator.open("claim_submission_basic", {displayHomeAsUp: true,t_id:t_id,c_no:c_no});
+			Alloy.Globals.Navigator.open("claim_submission_basic", {displayHomeAsUp: true,tid:t_id,cardno:c_no});
 		}else if(e.index == 1){
-			Alloy.Globals.Navigator.open("claim_submission", {displayHomeAsUp: true,t_id:t_id,c_no:c_no});
+			Alloy.Globals.Navigator.open("claim_submission", {displayHomeAsUp: true,tid:t_id,cardno:c_no});
 		}
 	});
-	console.log("show two times?");
-	dialog.show();	
+	dialog.show();
 }
 
 
 function render_pin_circle(){
-	console.log(pin.length+" pin.length");
 	var child = $.pin_circle.getChildren();
 	if(pin.length == 4 ){
 		child[pin.length-1].backgroundColor = "#ffffff";
@@ -292,9 +284,9 @@ function init(){
 	$.masked.hide();
 //	$.inner_pay.hide();
 //	getDiagCategory();
-//	getDrugList();	
+//	getDrugList();
 	if(!checkTerminateIdExist()){
-		
+
 	}
 	//setTimeout(function(e){SCANNER.openScanner("1");}, 500);
 }
@@ -304,7 +296,7 @@ function closeKeyboard(e){
 	if(onfocus){
 		var all_textfield = e.source.getChildren();
 		all_textfield.pop();
-		
+
 		for (var i=2; i < all_textfield.length; i++) {
 		  all_textfield[i].blur();
 		};
@@ -323,19 +315,16 @@ function cancel_submit(){
 }
 
 function doPay(){
-	console.log(typeof cardno);
 	if(!cardno){
 		COMMON.createAlert("Warning", "Card No not found, please scan the patient card.", function(){
-			
+
 		});
 		return;
 	}
 }
 
-function getCardData(e){ 
+function getCardData(e){
 	cardno = e.cardno;
-	console.log("getCardData");
-	console.log(action);
 	setTimeout(function(){
 		if(action == "doInquiry"){
 			doInquiry();
@@ -344,8 +333,8 @@ function getCardData(e){
 		}
 	}, 1000);
 	//validateUserPinViaServer(cardno);
-}	
-		
+}
+
 function hideKeyboard(e){
 	$.diag1.blur();
 	$.diag2.blur();
@@ -355,14 +344,14 @@ function hideKeyboard(e){
 	$.medication.blur();
 	$.injection.blur();
 	$.xray.blur();
-	$.surgical.blur(); 
+	$.surgical.blur();
 }
 
 
 Ti.App.addEventListener('getCardData', getCardData);
 Ti.App.addEventListener('cardReader:closeWindow', closeWindow);
-		 
-$.win.addEventListener("close", function(){ 
+
+$.win.addEventListener("close", function(){
 	Ti.App.Properties.setString("card_data","");
 	Ti.App.removeEventListener('cardReader:closeWindow', closeWindow);
 	Ti.App.removeEventListener('getCardData', getCardData);

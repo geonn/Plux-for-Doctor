@@ -15,7 +15,6 @@ function init(){
 	//doctorModel.addColumn("img_path", "TEXT");
 	var login = Alloy.createController("auth/login");
 	login.checkAuth(navToIndexHome);
-	console.log("index init");
 	setTimeout(function(e){$.win.close();}, 500);
 }
 
@@ -31,5 +30,4 @@ API.callByPost({url: "dateNow"}, function(responseText){
 init();
 
 $.win.addEventListener("close", function(e){
-	console.log("close index");
 });

@@ -6,7 +6,6 @@ var duration = parseInt(args.duration) || 0;
 var status = (args.status)?true:false;
 var clinic_id = parseInt(args.clinic_id) || 0;
 var doctor_id = Ti.App.Properties.getString('doctor_id');
-console.log("parts/workinghour");
 var day_text = ["","MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY"];
 
 function changeDuty(e){

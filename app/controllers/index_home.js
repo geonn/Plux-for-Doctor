@@ -13,7 +13,6 @@ Alloy.Globals.Navigator = {
 };
 
 function navTo(controller, payload){
-	console.log(controller);
 	var win = Alloy.createController(controller, payload || {}).getView();
 
 	if(OS_IOS){
@@ -21,7 +20,6 @@ function navTo(controller, payload){
 	}else if(OS_MOBILEWEB){
 		Alloy.Globals.Navigator.navGroup.open(win);
 	}else{
-		console.log(payload);
 		// added this property to the payload to know if the window is a child
 		if (typeof payload.displayHomeAsUp !="undefined" || typeof payload !="undefined"){
 			win.addEventListener('open',function(evt){

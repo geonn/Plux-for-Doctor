@@ -16,9 +16,6 @@ function onload(responseText){
 		setTimeout(function(){
 			loading.finish(); 
 			var arr = result.data; 
-			//Ti.App.Properties.setString('clinic_id', arr.clinic_id);
-			//Ti.App.Properties.setString('specialty', arr.specialty);
-			console.log("asdf:"+arr.doctor_id);
 	   		Ti.App.Properties.setString('u_id', arr.doctor_id);
 	   		Ti.App.Properties.setString('doctor_id', arr.doctor_id);
 	   		Ti.App.Properties.setString('name', arr.name);
@@ -78,7 +75,6 @@ function init(){
 
 $.checkAuth = function(cb){
 	var u_id = Ti.App.Properties.getString('terminal_id') || 0;  
-	console.log(u_id+" terminal_id");
 	if(u_id > 0){
 		cb && cb();
     }else{ 

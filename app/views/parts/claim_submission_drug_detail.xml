@@ -1,0 +1,24 @@
+<Alloy>
+	<Window navTintColor="#CE1D1C" backgroundColor="#535a74" id="win" title="Medication" fullscreen="true"  navBarHidden="false">
+	    <View class="wfill hfill vert">
+            <Label class="wfill hsize padding h7" color="#fff"> * COMPULSORY</Label>
+            <ScrollView class="wfill hfill vert contwfill conthsize" scrollType="vertical" id="forms">
+				<Label class="wfill hsize padding h5" bottom="5" top="0" color="#fff" nosubmit="1">MEDICATION</Label>
+				<View class="wfill hsize" top="0" id="medication">
+					<View backgroundColor="#fba81c" value="" class="wfill hsize padding rounded" top="0">
+					    <TextField hintText="Medication" onClick="openMedicationPicker" onPostlayout="getDrugList" editable="false" onBlur="textFieldOnBlur" required="0" left="5" value=""></TextField>
+					</View>
+				</View>
+				<Label class="wfill hsize padding h5" bottom="5" top="0" color="#fff" nosubmit="1">QUANTITY</Label>
+				<View backgroundColor="#fba81c" id="qty" value="" class="wfill hsize padding rounded" top="0">
+                    <TextField keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" maxLength="30" hintText="Quantity" onBlur="textFieldOnBlur" required="0" left="5" value=""></TextField>
+                </View>
+					<Label class="wfill hsize padding h5" bottom="5" top="0" color="#fff" nosubmit="1">PRICE</Label>
+					<View backgroundColor="#fba81c" id="cost" value="" class="wfill hsize padding rounded" top="0">
+                        <TextField keyboardType="Titanium.UI.KEYBOARD_TYPE_DECIMAL_PAD" maxLength="30" hintText="Price" onBlur="textFieldOnBlur" required="0" left="5" value=""></TextField>
+                    </View>
+                <Button class="new_button" onClick="doSave" width="70%" bottom="10" title="SAVE"></Button>
+            </ScrollView>
+        </View>
+    </Window>
+</Alloy>

@@ -32,7 +32,6 @@ function render_date_bar(){
 	    
 		var active_view = (selected_date.getDate() == date)?"active_view":"";
 		var active_label = (selected_date.getDate() == date)?"active_label":"";
-	   	//console.log(selected_date.getDate()+" = "+date);
 	    var view_date_box = $.UI.create("View",{
 	    	width: 80,
 	    	height: 80,
@@ -127,7 +126,6 @@ function collectData(e){
 	}else{
 		working_hour_arr.push(obj);
 	}
-	console.log(working_hour_arr);
 }
 
 Ti.App.addEventListener('set_working_hours:refresh', refresh);
@@ -139,5 +137,4 @@ $.win.addEventListener("close", function(){
 	Ti.App.removeEventListener('set_working_hours:refresh',refresh);
 	Ti.App.removeEventListener('set_working_hours:collectData', collectData);
 	$.destroy();
-	console.log("window close");
 });

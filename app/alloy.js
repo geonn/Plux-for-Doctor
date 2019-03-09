@@ -35,7 +35,6 @@ function parent(key, e){
 	    		return e;
 	    }
 	}else{
-		console.log("parent "+e.mod);
 		if(eval("typeof e."+key.name) == "undefined"){
 			if(eval("typeof e.parent."+key.name+"") == "undefined"){
 				if(eval("typeof e.parent.parent."+key.name+"") == "undefined"){

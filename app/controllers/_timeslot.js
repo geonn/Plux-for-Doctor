@@ -17,7 +17,6 @@ var sd = args.selected_date || "";
 var res;
 var selected_date;
 var selected_time;
-//console.log(sd);
 if(sd != ""){
   
 	if(isDate(sd) === true){
@@ -26,8 +25,6 @@ if(sd != ""){
 		res = sd.replace(" ", "T");  
 		selected_date = new Date(res);
 	}
-	
-	//console.log(selected_date);
 }else{ 
 	selected_date = d;
 }
@@ -68,7 +65,6 @@ function convertMinuteToHour(minutes){
 }
 
 function render_date_bar(){
-	console.log(args.multiple_select);
 	if(args.multiple_select){
 		//$.date_bar.height = 0;
 		//return;
@@ -82,7 +78,6 @@ function render_date_bar(){
 	    
 		var active_view = (selected_date.getDate() == date)?"active_view":"";
 		var active_label = (selected_date.getDate() == date)?"active_label":"";
-	   	//console.log(selected_date.getDate()+" = "+date);
 	    var view_date_box = $.UI.create("View",{
 	    	width: 80,
 	    	height: 80,
@@ -159,13 +154,8 @@ function render_available_timeslot(){
 	var start_date = selected_date.getFullYear()+"-"+("0"+(parseInt(selected_date.getMonth())+1)).slice(-2)+"-"+("0"+selected_date.getDate()).slice(-2)+" 00:00:00";
 	var end_date = selected_date.getFullYear()+"-"+("0"+(parseInt(selected_date.getMonth())+1)).slice(-2)+"-"+("0"+selected_date.getDate()).slice(-2)+" 23:59:59";
 	var appointmentList = appointmentModel.getAppointmentList({u_id: u_id, doctor_panel_id: doctor_panel_id, start_date: start_date, end_date:end_date});
-	console.log(selected_time);
-	console.log("appointment list");
-	console.log(appointmentList);
 	if(selected_time != null){
 	appointmentList = _.union(selected_time, appointmentList);
-	console.log("after");
-	console.log(appointmentList);
 	}
 	/*
 	 generate booked timeslot from appointment list
@@ -175,7 +165,6 @@ function render_available_timeslot(){
 	  var timeStamp = datetime.split(" ");
 	  var time = timeStamp[1].split(":");
 	  var date_now = selected_date.getFullYear()+"-"+("0"+(parseInt(selected_date.getMonth())+1)).slice(-2)+"-"+("0"+selected_date.getDate()).slice(-2);
-	  console.log(date_now+"!= "+timeStamp[0]);
 	  if(date_now != timeStamp[0]){
 	  		break;
 	  }
@@ -280,12 +269,6 @@ function changeDate(e){
 
 function refresh(){
 	var doctor_panel_id = Ti.App.Properties.getString('doctor_panel_id');
-	/*var model = Alloy.createCollection('working_hours');  
-	console.log(doctor_panel_id+" doctor_panel_id");
-	
-	working_hour = model.getData(doctor_panel_id);
-	console.log(working_hour);*/
-	console.log("doctor_panel_id"+doctor_panel_id);
 	setClinicLabel();
 	
 	API.callByPost({url:"getWorkingHoursByDoctorPanelUrl", params: {doctor_panel_id: doctor_panel_id}}, function(responseText){
@@ -301,7 +284,6 @@ function setClinicLabel(){
 	
 	var model = Alloy.createCollection("doctor_panel");
 	var current_clinic = model.getDataById({doctor_panel_id: doctor_panel_id});
-	console.log(doctor_panel_id+" "+current_clinic);
 	if(typeof current_clinic != "undefined"){
 		$.clinic_label.text = current_clinic.clinicName;
 	}
@@ -309,7 +291,6 @@ function setClinicLabel(){
 
 $.set_selected_time = function(e) {
 	selected_time = e;
-	console.log(e);
 };
 
 function init(){
@@ -321,11 +302,9 @@ function init(){
 init();
 
 $.clinic_list.addEventListener("click", function(e){
-	console.log(e.rowData);
 	var clinicName = e.rowData.clinicName;
 	var doctor_panel_id = e.rowData.id;
 	Ti.App.Properties.setString('doctor_panel_id', doctor_panel_id);
-	//console.log(clinicName+" doctor_panel_id is"+doctor_panel_id);
 	$.clinic.hide();
 	$.clinic_list.removeAllChildren();
 	refresh();

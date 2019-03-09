@@ -59,7 +59,6 @@ function loadClinic(){
 			$.myClinic.add(clinicView);
 			
 			clinicView.addEventListener('click', function(e){
-				console.log(e);
 				var dialog = Ti.UI.createOptionDialog({
 					cancel: 2,
 					options: ['Select Panel', 'Set Working Hours', 'Cancel'],
@@ -70,7 +69,6 @@ function loadClinic(){
 				});
 				dialog.show();
 				dialog.addEventListener("click", function(ex){
-					console.log(ex.source);
 					if(ex.index == 0){
 						selectedPanel(ex.source.clinic_id);
 					}else if(ex.index == 1){
@@ -109,8 +107,6 @@ function selectedPanel(id){
 			var doctor_id = Ti.App.Properties.getString('doctor_id');
 			var model = Alloy.createCollection('doctor_panel');  
 			var doctor_panel = model.getDoctorPanelId(doctor_id, id);
-			console.log("setting doctor_panel");
-			console.log(doctor_panel);
 			Ti.App.Properties.setString('doctor_panel_id', doctor_panel.id);
 		
 			COMMON.removeAllChildren($.myClinic);

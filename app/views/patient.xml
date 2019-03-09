@@ -1,16 +1,12 @@
 <Alloy>
 	<Window   navTintColor="#CE1D1C" id="win" title="Patient Records"  navBarHidden="false">
-		
+
 		<View layout="vertical" id="loadingBar" height="120" width="120" borderRadius="15" backgroundColor="#2E2E2E" >
 	        	<ActivityIndicator  id="activityIndicator" />
 	        	<Label id="loading" top="5" text="Loading" color="#ffffff" />
 	    </View>
-		<View class="wfill" height="50" top="0" id="searchBarView">
-			 <SearchBar id="searchBar" showCancel="true" height="50" hintText="Search Patient Information" barColor="#ffffff"></SearchBar>
-			 
-	 	</View> 
-	 	<TableView width="100%" id="recordTable"  top="50" class="wfill hfill"  separatorColor="#375540" />
-	    <!--<ScrollView id="contentView" class="wfill hfill vert"  top="40"  contentHeight="Ti.UI.SIZE" contentWidth="Ti.UI.FILL" />  
+	 	<TableView width="100%" id="recordTable" class="wfill hfill"  separatorColor="#375540" filterAttribute="value" />
+	    <!--<ScrollView id="contentView" class="wfill hfill vert"  top="40"  contentHeight="Ti.UI.SIZE" contentWidth="Ti.UI.FILL" />
     	-->
     </Window>
 </Alloy>

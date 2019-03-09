@@ -11,7 +11,6 @@ $.start = function() {
 	$.main.show();
 	$.mask.show();
 	$.loadingBar.show();
-	console.log("loading show");
 	$.activityIndicator.show();
 };
 

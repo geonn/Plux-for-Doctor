@@ -49,7 +49,6 @@ function render_menu_list(){
 	$.menu_scrollview.removeAllChildren();
 	var pWidth = (OS_ANDROID)?(Titanium.Platform.displayCaps.platformWidth / (Titanium.Platform.displayCaps.dpi / 160)):Titanium.Platform.displayCaps.platformWidth;
 	var button_width = Math.floor((pWidth - 30) / 2);
-	console.log(button_width+" button width"+pWidth+" "+Titanium.Platform.displayCaps.dpi+" "+Titanium.Platform.displayCaps.platformWidth);
 	$.menu_scrollview.width = "100%";
 	$.menu_scrollview.width = 293;
 	button_width = 139;
@@ -94,7 +93,6 @@ function render_menu_list(){
 			imageView_menu.addEventListener("click", navToMod);
 			$.menu_scrollview.add(imageView_menu);
 		}
-		console.log("render_menu_list");
 	};
 }
 
@@ -140,7 +138,6 @@ function render_header_info(){
 	});
 
 	title_view.add(welcomeTitle);
-	console.log("render_header_info");
 	$.myInfo.add(logoutBtn);
 	$.myInfo.add(title_view);
 
@@ -160,12 +157,9 @@ function init(){
 
 	var deviceToken = Ti.App.Properties.getString('deviceToken');
 	var u_id = Ti.App.Properties.getString('u_id') || "";
-	console.log(u_id +" => " + deviceToken);
-	console.log( "doctor_panel_id => " + Ti.App.Properties.getString('doctor_panel_id'));
 
 	if(deviceToken != "" && u_id != ""){
 		API.callByPost({url: "updateDoctorDeviceTokenUrl", params:{u_id: u_id,device_id:deviceToken }}, function(responseText){
-	      console.log("OK DEVICE TOKEN");
 	    });
 	}
 	//$.win.add(loading.getView());
@@ -177,10 +171,8 @@ Ti.App.addEventListener('home:refresh',refresh);
 
 $.win.addEventListener("close", function(){
 	Ti.App.removeEventListener('home:refresh',refresh);
-	console.log("home closing from home");
 	$.destroy();
 });
 
 $.win.addEventListener("open", function(){
-	console.log("home window open");
 });

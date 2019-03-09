@@ -1,293 +1,152 @@
 var args = arguments[0] || {};
-var t_id = args.t_id || undefined;
-var c_no = args.c_no || undefined;
-var SCANNER = require("scanner"); 
-Ti.App.Properties.setString('time1', '');  
-var doctor_id = Ti.App.Properties.getString('doctor_id');
-var patient_recordsModel = Alloy.createCollection('patient_records'); 
-var id;
-var terminal_id;
-var clinic_name = "";
-var diagCategoryArr = [];
-var diagCategoryIdArr = [];
-var selectedDiag1;
-var selectedDiag2;
-var cardno, action;// = "6000201000113580";
-var loading = Alloy.createController("loading");
-var status = "", check_pin="", pin_confirm="";
-var pin = [];
-var mctotalcharges=0;
-var totalcharges=0;
-var till;
-var from;
-checkingID(t_id,c_no);
-function checkingID(t_id1,c_no1){
-	if(typeof t_id1 == "undefined"){
-		setTimeout(function(){
-			COMMON.createAlert("Warning", "Terminal ID not found !!!", function(){
-				closeWindow();				
-			});
-			console.log("t_id:"+t_id);				
-		},1000);		
-	}else{
-		$.terminal_id.value = t_id1;
-	}
-	if(typeof c_no1 == "undefined"){
-		setTimeout(function(){
-			COMMON.createAlert("Warning", "Card No. not found!!!", function(){
-				closeWindow();
-			});
-		},1000);
-	}else{
-		$.cardno.value = c_no1;
-	}
-}
+var serial = args.serial || "";
+var corpcode = Ti.App.Properties.getString('corpcode');
+var empno = Ti.App.Properties.getString('empno');
+var memno = Ti.App.Properties.getString('memno');
+var name = Ti.App.Properties.getString('fullname');
+var loading = Alloy.createController('loading');
+var error_message = "";
+var diagCategory = [];
 
-function closeWindow(){
-	//Alloy.Globals.Navigator.open("cardReader", {displayHomeAsUp: true});
-	//COMMON.openWindow(Alloy.createController("cardReader").getView());
-	console.log("claim_submittion_basic close");
-	
-	$.win.close();
+function init(){
+    //loading.start();
+    $.win.add(loading.getView());
+    $.cardno.children[0].value = args.cardno || "";
+    $.cardno.children[0].text = "Card No: "+args.cardno || "";
+    $.terminal.children[0].value = args.tid || "";
+    $.terminal.children[0].text = "Terminal No: "+args.tid || "";
 }
 init();
 
- 
-function getDiag(picker){
-	API.callByPost({url:"getDiagList"}, function(responseText){
-	  	var res = JSON.parse(responseText);
-		var data = Array();
-	  	for (var i=0; i < res.data.length; i++) {
-			data.push($.UI.create("PickerRow", {title: res.data[i].desc, value: res.data[i].code}));
-		  };
-		picker.add(data);
-	});
+function textFieldOnBlur(e){
+    checkRequired(e.source);
 }
 
-
-function init(){
-	$.win.add(loading.getView());
-	if(Ti.Platform.osname == "android" ){
-		//getDiag($.diag1);
-	//	getDiag($.diag2);
-	}
-	getDiagCategory();
-	//setTimeout(function(e){SCANNER.openScanner("1");}, 500);
-}
-
-var submit = true;
-function claim_submit(){
-	if(submit){
-		submit=true;
-		loading.start();
-		var tid = $.terminal_id.value || 0;
-		var cardno = $.cardno.value || 0;	
-		var dayamt1 = ($.day.name == "consday")?$.consday.value : 0;
-		var nightamt1 = ($.day.name == "consnight")?$.consday.value : 0;
-		var dayamt = dayamt1 || 0;
-		var nightamt = nightamt1 || 0;
-		var diag1 = $.diag1.name || 0;
-		var diag2 = $.diag2.name || 0; 
-		var injectamt = $.injectamt.value || 0;
-		var xrayamt = $.xrayamt.value || 0;
-		var labamt = $.labtestamt.value || 0;
-		var suramt = $.surginalamt.value || 0;
-		var totalamt = $.totalamt.value || 0;
-		var medamt = $.mc_charges.value || 0;
-		var mcday = $.mcday.value || 0;
-		var appcode = "1234";
-		var total = $.totalamt.value ||0;
-		var total1 = parseFloat(dayamt)+parseFloat(nightamt)+parseFloat(medamt)+parseFloat(injectamt)+parseFloat(xrayamt)+parseFloat(labamt)+parseFloat(suramt);
-		if(diag1 == 0){
-			alert("Please select diagnosis 1.");
-			loading.finish();			
-			return;
-		}
-		console.log("total :"+total+"	"+total1);
-		if(total != total1){
-			alert("Total amount is not match.");
-			loading.finish();			
-			return;
-		}
-		if(total <= 0){
-			alert("Total amount cannot be 0");
-			loading.finish();			
-			return;
-		}
-		API.callByGet({url:"terminalsub", params: "action=PAY&terminal="+tid+"&cardno="+cardno+"&diag1="+diag1+"&diag2="+diag2+"&mc="+mcday+"&consday="+dayamt+"&consnight="+nightamt+"&medication="+medamt+"&injection="+injectamt
-		+"&xray="+xrayamt+"&labtest="+labamt+"&surgical="+suramt+"&total="+total+"&appcode="+appcode}, function(responseText){
-		  	//console.log(responseText);
-		  	var res = JSON.parse(responseText); 
-			console.log(res);
-			var arr = [{
-				tid:tid,
-				cardno:cardno,
-				dayamt:dayamt,
-				nightamt:nightamt,
-				diag1:diag1,
-				diag2:diag2,
-				injectamt:injectamt,
-				xrayamt:xrayamt,
-				labamt:labamt,
-				suramt:suramt,
-				totalamt:totalamt,
-				medamt:medamt,
-				mcday:mcday,
-				appcode:res[0].appcode
-			}];
-		  	var msg = res[0].message.split("\n          ________________________"); 
-		  	var signature = (_.isUndefined(msg[1]))?false:true;
-		  	console.log("signature:"+signature);
-		  	submit = true;
-			Alloy.Globals.Navigator.open("receipt", {displayHomeAsUp: true, message: msg[0], signature: signature, terminal_id: tid, record: res[0],arr:arr, appcode: res[0].appcode});
-			loading.finish();
-		},function(err){
-			alert("Please try again later.");
-		});
-	}
-}	
-		
-
-function getDiagCategory(){
-	loading.start();
-	API.callByPost({url:"getDiagList"}, function(responseText){ 
-		res = JSON.parse(responseText); 
-		console.log(JSON.stringify(res)); 
-		for (var i=0; i < res.data.length; i++) { 
-			diagCategoryIdArr.push(res.data[i].code);
-			diagCategoryArr.push( res.data[i].code+"-"+res.data[i].desc); 
-		}
-		
-	 	//if(OS_IOS){
-		//diagCategoryArr.push("Cancel"); 
-		//}
-		loading.finish(); 
-	}); 
-}
-
-function openDiagListView(tf){
-	if(Ti.Platform.osname === 'android'){
-         Ti.UI.Android.hideSoftKeyboard();
-    }
-    console.log("openDiagListView");
- 	var search_bar = (OS_IOS)?Titanium.UI.createSearchBar({
- 		hintText: "Table Search"
- 	}):Ti.UI.Android.createSearchView({
-	    hintText: "Table Search"
-	});
- 	var items = [];
- 	for (var i=0; i < diagCategoryArr.length; i++) {
-		if(OS_IOS){
-	 		var row = $.UI.create("TableViewRow", {title: diagCategoryArr[i]});
-	 		var view = $.UI.create("View", {classes:['wfill','hsize','padding'], height: 20});
-	 		row.add(view);
-			items.push(row);
-		}else{
-			items.push({title: diagCategoryArr[i], color: "#000000"});
-		}
-	};
-	 console.log("openDiagListView");
-	var tableview = Titanium.UI.createTableView({
-	    data: items,
-	    layout: "vertiacl",
-	    search: search_bar,
-	    backgroundColor: "#ffffff",
-	    searchAsChild: true,
-	    zIndex:100
-	});
-	 console.log("openDiagListView");
-	tableview.addEventListener("click", function(e){   
-		if(typeof tf.source == "undefined"){
-			tf.value = diagCategoryArr[e.index]; 
-			tf.text = diagCategoryArr[e.index]; 
-			tf.name = diagCategoryIdArr[e.index];				
-			tf.color = "#000000";	
-			tf.position = e.index; 								
-		}else{
-			tf.source.value = diagCategoryArr[e.index];  
-			tf.source.text = diagCategoryArr[e.index]; 
-			tf.source.name = diagCategoryIdArr[e.index];								
-			tf.source.color = "#000000";		
-			selectedDiag1 = e.index;		
-		}
-		$.win.remove(tableview);
-	});
-	$.win.add(tableview);
-}
-
-function openDiagPicker(tf){ 
-	if(Ti.Platform.osname === 'android'){
-         Ti.UI.Android.hideSoftKeyboard();
-    }
-    
-	var curSelection = "0";
-	var cancelBtn = diagCategoryArr.length -1;
-	if(typeof tf.source != "undefined"){
-		console.log("tf source");
-		if(tf.source.id == "diag1"){
-			curSelection = selectedDiag1;
-		}
-	}else{
-		console.log("tf position:"+tf.position);
-		curSelection = tf.position;
-	}
-	 
-	var dialog = Ti.UI.createOptionDialog({
-	 cancel: diagCategoryArr.length -1,
-	 options: diagCategoryArr,
-	  selectedIndex: parseInt(curSelection),
-	  title: 'Choose Diag Type'
-	});
-		
-	dialog.show(); 
-	dialog.addEventListener("click", function(e){   
-		if(cancelBtn != e.index){ 
-			if(typeof tf.source == "undefined"){
-				tf.value = diagCategoryArr[e.index];  
-				tf.name = diagCategoryIdArr[e.index];				
-				tf.color = "#000000";	
-				tf.position = e.index; 								
-			}
-			else{
-				tf.source.value = diagCategoryArr[e.index];  
-				tf.source.name = diagCategoryIdArr[e.index];								
-				tf.source.color = "#000000";		
-				selectedDiag1 = e.index;		
-			}
-		}
-	});
-}
-function hideSoftKeyboard(e){
-    if(OS_ANDROID){
-         Ti.UI.Android.hideSoftKeyboard();
-    } else {
-        $.mc_charges.blur();
+function checkRequired(obj){
+    if(obj.required && obj.value == ""){
+        error_message += obj.hintText+" cannot be empty\n";
+        obj.parent.backgroundColor = "#e8534c";
+    }else{
+        obj.parent.backgroundColor = "#55a939";
     }
 }
-function openDayPicker(lb){ 
-    
-	var daynight = ['Consultation Charges (Day)','Consultation Charges (Night)'];
-	var day = ['consday','consnight'];
-	var curSelection = "0";	 
-	var dialog = Ti.UI.createOptionDialog({
-	 options: daynight,
-	  selectedIndex: parseInt(curSelection),
-	  title: 'Choose Diag Type'
-	});
-		
-	dialog.show(); 
-	dialog.addEventListener("click", function(e){   
-		if(e.index > -1){
-			$.day.text = daynight[e.index];  
-			$.day.name = day[e.index];								
-			$.day.color = "#000000";	
-			$.consday.hintText = daynight[e.index];				
-		}	
-	});
+var singleton_diagcategory = false;
+function getDiagCategory(e){
+    if(singleton_diagcategory){
+        return;
+    }
+    e.source.opacity = 0.5;
+    var indicator = $.UI.create("ActivityIndicator", {classes:['wsize','hsize'], style: Ti.UI.ActivityIndicatorStyle.DARK,});
+    indicator.show();
+    e.source.add(indicator);
+    API.callByPost({url:"getDiagList"}, function(responseText){
+        res = JSON.parse(responseText);
+        var dat = res.data;
+        for (var i=0; i < dat.length; i++) {
+            diagCategory.push({key: dat[i].code, value: dat[i].code+" - "+dat[i].desc});
+        }
+        e.source.opacity = 1;
+        indicator.hide();
+        e.source.remove(indicator);
+        singleton_diagcategory = true;
+    });
 }
+
+function addDiagRow(){
+    var view = $.UI.create("View", {backgroundColor: "#ffffff", value: "", classes:['wfill','hsize','padding','rounded'], top: 0});
+    var label_view = $.UI.create("View", {classes:['wfill','hsize'], backgroundColor: "#ffffff"});
+    var label_diag = $.UI.create("Label", {classes:['wfill','hsize','padding','h5'], right: 40, text: "Diagnosis", color: "#000000", required: 0, value: ""});
+    var button = $.UI.create("Button", {bublleParent: false, classes:['rounded'], backgroundColor: "#a93955", color: "#702638", width: 40, height: 40, top:0, right: 0, title: "x"});
+    label_view.add(label_diag);
+    view.add(label_view);
+    view.add(button);
+    button.addEventListener("click", removeDiagRow);
+    label_diag.addEventListener("click", openDiagPicker);
+    $.diagnosis.children[0].add(view);
+}
+
+function openDiagPicker(e){
+    Alloy.Globals.Navigator.open("parts/search_list", {displayHomeAsUp: true, title: "Diagnosis", listing: diagCategory, callback: function(ex){
+        e.source.text = ex.value;
+        e.source.parent.parent.value = ex.key;
+        updateDiagArr();
+    }});
+}
+
+function removeDiagRow(e){
+     $.diagnosis.children[0].remove(e.source.parent);
+     updateDiagArr();
+}
+
+function updateDiagArr(){
+    var temp_diag_value = [];
+    var count = $.diagnosis.children[0].getChildren().length;
+    for (var i = 0; i < $.diagnosis.children[0].getChildren().length; i++) {
+        if($.diagnosis.children[0].children[i].value != ""){
+            temp_diag_value.push($.diagnosis.children[0].children[i].value);
+        }
+    }
+    $.diagnosis.children[0].value = temp_diag_value.join("*");
+}
+
+function sumCharges(){
+  var total = parseFloat($.consday.children[0].value || 0) + parseFloat($.consnight.children[0].value || 0) + parseFloat($.medication.children[0].value || 0) + parseFloat($.injection.children[0].value || 0) + parseFloat($.labtest.children[0].value || 0) + parseFloat($.xray.children[0].value || 0) + parseFloat($.surgical.children[0].value || 0);
+  $.cal_total.text = "TOTAL: RM "+total.toFixed(2);
+}
+
+function doSubmit(){
+    loading.start();
+    var childs = $.forms.getChildren();
+    var params = "action=PAY";
+
+    for (var i=0; i < childs.length - 1; i++) {
+        if(childs[i].nosubmit != "1"){
+            checkRequired(childs[i].children[0]);
+            if(childs[i].id == "diagnosis"){
+              var diag = childs[i].children[0].value.split("*");
+              for (var z = 0; z < diag.length; z++) {
+                if(diag[z] != ""){
+                  params += "&diag"+(z+1)+"="+diag[z];
+                }
+              }
+            }else{
+              var default_value = (childs[i].children[0].keyboardType == 8)?0:"NV";
+              params += "&"+childs[i].id+"="+(childs[i].children[0].value || default_value);
+            }
+
+        }
+    };
+    if(error_message.length > 0){
+        alert(error_message);
+        loading.finish();
+    }else{
+        API.callByGet({url:"terminalsub", params: params}, function(responseText){
+            var res = JSON.parse(responseText);
+            var msg = res[0].message.split("\n          ________________________");
+            var signature = (_.isUndefined(msg[1]))?false:true;
+            submit = true;
+            Alloy.Globals.Navigator.open("receipt", {displayHomeAsUp: true, message: msg[0], signature: signature, terminal_id: args.tid, record: res[0], appcode: res[0].appcode});
+            loading.finish();
+        },function(err){
+            alert("Please try again later.");
+        });
+    }
+    error_message = "";
+}
+
+function closeWindow(){
+    $.win.close();
+}
+
 Ti.App.addEventListener('claim_submit:closeWindow', closeWindow);
-		 
-$.win.addEventListener("close", function(){ 
-	Ti.App.Properties.setString("card_data","");
-	Ti.App.removeEventListener('claim_submit:closeWindow', closeWindow);
+
+$.win.addEventListener("close", function(){
+    Ti.App.Properties.setString("card_data","");
+    Ti.App.removeEventListener('claim_submit:closeWindow', closeWindow);
+});
+
+$.win.addEventListener("android:back",function(){
+    COMMON.createAlert("Warning","Are you sure you want to leave this page",function(){
+        $.win.close();
+    });
 });

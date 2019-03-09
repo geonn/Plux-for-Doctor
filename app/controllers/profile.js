@@ -19,7 +19,6 @@ function showList(){
 	if(avatar == ""){
 		avatar = "/images/avatar.jpg";
 	}
-	console.log(details);
 	$.name.value = details.name;
 	$.code.value = details.dr_code;
 	$.email.value = details.email;
@@ -181,7 +180,6 @@ function takePhoto(){
 					};
 					
 					API.callByPostImage({url:"uploadDoctorImageUrl", params: param, img: img_param}, function(responseText){ 
-					 	console.log(responseText);
 						var res = JSON.parse(responseText);   
 						 
 						if(res.status == "success"){    

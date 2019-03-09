@@ -15,9 +15,7 @@ overrode the settings with other TSS, XML, or JS settings:
 	color: '#000' // all platforms except Android default to black
 }
 
-'TextField[platform=android]': {
-	height: Ti.UI.SIZE //
-}
+
 
 */
 
@@ -30,11 +28,19 @@ overrode the settings with other TSS, XML, or JS settings:
 "Actionbar":{
 	backgroundColor: "#75d0cb",
 },
-".textfield":{
-	 backgroundColor: "#ffffff",
-	 borderWidth: 1,
-	 borderColor: "#cccccc"	
-},
+
+'TextField': {
+    borderStyle: Ti.UI.INPUT_BORDERSTYLE_NONE,
+    padding: { left: 10, right: 10, bottom:5, top:5 },
+    width: Ti.UI.FILL,
+    height: Ti.UI.SIZE,
+    font:{
+    	fontSize: 14,
+    },
+    color: "#000000",
+    hintTextColor: "#000000",
+    backgroundColor: "#ffffff"
+}
 "TableViewRow[platform=android]":{
 	color: "#606060",
 	top:10,
@@ -56,50 +62,13 @@ overrode the settings with other TSS, XML, or JS settings:
     width: Ti.UI.FILL,
 },
 
-'TextField[platform=ios formFactor=handheld]': {
-    height: 40,
-	borderColor: "#dfe0e4",
-	borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
-	verticalAlign: Titanium.UI.TEXT_VERTICAL_ALIGNMENT_CENTER,
-	textAlign: Titanium.UI.TEXT_ALIGNMENT_LEFT,
-	backgroundColor: "#ffffff",
-	width: Titanium.UI.FILL,
-	left: 10,
-	right: 10,
-	top: 10,
-},
-
-'TextField[platform=android]': {
-    height: 50,
-	borderColor: "#dfe0e4",
-	color: "#000000",
-	borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
-	verticalAlign: Titanium.UI.TEXT_VERTICAL_ALIGNMENT_CENTER,
-	textAlign: Titanium.UI.TEXT_ALIGNMENT_LEFT,
-	backgroundColor: "#ffffff",
-	width: Titanium.UI.FILL,
-	left: 10,
-	right: 10,
-	top: 10,
-},
-
-// iPad and iPad mini
-"TextField[platform=ios formFactor=tablet]": { 
-    height: 60,
-    width : '50%', 
-	borderColor: "#dfe0e4",
-	borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
-	//verticalAlign: Titanium.UI.TEXT_VERTICAL_ALIGNMENT_CENTER, 
-	backgroundColor: "#ffffff",  
-},
-
 "ImageView":{
 	preventDefaultImage: true
 },
 
 'TableView':{
 	contentHeight: Ti.UI.SIZE,
-	contentWidth: Ti.UI.FILL,	
+	contentWidth: Ti.UI.FILL,
 },
 
 "TabGroup":{
@@ -118,7 +87,30 @@ overrode the settings with other TSS, XML, or JS settings:
 		fontSize: 14
 	}
 }
- 
+
+'.field': {
+    padding: { left: 10, right: 10, bottom:10, top:10 },
+    width: Ti.UI.FILL,
+    height: Ti.UI.SIZE,
+    font:{
+    	fontSize: 14,
+    },
+    height: 40,
+    color: "#000000",
+    backgroundColor: "#ffffff"
+}
+
+'.combo_box':{
+	width: Ti.UI.FILL,
+    height: Ti.UI.SIZE,
+	height: 40,
+    left: 10,
+    right: 10,
+    bottom: 10,
+    borderWidth: 0,
+    hintTextColor: "#E89114",
+    backgroundColor: "#ffffff"
+}
 
 '.button[platform=android]': {
 	height: 40,
@@ -126,7 +118,7 @@ overrode the settings with other TSS, XML, or JS settings:
 	textAlign: Titanium.UI.TEXT_ALIGNMENT_CENTER,
 	backgroundColor: "#CE1D1C",
 	borderRadius: 6,
-	color: "#ffffff",  
+	color: "#ffffff",
 	top: 10,
 },
 
@@ -138,7 +130,7 @@ overrode the settings with other TSS, XML, or JS settings:
 	borderRadius: 6,
 	color: "#ffffff",
 	top: 10,
-	width: "70%", 
+	width: "70%",
 },
 '.button[platform=ios formFactor=tablet]': {
 	height: 60,
@@ -147,6 +139,14 @@ overrode the settings with other TSS, XML, or JS settings:
 	borderRadius: 6,
 	color: "#ffffff",
 	width: "50%"
+},
+
+'.new_button': {
+	borderRadius: 5,
+	backgroundColor: "#CC2228",
+	height: 40,
+	color: "#ffffff",
+	width: Ti.UI.FILL,
 },
 
 '.vert':{
@@ -188,7 +188,12 @@ overrode the settings with other TSS, XML, or JS settings:
 '.contwfill':{
 	contentWidth: Ti.UI.FILL
 }
-
+'.small_padding':{
+	top: 5,
+	left: 5,
+	right: 5,
+	bottom: 5,
+},
 '.padding':{
 	top: 10,
 	left: 10,
@@ -210,7 +215,7 @@ overrode the settings with other TSS, XML, or JS settings:
 
 ".padding-bottom":{
 	bottom: 10
-}, 
+},
 
 '.box':{
 	borderColor: "#d2d3ce",
@@ -279,7 +284,7 @@ overrode the settings with other TSS, XML, or JS settings:
 	}
 },
 
-".h6":{
+".h7":{
 	font:{
 		fontSize: 10
 	}
@@ -314,19 +319,19 @@ overrode the settings with other TSS, XML, or JS settings:
 ".black-line":{
 	backgroundColor: "#000",
 	width: Ti.UI.FILL,
-	height: 1	
+	height: 1
 },
 
 ".gray-line":{
 	backgroundColor: "#d2d3ce",
 	width: Ti.UI.FILL,
-	height: 1	
+	height: 1
 },
- 
+
 ".white-line":{
 	backgroundColor: "#fff",
 	width: Ti.UI.FILL,
-	height: 1	
+	height: 1
 },
 
 ".bold":{
@@ -347,7 +352,7 @@ overrode the settings with other TSS, XML, or JS settings:
 }
 '.themeBg' : {
 	backgroundColor: "#CE1D1C"
-}, 
+},
 '.font_light_grey':{
 	color: "#9197a3 "
 },
@@ -373,13 +378,13 @@ overrode the settings with other TSS, XML, or JS settings:
 	width : Ti.UI.SIZE,
 	height : Ti.UI.SIZE
 },
-"#activityIndicator[platform=ios]" : { 
+"#activityIndicator[platform=ios]" : {
 	 top:30,
 	 left:30,
 	 width:60,
 },
 
-"#activityIndicator[platform=android]" : { 
+"#activityIndicator[platform=android]" : {
 	 top:10,
 	 left:30,
 	 width:60,

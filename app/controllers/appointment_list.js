@@ -34,8 +34,7 @@ function render_appointment_list(){
 		$.appointment_list.add(view_norecord);
 	}else{
 		var all_date = _.sortBy(appointmentList, 'start_date');
-		all_date = all_date.reverse(); 
-		console.log(all_date);
+		all_date = all_date.reverse();
 		for (var i=0; i < all_date.length; i++) {
 			var datetime = all_date[i].start_date.split(" ");
 			check_update_currentdate(datetime[0]);
@@ -406,8 +405,6 @@ function create_dialog_box(ex){
 	      		var model = Alloy.createCollection("appointment");
 				var res = JSON.parse(responseText);
 				var arr = res.data || null;
-				console.log("doctor_panel_id"+doctor_panel_id);
-				console.log(arr);
 				model.saveArray(arr);
 				model.updateSuggestedAppointmentStatus(doctor_panel_id);
 				setTimeout(render_appointment_list, 1000);
