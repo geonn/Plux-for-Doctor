@@ -3,7 +3,7 @@ var args = arguments[0] || {};
 
 var menu_info = [
 	{mod: "cardReader", image: "/images/btn/e-card-reader.png"},
-	{mod: "patient", image: "/images/btn/patient-record.png"},
+	{mod: "receipt0", image: "/images/btn/patient-record.png"},
 	//{mod: "appointment", image: "/images/btn/appointment.png"},
 	//{mod: "clinic/listing", image: "/images/btn/clinic-locator.png"},
 	//{mod: "ida", image: "/images/btn/ida.png"},
@@ -115,7 +115,7 @@ function render_header_info(){
 			cancel: 1,
 			buttonNames: ['Cancel','Confirm'],
 			message: 'Would you like to logout?',
-			title: 'Logout PLUX'
+			title: 'Logout'
 		});
 		dialog.addEventListener('click', function(e){
 			if (e.index === e.source.cancel){
@@ -176,3 +176,32 @@ $.win.addEventListener("close", function(){
 
 $.win.addEventListener("open", function(){
 });
+
+var alertFields = {
+    title: 'Notification', //Android Only
+    body : 'Just another notification',
+    badge: 1,
+    when: new Date(new Date().getTime() + 30) //iOS only
+};
+
+var notification = Titanium.Android.createNotification({
+        contentTitle: alertFields.title,
+        contentText : alertFields.body,
+        contentIntent: Ti.Android.createPendingIntent({intent: Ti.Android.createIntent({})}),
+        number: alertFields.badge
+    });
+
+    var intent = Ti.Android.createIntent({
+        action: Ti.Android.ACTION_MAIN,
+    });
+
+    intent.flags |= Ti.Android.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED; //Starts app if not backgrounded
+    intent.addCategory(Ti.Android.CATEGORY_LAUNCHER);
+
+    notification.contentIntent = Ti.Android.createPendingIntent({
+        intent: intent,
+        type : Ti.Android.PENDING_INTENT_FOR_ACTIVITY,
+        flags : Ti.Android.FLAG_ACTIVITY_NO_HISTORY
+    });
+
+    Ti.Android.NotificationManager.notify(1, notification);

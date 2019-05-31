@@ -1,0 +1,4 @@
+<Alloy>
+	<Window navTintColor="#CE1D1C" class="wfill" id="win" title="Receipt" navBarHidden="false" >
+	</Window>
+</Alloy>

@@ -27,15 +27,15 @@ function screenshot(e){
 	blob = blob.substring(index + 'base64,'.length);
 	screenShotBlob = Ti.Utils.base64decode(blob);
 	if(screenShotBlob.width > screenShotBlob.height){
-		var newWidth = 640;
-		var ratio =   640 / screenShotBlob.width;
+		var newWidth = 1024;
+		var ratio =   1024 / screenShotBlob.width;
 		var newHeight = screenShotBlob.height * ratio;
 	}else{
-		var newHeight = 640;
-		var ratio =   640 / screenShotBlob.height;
+		var newHeight = 1024;
+		var ratio =   1024 / screenShotBlob.height;
 		var newWidth = screenShotBlob.width * ratio;
 	}
-
+  console.log(newWidth+", "+newHeight);
 	screenShotBlob = screenShotBlob.imageAsResized(newWidth, newHeight);
 	submit_receipt();
 }

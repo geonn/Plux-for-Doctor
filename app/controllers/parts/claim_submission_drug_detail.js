@@ -12,6 +12,8 @@ function doSave(){
 }
 
 function getDrugList(){
+  if(drugList.length > 0)
+    return;
 	API.callByGet({url:"drugList",params:""},function(responceText){
 		var res = JSON.parse(responceText);
 		for(var i = 0; i < res.length; i++){

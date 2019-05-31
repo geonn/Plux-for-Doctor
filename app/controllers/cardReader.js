@@ -166,7 +166,8 @@ function cardnoAssign(){
 	$.masked.hide();
 	$.cardno_input.blur();
 	if(action == "show_itemise_submittion"){
-		validateUserPinViaServer(cardno);
+		//validateUserPinViaServer(cardno);
+		show_itemise_submittion();
 	}else{
 		if(action == "doInquiry"){
 			doInquiry();

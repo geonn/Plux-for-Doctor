@@ -6,6 +6,7 @@ var search_bar = (OS_IOS)?Titanium.UI.createSearchBar({
     hintText: args.title+" Search"
 });
 var items = [];
+
 for (var i=0; i < args.listing.length; i++) {
     if(OS_IOS){
         var row = $.UI.create("TableViewRow", {title: args.listing[i].value});
@@ -13,20 +14,23 @@ for (var i=0; i < args.listing.length; i++) {
         row.add(view);
         items.push(row);
     }else{
-        items.push({title: args.listing[i].value, color: "#000000"});
+        items.push({properties: {title: args.listing[i].value, searchableText: args.listing[i].value, color: "#000000"}});
     }
 };
-var tableview = Titanium.UI.createTableView({
-    data: items,
+
+var listSection = Titanium.UI.createListSection({items: items});
+
+var listView = Titanium.UI.createListView({
+    sections: [listSection],
     layout: "vertiacl",
-    search: search_bar,
+    searchView: search_bar,
     backgroundColor: "#ffffff",
-    searchAsChild: true,
     zIndex:100
 });
 
-tableview.addEventListener("click", function(e){
-    args.callback(args.listing[e.index]);
+listView.addEventListener("itemclick", function(e){
+  console.log(args.listing[e.itemIndex]);
+    args.callback(args.listing[e.itemIndex]);
     $.win.close();
     return;
     if(typeof tf.source == "undefined"){
@@ -42,6 +46,6 @@ tableview.addEventListener("click", function(e){
         tf.source.color = "#000000";
         selectedDiag1 = e.index;
     }
-    $.win.remove(tableview);
+    $.win.remove(listView);
 });
-$.win.add(tableview);
+$.win.add(listView);

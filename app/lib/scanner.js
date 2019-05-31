@@ -53,7 +53,7 @@ exports.openScanner = function(scanType) {
 		    }
 		}else{
 			if(time1 == barRes[13] || time1 == barRes2[1]){
-				console.log("Invalid scan. Please scan again with PLUX Health app");
+				console.log("Invalid scan. Please scan again with ASP Healthcare APP");
 			}else{
 			    if(typeof barRes[13] != "undefined"){
                     Ti.App.fireEvent('getCardData', {cardno: barRes[14]});
